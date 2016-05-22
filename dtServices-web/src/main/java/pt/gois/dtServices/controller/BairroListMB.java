@@ -14,6 +14,8 @@ import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.Bairro;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
+// Versão 0.1.1
+
 @ManagedBean
 @ViewScoped
 public class BairroListMB extends GeneralMB implements Serializable {
