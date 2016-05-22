@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1"
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="recover_house" transaction-type="JTA">
+		<jta-data-source>jboss/datasources/recover_houseDS</jta-data-source>
+
+		<class>pt.gois.recoverHouse.entity.Bairro.java</class>
+		<class>pt.gois.recoverHouse.entity.Endereco.java</class>
+		<class>pt.gois.recoverHouse.entity.Entidadedefacturacao.java</class>
+		<class>pt.gois.recoverHouse.entity.Freguesia.java</class>
+		<class>pt.gois.recoverHouse.entity.Imagem.java</class>
+		<class>pt.gois.recoverHouse.entity.Imovel.java</class>
+		<class>pt.gois.recoverHouse.entity.Mapa.java</class>
+		<class>pt.gois.recoverHouse.entity.Orcamento.java</class>
+		<class>pt.gois.recoverHouse.entity.Processo.java</class>
+		<class>pt.gois.recoverHouse.entity.Servico.java</class>
+		<class>pt.gois.recoverHouse.entity.Solicitante.java</class>
+
+		<exclude-unlisted-classes>false</exclude-unlisted-classes>
+		<properties>
+			<!-- 
+			<property name="hibernate.dialect" value="org.hibernate.dialect.ProgressDialect"/>
+			 -->
+			<property name="hibernate.show_sql" value="true" />
+			<property name="hibernate.format_sql" value="true" />
+		</properties>
+	</persistence-unit>
+</persistence>

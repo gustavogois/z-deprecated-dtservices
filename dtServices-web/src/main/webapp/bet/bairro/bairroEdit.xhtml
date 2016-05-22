@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/bet/templates/common.xhtml">
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_cambista}" />
+
+	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="id" value="#{cambistaEditMB.id}" />
+		</f:metadata>
+		<h:form id="cambistaNew">
+			<div id="rightbox" class="fixright">
+				<p:panel>
+					<h:panelGrid columns="2">
+						<p:commandButton ajax="false"
+							value="#{bundle.default_action_save}"
+							action="#{cambistaEditMB.save}" />
+						<p:commandButton ajax="false"
+							value="#{bundle.default_action_cancel}" immediate="true"
+							action="cambistaList" />
+					</h:panelGrid>
+				</p:panel>
+			</div>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="#{bundle.default_field_ID}" />
+				<p:outputLabel value="#{cambistaEditMB.cambista.id}" />
+				<p:outputLabel value="#{bundle.cidade_field_name}" />
+				<p:selectOneMenu value="#{cambistaEditMB.cambista.cidade.id}"
+					style="width:125px" required="true" disabled="#{userSessionMB.cidadeId != null}">
+					<f:selectItems value="#{cidadeListMB.cidades}" var="cidade"
+						itemValue="#{cidade.id}" itemLabel="#{cidade.nome}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="#{bundle.default_field_nome}" />
+				<p:inputText size="40" label="#{bundle.default_field_nome}"
+					value="#{cambistaEditMB.cambista.nome}"
+					validator="#{cambistaEditMB.validateName}" required="true"
+					validatorMessage="#{bundle.cambista_msg_invalidName}">
+				</p:inputText>
+				<p:outputLabel value="#{bundle.pessoa_field_senha}" />
+				<p:password size="8" label="#{bundle.pessoa_field_senha}"
+					value="#{cambistaEditMB.cambista.senha}" required="true">
+				</p:password>
+				<p:outputLabel value="#{bundle.pessoa_field_dtCadastro}" />
+				<p:inputMask size="12" label="#{bundle.pessoa_field_dtCadastro}"
+					mask="99/99/9999 99:99"
+					value="#{cambistaEditMB.cambista.dtCadastro}" required="true">
+					<f:convertDateTime type="both" pattern="dd/MM/yyyy HH:mm" />
+				</p:inputMask>
+				<p:outputLabel value="#{bundle.cambista_field_bloqueado}" />
+				<p:selectBooleanButton label="#{bundle.cambista_field_bloqueado}"
+					value="#{cambistaEditMB.cambista.bloqueado}"
+					onLabel="#{bundle.default_label_yes}"
+					offLabel="#{bundle.default_label_no}" onIcon="ui-icon-check"
+					offIcon="ui-icon-close" />
+
+				<p:separator />
+				<p:separator />
+				<p:outputLabel value="#{bundle.periodicidadeComissao_field_name}" />
+				<p:selectOneMenu
+					value="#{cambistaEditMB.cambista.periodicidadeComissao.id}"
+					style="width:125px" required="true">
+					<f:selectItems value="#{userSessionMB.periodicidadeComissaos}"
+						var="tipoComissao" itemValue="#{tipoComissao.id}"
+						itemLabel="#{tipoComissao.descricao}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="#{bundle.cambista_field_comissao}" />
+				<pe:inputNumber label="#{bundle.cambista_field_comissao}"
+					id="comissao" value="#{cambistaEditMB.cambista.comissao}"
+					required="true" symbol="% ">
+					<p:clientValidator event="keyup" />
+				</pe:inputNumber>
+				<p:outputLabel value="#{bundle.cambista_field_saldo}" />
+				<pe:inputNumber label="#{bundle.cambista_field_saldo}" id="saldo"
+					value="#{cambistaEditMB.cambista.saldo}" required="true"
+					symbol="R$ ">
+					<p:clientValidator event="keyup" />
+				</pe:inputNumber>
+				<p:outputLabel value="#{bundle.cambista_field_teste}" />
+				<p:selectBooleanButton label="#{bundle.cambista_field_teste}"
+					value="#{cambistaEditMB.cambista.teste}"
+					onLabel="#{bundle.default_label_yes}"
+					offLabel="#{bundle.default_label_no}" onIcon="ui-icon-check"
+					offIcon="ui-icon-close" />
+
+
+				<p:separator />
+				<p:separator />
+				<p:outputLabel value="#{bundle.recolhe_field_name}" />
+				<p:selectOneMenu value="#{cambistaEditMB.cambista.recolhe.id}"
+					style="width:125px">
+					<f:selectItems value="#{userSessionMB.recolhes}" var="recolhe"
+						itemValue="#{recolhe.id}" itemLabel="#{recolhe.nome}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="#{bundle.cambista_field_recolheComissao}" />
+				<pe:inputNumber label="#{bundle.cambista_field_recolheComissao}"
+					value="#{cambistaEditMB.cambista.recolheComissao}" required="true"
+					symbol="% ">
+					<p:clientValidator event="keyup" />
+				</pe:inputNumber>
+
+				<p:separator />
+				<p:separator />
+				<p:outputLabel value="#{bundle.cambista_field_observacao}" />
+				<p:inputTextarea rows="3" cols="50"
+					value="#{cambistaEditMB.cambista.observacao}" />
+			</h:panelGrid>
+		</h:form>
+
+		<br />
+		<br />
+		<ui:fragment id="mobiles"
+			rendered="#{cambistaEditMB.cambista.id != null}">
+			<p:outputLabel value="#{bundle.cambista_label_adicionarMobile}"
+				styleClass="title" />
+			<p:separator />
+			<h:form id="cambistaMobile">
+				<h:panelGrid columns="5">
+					<p:outputLabel value="#{bundle.mobile_field_imei}" />
+					<p:inputText label="#{bundle.mobile_field_imei}"
+						value="#{cambistaEditMB.mobile.id}" required="true">
+						<p:clientValidator event="keyup" />
+					</p:inputText>				
+					<p:outputLabel value="#{bundle.mobile_field_modelo}" />
+					<p:inputText size="40" label="#{bundle.default_field_nome}"
+						value="#{cambistaEditMB.mobile.modelo}" required="true">
+					</p:inputText>
+					<p:commandButton ajax="false" value="#{bundle.default_action_add}"
+						action="#{cambistaEditMB.saveMobile}" />
+				</h:panelGrid>
+
+				<p:dataTable id="cambistaList" value="#{cambistaEditMB.mobiles}"
+					var="mobile" emptyMessage="#{bundle.mobile_msg_NotFound}"
+					rows="20">
+					<p:column headerText="#{bundle.mobile_field_imei}">
+						<h:outputText value="#{mobile.id}" />
+					</p:column>
+					<p:column headerText="#{bundle.mobile_field_modelo}">
+						<h:outputText value="#{mobile.modelo}" />
+					</p:column>
+					<p:column headerText="#{bundle.default_label_action}">
+						<h:commandLink value="#{bundle.default_action_del}"
+							styleClass="ui-icon-person"
+							actionListener="#{cambistaEditMB.deleteMobile(mobile)}"
+							style="margin-right:20px">
+							<f:ajax render="@form" />
+						</h:commandLink>
+					</p:column>
+				</p:dataTable>
+			</h:form>
+		</ui:fragment>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
