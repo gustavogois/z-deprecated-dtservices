@@ -17,7 +17,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="author" content="Gois" />
 
-		<title>Recover House - Real Estate Services</title>
+		<title>#{bundle.titulo_pagina}</title>
 		<ui:insert name="headHTML" />
 	</h:head>
 
@@ -29,13 +29,13 @@
 				<p:toolbarGroup align="left">
 
 					<h:form prependId="false">
-						<p:commandButton value="Home" ajax="false"
+						<p:commandButton value="#{bundle.menu_home}" ajax="false"
 							action="/home.jsf?faces-redirect=true" id="homeButton"
 							styleClass="${fn:contains(request.servletPath, '/home.jsf') ? 'catui-state-active':''}"
 							icon="ui-icon-home" />
 
-						<p:menuButton value="Geral" styleClass="pr1">
-							<p:menuitem value="Bairro" icon="ui-icon-gear"
+						<p:menuButton value="#{bundle.menu_geral}" styleClass="pr1">
+							<p:menuitem value="#{bundle.menu_bairro}" icon="ui-icon-gear"
 								immediate="true" ajax="true"
 								outcome="/bet/bairro/bairroList.jsf">
 							</p:menuitem>
@@ -48,10 +48,10 @@
 						<h:form prependId="false" _style="display:inline-block">
 
 								<h:panelGroup>
-									<h:outputText value="Version. 0.0.1 " />
-									<h:outputText value="Usuário: Miguel Sanchez" />
+									<h:outputText value="Version. 0.1.1 " />
+									<h:outputText value="User Name" />
 								</h:panelGroup>
-							<h1>FIGURA</h1>
+							<img src="../img/realState.png" width="62" height="30" />
 						</h:form>
 
 						<h:form prependId="false" target="_new">
