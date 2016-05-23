@@ -22,8 +22,8 @@
 				<h:panelGrid columns="3" style="float: right">
 					<h:outputText value="#{bundle.default_label_termSearch} " />
 					<p:remoteCommand name="searchTrigger" update=":solicitanteListId"
-						actionListener="#{solicitanteListBean.search}" />
-					<p:inputText id="search" value="#{solicitanteListBean.term}"
+						actionListener="#{solicitanteListMB.search}" />
+					<p:inputText id="search" value="#{solicitanteListMB.term}"
 						onkeydown="if(event.keyCode == 13) { searchTrigger(); }" />
 				</h:panelGrid>
 			</h:form>

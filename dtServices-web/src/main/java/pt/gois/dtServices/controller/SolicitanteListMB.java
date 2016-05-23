@@ -35,14 +35,10 @@ public class SolicitanteListMB extends GeneralMB implements Serializable {
 		SearchPageCtrl<Solicitante> searchPageCtrl = new SearchPageCtrl<Solicitante>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
-			filters.put("obj.loteria.nome", term);
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-//		if( userSessionMB.getCidadeId() != null ){
-//			filters.put("obj.cidade.id", userSessionMB.getCidadeId() );
-//		}
 		list = new PaginatedDataModel<Solicitante>(searchPageCtrl, sb);
 		return list;
 	}
