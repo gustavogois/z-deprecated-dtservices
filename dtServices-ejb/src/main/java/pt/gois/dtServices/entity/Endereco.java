@@ -16,10 +16,8 @@ public class Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String codigoPostal;
-	private String concelho;
 	private String endereco;
-	private Bairro bairro;
-	private Freguesia freguesia;
+	private Distrito distrito;
 	private Mapa mapa;
 	private List<Imovel> imovels;
 
@@ -49,16 +47,6 @@ public class Endereco implements Serializable {
 	}
 
 
-	@Column(nullable=false, length=30)
-	public String getConcelho() {
-		return this.concelho;
-	}
-
-	public void setConcelho(String concelho) {
-		this.concelho = concelho;
-	}
-
-
 	@Column(length=60)
 	public String getEndereco() {
 		return this.endereco;
@@ -69,27 +57,15 @@ public class Endereco implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Bairro
+	//bi-directional many-to-one association to Distrito
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="bairroId", nullable=false)
-	public Bairro getBairro() {
-		return this.bairro;
+	@JoinColumn(name="idDistrito", nullable=false)
+	public Distrito getDistrito() {
+		return this.distrito;
 	}
 
-	public void setBairro(Bairro bairro) {
-		this.bairro = bairro;
-	}
-
-
-	//bi-directional many-to-one association to Freguesia
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="freguesiaId", nullable=false)
-	public Freguesia getFreguesia() {
-		return this.freguesia;
-	}
-
-	public void setFreguesia(Freguesia freguesia) {
-		this.freguesia = freguesia;
+	public void setDistrito(Distrito distrito) {
+		this.distrito = distrito;
 	}
 
 

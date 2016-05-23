@@ -5,19 +5,19 @@ import javax.persistence.*;
 
 
 /**
- * The persistent class for the freguesia database table.
+ * The persistent class for the concelho database table.
  * 
  */
 @Entity
-@Table(name="freguesia")
-@NamedQuery(name="Freguesia.findAll", query="SELECT f FROM Freguesia f")
-public class Freguesia implements Serializable {
+@Table(name="concelho")
+@NamedQuery(name="Concelho.findAll", query="SELECT c FROM Concelho c")
+public class Concelho implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String nome;
 	private Municipio municipio;
 
-	public Freguesia() {
+	public Concelho() {
 	}
 
 
