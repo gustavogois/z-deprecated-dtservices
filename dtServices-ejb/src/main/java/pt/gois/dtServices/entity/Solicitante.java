@@ -14,7 +14,7 @@ import java.util.List;
 @NamedQuery(name="Solicitante.findAll", query="SELECT s FROM Solicitante s")
 public class Solicitante implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String nif;
 	private String nome;
 	private String telefone;
@@ -28,11 +28,11 @@ public class Solicitante implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
