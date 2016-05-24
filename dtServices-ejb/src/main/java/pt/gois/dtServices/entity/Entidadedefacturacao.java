@@ -14,7 +14,7 @@ import java.util.List;
 @NamedQuery(name="Entidadedefacturacao.findAll", query="SELECT e FROM Entidadedefacturacao e")
 public class Entidadedefacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String nome;
 	private List<Processo> processos;
 
@@ -23,13 +23,15 @@ public class Entidadedefacturacao implements Serializable {
 
 
 	@Id
+	//@SequenceGenerator(name = "entidadeFacturacao_id_seq_1", sequenceName = "entidadeFacturacao_id_seq_1", allocationSize = 1)
+	//@GeneratedValue(strategy=GenerationType.AUTO, generator = "entidadeFacturacao_id_seq_1")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
