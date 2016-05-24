@@ -66,7 +66,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		return "solicitanteList";
 	}
 	
-	public String delete( Solicitante cambista ){
+	public String delete( Solicitante solicitante ){
 		sb.delete(solicitante);
 		return "solicitanteList";
 	}
