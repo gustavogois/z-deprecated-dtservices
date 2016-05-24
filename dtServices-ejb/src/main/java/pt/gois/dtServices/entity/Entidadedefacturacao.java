@@ -23,8 +23,6 @@ public class Entidadedefacturacao implements Serializable {
 
 
 	@Id
-	//@SequenceGenerator(name = "entidadeFacturacao_id_seq_1", sequenceName = "entidadeFacturacao_id_seq_1", allocationSize = 1)
-	//@GeneratedValue(strategy=GenerationType.AUTO, generator = "entidadeFacturacao_id_seq_1")
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
 	public Integer getId() {
