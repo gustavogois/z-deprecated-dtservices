@@ -11,45 +11,48 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_solicitante}" />
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_servico}" />
 
 	<ui:define name="body">
 		<f:metadata>
-			<f:viewParam name="id" value="#{solicitanteEditMB.id}" />
+			<f:viewParam name="id" value="#{servicoEditMB.id}" />
+			<f:viewParam name="solicitanteId" value="#{servicoEditMB.servico.solicitante.id}" />
 		</f:metadata>
-		<h:form id="solicitanteNew">
+		<h:form id="servicoNew">
 			<div id="rightbox" class="fixright">
 				<p:panel>
 					<h:panelGrid columns="2">
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_save}"
-							action="#{solicitanteEditMB.save}" />
+							action="#{servicoEditMB.save}" />
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_cancel}" immediate="true"
-							action="solicitanteList" />
+							action="servicoList" />
 					</h:panelGrid>
 				</p:panel>
 			</div>
 			<h:panelGrid columns="2">
 				<p:outputLabel value="#{bundle.default_field_ID}" />
-				<p:outputLabel value="#{solicitanteEditMB.solicitante.id}" />
+				<p:outputLabel value="#{servicoEditMB.servico.id}" />
+				
+				<p:outputLabel value="#{bundle.servico_field_solicitante}" />
+				<p:selectOneMenu value="#{servicoEditMB.servico.solicitante.id}"
+					style="width:300px" required="true">
+					<f:selectItems value="#{solicitanteListMB.solicitantes}" var="solicitante"
+						itemValue="#{solicitante.id}" itemLabel="#{solicitante.nome}" />
+				</p:selectOneMenu>
+				
 				<p:outputLabel value="#{bundle.default_field_name}" />
-				<p:inputText size="30" label="#{bundle.default_field_nome}"
-					value="#{solicitanteEditMB.solicitante.nome}"
-					validator="#{solicitanteEditMB.validateName}" required="true"
-					validatorMessage="#{bundle.solicitante_msg_invalidName}">
+				<p:inputText size="60" label="#{bundle.default_field_nome}"
+					value="#{servicoEditMB.servico.nome}"
+					validator="#{servicoEditMB.validateName}" required="true"
+					validatorMessage="#{bundle.default_msg_invalidName}">
 				</p:inputText>
-				<p:outputLabel value="#{bundle.solicitante_field_nif}" />
-				<p:inputText size="30" label="#{bundle.solicitante_field_nif}"
-					value="#{solicitanteEditMB.solicitante.nif}"
-					validator="#{solicitanteEditMB.validateNif}" required="true"
-					validatorMessage="#{bundle.solicitante_msg_invalidNif}">
-				</p:inputText>
-				<p:outputLabel value="#{bundle.default_field_telefone}" />
-				<p:inputText size="30" label="#{bundle.default_field_telefone}"
-					value="#{solicitanteEditMB.solicitante.telefone}"
-					validator="#{solicitanteEditMB.validateTelefone}" required="true"
-					validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
+				<p:outputLabel value="#{bundle.default_field_valor}" />
+				<p:inputText size="8" label="#{bundle.default_field_valor}"
+					value="#{servicoEditMB.servico.valor}"
+					validator="#{servicoEditMB.validateValor}" required="true"
+					validatorMessage="#{bundle.default_msg_invalidValor}">
 				</p:inputText>
 			</h:panelGrid>
 		</h:form>

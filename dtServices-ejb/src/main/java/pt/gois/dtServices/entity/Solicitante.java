@@ -93,7 +93,7 @@ public class Solicitante implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@OneToMany(mappedBy="solicitante")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="solicitante")
 	public List<Servico> getServicos() {
 		return this.servicos;
 	}

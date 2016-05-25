@@ -14,7 +14,7 @@ import java.util.List;
 @NamedQuery(name="Servico.findAll", query="SELECT s FROM Servico s")
 public class Servico implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String nome;
 	private double valor;
 	private List<Processo> processos;
@@ -27,11 +27,11 @@ public class Servico implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(unique=true, nullable=false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -77,7 +77,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId", nullable=false)
 	public Solicitante getSolicitante() {
 		return this.solicitante;

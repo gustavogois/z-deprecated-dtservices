@@ -1,7 +1,6 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
@@ -10,41 +9,41 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
-import pt.gois.dtServices.business.SolicitanteSBLocal;
+import pt.gois.dtServices.business.ServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.Solicitante;
+import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class SolicitanteListMB extends GeneralMB implements Serializable {
+public class ServicoListMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.SolicitanteSBLocal sb;
+	private pt.gois.dtServices.business.ServicoSBLocal sb;
 
-	PaginatedDataModel<Solicitante> list;
+	PaginatedDataModel<Servico> list;
 
-	public SolicitanteListMB() {
+	public ServicoListMB() {
 
 	}
 
-	public PaginatedDataModel<Solicitante> getList() {
+	public PaginatedDataModel<Servico> getList() {
 		if (list != null) {
 			return list;
 		}
-		SearchPageCtrl<Solicitante> searchPageCtrl = new SearchPageCtrl<Solicitante>();
+		SearchPageCtrl<Servico> searchPageCtrl = new SearchPageCtrl<Servico>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-		list = new PaginatedDataModel<Solicitante>(searchPageCtrl, sb);
+		list = new PaginatedDataModel<Servico>(searchPageCtrl, sb);
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<Solicitante> list) {
+	public void setList(PaginatedDataModel<Servico> list) {
 		this.list = list;
 	}
 
@@ -52,16 +51,11 @@ public class SolicitanteListMB extends GeneralMB implements Serializable {
 		list = null;
 	}
 
-	public SolicitanteSBLocal getSb() {
+	public ServicoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSb(SolicitanteSBLocal sb) {
+	public void setSb(ServicoSBLocal sb) {
 		this.sb = sb;
 	}
-
-	public List<Solicitante> getSolicitantes(){
-		return sb.findAll();
-	}
-
 }
