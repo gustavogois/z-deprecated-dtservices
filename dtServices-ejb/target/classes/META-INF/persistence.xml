@@ -11,7 +11,6 @@
 		<class>pt.gois.dtServices.entity.Entidadedefacturacao</class>
 		<class>pt.gois.dtServices.entity.Freguesia</class>
 		<class>pt.gois.dtServices.entity.Iimagem</class>
-		<class>pt.gois.dtServices.entity.Imovel</class>
 		<class>pt.gois.dtServices.entity.Mapa</class>
 		<class>pt.gois.dtServices.entity.Orcamento</class>
 		<class>pt.gois.dtServices.entity.Processo</class>

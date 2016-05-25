@@ -68,12 +68,6 @@ public class Iimagem implements Serializable {
 	}
 
 
-	//bi-directional many-to-many association to Imovel
-	@ManyToMany(mappedBy="iimagems")
-	public List<Imovel> getImovels() {
-		return this.imovels;
-	}
-
 	public void setImovels(List<Imovel> imovels) {
 		this.imovels = imovels;
 	}

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_imovel}" />
+
+	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="id" value="#{imovelEditMB.id}" />
+		</f:metadata>
+		<h:form id="imovelNew">
+			<div id="rightbox" class="fixright">
+				<p:panel>
+					<h:panelGrid columns="2">
+						<p:commandButton ajax="false"
+							value="#{bundle.default_action_save}"
+							action="#{imovelEditMB.save}" />
+						<p:commandButton ajax="false"
+							value="#{bundle.default_action_cancel}" immediate="true"
+							action="imovelList" />
+					</h:panelGrid>
+				</p:panel>
+			</div>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="#{bundle.default_field_ID}" />
+				<p:outputLabel value="#{imovelEditMB.imovel.id}" />
+				<p:outputLabel value="#{bundle.default_field_name}" />
+				<p:inputText size="60" label="#{bundle.imovel_field_inquilino}"
+					value="#{imovelEditMB.imovel.inquilino}"
+					validator="#{imovelEditMB.validateInquilino}" required="true"
+					validatorMessage="#{bundle.imovel_msg_invalidInquilino}">
+				</p:inputText>
+				<p:outputLabel value="#{bundle.imovel_field_crp}" />
+				<p:inputText size="60" label="#{bundle.imovel_field_crp}"
+					value="#{imovelEditMB.imovel.crp}"
+					validator="#{imovelEditMB.validateCrp}" required="true"
+					validatorMessage="#{bundle.imovel_msg_invalidCrp}">
+				</p:inputText>
+				<p:outputLabel value="#{bundle.imovel_field_endereco}" />
+				<p:inputText size="60" label="#{bundle.imovel_field_endereco}"
+					value="#{imovelEditMB.imovel.endereco}"
+					validator="#{imovelEditMB.validateEndereco}" required="true"
+					validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
+				</p:inputText>
+				
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

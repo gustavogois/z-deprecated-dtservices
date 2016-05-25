@@ -81,28 +81,9 @@ public class Endereco implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Imovel
-	@OneToMany(mappedBy="endereco")
-	public List<Imovel> getImovels() {
-		return this.imovels;
-	}
-
 	public void setImovels(List<Imovel> imovels) {
 		this.imovels = imovels;
 	}
 
-	public Imovel addImovel(Imovel imovel) {
-		getImovels().add(imovel);
-		imovel.setEndereco(this);
-
-		return imovel;
-	}
-
-	public Imovel removeImovel(Imovel imovel) {
-		getImovels().remove(imovel);
-		imovel.setEndereco(null);
-
-		return imovel;
-	}
 
 }

@@ -2,6 +2,7 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.List;
 
 
@@ -10,15 +11,14 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="imovel")
 @NamedQuery(name="Imovel.findAll", query="SELECT i FROM Imovel i")
 public class Imovel implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
+	private String codigoPostal;
 	private String crp;
+	private String endereco;
 	private String inquilino;
-	private Endereco endereco;
-	private List<Iimagem> iimagems;
 	private List<Processo> processos;
 
 	public Imovel() {
@@ -27,17 +27,24 @@ public class Imovel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 
-	@Column(length=30)
+	public String getCodigoPostal() {
+		return this.codigoPostal;
+	}
+
+	public void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
+	}
+
+
 	public String getCrp() {
 		return this.crp;
 	}
@@ -47,45 +54,21 @@ public class Imovel implements Serializable {
 	}
 
 
-	@Column(length=30)
+	public String getEndereco() {
+		return this.endereco;
+	}
+
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
+
+
 	public String getInquilino() {
 		return this.inquilino;
 	}
 
 	public void setInquilino(String inquilino) {
 		this.inquilino = inquilino;
-	}
-
-
-	//bi-directional many-to-one association to Endereco
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="enderecoId")
-	public Endereco getEndereco() {
-		return this.endereco;
-	}
-
-	public void setEndereco(Endereco endereco) {
-		this.endereco = endereco;
-	}
-
-
-	//bi-directional many-to-many association to Iimagem
-	@ManyToMany
-	@JoinTable(
-		name="iimovelimagens"
-		, joinColumns={
-			@JoinColumn(name="imovelId", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="imagemId", nullable=false)
-			}
-		)
-	public List<Iimagem> getIimagems() {
-		return this.iimagems;
-	}
-
-	public void setIimagems(List<Iimagem> iimagems) {
-		this.iimagems = iimagems;
 	}
 
 
