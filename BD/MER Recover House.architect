@@ -220,7 +220,7 @@
     <column id="COL61" populated="true" UUID="73a41bc0-ad5b-4101-acb4-f1566856b993" autoIncrement="true" autoIncrementSequenceName="solicitante_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL62" populated="true" UUID="fe368e32-ccb5-4a24-9e30-5969a6e9314d" autoIncrement="false" autoIncrementSequenceName="solicitante_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL62" populated="true" UUID="fe368e32-ccb5-4a24-9e30-5969a6e9314d" autoIncrement="false" autoIncrementSequenceName="solicitante_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Nome do Solicitante</remarks>
     </column>
     <column id="COL63" populated="true" UUID="636e84a7-dc9f-47b2-9189-8fca414c3025" autoIncrement="false" autoIncrementSequenceName="solicitante_nif_seq" defaultValue="" name="nif" nullable="0" physicalName="nif" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
@@ -246,10 +246,10 @@
     <column id="COL68" populated="true" UUID="be7cf2d8-9c12-4cf5-8d69-5ba4da7efd66" autoIncrement="true" autoIncrementSequenceName="imovel_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL69" populated="true" UUID="c4228748-6a9b-438d-95ef-4eac88163e77" autoIncrement="false" autoIncrementSequenceName="imovel_inquilino_seq" defaultValue="" name="inquilino" nullable="0" physicalName="inquilino" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL69" populated="true" UUID="c4228748-6a9b-438d-95ef-4eac88163e77" autoIncrement="false" autoIncrementSequenceName="imovel_inquilino_seq" defaultValue="" name="inquilino" nullable="0" physicalName="inquilino" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Inquilino atual do imóvel.</remarks>
     </column>
-    <column id="COL70" populated="true" UUID="693618db-babf-4b5c-b81d-474ef7437415" autoIncrement="false" autoIncrementSequenceName="imovel_crp_seq" defaultValue="" name="crp" nullable="0" physicalName="crp" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL70" populated="true" UUID="693618db-babf-4b5c-b81d-474ef7437415" autoIncrement="false" autoIncrementSequenceName="imovel_crp_seq" defaultValue="" name="crp" nullable="0" physicalName="crp" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Certidão de Registro Predial.</remarks>
     </column>
     <column id="COL71" populated="true" UUID="aa6e70c5-52f4-4cd2-a724-77723f9a5ebf" autoIncrement="false" autoIncrementSequenceName="imovel_endereco_seq" defaultValue="" name="endereco" nullable="0" physicalName="endereco" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
@@ -275,7 +275,7 @@
     <column id="COL76" populated="true" UUID="cb2275af-1261-4249-a754-73cc99ea0132" autoIncrement="true" autoIncrementSequenceName="entidadeFacturacao_id_seq_1" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks>Identificador único da Entidade de Facturação.</remarks>
     </column>
-    <column id="COL77" populated="true" UUID="24f14456-72f7-42f8-83ef-696c038fcc92" autoIncrement="false" autoIncrementSequenceName="entidadeDeFacturacao_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL77" populated="true" UUID="24f14456-72f7-42f8-83ef-696c038fcc92" autoIncrement="false" autoIncrementSequenceName="entidadeDeFacturacao_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Nome da Entidade de Facturação</remarks>
     </column>
     </folder>
@@ -298,7 +298,7 @@
     <column id="COL82" populated="true" UUID="c83fb620-6fa7-4ead-bbea-132368fdfdca" autoIncrement="false" autoIncrementSequenceName="servico_solicitanteId_seq" defaultValue="" name="solicitanteId" nullable="0" physicalName="solicitanteId" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL83" populated="true" UUID="96b102d9-d27b-469e-bf53-71fe2257ef7f" autoIncrement="false" autoIncrementSequenceName="servico_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL83" populated="true" UUID="96b102d9-d27b-469e-bf53-71fe2257ef7f" autoIncrement="false" autoIncrementSequenceName="servico_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Nome do serviço</remarks>
     </column>
     <column id="COL84" populated="true" UUID="843324bb-1cd4-4b3b-b1e3-e638a04eab88" autoIncrement="false" autoIncrementSequenceName="servico_valor_seq" defaultValue="" name="valor" nullable="0" physicalName="valor" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
@@ -321,7 +321,7 @@
     <column id="COL88" populated="true" UUID="26c810b2-0844-4caf-afbb-751abadb758c" autoIncrement="true" autoIncrementSequenceName="iImagem_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks>Identificador único da imagem no sistema.</remarks>
     </column>
-    <column id="COL89" populated="true" UUID="6333aba5-0d4d-4e69-937f-bd2588689e27" autoIncrement="false" autoIncrementSequenceName="iImagem_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL89" populated="true" UUID="6333aba5-0d4d-4e69-937f-bd2588689e27" autoIncrement="false" autoIncrementSequenceName="iImagem_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks>Nome da imagem.</remarks>
     </column>
     <column id="COL90" populated="true" UUID="9414c8c2-eb6b-41fe-9b5b-52281957af57" autoIncrement="false" autoIncrementSequenceName="iImagem_imagem_seq" defaultValue="" name="imagem" nullable="0" physicalName="imagem" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="2004" userDefinedTypeUUID="5c50e616-a448-40e1-abcd-5bfc04dcc607" >
@@ -445,7 +445,7 @@
     <column id="COL120" populated="true" UUID="3fc6a4eb-6797-4fc8-bcb3-0e33e426db77" autoIncrement="false" autoIncrementSequenceName="distrito_id_seq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL121" populated="true" UUID="bd1a5c09-43f8-4b07-be13-65a91ec7591c" autoIncrement="false" autoIncrementSequenceName="distrito_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL121" populated="true" UUID="bd1a5c09-43f8-4b07-be13-65a91ec7591c" autoIncrement="false" autoIncrementSequenceName="distrito_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -468,7 +468,7 @@
     <column id="COL126" populated="true" UUID="e3b828bd-bb64-44df-9573-ea40fe7df488" autoIncrement="false" autoIncrementSequenceName="municipio_idDistrito_seq" defaultValue="" name="idDistrito" nullable="0" physicalName="idDistrito" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL127" populated="true" UUID="b8b65a81-30a9-470b-a178-7baa7ee5bd0e" autoIncrement="false" autoIncrementSequenceName="municipio_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL127" populated="true" UUID="b8b65a81-30a9-470b-a178-7baa7ee5bd0e" autoIncrement="false" autoIncrementSequenceName="municipio_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -491,7 +491,7 @@
     <column id="COL132" populated="true" UUID="3673eff7-cb70-4925-aa40-0abb24874d67" autoIncrement="false" autoIncrementSequenceName="freguesia_idMunicipio_seq" defaultValue="" name="idMunicipio" nullable="0" physicalName="idMunicipio" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL133" populated="true" UUID="6f907f4f-b357-4d65-a8f6-03955bffa83e" autoIncrement="false" autoIncrementSequenceName="freguesia_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="30" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL133" populated="true" UUID="6f907f4f-b357-4d65-a8f6-03955bffa83e" autoIncrement="false" autoIncrementSequenceName="freguesia_nome_seq" defaultValue="" name="nome" nullable="0" physicalName="nome" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
