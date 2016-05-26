@@ -6,17 +6,6 @@
 	<persistence-unit name="recover_house" transaction-type="JTA">
 		<jta-data-source>jboss/datasources/recover_houseDS</jta-data-source>
 
-		<class>pt.gois.dtServices.entity.Bairro</class>
-		<class>pt.gois.dtServices.entity.Endereco</class>
-		<class>pt.gois.dtServices.entity.Entidadedefacturacao</class>
-		<class>pt.gois.dtServices.entity.Freguesia</class>
-		<class>pt.gois.dtServices.entity.Iimagem</class>
-		<class>pt.gois.dtServices.entity.Mapa</class>
-		<class>pt.gois.dtServices.entity.Orcamento</class>
-		<class>pt.gois.dtServices.entity.Processo</class>
-		<class>pt.gois.dtServices.entity.Servico</class>
-		<class>pt.gois.dtServices.entity.Solicitante</class>
-
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<!-- 

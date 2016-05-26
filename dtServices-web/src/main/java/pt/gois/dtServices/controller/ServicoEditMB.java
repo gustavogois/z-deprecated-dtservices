@@ -49,17 +49,17 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	public String create() {
 		servico = new Servico();
-		servico.setSolicitante(new Solicitante());
+		//servico.setSolicitante(new Solicitante());
 		sb.create(servico);
 		return "ServicoEdit";
 	}
 	
 	public String save(){
-		Servico Servico = getServico();
-		if( Servico.getId() != null ){
-			sb.save( Servico );
+		Servico servico = getServico();
+		if( servico.getId() != null ){
+			sb.save( servico );
 		}else{
-			sb.create( Servico );
+			sb.create( servico );
 		}
 		return "servicoList";
 	}
@@ -76,7 +76,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 				servico = sb.findById( getId() );
 			}else{
 				servico = new Servico();
-				servico.setSolicitante(new Solicitante());
+				//servico.setSolicitante(new Solicitante());
 			}
 		}
 		return servico;

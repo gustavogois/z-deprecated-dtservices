@@ -10,7 +10,6 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="entidadedefacturacao")
 @NamedQuery(name="Entidadedefacturacao.findAll", query="SELECT e FROM Entidadedefacturacao e")
 public class Entidadedefacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -23,8 +22,6 @@ public class Entidadedefacturacao implements Serializable {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -34,7 +31,6 @@ public class Entidadedefacturacao implements Serializable {
 	}
 
 
-	@Column(length=30)
 	public String getNome() {
 		return this.nome;
 	}

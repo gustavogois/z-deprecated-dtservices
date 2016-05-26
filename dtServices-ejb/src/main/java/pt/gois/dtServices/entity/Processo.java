@@ -11,21 +11,20 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="processo")
 @NamedQuery(name="Processo.findAll", query="SELECT p FROM Processo p")
 public class Processo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private byte comChaves;
-	private Date dataDeCadastro;
-	private Date dataDeFaturamento;
-	private Date dataDeFinalizacaoServicos;
-	private Date dataDeInicioExecucao;
-	private Date dataDeSolicitacao;
-	private Date dataDoRecebimento;
+	private Date dtCadastro;
+	private Date dtFaturamento;
+	private Date dtFinalizacao;
+	private Date dtInicioExecucao;
+	private Date dtRecebimento;
+	private Date dtSolicitacao;
+	private int estado;
 	private String observacoes;
 	private Entidadedefacturacao entidadedefacturacao;
-	private List<Iimagem> iimagems;
 	private Imovel imovel;
 	private Orcamento orcamento;
 	private Solicitante solicitante;
@@ -36,8 +35,6 @@ public class Processo implements Serializable {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	public int getId() {
 		return this.id;
 	}
@@ -57,66 +54,74 @@ public class Processo implements Serializable {
 
 
 	@Temporal(TemporalType.DATE)
-	public Date getDataDeCadastro() {
-		return this.dataDeCadastro;
+	public Date getDtCadastro() {
+		return this.dtCadastro;
 	}
 
-	public void setDataDeCadastro(Date dataDeCadastro) {
-		this.dataDeCadastro = dataDeCadastro;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDataDeFaturamento() {
-		return this.dataDeFaturamento;
-	}
-
-	public void setDataDeFaturamento(Date dataDeFaturamento) {
-		this.dataDeFaturamento = dataDeFaturamento;
+	public void setDtCadastro(Date dtCadastro) {
+		this.dtCadastro = dtCadastro;
 	}
 
 
 	@Temporal(TemporalType.DATE)
-	public Date getDataDeFinalizacaoServicos() {
-		return this.dataDeFinalizacaoServicos;
+	public Date getDtFaturamento() {
+		return this.dtFaturamento;
 	}
 
-	public void setDataDeFinalizacaoServicos(Date dataDeFinalizacaoServicos) {
-		this.dataDeFinalizacaoServicos = dataDeFinalizacaoServicos;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDataDeInicioExecucao() {
-		return this.dataDeInicioExecucao;
-	}
-
-	public void setDataDeInicioExecucao(Date dataDeInicioExecucao) {
-		this.dataDeInicioExecucao = dataDeInicioExecucao;
+	public void setDtFaturamento(Date dtFaturamento) {
+		this.dtFaturamento = dtFaturamento;
 	}
 
 
 	@Temporal(TemporalType.DATE)
-	public Date getDataDeSolicitacao() {
-		return this.dataDeSolicitacao;
+	public Date getDtFinalizacao() {
+		return this.dtFinalizacao;
 	}
 
-	public void setDataDeSolicitacao(Date dataDeSolicitacao) {
-		this.dataDeSolicitacao = dataDeSolicitacao;
+	public void setDtFinalizacao(Date dtFinalizacao) {
+		this.dtFinalizacao = dtFinalizacao;
 	}
 
 
 	@Temporal(TemporalType.DATE)
-	public Date getDataDoRecebimento() {
-		return this.dataDoRecebimento;
+	public Date getDtInicioExecucao() {
+		return this.dtInicioExecucao;
 	}
 
-	public void setDataDoRecebimento(Date dataDoRecebimento) {
-		this.dataDoRecebimento = dataDoRecebimento;
+	public void setDtInicioExecucao(Date dtInicioExecucao) {
+		this.dtInicioExecucao = dtInicioExecucao;
 	}
 
 
-	@Column(length=60)
+	@Temporal(TemporalType.DATE)
+	public Date getDtRecebimento() {
+		return this.dtRecebimento;
+	}
+
+	public void setDtRecebimento(Date dtRecebimento) {
+		this.dtRecebimento = dtRecebimento;
+	}
+
+
+	@Temporal(TemporalType.DATE)
+	public Date getDtSolicitacao() {
+		return this.dtSolicitacao;
+	}
+
+	public void setDtSolicitacao(Date dtSolicitacao) {
+		this.dtSolicitacao = dtSolicitacao;
+	}
+
+
+	public int getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+
 	public String getObservacoes() {
 		return this.observacoes;
 	}
@@ -138,29 +143,9 @@ public class Processo implements Serializable {
 	}
 
 
-	//bi-directional many-to-many association to Iimagem
-	@ManyToMany
-	@JoinTable(
-		name="processoimagens"
-		, joinColumns={
-			@JoinColumn(name="processoId", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="imagemId", nullable=false)
-			}
-		)
-	public List<Iimagem> getIimagems() {
-		return this.iimagems;
-	}
-
-	public void setIimagems(List<Iimagem> iimagems) {
-		this.iimagems = iimagems;
-	}
-
-
 	//bi-directional many-to-one association to Imovel
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="imovelId", nullable=false)
+	@JoinColumn(name="imovelId")
 	public Imovel getImovel() {
 		return this.imovel;
 	}
@@ -172,7 +157,7 @@ public class Processo implements Serializable {
 
 	//bi-directional many-to-one association to Orcamento
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="orcamentoId", nullable=false)
+	@JoinColumn(name="orcamentoId")
 	public Orcamento getOrcamento() {
 		return this.orcamento;
 	}
@@ -184,7 +169,7 @@ public class Processo implements Serializable {
 
 	//bi-directional many-to-one association to Solicitante
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="solicitanteId", nullable=false)
+	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
 	}
@@ -194,14 +179,28 @@ public class Processo implements Serializable {
 	}
 
 
-	//bi-directional many-to-many association to Servico
-	@ManyToMany(mappedBy="processos")
+	//bi-directional many-to-one association to Servico
+	@OneToMany(mappedBy="processo")
 	public List<Servico> getServicos() {
 		return this.servicos;
 	}
 
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
+	}
+
+	public Servico addServico(Servico servico) {
+		getServicos().add(servico);
+		servico.setProcesso(this);
+
+		return servico;
+	}
+
+	public Servico removeServico(Servico servico) {
+		getServicos().remove(servico);
+		servico.setProcesso(null);
+
+		return servico;
 	}
 
 }

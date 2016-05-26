@@ -2,7 +2,6 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
 import java.util.List;
 
 
@@ -26,7 +25,6 @@ public class Imovel implements Serializable {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer getId() {
 		return this.id;
 	}

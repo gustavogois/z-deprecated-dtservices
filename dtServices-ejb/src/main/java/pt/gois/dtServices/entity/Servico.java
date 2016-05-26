@@ -2,7 +2,7 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+import java.util.Date;
 
 
 /**
@@ -10,23 +10,22 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="servico")
 @NamedQuery(name="Servico.findAll", query="SELECT s FROM Servico s")
 public class Servico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private String nome;
-	private double valor;
-	private List<Processo> processos;
-	private Solicitante solicitante;
+	private Date dtCadastro;
+	private Date dtFim;
+	private Date dtInicio;
+	private int estado;
+	private Processo processo;
+	private TiposervicoSolicitante tiposervicoSolicitante;
 
 	public Servico() {
 	}
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	public Integer getId() {
 		return this.id;
 	}
@@ -36,55 +35,66 @@ public class Servico implements Serializable {
 	}
 
 
-	@Column(length=30)
-	public String getNome() {
-		return this.nome;
+	@Temporal(TemporalType.DATE)
+	public Date getDtCadastro() {
+		return this.dtCadastro;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
-	}
-
-
-	@Column(nullable=false)
-	public double getValor() {
-		return this.valor;
-	}
-
-	public void setValor(double valor) {
-		this.valor = valor;
+	public void setDtCadastro(Date dtCadastro) {
+		this.dtCadastro = dtCadastro;
 	}
 
 
-	//bi-directional many-to-many association to Processo
-	@ManyToMany
-	@JoinTable(
-		name="processoservicos"
-		, joinColumns={
-			@JoinColumn(name="servicoId", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="processoId", nullable=false)
-			}
-		)
-	public List<Processo> getProcessos() {
-		return this.processos;
+	@Temporal(TemporalType.DATE)
+	public Date getDtFim() {
+		return this.dtFim;
 	}
 
-	public void setProcessos(List<Processo> processos) {
-		this.processos = processos;
+	public void setDtFim(Date dtFim) {
+		this.dtFim = dtFim;
 	}
 
 
-	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="solicitanteId", nullable=false)
-	public Solicitante getSolicitante() {
-		return this.solicitante;
+	@Temporal(TemporalType.DATE)
+	public Date getDtInicio() {
+		return this.dtInicio;
 	}
 
-	public void setSolicitante(Solicitante solicitante) {
-		this.solicitante = solicitante;
+	public void setDtInicio(Date dtInicio) {
+		this.dtInicio = dtInicio;
+	}
+
+
+	public int getEstado() {
+		return this.estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+
+	//bi-directional many-to-one association to Processo
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="idProcesso")
+	public Processo getProcesso() {
+		return this.processo;
+	}
+
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
+	}
+
+
+	//bi-directional one-to-one association to TiposervicoSolicitante
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id")
+	public TiposervicoSolicitante getTiposervicoSolicitante() {
+		return this.tiposervicoSolicitante;
+	}
+
+	public void setTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
+		this.tiposervicoSolicitante = tiposervicoSolicitante;
 	}
 
 }

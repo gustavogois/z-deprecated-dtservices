@@ -11,7 +11,6 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="orcamento")
 @NamedQuery(name="Orcamento.findAll", query="SELECT o FROM Orcamento o")
 public class Orcamento implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -24,8 +23,6 @@ public class Orcamento implements Serializable {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(unique=true, nullable=false)
 	public int getId() {
 		return this.id;
 	}
@@ -36,7 +33,6 @@ public class Orcamento implements Serializable {
 
 
 	@Temporal(TemporalType.DATE)
-	@Column(nullable=false)
 	public Date getDataDeSolicitacao() {
 		return this.dataDeSolicitacao;
 	}
