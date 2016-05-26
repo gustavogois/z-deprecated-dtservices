@@ -10,25 +10,26 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="tiposervico_solicitante")
-@NamedQuery(name="TiposervicoSolicitante.findAll", query="SELECT t FROM TiposervicoSolicitante t")
-public class TiposervicoSolicitante implements Serializable {
+@NamedQuery(name="TipoServicoSolicitante.findAll", query="SELECT t FROM TipoServicoSolicitante t")
+public class TipoServicoSolicitante implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private double valor;
 	private Servico servico;
 	private Solicitante solicitante;
-	private Tiposervico tiposervico;
+	private TipoServico tiposervico;
 
-	public TiposervicoSolicitante() {
+	public TipoServicoSolicitante() {
 	}
 
 
 	@Id
-	public int getId() {
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -68,11 +69,11 @@ public class TiposervicoSolicitante implements Serializable {
 	//bi-directional many-to-one association to Tiposervico
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoServicoId")
-	public Tiposervico getTiposervico() {
+	public TipoServico getTiposervico() {
 		return this.tiposervico;
 	}
 
-	public void setTiposervico(Tiposervico tiposervico) {
+	public void setTiposervico(TipoServico tiposervico) {
 		this.tiposervico = tiposervico;
 	}
 

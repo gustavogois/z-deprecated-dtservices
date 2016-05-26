@@ -17,6 +17,8 @@ insert into processo (id, entidadeFacturacaoId, solicitanteId, imovelId, comChav
                       dtCadastro, dtInicioExecucao, dtFinalizacao, dtFaturamento, dtRecebimento, estado)
 			values
             (12, 3, 1, 11, true, "", null, null, null, null, null, null, 0);
+            
+update hibernate_sequence set next_val=13;
 
 -- insert into imovel (id, inquilino, crp, endereco, codigoPostal) values (10, "Maria Pereira", 
 -- 	"Arroja 3aCRP, número 1020, matriz predial 8845, fracção C", 

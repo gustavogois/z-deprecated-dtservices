@@ -18,13 +18,14 @@ public class Solicitante implements Serializable {
 	private String nome;
 	private String telefone;
 	private List<Processo> processos;
-	private List<TiposervicoSolicitante> tiposervicoSolicitantes;
+	private List<TipoServicoSolicitante> tiposervicoSolicitantes;
 
 	public Solicitante() {
 	}
 
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer getId() {
 		return this.id;
 	}
@@ -88,22 +89,22 @@ public class Solicitante implements Serializable {
 
 	//bi-directional many-to-one association to TiposervicoSolicitante
 	@OneToMany(mappedBy="solicitante")
-	public List<TiposervicoSolicitante> getTiposervicoSolicitantes() {
+	public List<TipoServicoSolicitante> getTiposervicoSolicitantes() {
 		return this.tiposervicoSolicitantes;
 	}
 
-	public void setTiposervicoSolicitantes(List<TiposervicoSolicitante> tiposervicoSolicitantes) {
+	public void setTiposervicoSolicitantes(List<TipoServicoSolicitante> tiposervicoSolicitantes) {
 		this.tiposervicoSolicitantes = tiposervicoSolicitantes;
 	}
 
-	public TiposervicoSolicitante addTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
+	public TipoServicoSolicitante addTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
 		getTiposervicoSolicitantes().add(tiposervicoSolicitante);
 		tiposervicoSolicitante.setSolicitante(this);
 
 		return tiposervicoSolicitante;
 	}
 
-	public TiposervicoSolicitante removeTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
+	public TipoServicoSolicitante removeTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
 		getTiposervicoSolicitantes().remove(tiposervicoSolicitante);
 		tiposervicoSolicitante.setSolicitante(null);
 

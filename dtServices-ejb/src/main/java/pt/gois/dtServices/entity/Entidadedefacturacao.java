@@ -22,6 +22,7 @@ public class Entidadedefacturacao implements Serializable {
 
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer getId() {
 		return this.id;
 	}

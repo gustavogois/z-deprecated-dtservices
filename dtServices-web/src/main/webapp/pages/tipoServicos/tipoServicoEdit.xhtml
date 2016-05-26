@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_tipoServico}" />
+
+	<ui:define name="body">
+		<f:metadata>
+			<f:viewParam name="id" value="#{tipoServicoEditMB.id}" />
+		</f:metadata>
+		<h:form id="tipoServicoNew">
+			<div id="rightbox" class="fixright">
+				<p:panel>
+					<h:panelGrid columns="2">
+						<p:commandButton ajax="false"
+							value="#{bundle.default_action_save}"
+							action="#{tipoServicoEditMB.save}" />
+						<p:commandButton ajax="false"
+							value="#{bundle.default_action_cancel}" immediate="true"
+							action="tipoServicoList" />
+					</h:panelGrid>
+				</p:panel>
+			</div>
+			<h:panelGrid columns="2">
+				<p:outputLabel value="#{bundle.default_field_ID}" />
+				<p:outputLabel value="#{tipoServicoEditMB.tipoServico.id}" />
+				
+				<p:outputLabel value="#{bundle.default_field_name}" />
+				<p:inputText size="60" label="#{bundle.default_field_nome}"
+					value="#{tipoServicoEditMB.tipoServico.nome}"
+					validator="#{tipoServicoEditMB.validateName}" required="true"
+					validatorMessage="#{bundle.default_msg_invalidName}">
+				</p:inputText>
+				<p:outputLabel value="#{bundle.default_field_valor}" />
+				<p:inputText size="8" label="#{bundle.default_field_valor}"
+					value="#{tipoServicoEditMB.tipoServico.valor}"
+					validator="#{tipoServicoEditMB.validateValor}" required="true"
+					validatorMessage="#{bundle.default_msg_invalidValor}">
+				</p:inputText>
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>

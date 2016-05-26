@@ -8,5 +8,5 @@ insert into tiposervico (id, nome, valor, descricao) values (5, "Abertura de Por
 insert into tiposervico (id, nome, valor, descricao) values (6, "Abertura de Porta (Fechadura Especial)", 20, "");
 insert into tiposervico (id, nome, valor, descricao) values (7, "Pintura", 5, "O preço está por metro quadrado.");
 
-insert into hibernate_sequence values (8);
+update hibernate_sequence set next_val=8;
 

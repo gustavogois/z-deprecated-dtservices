@@ -25,6 +25,7 @@ public class Imovel implements Serializable {
 
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer getId() {
 		return this.id;
 	}

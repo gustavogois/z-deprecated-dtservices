@@ -14,19 +14,19 @@ import java.util.List;
 @NamedQuery(name="Processo.findAll", query="SELECT p FROM Processo p")
 public class Processo implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
-	private byte comChaves;
+	private Integer id;
+	private Boolean comChaves;
 	private Date dtCadastro;
 	private Date dtFaturamento;
 	private Date dtFinalizacao;
 	private Date dtInicioExecucao;
+	private Date dtOrcamento;
 	private Date dtRecebimento;
 	private Date dtSolicitacao;
 	private int estado;
 	private String observacoes;
 	private Entidadedefacturacao entidadedefacturacao;
 	private Imovel imovel;
-	private Orcamento orcamento;
 	private Solicitante solicitante;
 	private List<Servico> servicos;
 
@@ -35,20 +35,21 @@ public class Processo implements Serializable {
 
 
 	@Id
-	public int getId() {
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
 
-	public byte getComChaves() {
+	public Boolean getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(byte comChaves) {
+	public void setComChaves(Boolean comChaves) {
 		this.comChaves = comChaves;
 	}
 
@@ -90,6 +91,16 @@ public class Processo implements Serializable {
 
 	public void setDtInicioExecucao(Date dtInicioExecucao) {
 		this.dtInicioExecucao = dtInicioExecucao;
+	}
+
+
+	@Temporal(TemporalType.DATE)
+	public Date getDtOrcamento() {
+		return this.dtOrcamento;
+	}
+
+	public void setDtOrcamento(Date dtOrcamento) {
+		this.dtOrcamento = dtOrcamento;
 	}
 
 
@@ -152,18 +163,6 @@ public class Processo implements Serializable {
 
 	public void setImovel(Imovel imovel) {
 		this.imovel = imovel;
-	}
-
-
-	//bi-directional many-to-one association to Orcamento
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="orcamentoId")
-	public Orcamento getOrcamento() {
-		return this.orcamento;
-	}
-
-	public void setOrcamento(Orcamento orcamento) {
-		this.orcamento = orcamento;
 	}
 
 

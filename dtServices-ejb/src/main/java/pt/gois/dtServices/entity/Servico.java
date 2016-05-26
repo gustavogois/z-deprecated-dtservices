@@ -19,13 +19,14 @@ public class Servico implements Serializable {
 	private Date dtInicio;
 	private int estado;
 	private Processo processo;
-	private TiposervicoSolicitante tiposervicoSolicitante;
+	private TipoServicoSolicitante tiposervicoSolicitante;
 
 	public Servico() {
 	}
 
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	public Integer getId() {
 		return this.id;
 	}
@@ -89,11 +90,11 @@ public class Servico implements Serializable {
 	//bi-directional one-to-one association to TiposervicoSolicitante
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id")
-	public TiposervicoSolicitante getTiposervicoSolicitante() {
+	public TipoServicoSolicitante getTiposervicoSolicitante() {
 		return this.tiposervicoSolicitante;
 	}
 
-	public void setTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
+	public void setTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
 		this.tiposervicoSolicitante = tiposervicoSolicitante;
 	}
 

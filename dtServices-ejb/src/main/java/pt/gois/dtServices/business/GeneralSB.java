@@ -14,7 +14,7 @@ import pt.gois.dtServices.util.SearchPageCtrl;
 public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 	private Class<T> entityClass;
 
-	@PersistenceContext(unitName = "recover_house")
+	@PersistenceContext(unitName = "dtServices")
 	private EntityManager em;
 
 	public GeneralSB(Class<T> entityClass) {
