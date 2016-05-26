@@ -87,7 +87,7 @@ public class Solicitante implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TiposervicoSolicitante
+	//bi-directional many-to-one association to TipoServicoSolicitante
 	@OneToMany(mappedBy="solicitante")
 	public List<TipoServicoSolicitante> getTiposervicoSolicitantes() {
 		return this.tiposervicoSolicitantes;

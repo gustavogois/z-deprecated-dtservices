@@ -87,7 +87,7 @@ public class Servico implements Serializable {
 	}
 
 
-	//bi-directional one-to-one association to TiposervicoSolicitante
+	//bi-directional one-to-one association to TipoServicoSolicitante
 	@OneToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="id")
 	public TipoServicoSolicitante getTiposervicoSolicitante() {

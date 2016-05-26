@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Tiposervico.findAll", query="SELECT t FROM TipoServico t")
+@NamedQuery(name="TipoServico.findAll", query="SELECT t FROM TipoServico t")
 public class TipoServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
@@ -61,7 +61,7 @@ public class TipoServico implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TiposervicoSolicitante
+	//bi-directional many-to-one association to TipoServicoSolicitante
 	@OneToMany(mappedBy="tiposervico")
 	public List<TipoServicoSolicitante> getTiposervicoSolicitantes() {
 		return this.tiposervicoSolicitantes;

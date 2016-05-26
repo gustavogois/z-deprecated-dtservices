@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
 public class GeneralMB implements Serializable {

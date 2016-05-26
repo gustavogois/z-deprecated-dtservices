@@ -52,6 +52,24 @@
 					validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
 				</p:inputText>
 			</h:panelGrid>
+			
+			<p:dataTable id="tipoServicoList" value="#{solicitanteEditMB.tiposServicoBySolicitante}"
+				var="tipoServicoSolicitante" emptyMessage="#{bundle.default_msg_notFound}"
+				paginator="true" rows="20" lazy="true"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
+					{NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="20, 50, 10" selectionMode="single">
+				<p:column headerText="#{bundle.default_field_ID}">
+					<h:outputText value="#{tipoServicoSolicitante.id}" />
+				</p:column>
+				<p:column headerText="#{bundle.default_field_name}">
+					<h:outputText value="#{tipoServicoSolicitante.tiposervico.nome}" />
+				</p:column>
+				<p:column headerText="#{bundle.default_field_valor}">
+					<h:outputText value="#{tipoServicoSolicitante.valor}" />
+				</p:column>
+			</p:dataTable>
+				
 		</h:form>
 
 	</ui:define>

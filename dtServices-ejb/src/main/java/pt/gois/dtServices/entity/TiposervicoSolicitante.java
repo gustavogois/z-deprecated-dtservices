@@ -44,7 +44,7 @@ public class TipoServicoSolicitante implements Serializable {
 
 
 	//bi-directional one-to-one association to Servico
-	@OneToOne(mappedBy="tiposervicoSolicitante", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="tiposervicoSolicitante", fetch=FetchType.EAGER)
 	public Servico getServico() {
 		return this.servico;
 	}
@@ -55,7 +55,7 @@ public class TipoServicoSolicitante implements Serializable {
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
@@ -66,8 +66,8 @@ public class TipoServicoSolicitante implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Tiposervico
-	@ManyToOne(fetch=FetchType.LAZY)
+	//bi-directional many-to-one association to TipoServico
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoServicoId")
 	public TipoServico getTiposervico() {
 		return this.tiposervico;

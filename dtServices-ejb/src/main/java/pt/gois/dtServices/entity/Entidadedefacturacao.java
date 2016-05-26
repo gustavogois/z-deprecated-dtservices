@@ -10,14 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Entidadedefacturacao.findAll", query="SELECT e FROM Entidadedefacturacao e")
-public class Entidadedefacturacao implements Serializable {
+@NamedQuery(name="EntidadedeFacturacao.findAll", query="SELECT e FROM EntidadedeFacturacao e")
+public class EntidadedeFacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
 	private List<Processo> processos;
 
-	public Entidadedefacturacao() {
+	public EntidadedeFacturacao() {
 	}
 
 
