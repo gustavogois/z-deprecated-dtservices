@@ -18,7 +18,15 @@ insert into processo (id, entidadeFacturacaoId, solicitanteId, imovelId, comChav
 			values
             (12, 3, 1, 11, true, "", null, null, null, null, null, null, 0);
             
-update hibernate_sequence set next_val=13;
+-- solicitante (1,"Banco Whitestar", "288653880", "243699012");
+-- tiposervico (5, "Abertura de Porta (Fechadura Normal)", 10, "");
+-- tiposervico_solicitante id = 9
+-- processo 12            
+insert into servico (id, processoId, tipoServico_SolicitanteId, estado, dtCadastro, dtInicio, dtFim, valor)
+			values
+            (13, 12, 9, 0, null, null, null, 50);
+            
+update hibernate_sequence set next_val=14;
 
 -- insert into imovel (id, inquilino, crp, endereco, codigoPostal) values (10, "Maria Pereira", 
 -- 	"Arroja 3aCRP, número 1020, matriz predial 8845, fracção C", 

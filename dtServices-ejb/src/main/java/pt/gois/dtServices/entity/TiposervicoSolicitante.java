@@ -1,7 +1,18 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -15,7 +26,7 @@ public class TipoServicoSolicitante implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private double valor;
-	private Servico servico;
+	private List<Servico> servico;
 	private Solicitante solicitante;
 	private TipoServico tiposervico;
 
@@ -44,12 +55,12 @@ public class TipoServicoSolicitante implements Serializable {
 
 
 	//bi-directional one-to-one association to Servico
-	@OneToOne(mappedBy="tiposervicoSolicitante", fetch=FetchType.EAGER)
-	public Servico getServico() {
+	@OneToMany(mappedBy="tiposervicoSolicitante")
+	public List<Servico> getServico() {
 		return this.servico;
 	}
 
-	public void setServico(Servico servico) {
+	public void setServico(List<Servico> servico) {
 		this.servico = servico;
 	}
 
