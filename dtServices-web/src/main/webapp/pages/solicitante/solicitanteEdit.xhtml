@@ -70,23 +70,6 @@
 				</p:column>
 			</p:dataTable>
 			
-			<p:dataTable id="processoList" value="#{processoListMB.list}"
-				var="processo" emptyMessage="#{bundle.default_msg_notFound}"
-				paginator="true" rows="20" lazy="true"
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
-					{NextPageLink} {LastPageLink}"
-				rowsPerPageTemplate="20, 50, 10" selectionMode="single">
-				<p:column headerText="#{bundle.default_field_ID}">
-					<h:outputText value="#{processo.id}" />
-				</p:column>
-				<p:column headerText="#{bundle.processo_field_solicitante}">
-					<h:outputText value="#{processo.solicitante.nome}" />
-				</p:column>
-				<p:column headerText="#{bundle.processo_field_imovel}">
-					<h:outputText value="#{processo.imovel.endereco}" />
-				</p:column>
-			
-
 		</h:form>
 
 	</ui:define>
