@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.entity.Servico;
-import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean

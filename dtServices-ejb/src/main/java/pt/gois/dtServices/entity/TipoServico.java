@@ -6,7 +6,7 @@ import java.util.List;
 
 
 /**
- * The persistent class for the tiposervico database table.
+ * The persistent class for the TipoServico database table.
  * 
  */
 @Entity

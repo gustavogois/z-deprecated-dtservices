@@ -25,7 +25,7 @@ public class Processo implements Serializable {
 	private Date dtSolicitacao;
 	private int estado;
 	private String observacoes;
-	private EntidadedeFacturacao entidadedefacturacao;
+	private EntidadeDeFacturacao entidadeDeFacturacao;
 	private Imovel imovel;
 	private Solicitante solicitante;
 	private List<Servico> servicos;
@@ -145,12 +145,12 @@ public class Processo implements Serializable {
 	//bi-directional many-to-one association to EntidadedeFacturacao
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="entidadeFacturacaoId")
-	public EntidadedeFacturacao getEntidadedefacturacao() {
-		return this.entidadedefacturacao;
+	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
+		return this.entidadeDeFacturacao;
 	}
 
-	public void setEntidadedefacturacao(EntidadedeFacturacao entidadedefacturacao) {
-		this.entidadedefacturacao = entidadedefacturacao;
+	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
+		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
 
 

@@ -11,18 +11,18 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import pt.gois.dtServices.entity.EntidadedeFacturacao;
+import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class EntidadeFacturacaoEditMB extends GeneralMB implements Serializable {
+public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.EntidadeFacturacaoSBLocal sb;
+	private pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sb;
 	
-	EntidadedeFacturacao entidade;
+	EntidadeDeFacturacao entidade;
 	
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
@@ -31,9 +31,9 @@ public class EntidadeFacturacaoEditMB extends GeneralMB implements Serializable 
 			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
 		}
 
-		SearchPageCtrl<EntidadedeFacturacao> searchPageCtrl = new SearchPageCtrl<EntidadedeFacturacao>();
+		SearchPageCtrl<EntidadeDeFacturacao> searchPageCtrl = new SearchPageCtrl<EntidadeDeFacturacao>();
 		searchPageCtrl.getFilters().put("nome", value);
-		List<EntidadedeFacturacao> solicitantes = sb.find(searchPageCtrl).getRows();
+		List<EntidadeDeFacturacao> solicitantes = sb.find(searchPageCtrl).getRows();
 		if (solicitantes != null && solicitantes.size() > 0 ) {
 			if( solicitantes.size() == 1 && ( solicitantes.get(0).getId() == entidade.getId() ) ){
 				return;
@@ -43,13 +43,13 @@ public class EntidadeFacturacaoEditMB extends GeneralMB implements Serializable 
 	}
 	
 	public String create() {
-		entidade = new EntidadedeFacturacao();
+		entidade = new EntidadeDeFacturacao();
 		sb.create(entidade);
 		return "entidadeFacturacaoEdit";
 	}
 	
 	public String save(){
-		EntidadedeFacturacao entidade = getEntidade();
+		EntidadeDeFacturacao entidade = getEntidade();
 		if( entidade.getId() != null ){
 			sb.save( entidade );
 		}else{
@@ -58,32 +58,32 @@ public class EntidadeFacturacaoEditMB extends GeneralMB implements Serializable 
 		return "entidadeFacturacaoList";
 	}
 	
-	public String delete( EntidadedeFacturacao entidade ){
+	public String delete( EntidadeDeFacturacao entidade ){
 		sb.delete(entidade);
 		return "entidadeFacturacaoList";
 	}
 	
-	public EntidadedeFacturacao getEntidade() {
+	public EntidadeDeFacturacao getEntidade() {
 		if( entidade == null ){
 			Integer id = getId();
 			if( id != null ){
 				entidade = sb.findById( getId() );
 			}else{
-				entidade = new EntidadedeFacturacao();
+				entidade = new EntidadeDeFacturacao();
 			}
 		}
 		return entidade;
 	}
 	
-	public void setEntidade(EntidadedeFacturacao entidade) {
+	public void setEntidade(EntidadeDeFacturacao entidade) {
 		this.entidade = entidade;
 	}
 
-	public pt.gois.dtServices.business.EntidadeFacturacaoSBLocal getSb() {
+	public pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSBLocalb(pt.gois.dtServices.business.EntidadeFacturacaoSBLocal sb) {
+	public void setSBLocalb(pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sb) {
 		this.sb = sb;
 	}
 

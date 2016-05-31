@@ -9,41 +9,41 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
-import pt.gois.dtServices.business.EntidadeFacturacaoSBLocal;
+import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.EntidadedeFacturacao;
+import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class EntidadeFacturacaoListMB extends GeneralMB implements Serializable {
+public class EntidadeDeFacturacaoListMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.EntidadeFacturacaoSBLocal sb;
+	private pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sb;
 
-	PaginatedDataModel<EntidadedeFacturacao> list;
+	PaginatedDataModel<EntidadeDeFacturacao> list;
 
-	public EntidadeFacturacaoListMB() {
+	public EntidadeDeFacturacaoListMB() {
 
 	}
 
-	public PaginatedDataModel<EntidadedeFacturacao> getList() {
+	public PaginatedDataModel<EntidadeDeFacturacao> getList() {
 		if (list != null) {
 			return list;
 		}
-		SearchPageCtrl<EntidadedeFacturacao> searchPageCtrl = new SearchPageCtrl<EntidadedeFacturacao>();
+		SearchPageCtrl<EntidadeDeFacturacao> searchPageCtrl = new SearchPageCtrl<EntidadeDeFacturacao>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-		list = new PaginatedDataModel<EntidadedeFacturacao>(searchPageCtrl, sb);
+		list = new PaginatedDataModel<EntidadeDeFacturacao>(searchPageCtrl, sb);
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<EntidadedeFacturacao> list) {
+	public void setList(PaginatedDataModel<EntidadeDeFacturacao> list) {
 		this.list = list;
 	}
 
@@ -51,11 +51,11 @@ public class EntidadeFacturacaoListMB extends GeneralMB implements Serializable 
 		list = null;
 	}
 
-	public EntidadeFacturacaoSBLocal getSb() {
+	public EntidadeDeFacturacaoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSb(EntidadeFacturacaoSBLocal sb) {
+	public void setSb(EntidadeDeFacturacaoSBLocal sb) {
 		this.sb = sb;
 	}
 }
