@@ -1,0 +1,3 @@
+mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\r"  --ignore dt_services C:\tmp\gustavo\bd\distrito.csv
+mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\r"  --ignore dt_services C:\tmp\gustavo\bd\concelho.csv
+mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\r"  --ignore dt_services C:\tmp\gustavo\bd\localidade.csv
