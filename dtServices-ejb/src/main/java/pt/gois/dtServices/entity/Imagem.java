@@ -17,7 +17,7 @@ public class Imagem implements Serializable {
 	private String descricao;
 	private byte[] imagem;
 	private List<Imovel> imovels;
-	private List<ImagemServico> imagemServicos;
+	private List<Servico> servicos;
 
 	public Imagem() {
 	}
@@ -74,27 +74,21 @@ public class Imagem implements Serializable {
 
 
 	//bi-directional many-to-one association to ImagemServico
-	@OneToMany(mappedBy="imagem")
-	public List<ImagemServico> getImagemServicos() {
-		return this.imagemServicos;
+	@ManyToMany
+	@JoinTable(
+		name="imagem_imovel"
+		, joinColumns={
+			@JoinColumn(name="imagemId")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="imovelId")
+			}
+		)
+	public List<Servico> getServicos() {
+		return this.servicos;
 	}
 
-	public void setImagemServicos(List<ImagemServico> imagemServicos) {
-		this.imagemServicos = imagemServicos;
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
 	}
-
-	public ImagemServico addImagemServico(ImagemServico imagemServico) {
-		getImagemServicos().add(imagemServico);
-		imagemServico.setImagem(this);
-
-		return imagemServico;
-	}
-
-	public ImagemServico removeImagemServico(ImagemServico imagemServico) {
-		getImagemServicos().remove(imagemServico);
-		imagemServico.setImagem(null);
-
-		return imagemServico;
-	}
-
 }

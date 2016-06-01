@@ -20,7 +20,7 @@ public class Servico implements Serializable {
 	private Date dtInicio;
 	private String observacoes;
 	private double valor;
-	private List<ImagemServico> imagemServicos;
+	private List<Imagem> imagems;
 	private TiposDeEstado tiposDeEstado;
 	private Processo processo;
 	private TiposervicoSolicitante tiposervicoSolicitante;
@@ -89,29 +89,14 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to ImagemServico
-	@OneToMany(mappedBy="servico")
-	public List<ImagemServico> getImagemServicos() {
-		return this.imagemServicos;
+	@ManyToMany(mappedBy="servico")
+	public List<Imagem> getImagems() {
+		return this.imagems;
 	}
 
-	public void setImagemServicos(List<ImagemServico> imagemServicos) {
-		this.imagemServicos = imagemServicos;
+	public void setImagems(List<Imagem> imagems) {
+		this.imagems = imagems;
 	}
-
-	public ImagemServico addImagemServico(ImagemServico imagemServico) {
-		getImagemServicos().add(imagemServico);
-		imagemServico.setServico(this);
-
-		return imagemServico;
-	}
-
-	public ImagemServico removeImagemServico(ImagemServico imagemServico) {
-		getImagemServicos().remove(imagemServico);
-		imagemServico.setServico(null);
-
-		return imagemServico;
-	}
-
 
 	//bi-directional many-to-one association to TiposDeEstado
 	@ManyToOne(fetch=FetchType.EAGER)
