@@ -147,7 +147,7 @@ public class TiposDeEstado implements Serializable {
 
 
 	//bi-directional many-to-one association to GrupoTiposEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="grupo_estadoId")
 	public GrupoTiposEstado getGrupoTiposEstado() {
 		return this.grupoTiposEstado;

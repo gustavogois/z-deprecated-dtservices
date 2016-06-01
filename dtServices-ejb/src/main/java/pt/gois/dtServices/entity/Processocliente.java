@@ -78,7 +78,7 @@ public class Processocliente implements Serializable {
 
 
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processocliente", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="processocliente", fetch=FetchType.EAGER)
 	public Imovel getImovel() {
 		return this.imovel;
 	}
@@ -114,7 +114,7 @@ public class Processocliente implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="estado_atual_Id")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
@@ -126,7 +126,7 @@ public class Processocliente implements Serializable {
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;

@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.TipoServico;
+import pt.gois.dtServices.entity.Tiposervico;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -22,28 +22,28 @@ public class TipoServicoListMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSBLocal sb;
 
-	PaginatedDataModel<TipoServico> list;
+	PaginatedDataModel<Tiposervico> list;
 
 	public TipoServicoListMB() {
 
 	}
 
-	public PaginatedDataModel<TipoServico> getList() {
+	public PaginatedDataModel<Tiposervico> getList() {
 		if (list != null) {
 			return list;
 		}
-		SearchPageCtrl<TipoServico> searchPageCtrl = new SearchPageCtrl<TipoServico>();
+		SearchPageCtrl<Tiposervico> searchPageCtrl = new SearchPageCtrl<Tiposervico>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-		list = new PaginatedDataModel<TipoServico>(searchPageCtrl, sb);
+		list = new PaginatedDataModel<Tiposervico>(searchPageCtrl, sb);
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<TipoServico> list) {
+	public void setList(PaginatedDataModel<Tiposervico> list) {
 		this.list = list;
 	}
 

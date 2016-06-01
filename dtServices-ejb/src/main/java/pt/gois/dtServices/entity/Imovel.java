@@ -13,7 +13,7 @@ import java.util.List;
 @NamedQuery(name="Imovel.findAll", query="SELECT i FROM Imovel i")
 public class Imovel implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private int id;
+	private Integer id;
 	private String codigoPostal;
 	private String crp;
 	private String endereco;
@@ -27,11 +27,11 @@ public class Imovel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public int getId() {
+	public Integer getId() {
 		return this.id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -84,7 +84,7 @@ public class Imovel implements Serializable {
 
 
 	//bi-directional one-to-one association to Processocliente
-	@OneToOne(fetch=FetchType.LAZY)
+	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id")
 	public Processocliente getProcessocliente() {
 		return this.processocliente;

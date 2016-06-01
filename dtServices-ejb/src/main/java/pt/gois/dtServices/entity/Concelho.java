@@ -43,7 +43,7 @@ public class Concelho implements Serializable {
 
 
 	//bi-directional many-to-one association to Distrito
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="distritoId")
 	public Distrito getDistrito() {
 		return this.distrito;

@@ -54,7 +54,7 @@ public class Historico implements Serializable {
 
 
 	//bi-directional many-to-one association to GrupoTiposEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="grupo_tipos_estadoId")
 	public GrupoTiposEstado getGrupoTiposEstado() {
 		return this.grupoTiposEstado;
@@ -66,7 +66,7 @@ public class Historico implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipos_de_estadoId")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;

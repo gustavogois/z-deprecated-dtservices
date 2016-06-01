@@ -70,7 +70,7 @@ public class TiposervicoSolicitante implements Serializable {
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
@@ -82,7 +82,7 @@ public class TiposervicoSolicitante implements Serializable {
 
 
 	//bi-directional many-to-one association to Tiposervico
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoServicoId")
 	public Tiposervico getTiposervico() {
 		return this.tiposervico;

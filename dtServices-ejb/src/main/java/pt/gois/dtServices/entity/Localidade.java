@@ -12,7 +12,8 @@ import javax.persistence.*;
 @NamedQuery(name="Localidade.findAll", query="SELECT l FROM Localidade l")
 public class Localidade implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private LocalidadePK id;
+	private String id;
+	private LocalidadePK localidadeId;
 	private String artCod;
 	private String artDesig;
 	private String artLocal;
@@ -22,7 +23,6 @@ public class Localidade implements Serializable {
 	private String codigoPostal3;
 	private String codigoPostal4;
 	private String codigoPostalDesignacao;
-	private String id;
 	private String localidade;
 	private String porta;
 	private String priPrep;
@@ -36,12 +36,12 @@ public class Localidade implements Serializable {
 
 
 	@EmbeddedId
-	public LocalidadePK getId() {
-		return this.id;
+	public LocalidadePK getLocalidadeId() {
+		return this.localidadeId;
 	}
 
 	public void setId(LocalidadePK id) {
-		this.id = id;
+		this.localidadeId = id;
 	}
 
 
@@ -188,7 +188,7 @@ public class Localidade implements Serializable {
 
 
 	//bi-directional many-to-one association to Concelho
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="CC")
 	public Concelho getConcelho() {
 		return this.concelho;
@@ -200,7 +200,7 @@ public class Localidade implements Serializable {
 
 
 	//bi-directional many-to-one association to Distrito
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="DD")
 	public Distrito getDistrito() {
 		return this.distrito;

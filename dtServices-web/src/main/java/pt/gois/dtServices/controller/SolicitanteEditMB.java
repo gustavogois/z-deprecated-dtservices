@@ -1,7 +1,6 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,9 +12,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.Solicitante;
-import pt.gois.dtServices.entity.TipoServicoSolicitante;
+import pt.gois.dtServices.entity.TiposervicoSolicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -85,19 +83,19 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 				solicitante = sb.findById( getId() );
 			}else{
 				solicitante = new Solicitante();
-				solicitante.setProcessos(new ArrayList<Processo>());
-				solicitante.setTiposervicoSolicitantes(new ArrayList<TipoServicoSolicitante>());
+//				solicitante.setProcessos(new ArrayList<Processo>());
+//				solicitante.setTiposervicoSolicitantes(new ArrayList<TipoServicoSolicitante>());
 			}
 		}
 		return solicitante;
 	}
 	
-	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception{
-		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
+	public PaginatedDataModel<TiposervicoSolicitante> getTiposServicoBySolicitante() throws Exception{
+		SearchPageCtrl<TiposervicoSolicitante> searchPageCtrl = new SearchPageCtrl<TiposervicoSolicitante>();
 		searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
 		//List<TipoServicoSolicitante> tiposDeServico = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
 		
-		return new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
+		return new PaginatedDataModel<TiposervicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
 	}
 
 	

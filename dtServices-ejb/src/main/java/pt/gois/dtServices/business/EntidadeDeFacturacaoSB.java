@@ -2,12 +2,12 @@ package pt.gois.dtServices.business;
 
 import javax.ejb.Stateless;
 
-import pt.gois.dtServices.entity.EntidadeDeFacturacao;
+import pt.gois.dtServices.entity.Entidadedefacturacao;
 
 @Stateless
-public class EntidadeDeFacturacaoSB extends GeneralSB<EntidadeDeFacturacao> implements EntidadeDeFacturacaoSBLocal{
+public class EntidadeDeFacturacaoSB extends GeneralSB<Entidadedefacturacao> implements EntidadeDeFacturacaoSBLocal{
 
 	public EntidadeDeFacturacaoSB() {
-		super(EntidadeDeFacturacao.class);
+		super(Entidadedefacturacao.class);
 	}
 }

@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NamedQuery(name="ImagemServico.findAll", query="SELECT i FROM ImagemServico i")
 public class ImagemServico implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private ImagemServicoPK id;
+	private ImagemServicoPK imagemServicoId;
 	private Integer id;
 	private Imagem imagem;
 	private Servico servico;
@@ -23,12 +23,12 @@ public class ImagemServico implements Serializable {
 
 
 	@EmbeddedId
-	public ImagemServicoPK getId() {
-		return this.id;
+	public ImagemServicoPK getImagemServicoId() {
+		return this.imagemServicoId;
 	}
 
 	public void setId(ImagemServicoPK id) {
-		this.id = id;
+		this.imagemServicoId = id;
 	}
 
 
@@ -42,7 +42,7 @@ public class ImagemServico implements Serializable {
 
 
 	//bi-directional many-to-one association to Imagem
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="imagemId")
 	public Imagem getImagem() {
 		return this.imagem;
@@ -54,7 +54,7 @@ public class ImagemServico implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="servicoId")
 	public Servico getServico() {
 		return this.servico;

@@ -114,7 +114,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="estado_atual_Id")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
@@ -126,7 +126,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to Processo
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="processoId")
 	public Processo getProcesso() {
 		return this.processo;
@@ -138,7 +138,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposervicoSolicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoServico_SolicitanteId")
 	public TiposervicoSolicitante getTiposervicoSolicitante() {
 		return this.tiposervicoSolicitante;
