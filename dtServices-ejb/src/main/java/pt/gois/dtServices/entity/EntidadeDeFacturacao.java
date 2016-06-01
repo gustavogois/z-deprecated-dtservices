@@ -4,15 +4,20 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.List;
 
+
+/**
+ * The persistent class for the entidadedefacturacao database table.
+ * 
+ */
 @Entity
-@NamedQuery(name="EntidadedeFacturacao.findAll", query="SELECT e FROM EntidadeDeFacturacao e")
-public class EntidadeDeFacturacao implements Serializable {
+@NamedQuery(name="Entidadedefacturacao.findAll", query="SELECT e FROM Entidadedefacturacao e")
+public class Entidadedefacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
 	private List<Processo> processos;
 
-	public EntidadeDeFacturacao() {
+	public Entidadedefacturacao() {
 	}
 
 
@@ -37,7 +42,7 @@ public class EntidadeDeFacturacao implements Serializable {
 
 
 	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="entidadeDeFacturacao")
+	@OneToMany(mappedBy="entidadedefacturacao")
 	public List<Processo> getProcessos() {
 		return this.processos;
 	}
@@ -48,14 +53,14 @@ public class EntidadeDeFacturacao implements Serializable {
 
 	public Processo addProcesso(Processo processo) {
 		getProcessos().add(processo);
-		processo.setEntidadeDeFacturacao(this);
+		processo.setEntidadedefacturacao(this);
 
 		return processo;
 	}
 
 	public Processo removeProcesso(Processo processo) {
 		getProcessos().remove(processo);
-		processo.setEntidadeDeFacturacao(null);
+		processo.setEntidadedefacturacao(null);
 
 		return processo;
 	}

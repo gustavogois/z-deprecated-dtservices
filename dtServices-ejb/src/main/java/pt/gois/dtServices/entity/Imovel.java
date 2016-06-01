@@ -13,12 +13,13 @@ import java.util.List;
 @NamedQuery(name="Imovel.findAll", query="SELECT i FROM Imovel i")
 public class Imovel implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private int id;
 	private String codigoPostal;
 	private String crp;
 	private String endereco;
 	private String inquilino;
-	private List<Processo> processos;
+	private List<Imagem> imagems;
+	private Processocliente processocliente;
 
 	public Imovel() {
 	}
@@ -26,11 +27,11 @@ public class Imovel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -71,28 +72,26 @@ public class Imovel implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="imovel")
-	public List<Processo> getProcessos() {
-		return this.processos;
+	//bi-directional many-to-many association to Imagem
+	@ManyToMany(mappedBy="imovels")
+	public List<Imagem> getImagems() {
+		return this.imagems;
 	}
 
-	public void setProcessos(List<Processo> processos) {
-		this.processos = processos;
+	public void setImagems(List<Imagem> imagems) {
+		this.imagems = imagems;
 	}
 
-	public Processo addProcesso(Processo processo) {
-		getProcessos().add(processo);
-		processo.setImovel(this);
 
-		return processo;
+	//bi-directional one-to-one association to Processocliente
+	@OneToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id")
+	public Processocliente getProcessocliente() {
+		return this.processocliente;
 	}
 
-	public Processo removeProcesso(Processo processo) {
-		getProcessos().remove(processo);
-		processo.setImovel(null);
-
-		return processo;
+	public void setProcessocliente(Processocliente processocliente) {
+		this.processocliente = processocliente;
 	}
 
 }

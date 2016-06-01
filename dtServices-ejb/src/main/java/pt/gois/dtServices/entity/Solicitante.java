@@ -17,8 +17,8 @@ public class Solicitante implements Serializable {
 	private String nif;
 	private String nome;
 	private String telefone;
-	private List<Processo> processos;
-	private List<TipoServicoSolicitante> tiposervicoSolicitantes;
+	private List<Processocliente> processoclientes;
+	private List<TiposervicoSolicitante> tiposervicoSolicitantes;
 
 	public Solicitante() {
 	}
@@ -62,49 +62,49 @@ public class Solicitante implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processo
+	//bi-directional many-to-one association to Processocliente
 	@OneToMany(mappedBy="solicitante")
-	public List<Processo> getProcessos() {
-		return this.processos;
+	public List<Processocliente> getProcessoclientes() {
+		return this.processoclientes;
 	}
 
-	public void setProcessos(List<Processo> processos) {
-		this.processos = processos;
+	public void setProcessoclientes(List<Processocliente> processoclientes) {
+		this.processoclientes = processoclientes;
 	}
 
-	public Processo addProcesso(Processo processo) {
-		getProcessos().add(processo);
-		processo.setSolicitante(this);
+	public Processocliente addProcessocliente(Processocliente processocliente) {
+		getProcessoclientes().add(processocliente);
+		processocliente.setSolicitante(this);
 
-		return processo;
+		return processocliente;
 	}
 
-	public Processo removeProcesso(Processo processo) {
-		getProcessos().remove(processo);
-		processo.setSolicitante(null);
+	public Processocliente removeProcessocliente(Processocliente processocliente) {
+		getProcessoclientes().remove(processocliente);
+		processocliente.setSolicitante(null);
 
-		return processo;
+		return processocliente;
 	}
 
 
-	//bi-directional many-to-one association to TipoServicoSolicitante
+	//bi-directional many-to-one association to TiposervicoSolicitante
 	@OneToMany(mappedBy="solicitante")
-	public List<TipoServicoSolicitante> getTiposervicoSolicitantes() {
+	public List<TiposervicoSolicitante> getTiposervicoSolicitantes() {
 		return this.tiposervicoSolicitantes;
 	}
 
-	public void setTiposervicoSolicitantes(List<TipoServicoSolicitante> tiposervicoSolicitantes) {
+	public void setTiposervicoSolicitantes(List<TiposervicoSolicitante> tiposervicoSolicitantes) {
 		this.tiposervicoSolicitantes = tiposervicoSolicitantes;
 	}
 
-	public TipoServicoSolicitante addTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
+	public TiposervicoSolicitante addTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
 		getTiposervicoSolicitantes().add(tiposervicoSolicitante);
 		tiposervicoSolicitante.setSolicitante(this);
 
 		return tiposervicoSolicitante;
 	}
 
-	public TipoServicoSolicitante removeTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
+	public TiposervicoSolicitante removeTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
 		getTiposervicoSolicitantes().remove(tiposervicoSolicitante);
 		tiposervicoSolicitante.setSolicitante(null);
 

@@ -2,7 +2,6 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 
@@ -15,19 +14,12 @@ import java.util.List;
 public class Processo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private Boolean comChaves;
-	private Date dtCadastro;
-	private Date dtFaturamento;
-	private Date dtFinalizacao;
-	private Date dtInicioExecucao;
-	private Date dtOrcamento;
-	private Date dtRecebimento;
-	private Date dtSolicitacao;
+	private byte comChaves;
 	private int estado;
 	private String observacoes;
-	private EntidadeDeFacturacao entidadeDeFacturacao;
-	private Imovel imovel;
-	private Solicitante solicitante;
+	private Entidadedefacturacao entidadedefacturacao;
+	private TiposDeEstado tiposDeEstado;
+	private Processocliente processocliente;
 	private List<Servico> servicos;
 
 	public Processo() {
@@ -45,82 +37,12 @@ public class Processo implements Serializable {
 	}
 
 
-	public Boolean getComChaves() {
+	public byte getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(Boolean comChaves) {
+	public void setComChaves(byte comChaves) {
 		this.comChaves = comChaves;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtCadastro() {
-		return this.dtCadastro;
-	}
-
-	public void setDtCadastro(Date dtCadastro) {
-		this.dtCadastro = dtCadastro;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtFaturamento() {
-		return this.dtFaturamento;
-	}
-
-	public void setDtFaturamento(Date dtFaturamento) {
-		this.dtFaturamento = dtFaturamento;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtFinalizacao() {
-		return this.dtFinalizacao;
-	}
-
-	public void setDtFinalizacao(Date dtFinalizacao) {
-		this.dtFinalizacao = dtFinalizacao;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtInicioExecucao() {
-		return this.dtInicioExecucao;
-	}
-
-	public void setDtInicioExecucao(Date dtInicioExecucao) {
-		this.dtInicioExecucao = dtInicioExecucao;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtOrcamento() {
-		return this.dtOrcamento;
-	}
-
-	public void setDtOrcamento(Date dtOrcamento) {
-		this.dtOrcamento = dtOrcamento;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtRecebimento() {
-		return this.dtRecebimento;
-	}
-
-	public void setDtRecebimento(Date dtRecebimento) {
-		this.dtRecebimento = dtRecebimento;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtSolicitacao() {
-		return this.dtSolicitacao;
-	}
-
-	public void setDtSolicitacao(Date dtSolicitacao) {
-		this.dtSolicitacao = dtSolicitacao;
 	}
 
 
@@ -142,39 +64,39 @@ public class Processo implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to EntidadedeFacturacao
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to Entidadedefacturacao
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="entidadeFacturacaoId")
-	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
-		return this.entidadeDeFacturacao;
+	public Entidadedefacturacao getEntidadedefacturacao() {
+		return this.entidadedefacturacao;
 	}
 
-	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
-		this.entidadeDeFacturacao = entidadeDeFacturacao;
-	}
-
-
-	//bi-directional many-to-one association to Imovel
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="imovelId")
-	public Imovel getImovel() {
-		return this.imovel;
-	}
-
-	public void setImovel(Imovel imovel) {
-		this.imovel = imovel;
+	public void setEntidadedefacturacao(Entidadedefacturacao entidadedefacturacao) {
+		this.entidadedefacturacao = entidadedefacturacao;
 	}
 
 
-	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="solicitanteId")
-	public Solicitante getSolicitante() {
-		return this.solicitante;
+	//bi-directional many-to-one association to TiposDeEstado
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="estado_atual_Id")
+	public TiposDeEstado getTiposDeEstado() {
+		return this.tiposDeEstado;
 	}
 
-	public void setSolicitante(Solicitante solicitante) {
-		this.solicitante = solicitante;
+	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
+		this.tiposDeEstado = tiposDeEstado;
+	}
+
+
+	//bi-directional many-to-one association to Processocliente
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="processoClienteId")
+	public Processocliente getProcessocliente() {
+		return this.processocliente;
+	}
+
+	public void setProcessocliente(Processocliente processocliente) {
+		this.processocliente = processocliente;
 	}
 
 

@@ -1,18 +1,9 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.List;
 
 
 /**
@@ -27,9 +18,12 @@ public class Servico implements Serializable {
 	private Date dtCadastro;
 	private Date dtFim;
 	private Date dtInicio;
-	private int estado;
+	private String observacoes;
+	private double valor;
+	private List<ImagemServico> imagemServicos;
+	private TiposDeEstado tiposDeEstado;
 	private Processo processo;
-	private TipoServicoSolicitante tiposervicoSolicitante;
+	private TiposervicoSolicitante tiposervicoSolicitante;
 
 	public Servico() {
 	}
@@ -76,17 +70,63 @@ public class Servico implements Serializable {
 	}
 
 
-	public int getEstado() {
-		return this.estado;
+	public String getObservacoes() {
+		return this.observacoes;
 	}
 
-	public void setEstado(int estado) {
-		this.estado = estado;
+	public void setObservacoes(String observacoes) {
+		this.observacoes = observacoes;
+	}
+
+
+	public double getValor() {
+		return this.valor;
+	}
+
+	public void setValor(double valor) {
+		this.valor = valor;
+	}
+
+
+	//bi-directional many-to-one association to ImagemServico
+	@OneToMany(mappedBy="servico")
+	public List<ImagemServico> getImagemServicos() {
+		return this.imagemServicos;
+	}
+
+	public void setImagemServicos(List<ImagemServico> imagemServicos) {
+		this.imagemServicos = imagemServicos;
+	}
+
+	public ImagemServico addImagemServico(ImagemServico imagemServico) {
+		getImagemServicos().add(imagemServico);
+		imagemServico.setServico(this);
+
+		return imagemServico;
+	}
+
+	public ImagemServico removeImagemServico(ImagemServico imagemServico) {
+		getImagemServicos().remove(imagemServico);
+		imagemServico.setServico(null);
+
+		return imagemServico;
+	}
+
+
+	//bi-directional many-to-one association to TiposDeEstado
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="estado_atual_Id")
+	public TiposDeEstado getTiposDeEstado() {
+		return this.tiposDeEstado;
+	}
+
+	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
+		this.tiposDeEstado = tiposDeEstado;
 	}
 
 
 	//bi-directional many-to-one association to Processo
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="processoId")
 	public Processo getProcesso() {
 		return this.processo;
@@ -97,14 +137,14 @@ public class Servico implements Serializable {
 	}
 
 
-	//bi-directional one-to-one association to TipoServicoSolicitante
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to TiposervicoSolicitante
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoServico_SolicitanteId")
-	public TipoServicoSolicitante getTiposervicoSolicitante() {
+	public TiposervicoSolicitante getTiposervicoSolicitante() {
 		return this.tiposervicoSolicitante;
 	}
 
-	public void setTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
+	public void setTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
 		this.tiposervicoSolicitante = tiposervicoSolicitante;
 	}
 

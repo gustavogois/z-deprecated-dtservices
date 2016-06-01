@@ -6,20 +6,20 @@ import java.util.List;
 
 
 /**
- * The persistent class for the TipoServico database table.
+ * The persistent class for the tiposervico database table.
  * 
  */
 @Entity
-@NamedQuery(name="TipoServico.findAll", query="SELECT t FROM TipoServico t")
-public class TipoServico implements Serializable {
+@NamedQuery(name="Tiposervico.findAll", query="SELECT t FROM Tiposervico t")
+public class Tiposervico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String descricao;
 	private String nome;
 	private double valor;
-	private List<TipoServicoSolicitante> tiposervicoSolicitantes;
+	private List<TiposervicoSolicitante> tiposervicoSolicitantes;
 
-	public TipoServico() {
+	public Tiposervico() {
 	}
 
 
@@ -61,24 +61,24 @@ public class TipoServico implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TipoServicoSolicitante
+	//bi-directional many-to-one association to TiposervicoSolicitante
 	@OneToMany(mappedBy="tiposervico")
-	public List<TipoServicoSolicitante> getTiposervicoSolicitantes() {
+	public List<TiposervicoSolicitante> getTiposervicoSolicitantes() {
 		return this.tiposervicoSolicitantes;
 	}
 
-	public void setTiposervicoSolicitantes(List<TipoServicoSolicitante> tiposervicoSolicitantes) {
+	public void setTiposervicoSolicitantes(List<TiposervicoSolicitante> tiposervicoSolicitantes) {
 		this.tiposervicoSolicitantes = tiposervicoSolicitantes;
 	}
 
-	public TipoServicoSolicitante addTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
+	public TiposervicoSolicitante addTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
 		getTiposervicoSolicitantes().add(tiposervicoSolicitante);
 		tiposervicoSolicitante.setTiposervico(this);
 
 		return tiposervicoSolicitante;
 	}
 
-	public TipoServicoSolicitante removeTiposervicoSolicitante(TipoServicoSolicitante tiposervicoSolicitante) {
+	public TiposervicoSolicitante removeTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
 		getTiposervicoSolicitantes().remove(tiposervicoSolicitante);
 		tiposervicoSolicitante.setTiposervico(null);
 

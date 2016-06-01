@@ -1,18 +1,8 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 
 /**
@@ -21,16 +11,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name="tiposervico_solicitante")
-@NamedQuery(name="TipoServicoSolicitante.findAll", query="SELECT t FROM TipoServicoSolicitante t")
-public class TipoServicoSolicitante implements Serializable {
+@NamedQuery(name="TiposervicoSolicitante.findAll", query="SELECT t FROM TiposervicoSolicitante t")
+public class TiposervicoSolicitante implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private double valor;
-	private List<Servico> servico;
+	private List<Servico> servicos;
 	private Solicitante solicitante;
-	private TipoServico tiposervico;
+	private Tiposervico tiposervico;
 
-	public TipoServicoSolicitante() {
+	public TiposervicoSolicitante() {
 	}
 
 
@@ -54,19 +44,33 @@ public class TipoServicoSolicitante implements Serializable {
 	}
 
 
-	//bi-directional one-to-one association to Servico
+	//bi-directional many-to-one association to Servico
 	@OneToMany(mappedBy="tiposervicoSolicitante")
-	public List<Servico> getServico() {
-		return this.servico;
+	public List<Servico> getServicos() {
+		return this.servicos;
 	}
 
-	public void setServico(List<Servico> servico) {
-		this.servico = servico;
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
+	}
+
+	public Servico addServico(Servico servico) {
+		getServicos().add(servico);
+		servico.setTiposervicoSolicitante(this);
+
+		return servico;
+	}
+
+	public Servico removeServico(Servico servico) {
+		getServicos().remove(servico);
+		servico.setTiposervicoSolicitante(null);
+
+		return servico;
 	}
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
@@ -77,14 +81,14 @@ public class TipoServicoSolicitante implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TipoServico
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to Tiposervico
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoServicoId")
-	public TipoServico getTiposervico() {
+	public Tiposervico getTiposervico() {
 		return this.tiposervico;
 	}
 
-	public void setTiposervico(TipoServico tiposervico) {
+	public void setTiposervico(Tiposervico tiposervico) {
 		this.tiposervico = tiposervico;
 	}
 
