@@ -1,3 +1,1 @@
-mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\r"  --ignore dt_services C:\tmp\gustavo\bd\distrito.csv
-mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\r"  --ignore dt_services C:\tmp\gustavo\bd\concelho.csv
-mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\r"  --ignore dt_services C:\tmp\gustavo\bd\localidade.csv
+mysqlimport -u root  --fields-terminated-by=";" --lines-terminated-by="\n" --delete -p --force  dt_services E:\Projects\java\gustavo\dtservices\BD\cp\distrito.csv
