@@ -30,7 +30,7 @@
 
 					<h:form prependId="false">
 						<p:commandButton value="#{bundle.menu_home}" ajax="false"
-							action="/home.jsf?faces-redirect=true" id="homeButton"
+							action="/pages/home.jsf?faces-redirect=true" id="homeButton"
 							styleClass="${fn:contains(request.servletPath, '/home.jsf') ? 'catui-state-active':''}"
 							icon="ui-icon-home" />
 
@@ -39,9 +39,9 @@
 								immediate="true" ajax="true"
 								outcome="/pages/solicitante/solicitanteList.jsf">
 							</p:menuitem>
-							<p:menuitem value="#{bundle.menu_entidadeFacturacao}" icon="ui-icon-gear"
+							<p:menuitem value="#{bundle.menu_entidadeDeFacturacao}" icon="ui-icon-gear"
 								immediate="true" ajax="true"
-								outcome="/pages/entidadeFacturacao/entidadeFacturacaoList.jsf">
+								outcome="/pages/entidadeDeFacturacao/entidadeDeFacturacaoList.jsf">
 							</p:menuitem>
 							<p:menuitem value="#{bundle.menu_tipo_servicos}" icon="ui-icon-gear"
 								immediate="true" ajax="true"
@@ -67,7 +67,7 @@
 									<h:outputText value="Version. 0.1.1 " />
 									<h:outputText value="User Name" />
 								</h:panelGroup>
-							<img src="../img/realState.png" width="62" height="30" />
+							<h:graphicImage value="/img/realState.png" width="62" height="30" />
 						</h:form>
 
 						<h:form prependId="false" target="_new">

@@ -1,6 +1,6 @@
-Zooe-ejb/target
-Zooe-ejb/.gitignore
-doc/bd/modelo-dados-zooe.architect~
+dtServices-ejb/target
+dtServices-ejb/.gitignore
+doc/bd/modelo-dados-dtServices.architect~
 dtServices-ear/target
 dtServices-ejb/target
 dtServices-web/target

@@ -6,21 +6,21 @@ import java.util.List;
 
 
 /**
- * The persistent class for the tiposervico_solicitante database table.
+ * The persistent class for the tipoServico_solicitante database table.
  * 
  */
 @Entity
-@Table(name="tiposervico_solicitante")
-@NamedQuery(name="TiposervicoSolicitante.findAll", query="SELECT t FROM TiposervicoSolicitante t")
-public class TiposervicoSolicitante implements Serializable {
+@Table(name="tipoServico_solicitante")
+@NamedQuery(name="TipoServicoSolicitante.findAll", query="SELECT t FROM TipoServicoSolicitante t")
+public class TipoServicoSolicitante implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private double valor;
 	private List<Servico> servicos;
 	private Solicitante solicitante;
-	private Tiposervico tiposervico;
+	private TipoServico tipoServico;
 
-	public TiposervicoSolicitante() {
+	public TipoServicoSolicitante() {
 	}
 
 
@@ -45,7 +45,7 @@ public class TiposervicoSolicitante implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@OneToMany(mappedBy="tiposervicoSolicitante")
+	@OneToMany(mappedBy="tipoServicoSolicitante")
 	public List<Servico> getServicos() {
 		return this.servicos;
 	}
@@ -56,14 +56,14 @@ public class TiposervicoSolicitante implements Serializable {
 
 	public Servico addServico(Servico servico) {
 		getServicos().add(servico);
-		servico.setTiposervicoSolicitante(this);
+		servico.setTipoServicoSolicitante(this);
 
 		return servico;
 	}
 
 	public Servico removeServico(Servico servico) {
 		getServicos().remove(servico);
-		servico.setTiposervicoSolicitante(null);
+		servico.setTipoServicoSolicitante(null);
 
 		return servico;
 	}
@@ -81,15 +81,15 @@ public class TiposervicoSolicitante implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Tiposervico
+	//bi-directional many-to-one association to TipoServico
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoServicoId")
-	public Tiposervico getTiposervico() {
-		return this.tiposervico;
+	public TipoServico getTipoServico() {
+		return this.tipoServico;
 	}
 
-	public void setTiposervico(Tiposervico tiposervico) {
-		this.tiposervico = tiposervico;
+	public void setTipoServico(TipoServico tipoServico) {
+		this.tipoServico = tipoServico;
 	}
 
 }

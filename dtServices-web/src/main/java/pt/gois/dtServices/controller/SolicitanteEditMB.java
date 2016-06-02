@@ -13,7 +13,7 @@ import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.Solicitante;
-import pt.gois.dtServices.entity.TiposervicoSolicitante;
+import pt.gois.dtServices.entity.TipoServicoSolicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -84,18 +84,18 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 			}else{
 				solicitante = new Solicitante();
 //				solicitante.setProcessos(new ArrayList<Processo>());
-//				solicitante.setTiposervicoSolicitantes(new ArrayList<TipoServicoSolicitante>());
+//				solicitante.setTipoServicoSolicitantes(new ArrayList<TipoServicoSolicitante>());
 			}
 		}
 		return solicitante;
 	}
 	
-	public PaginatedDataModel<TiposervicoSolicitante> getTiposServicoBySolicitante() throws Exception{
-		SearchPageCtrl<TiposervicoSolicitante> searchPageCtrl = new SearchPageCtrl<TiposervicoSolicitante>();
+	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception{
+		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
 		searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
 		//List<TipoServicoSolicitante> tiposDeServico = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
 		
-		return new PaginatedDataModel<TiposervicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
+		return new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
 	}
 
 	

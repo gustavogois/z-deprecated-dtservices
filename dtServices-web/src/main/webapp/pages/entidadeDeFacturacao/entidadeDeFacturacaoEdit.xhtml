@@ -11,33 +11,33 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_entidadeFacturacao}" />
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_entidadeDeFacturacao}" />
 
 	<ui:define name="body">
 		<f:metadata>
-			<f:viewParam name="id" value="#{entidadeFacturacaoEditMB.id}" />
+			<f:viewParam name="id" value="#{entidadeDeFacturacaoEditMB.id}" />
 		</f:metadata>
-		<h:form id="entidadeFacturacaoNew">
+		<h:form id="entidadeDeFacturacaoNew">
 			<div id="rightbox" class="fixright">
 				<p:panel>
 					<h:panelGrid columns="2">
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_save}"
-							action="#{entidadeFacturacaoEditMB.save}" />
+							action="#{entidadeDeFacturacaoEditMB.save}" />
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_cancel}" immediate="true"
-							action="entidadeFacturacaoList" />
+							action="entidadeDeFacturacaoList" />
 					</h:panelGrid>
 				</p:panel>
 			</div>
 			<h:panelGrid columns="2">
 				<p:outputLabel value="#{bundle.default_field_ID}" />
-				<p:outputLabel value="#{entidadeFacturacaoEditMB.entidade.id}" />
+				<p:outputLabel value="#{entidadeDeFacturacaoEditMB.entidade.id}" />
 				<p:outputLabel value="#{bundle.default_field_name}" />
 				<p:inputText size="30" label="#{bundle.default_field_nome}"
-					value="#{entidadeFacturacaoEditMB.entidade.nome}"
-					validator="#{entidadeFacturacaoEditMB.validateName}" required="true"
-					validatorMessage="#{bundle.entidadeFacturacao_msg_invalidName}">
+					value="#{entidadeDeFacturacaoEditMB.entidade.nome}"
+					validator="#{entidadeDeFacturacaoEditMB.validateName}" required="true"
+					validatorMessage="#{bundle.entidadeDeFacturacao_msg_invalidName}">
 				</p:inputText>
 			</h:panelGrid>
 		</h:form>

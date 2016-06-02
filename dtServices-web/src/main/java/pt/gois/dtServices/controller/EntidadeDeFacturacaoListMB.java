@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.Entidadedefacturacao;
+import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -22,28 +22,28 @@ public class EntidadeDeFacturacaoListMB extends GeneralMB implements Serializabl
 	@EJB
 	private pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sb;
 
-	PaginatedDataModel<Entidadedefacturacao> list;
+	PaginatedDataModel<EntidadeDeFacturacao> list;
 
 	public EntidadeDeFacturacaoListMB() {
 
 	}
 
-	public PaginatedDataModel<Entidadedefacturacao> getList() {
+	public PaginatedDataModel<EntidadeDeFacturacao> getList() {
 		if (list != null) {
 			return list;
 		}
-		SearchPageCtrl<Entidadedefacturacao> searchPageCtrl = new SearchPageCtrl<Entidadedefacturacao>();
+		SearchPageCtrl<EntidadeDeFacturacao> searchPageCtrl = new SearchPageCtrl<EntidadeDeFacturacao>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-		list = new PaginatedDataModel<Entidadedefacturacao>(searchPageCtrl, sb);
+		list = new PaginatedDataModel<EntidadeDeFacturacao>(searchPageCtrl, sb);
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<Entidadedefacturacao> list) {
+	public void setList(PaginatedDataModel<EntidadeDeFacturacao> list) {
 		this.list = list;
 	}
 

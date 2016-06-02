@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="Zooe-ear-1.0">
+    <wb-module deploy-name="dtServices-ear-1.0">
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/ear-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/application" tag="defaultRootSource"/>
         <dependent-module archiveName="dtServices-ejb-1.0.jar" deploy-path="/" handle="module:/resource/dtServices-ejb/dtServices-ejb">

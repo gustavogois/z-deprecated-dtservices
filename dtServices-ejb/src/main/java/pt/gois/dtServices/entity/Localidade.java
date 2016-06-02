@@ -1,7 +1,14 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 
 
 /**
@@ -12,7 +19,6 @@ import javax.persistence.*;
 @NamedQuery(name="Localidade.findAll", query="SELECT l FROM Localidade l")
 public class Localidade implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id;
 	private LocalidadePK localidadeId;
 	private String artCod;
 	private String artDesig;
@@ -40,7 +46,7 @@ public class Localidade implements Serializable {
 		return this.localidadeId;
 	}
 
-	public void setId(LocalidadePK id) {
+	public void setLocalidadeId(LocalidadePK id) {
 		this.localidadeId = id;
 	}
 
@@ -128,15 +134,6 @@ public class Localidade implements Serializable {
 
 	public void setCodigoPostalDesignacao(String codigoPostalDesignacao) {
 		this.codigoPostalDesignacao = codigoPostalDesignacao;
-	}
-
-
-	public String getId() {
-		return this.id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
 	}
 
 

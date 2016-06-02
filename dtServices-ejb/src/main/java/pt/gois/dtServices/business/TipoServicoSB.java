@@ -2,12 +2,12 @@ package pt.gois.dtServices.business;
 
 import javax.ejb.Stateless;
 
-import pt.gois.dtServices.entity.Tiposervico;
+import pt.gois.dtServices.entity.TipoServico;
 
 @Stateless
-public class TipoServicoSB extends GeneralSB<Tiposervico> implements TipoServicoSBLocal{
+public class TipoServicoSB extends GeneralSB<TipoServico> implements TipoServicoSBLocal{
 
 	public TipoServicoSB() {
-		super(Tiposervico.class);
+		super(TipoServico.class);
 	}
 }

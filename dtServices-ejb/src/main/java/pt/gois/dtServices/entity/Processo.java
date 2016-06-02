@@ -1,8 +1,17 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -17,7 +26,7 @@ public class Processo implements Serializable {
 	private byte comChaves;
 	private int estado;
 	private String observacoes;
-	private Entidadedefacturacao entidadedefacturacao;
+	private EntidadeDeFacturacao entidadeDeFacturacao;
 	private TiposDeEstado tiposDeEstado;
 	private Processocliente processocliente;
 	private List<Servico> servicos;
@@ -64,15 +73,15 @@ public class Processo implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Entidadedefacturacao
+	//bi-directional many-to-one association to EntidadeDeFacturacao
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="entidadeFacturacaoId")
-	public Entidadedefacturacao getEntidadedefacturacao() {
-		return this.entidadedefacturacao;
+	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
+		return this.entidadeDeFacturacao;
 	}
 
-	public void setEntidadedefacturacao(Entidadedefacturacao entidadedefacturacao) {
-		this.entidadedefacturacao = entidadedefacturacao;
+	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
+		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
 
 

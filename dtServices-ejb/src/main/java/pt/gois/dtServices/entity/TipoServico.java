@@ -1,25 +1,31 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
- * The persistent class for the tiposervico database table.
+ * The persistent class for the tipoServico database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tiposervico.findAll", query="SELECT t FROM Tiposervico t")
-public class Tiposervico implements Serializable {
+@NamedQuery(name="TipoServico.findAll", query="SELECT t FROM TipoServico t")
+public class TipoServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String descricao;
 	private String nome;
 	private double valor;
-	private List<TiposervicoSolicitante> tiposervicoSolicitantes;
+	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 
-	public Tiposervico() {
+	public TipoServico() {
 	}
 
 
@@ -61,28 +67,28 @@ public class Tiposervico implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TiposervicoSolicitante
-	@OneToMany(mappedBy="tiposervico")
-	public List<TiposervicoSolicitante> getTiposervicoSolicitantes() {
-		return this.tiposervicoSolicitantes;
+	//bi-directional many-to-one association to TipoServicoSolicitante
+	@OneToMany(mappedBy="tipoServico")
+	public List<TipoServicoSolicitante> getTipoServicoSolicitantes() {
+		return this.tipoServicoSolicitantes;
 	}
 
-	public void setTiposervicoSolicitantes(List<TiposervicoSolicitante> tiposervicoSolicitantes) {
-		this.tiposervicoSolicitantes = tiposervicoSolicitantes;
+	public void setTipoServicoSolicitantes(List<TipoServicoSolicitante> tipoServicoSolicitantes) {
+		this.tipoServicoSolicitantes = tipoServicoSolicitantes;
 	}
 
-	public TiposervicoSolicitante addTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
-		getTiposervicoSolicitantes().add(tiposervicoSolicitante);
-		tiposervicoSolicitante.setTiposervico(this);
+	public TipoServicoSolicitante addTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		getTipoServicoSolicitantes().add(tipoServicoSolicitante);
+		tipoServicoSolicitante.setTipoServico(this);
 
-		return tiposervicoSolicitante;
+		return tipoServicoSolicitante;
 	}
 
-	public TiposervicoSolicitante removeTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
-		getTiposervicoSolicitantes().remove(tiposervicoSolicitante);
-		tiposervicoSolicitante.setTiposervico(null);
+	public TipoServicoSolicitante removeTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		getTipoServicoSolicitantes().remove(tipoServicoSolicitante);
+		tipoServicoSolicitante.setTipoServico(null);
 
-		return tiposervicoSolicitante;
+		return tipoServicoSolicitante;
 	}
 
 }

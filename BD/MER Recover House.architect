@@ -64,7 +64,7 @@
    </catalog>
    <catalog id="CAT17" populated="false" UUID="a4608210-a351-4169-8eb3-7008e4dbd5d8" name="world" nativeTerm="database" physicalName="world" >
    </catalog>
-   <catalog id="CAT18" populated="false" UUID="a368723f-27a9-4dc4-aed6-ba0140fda79a" name="zooe" nativeTerm="database" physicalName="zooe" >
+   <catalog id="CAT18" populated="false" UUID="a368723f-27a9-4dc4-aed6-ba0140fda79a" name="dtServices" nativeTerm="database" physicalName="dtServices" >
    </catalog>
    <relationships>
    </relationships>

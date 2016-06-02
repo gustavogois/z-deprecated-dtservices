@@ -2,9 +2,9 @@ package pt.gois.dtServices.business;
 
 import javax.ejb.Local;
 
-import pt.gois.dtServices.entity.TiposervicoSolicitante;
+import pt.gois.dtServices.entity.TipoServicoSolicitante;
 
 @Local
-public interface TipoServicoSolicitanteSBLocal extends GeneralSBLocal<TiposervicoSolicitante>{
+public interface TipoServicoSolicitanteSBLocal extends GeneralSBLocal<TipoServicoSolicitante>{
 	
 }

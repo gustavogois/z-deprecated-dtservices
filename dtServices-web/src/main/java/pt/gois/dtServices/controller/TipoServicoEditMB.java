@@ -11,7 +11,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import pt.gois.dtServices.entity.Tiposervico;
+import pt.gois.dtServices.entity.TipoServico;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -22,7 +22,7 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSBLocal sb;
 	
-	Tiposervico tipoServico;
+	TipoServico tipoServico;
 	
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
@@ -31,9 +31,9 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
 		}
 
-		SearchPageCtrl<Tiposervico> searchPageCtrl = new SearchPageCtrl<Tiposervico>();
+		SearchPageCtrl<TipoServico> searchPageCtrl = new SearchPageCtrl<TipoServico>();
 		searchPageCtrl.getFilters().put("nome", value);
-		List<Tiposervico> tipoServicos = sb.find(searchPageCtrl).getRows();
+		List<TipoServico> tipoServicos = sb.find(searchPageCtrl).getRows();
 		if (tipoServicos != null && tipoServicos.size() > 0 ) {
 			if( tipoServicos.size() == 1 && ( tipoServicos.get(0).getId() == tipoServico.getId() ) ){
 				return;
@@ -47,14 +47,14 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	public String create() {
-		tipoServico = new Tiposervico();
-		//Tiposervico.setSolicitante(new Solicitante());
+		tipoServico = new TipoServico();
+		//TipoServico.setSolicitante(new Solicitante());
 		sb.create(tipoServico);
 		return "tipoServicoEdit";
 	}
 	
 	public String save(){
-		Tiposervico tipoServico = getTiposervico();
+		TipoServico tipoServico = getTipoServico();
 		if( tipoServico.getId() != null ){
 			sb.save( tipoServico );
 		}else{
@@ -63,25 +63,25 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 		return "tipoServicoList";
 	}
 	
-	public String delete( Tiposervico tipoServico ){
+	public String delete( TipoServico tipoServico ){
 		sb.delete(tipoServico);
 		return "tipoServicoList";
 	}
 	
-	public Tiposervico getTiposervico() {
+	public TipoServico getTipoServico() {
 		if( tipoServico == null ){
 			Integer id = getId();
 			if( id != null ){
 				tipoServico = sb.findById( getId() );
 			}else{
-				tipoServico = new Tiposervico();
-				//Tiposervico.setSolicitante(new Solicitante());
+				tipoServico = new TipoServico();
+				//TipoServico.setSolicitante(new Solicitante());
 			}
 		}
 		return tipoServico;
 	}
 	
-	public void setTiposervico(Tiposervico tipoServico) {
+	public void setTipoServico(TipoServico tipoServico) {
 		this.tipoServico = tipoServico;
 	}
 

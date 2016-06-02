@@ -18,7 +18,7 @@ public class Solicitante implements Serializable {
 	private String nome;
 	private String telefone;
 	private List<Processocliente> processoclientes;
-	private List<TiposervicoSolicitante> tiposervicoSolicitantes;
+	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 
 	public Solicitante() {
 	}
@@ -87,28 +87,28 @@ public class Solicitante implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TiposervicoSolicitante
+	//bi-directional many-to-one association to TipoServicoSolicitante
 	@OneToMany(mappedBy="solicitante")
-	public List<TiposervicoSolicitante> getTiposervicoSolicitantes() {
-		return this.tiposervicoSolicitantes;
+	public List<TipoServicoSolicitante> getTipoServicoSolicitantes() {
+		return this.tipoServicoSolicitantes;
 	}
 
-	public void setTiposervicoSolicitantes(List<TiposervicoSolicitante> tiposervicoSolicitantes) {
-		this.tiposervicoSolicitantes = tiposervicoSolicitantes;
+	public void setTipoServicoSolicitantes(List<TipoServicoSolicitante> tipoServicoSolicitantes) {
+		this.tipoServicoSolicitantes = tipoServicoSolicitantes;
 	}
 
-	public TiposervicoSolicitante addTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
-		getTiposervicoSolicitantes().add(tiposervicoSolicitante);
-		tiposervicoSolicitante.setSolicitante(this);
+	public TipoServicoSolicitante addTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		getTipoServicoSolicitantes().add(tipoServicoSolicitante);
+		tipoServicoSolicitante.setSolicitante(this);
 
-		return tiposervicoSolicitante;
+		return tipoServicoSolicitante;
 	}
 
-	public TiposervicoSolicitante removeTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
-		getTiposervicoSolicitantes().remove(tiposervicoSolicitante);
-		tiposervicoSolicitante.setSolicitante(null);
+	public TipoServicoSolicitante removeTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		getTipoServicoSolicitantes().remove(tipoServicoSolicitante);
+		tipoServicoSolicitante.setSolicitante(null);
 
-		return tiposervicoSolicitante;
+		return tipoServicoSolicitante;
 	}
 
 }

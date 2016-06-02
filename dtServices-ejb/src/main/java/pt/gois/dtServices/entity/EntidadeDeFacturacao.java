@@ -10,14 +10,14 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Entidadedefacturacao.findAll", query="SELECT e FROM Entidadedefacturacao e")
-public class Entidadedefacturacao implements Serializable {
+@NamedQuery(name="Entidadedefacturacao.findAll", query="SELECT e FROM EntidadeDeFacturacao e")
+public class EntidadeDeFacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
 	private List<Processo> processos;
 
-	public Entidadedefacturacao() {
+	public EntidadeDeFacturacao() {
 	}
 
 
@@ -42,7 +42,7 @@ public class Entidadedefacturacao implements Serializable {
 
 
 	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="entidadedefacturacao")
+	@OneToMany(mappedBy="entidadeDeFacturacao")
 	public List<Processo> getProcessos() {
 		return this.processos;
 	}
@@ -53,14 +53,14 @@ public class Entidadedefacturacao implements Serializable {
 
 	public Processo addProcesso(Processo processo) {
 		getProcessos().add(processo);
-		processo.setEntidadedefacturacao(this);
+		processo.setEntidadeDeFacturacao(this);
 
 		return processo;
 	}
 
 	public Processo removeProcesso(Processo processo) {
 		getProcessos().remove(processo);
-		processo.setEntidadedefacturacao(null);
+		processo.setEntidadeDeFacturacao(null);
 
 		return processo;
 	}

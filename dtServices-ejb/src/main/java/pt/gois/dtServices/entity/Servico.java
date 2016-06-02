@@ -1,9 +1,20 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -23,7 +34,7 @@ public class Servico implements Serializable {
 	private List<Imagem> imagems;
 	private TiposDeEstado tiposDeEstado;
 	private Processo processo;
-	private TiposervicoSolicitante tiposervicoSolicitante;
+	private TipoServicoSolicitante tipoServicoSolicitante;
 
 	public Servico() {
 	}
@@ -89,7 +100,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to ImagemServico
-	@ManyToMany(mappedBy="servico")
+	@ManyToMany(mappedBy="servicos")
 	public List<Imagem> getImagems() {
 		return this.imagems;
 	}
@@ -122,15 +133,15 @@ public class Servico implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TiposervicoSolicitante
+	//bi-directional many-to-one association to TipoServicoSolicitante
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoServico_SolicitanteId")
-	public TiposervicoSolicitante getTiposervicoSolicitante() {
-		return this.tiposervicoSolicitante;
+	public TipoServicoSolicitante getTipoServicoSolicitante() {
+		return this.tipoServicoSolicitante;
 	}
 
-	public void setTiposervicoSolicitante(TiposervicoSolicitante tiposervicoSolicitante) {
-		this.tiposervicoSolicitante = tiposervicoSolicitante;
+	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		this.tipoServicoSolicitante = tipoServicoSolicitante;
 	}
 
 }
