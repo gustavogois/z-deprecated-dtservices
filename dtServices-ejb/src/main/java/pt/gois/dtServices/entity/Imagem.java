@@ -76,12 +76,12 @@ public class Imagem implements Serializable {
 	//bi-directional many-to-one association to ImagemServico
 	@ManyToMany
 	@JoinTable(
-		name="imagem_imovel"
+		name="imagem_servico"
 		, joinColumns={
 			@JoinColumn(name="imagemId")
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="imovelId")
+			@JoinColumn(name="servicoId")
 			}
 		)
 	public List<Servico> getServicos() {
