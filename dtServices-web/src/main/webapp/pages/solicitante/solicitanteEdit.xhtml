@@ -56,11 +56,12 @@
 			<p:panelGrid columns="2">
 				<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
 				<p:selectOneMenu id="tipoServicoList" value="#{solicitanteEditMB.tipoServico.id}">
+					<p:ajax listener="#{solicitanteEditMB.onTipoServicoChange}" update="valor" />
 					<f:selectItems value="#{solicitanteEditMB.tiposDeServico}" var="tipo" itemLabel="#{tipo.nome}" 
 						itemValue="#{tipo.id}"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="#{bundle.default_field_valor}" />
-				<p:inputText size="10"
+				<p:inputText size="10" id="valor"
 					value="#{solicitanteEditMB.tipoServico.valor}" required="true">
 				</p:inputText>
 				<p:commandButton ajax="false"

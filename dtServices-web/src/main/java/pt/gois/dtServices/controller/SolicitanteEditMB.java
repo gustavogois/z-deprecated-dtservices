@@ -48,10 +48,26 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 			tipo.setId(tipoServicoPorSolicitante.getTipoServico().getId());
 			tipoDeServicoNotYetSelected.remove(tipo);
 		}
+		
+		if(tipoDeServicoNotYetSelected != null) {
+			tipoServico = tipoDeServicoNotYetSelected.get(0);
+		}
 		return tipoDeServicoNotYetSelected;
 	}
 	
+	public void onTipoServicoChange() {
+		if(tipoServico != null) {
+			tipoServico = sbTiposServico.findById(tipoServico.getId());
+		}
+	}
+	
 	public String addTipoDeServico() {
+		
+		TipoServicoSolicitante tipoServicoSolicitante = new TipoServicoSolicitante();
+		tipoServicoSolicitante.setTipoServico(tipoServico);
+		tipoServicoSolicitante.setSolicitante(solicitante);
+		
+		tiposServicoPorSolicitante.add(tipoServicoSolicitante);
 		
 		return "solicitanteEdit";
 	}
@@ -111,8 +127,6 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 				solicitante = sb.findById( getId() );
 			}else{
 				solicitante = new Solicitante();
-//				solicitante.setProcessos(new ArrayList<Processo>());
-//				solicitante.setTipoServicoSolicitantes(new ArrayList<TipoServicoSolicitante>());
 			}
 		}
 		return solicitante;
