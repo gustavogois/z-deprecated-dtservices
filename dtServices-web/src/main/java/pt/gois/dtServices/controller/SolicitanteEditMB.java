@@ -1,6 +1,7 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,6 +14,7 @@ import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.Solicitante;
+import pt.gois.dtServices.entity.TipoServico;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
@@ -27,7 +29,32 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTiposServicoSolicitante;
 
+	@EJB
+	private pt.gois.dtServices.business.TipoServicoSBLocal sbTiposServico;
+	
 	Solicitante solicitante;
+	TipoServico tipoServico;
+	List<TipoServicoSolicitante> tiposServicoPorSolicitante;
+	
+	public List<TipoServico> getTiposDeServico() throws Exception {
+		
+		List<TipoServico> tipoDeServicoNotYetSelected = sbTiposServico.findAll();
+		if(tiposServicoPorSolicitante == null) {
+			tiposServicoPorSolicitante = 
+				(List<TipoServicoSolicitante>) getTiposServicoBySolicitante().getWrappedData();
+		}
+		for (TipoServicoSolicitante tipoServicoPorSolicitante : tiposServicoPorSolicitante) {
+			TipoServico tipo = new TipoServico();
+			tipo.setId(tipoServicoPorSolicitante.getTipoServico().getId());
+			tipoDeServicoNotYetSelected.remove(tipo);
+		}
+		return tipoDeServicoNotYetSelected;
+	}
+	
+	public String addTipoDeServico() {
+		
+		return "solicitanteEdit";
+	}
 	
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
@@ -57,6 +84,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	
 	public String create() {
 		solicitante = new Solicitante();
+		tipoServico = new TipoServico();
 		sb.create(solicitante);
 		return "solicitanteEdit";
 	}
@@ -93,9 +121,12 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception{
 		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
 		searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
-		//List<TipoServicoSolicitante> tiposDeServico = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
+		tiposServicoPorSolicitante = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
+		PaginatedDataModel<TipoServicoSolicitante> paginatedDataModel = 
+			new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
+		paginatedDataModel.setWrappedData(tiposServicoPorSolicitante);
 		
-		return new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
+		return paginatedDataModel;
 	}
 
 	
@@ -111,4 +142,22 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		this.sb = sb;
 	}
 
+	public TipoServico getTipoServico() {
+		if(this.tipoServico == null) {
+			tipoServico = new TipoServico();
+		}
+		return tipoServico;
+	}
+
+	public void setTipoServico(TipoServico tipoServico) {
+		this.tipoServico = tipoServico;
+	}
+
+	public List<TipoServicoSolicitante> getTiposServicoPorSolicitante() {
+		return tiposServicoPorSolicitante;
+	}
+
+	public void setTiposServicoPorSolicitante(List<TipoServicoSolicitante> tiposServicoPorSolicitante) {
+		this.tiposServicoPorSolicitante = tiposServicoPorSolicitante;
+	}
 }

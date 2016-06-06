@@ -52,10 +52,28 @@
 					validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
 				</p:inputText>
 			</h:panelGrid>
-			
-			<p:dataTable id="tipoServicoList" value="#{solicitanteEditMB.tiposServicoBySolicitante}"
-				var="tipoServicoSolicitante" emptyMessage="#{bundle.default_msg_notFound}"
-				paginator="true" rows="20" lazy="true"
+
+			<p:panelGrid columns="2">
+				<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
+				<p:selectOneMenu id="tipoServicoList" value="#{solicitanteEditMB.tipoServico.id}">
+					<f:selectItems value="#{solicitanteEditMB.tiposDeServico}" var="tipo" itemLabel="#{tipo.nome}" 
+						itemValue="#{tipo.id}"/>
+				</p:selectOneMenu>
+				<p:outputLabel value="#{bundle.default_field_valor}" />
+				<p:inputText size="10"
+					value="#{solicitanteEditMB.tipoServico.valor}" required="true">
+				</p:inputText>
+				<p:commandButton ajax="false"
+					value="#{bundle.default_action_add}"
+					action="#{solicitanteEditMB.addTipoDeServico}" />
+				<p:outputLabel/>
+			</p:panelGrid>
+
+			<p:dataTable id="tipoServicoSolicitanteList"
+				value="#{solicitanteEditMB.tiposServicoBySolicitante}"
+				var="tipoServicoSolicitante"
+				emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+				rows="20" lazy="true"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
 					{NextPageLink} {LastPageLink}"
 				rowsPerPageTemplate="20, 50, 10" selectionMode="single">
@@ -69,7 +87,7 @@
 					<h:outputText value="#{tipoServicoSolicitante.valor}" />
 				</p:column>
 			</p:dataTable>
-			
+
 		</h:form>
 
 	</ui:define>
