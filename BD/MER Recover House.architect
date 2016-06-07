@@ -4,20 +4,20 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="Mysql - Local - dt_services" />
+   <property key="Logical" value="(Banco de dados alvo)" />
    <property key="Connection Type" value="MySQL" />
-   <property key="JDBC URL" value="jdbc:mysql://localhost:3306/dt_services" />
+   <property key="JDBC URL" value="jdbc:mysql://:3306/dt_services" />
    <property key="UID" value="root" />
-   <property key="PWD" value="tacitopb" />
+   <property key="PWD" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
    <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
   </data-source>
-  <data-source id="DS0">
+  <data-source id="DS2">
    <property key="Connection Type" value="MySQL" />
-   <property key="Logical" value="Mysql - Local - dt_services" />
+   <property key="Logical" value="Modelo de Dados" />
    <property key="JDBC URL" value="jdbc:mysql://localhost:3306/dt_services" />
    <property key="UID" value="root" />
    <property key="PWD" value="tacitopb" />
@@ -29,7 +29,7 @@
   </data-source>
  </project-data-sources>
  <source-databases>
-  <database id="DB0" populated="true" UUID="25d1469d-84c1-4c4a-8f50-18b907c6ee83" dbcs-ref="DS0" name="Mysql - Local - dt_services" physicalName="Mysql - Local - dt_services" >
+  <database id="DB0" populated="true" UUID="25d1469d-84c1-4c4a-8f50-18b907c6ee83" dbcs-ref="DS2" name="Modelo de Dados" physicalName="Mysql - Local - dt_services" >
    <catalog id="CAT1" populated="false" UUID="f7f45c11-6a70-4b38-b349-6353964a4e81" name="information_schema" nativeTerm="database" physicalName="information_schema" >
    </catalog>
    <catalog id="CAT2" populated="false" UUID="7641a08e-e649-478b-8050-47c170cfc278" name="author_cat" nativeTerm="database" physicalName="author_cat" >
@@ -283,19 +283,19 @@
     <column id="COL78" populated="true" UUID="2719af0a-5555-4e5e-97a8-2f95ec2c179b" autoIncrement="false" autoIncrementSequenceName="processoCliente_solicitanteId_seq" defaultValue="" name="solicitanteId" nullable="0" physicalName="solicitanteId" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL79" populated="true" UUID="75dd423e-8eb6-4852-a64a-ac784a13b8ae" autoIncrement="false" autoIncrementSequenceName="processoCliente_codigo_seq" defaultValue="" name="codigo" nullable="0" physicalName="codigo" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL79" populated="true" UUID="98370bfa-f08a-4a5d-a28b-197ab2458d87" autoIncrement="false" autoIncrementSequenceName="processoCliente_estado_atual_Id_seq" defaultValue="" name="estado_atual_Id" nullable="0" physicalName="estado_atual_Id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL80" populated="true" UUID="98370bfa-f08a-4a5d-a28b-197ab2458d87" autoIncrement="false" autoIncrementSequenceName="processoCliente_estado_atual_Id_seq" defaultValue="" name="estado_atual_Id" nullable="0" physicalName="estado_atual_Id" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
+    <column id="COL80" populated="true" UUID="75dd423e-8eb6-4852-a64a-ac784a13b8ae" autoIncrement="false" autoIncrementSequenceName="processoCliente_codigo_seq" defaultValue="" name="codigo" nullable="0" physicalName="codigo" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL81" populated="true" UUID="d64d4585-a8ce-4123-8ab9-10153b7f2983" autoIncrement="false" autoIncrementSequenceName="processoCliente_dtInicio_seq" defaultValue="" name="dtInicio" nullable="0" physicalName="dtInicio" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+    <column id="COL81" populated="true" UUID="d64d4585-a8ce-4123-8ab9-10153b7f2983" autoIncrement="false" autoIncrementSequenceName="processoCliente_dtInicio_seq" defaultValue="" name="dtInicio" nullable="1" physicalName="dtInicio" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
-    <column id="COL82" populated="true" UUID="ccf4919e-34a4-458c-9ab9-61ed8b45e92f" autoIncrement="false" autoIncrementSequenceName="processoCliente_dtFim_seq" defaultValue="" name="dtFim" nullable="0" physicalName="dtFim" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+    <column id="COL82" populated="true" UUID="ccf4919e-34a4-458c-9ab9-61ed8b45e92f" autoIncrement="false" autoIncrementSequenceName="processoCliente_dtFim_seq" defaultValue="" name="dtFim" nullable="1" physicalName="dtFim" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
-    <column id="COL83" populated="true" UUID="b1ccf6f3-630e-4bc4-b10a-4e5e04e60074" autoIncrement="false" autoIncrementSequenceName="processoCliente_descricao_seq" defaultValue="" name="descricao" nullable="0" physicalName="descricao" precision="120" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL83" populated="true" UUID="b1ccf6f3-630e-4bc4-b10a-4e5e04e60074" autoIncrement="false" autoIncrementSequenceName="processoCliente_descricao_seq" defaultValue="" name="descricao" nullable="1" physicalName="descricao" precision="120" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -574,8 +574,8 @@
    <relationship id="REL164" populated="true" UUID="745f85b4-fc1d-41e2-80fc-7d003ef7586f" deferrability="7" deleteRule="3" fk-table-ref="TAB64" fkCardinality="7" identifying="false" name="processo_servico_fk" physicalName="processo_servico_fk" pk-table-ref="TAB20" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP165" populated="true" UUID="12b34a17-cd8b-4acf-8cc6-134cbba068ac" fk-column-ref="COL66" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL21" />
    </relationship>
-   <relationship id="REL166" populated="true" UUID="76574559-b74f-4ac4-b9d9-4b5d6649984e" deferrability="7" deleteRule="3" fk-table-ref="TAB57" fkCardinality="6" identifying="false" name="solicitante_tipoServico_solicitante_fk" physicalName="solicitante_tiposervico_solicitante_fk" pk-table-ref="TAB30" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP167" populated="true" UUID="65b042cb-df69-4707-834a-67fbfaa10292" fk-column-ref="COL60" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL31" />
+   <relationship id="REL166" populated="true" UUID="76574559-b74f-4ac4-b9d9-4b5d6649984e" deferrability="7" deleteRule="0" fk-table-ref="TAB57" fkCardinality="6" identifying="false" name="solicitante_tipoServico_solicitante_fk" physicalName="solicitante_tiposervico_solicitante_fk" pk-table-ref="TAB30" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP167" populated="true" UUID="6d351393-d295-4434-9834-9b56523015bd" fk-column-ref="COL60" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL31" />
    </relationship>
    <relationship id="REL168" populated="true" UUID="a931c88c-ae89-4a7d-a765-0ffe703ef8e5" deferrability="7" deleteRule="3" fk-table-ref="TAB76" fkCardinality="7" identifying="false" name="solicitante_processoCliente_fk" physicalName="solicitante_processocliente_fk" pk-table-ref="TAB30" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP169" populated="true" UUID="620d2d7c-938e-43e1-a4ad-7cbc35f0af2c" fk-column-ref="COL78" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL31" />
@@ -587,7 +587,7 @@
     <column-mapping id="CMP173" populated="true" UUID="5fdbf376-6e99-4a4f-a1d2-ca67b55f889b" fk-column-ref="COL23" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL46" />
    </relationship>
    <relationship id="REL174" populated="true" UUID="364cbc69-a1a1-402e-a509-623e7b3ebe36" deferrability="7" deleteRule="3" fk-table-ref="TAB57" fkCardinality="6" identifying="false" name="tipoServico_tipoServico_solicitante_fk" physicalName="tiposervico_tiposervico_solicitante_fk" pk-table-ref="TAB50" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP175" populated="true" UUID="369cb00f-591a-40cc-b03f-dea733a637c4" fk-column-ref="COL59" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL51" />
+    <column-mapping id="CMP175" populated="true" UUID="2b60b95d-61cf-44e6-8220-40e05b14afa1" fk-column-ref="COL59" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL51" />
    </relationship>
    <relationship id="REL176" populated="true" UUID="39917336-86de-455d-836d-a3487e2dbd55" deferrability="7" deleteRule="3" fk-table-ref="TAB64" fkCardinality="6" identifying="false" name="tipoServico_solicitante_servico_fk" physicalName="tiposervico_solicitante_servico_fk" pk-table-ref="TAB57" pkCardinality="3" updateRule="3" >
     <column-mapping id="CMP177" populated="true" UUID="7c7bdf6f-27ad-4674-8946-257336cdae5b" fk-column-ref="COL67" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL58" />
@@ -595,11 +595,11 @@
    <relationship id="REL178" populated="true" UUID="72da67c2-4d93-47f7-b1ed-87b3ea7d2453" deferrability="7" deleteRule="3" fk-table-ref="TAB98" fkCardinality="7" identifying="false" name="servico_imagem_servico_fk" physicalName="servico_imagem_servico_fk" pk-table-ref="TAB64" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP179" populated="true" UUID="eed3f150-97b2-4147-a2a5-d0e9f77d4db8" fk-column-ref="COL99" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL65" />
    </relationship>
-   <relationship id="REL180" populated="true" UUID="09a47716-6166-4797-ae8c-79fb4cf35784" deferrability="7" deleteRule="3" fk-table-ref="TAB37" fkCardinality="3" identifying="true" name="processoCliente_imovel_fk" physicalName="processocliente_imovel_fk" pk-table-ref="TAB76" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP181" populated="true" UUID="b42c6552-58b1-4c65-a4c9-bdbb23d1cb63" fk-column-ref="COL38" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL77" />
+   <relationship id="REL180" populated="true" UUID="a485609b-5e0c-44e9-99f0-2185752f54e1" deferrability="7" deleteRule="3" fk-table-ref="TAB20" fkCardinality="7" identifying="false" name="processoCliente_processo_fk" physicalName="processocliente_processo_fk" pk-table-ref="TAB76" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP181" populated="true" UUID="9d793082-fec3-4b0e-8db4-d96770fecc7b" fk-column-ref="COL22" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL77" />
    </relationship>
-   <relationship id="REL182" populated="true" UUID="a485609b-5e0c-44e9-99f0-2185752f54e1" deferrability="7" deleteRule="3" fk-table-ref="TAB20" fkCardinality="7" identifying="false" name="processoCliente_processo_fk" physicalName="processocliente_processo_fk" pk-table-ref="TAB76" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP183" populated="true" UUID="9d793082-fec3-4b0e-8db4-d96770fecc7b" fk-column-ref="COL22" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL77" />
+   <relationship id="REL182" populated="true" UUID="5952f0d6-1bad-4096-a7aa-dc4d405eacfa" deferrability="7" deleteRule="3" fk-table-ref="TAB37" fkCardinality="3" identifying="false" name="processoCliente_imovel_fk" physicalName="processocliente_imovel_fk" pk-table-ref="TAB76" pkCardinality="2" updateRule="3" >
+    <column-mapping id="CMP183" populated="true" UUID="200d9ef0-6a9b-45bd-b5de-82f5724b4bf8" fk-column-ref="COL38" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL77" />
    </relationship>
    <relationship id="REL184" populated="true" UUID="9adcb119-9a37-4593-b319-c2736da22e6a" deferrability="7" deleteRule="3" fk-table-ref="TAB92" fkCardinality="7" identifying="false" name="imagem_imagem_imovel_fk" physicalName="imagem_imagem_imovel_fk" pk-table-ref="TAB86" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP185" populated="true" UUID="60d08c19-aeb4-4eb4-bb30-0e28a72d6743" fk-column-ref="COL94" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL87" />
@@ -614,7 +614,7 @@
     <column-mapping id="CMP191" populated="true" UUID="187c156f-d342-45cc-b84b-574faa0f143d" fk-column-ref="COL25" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL105" />
    </relationship>
    <relationship id="REL192" populated="true" UUID="a96e003b-0992-47f7-8920-f3a833a7d9d2" deferrability="7" deleteRule="3" fk-table-ref="TAB76" fkCardinality="7" identifying="false" name="estado_processoCliente_fk" physicalName="estado_processocliente_fk" pk-table-ref="TAB104" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP193" populated="true" UUID="f1cd5d45-f2cb-4e64-aaa5-8976a2e6dfc2" fk-column-ref="COL80" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL105" />
+    <column-mapping id="CMP193" populated="true" UUID="f1cd5d45-f2cb-4e64-aaa5-8976a2e6dfc2" fk-column-ref="COL79" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL105" />
    </relationship>
    <relationship id="REL194" populated="true" UUID="e0c52db9-c15f-4867-b8e7-aeb155d07fcd" deferrability="7" deleteRule="3" fk-table-ref="TAB110" fkCardinality="7" identifying="false" name="tipos_de_estado_historico_fk" physicalName="tipos_de_estado_historico_fk" pk-table-ref="TAB104" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP195" populated="true" UUID="9c1f4a5d-4069-4875-aef5-1c5f98aab674" fk-column-ref="COL113" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL105" />
@@ -630,7 +630,7 @@
  <ddl-generator type="ca.sqlpower.architect.ddl.MySqlDDLGenerator" allow-connection="false" target-catalog="dt_services"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="0.9027993779160184" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="0.9027993779160184" viewportX="113" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB20" x="1100" y="573" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB30" x="65" y="23" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB37" x="670" y="91" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
@@ -653,8 +653,7 @@
   <table-link relationship-ref="REL174" pkConnection="0.49710982658959535" fkConnection="0.26785714285714285" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
   <table-link relationship-ref="REL164" pkConnection="0.8818897637795275" fkConnection="0.6850393700787402" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
   <table-link relationship-ref="REL176" pkConnection="0.7232142857142857" fkConnection="0.4265232974910394" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
-  <table-link relationship-ref="REL180" pkConnection="0.7764705882352941" fkConnection="0.26262626262626265" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL182" pkConnection="0.6294416243654822" fkConnection="0.5849056603773585" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL180" pkConnection="0.6294416243654822" fkConnection="0.5849056603773585" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL168" pkConnection="0.4470588235294118" fkConnection="0.2992125984251969" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
   <table-link relationship-ref="REL184" pkConnection="0.4720812182741117" fkConnection="0.4858490566037736" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
   <table-link relationship-ref="REL170" pkConnection="0.43434343434343436" fkConnection="0.49122807017543857" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
@@ -666,6 +665,7 @@
   <table-link relationship-ref="REL194" pkConnection="0.13983050847457626" fkConnection="0.14339622641509434" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL196" pkConnection="0.3930635838150289" fkConnection="0.5720338983050848" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
   <table-link relationship-ref="REL198" pkConnection="0.4393063583815029" fkConnection="0.5528455284552846" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
+  <table-link relationship-ref="REL182" pkConnection="0.6062992125984252" fkConnection="0.37373737373737376" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
  </play-pen>
  <critic-manager>
   <critic-grouping platformType="Generic" enabled="true">

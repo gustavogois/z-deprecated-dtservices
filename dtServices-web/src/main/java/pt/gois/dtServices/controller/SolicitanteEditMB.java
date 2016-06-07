@@ -34,6 +34,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	
 	Solicitante solicitante;
 	TipoServico tipoServico;
+	TipoServicoSolicitante tipoServicoSolicitante;
 	List<TipoServicoSolicitante> tiposServicoPorSolicitante;
 	
 	public List<TipoServico> getTiposDeServico() throws Exception {
@@ -49,8 +50,10 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 			tipoDeServicoNotYetSelected.remove(tipo);
 		}
 		
-		if(tipoDeServicoNotYetSelected != null) {
+		if(tipoDeServicoNotYetSelected != null && tipoDeServicoNotYetSelected.size() > 0) {
 			tipoServico = tipoDeServicoNotYetSelected.get(0);
+			tipoServicoSolicitante = getTipoServicoSolicitante();
+			tipoServicoSolicitante.setValor(tipoServico.getValor());
 		}
 		return tipoDeServicoNotYetSelected;
 	}
@@ -59,17 +62,17 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		if(tipoServico != null) {
 			tipoServico = sbTiposServico.findById(tipoServico.getId());
 		}
+		tipoServicoSolicitante.setTipoServico(tipoServico);
+		tipoServicoSolicitante.setValor(tipoServico.getValor());
 	}
 	
-	public String addTipoDeServico() {
+	public void addTipoDeServico() {
 		
-		TipoServicoSolicitante tipoServicoSolicitante = new TipoServicoSolicitante();
-		tipoServicoSolicitante.setTipoServico(tipoServico);
 		tipoServicoSolicitante.setSolicitante(solicitante);
-		
+		tipoServicoSolicitante.setTipoServico(tipoServico);
 		tiposServicoPorSolicitante.add(tipoServicoSolicitante);
+		sbTiposServicoSolicitante.save(tipoServicoSolicitante);
 		
-		return "solicitanteEdit";
 	}
 	
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
@@ -107,12 +110,16 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	
 	public String save(){
 		Solicitante solicitante = getSolicitante();
+		salvaSolicitante(solicitante);
+		return "solicitanteList";
+	}
+
+	private void salvaSolicitante(Solicitante solicitante) {
 		if( solicitante.getId() != null ){
 			sb.save( solicitante );
 		}else{
 			sb.create( solicitante );
 		}
-		return "solicitanteList";
 	}
 	
 	public String delete( Solicitante solicitante ){
@@ -135,7 +142,10 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception{
 		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
 		searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
+		
 		tiposServicoPorSolicitante = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
+		solicitante.setTipoServicoSolicitantes(tiposServicoPorSolicitante);
+		
 		PaginatedDataModel<TipoServicoSolicitante> paginatedDataModel = 
 			new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
 		paginatedDataModel.setWrappedData(tiposServicoPorSolicitante);
@@ -174,4 +184,15 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	public void setTiposServicoPorSolicitante(List<TipoServicoSolicitante> tiposServicoPorSolicitante) {
 		this.tiposServicoPorSolicitante = tiposServicoPorSolicitante;
 	}
+	public TipoServicoSolicitante getTipoServicoSolicitante() {
+		if(tipoServicoSolicitante == null) {
+			tipoServicoSolicitante = new TipoServicoSolicitante();
+		}
+		return tipoServicoSolicitante;
+	}
+
+	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		this.tipoServicoSolicitante = tipoServicoSolicitante;
+	}
+
 }

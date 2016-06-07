@@ -6,21 +6,23 @@ insert into tiposervico_solicitante (id, tipoServicoId, solicitanteId, valor) va
 -- solicitante (2,"Banco de Negócios", "734221954", "217788432");
 insert into tiposervico_solicitante (id, tipoServicoId, solicitanteId, valor) values (23, 5, 2, 12);
 
-insert into imovel (id, inquilino, crp, endereco, codigoPostal) values (24, "João da Silva", 
-	"Cascais 1ªCRP, número 7049, matriz predial 16920, fracção B", 
-    "RUA ONDINA PEREIRA LOTE 3 175 RC ESQ, Buzano, São Domingos de Rana, Cascais", "2785-343");
-
 -- solicitante (1,"Banco Whitestar", "288653880", "243699012");
 insert into processocliente (id, codigo, descricao, dtFim, dtInicio, solicitanteId, estado_atual_Id)
 			values
-            (25, "PROC102030", "", null, null, 1, 16);
+            (24, "PROC102030", "", null, null, 1, 16);
+            
+update hibernate_sequence set next_val=24;
+
+insert into imovel (id, inquilino, crp, endereco, codigoPostal) values (24, "João da Silva", 
+	"Cascais 1ªCRP, número 7049, matriz predial 16920, fracção B", 
+    "RUA ONDINA PEREIRA LOTE 3 175 RC ESQ, Buzano, São Domingos de Rana, Cascais", "2785-343");
             
 -- entidadedefacturacao (3, "Caixa Econômica Montepio Geral");
 -- solicitante (1,"Banco Whitestar", "288653880", "243699012");
 -- imovel (11, "João da Silva")
 insert into processo(id, comChaves, estado, observacoes, entidadeFacturacaoId, processoClienteId, estado_atual_Id)
 	values
-    (26, true, 11, "", 3, 25, 11);
+    (25, true, 11, "", 3, 24, 11);
 
             
 -- solicitante (1,"Banco Whitestar", "288653880", "243699012");
@@ -29,5 +31,5 @@ insert into processo(id, comChaves, estado, observacoes, entidadeFacturacaoId, p
 -- processo 26            
 insert into servico (id, dtCadastro, dtFim, dtInicio, observacoes, valor, processoId, tipoServico_SolicitanteId, estado_atual_Id)
 			values
-            (27, null, null, null, "", 50, 26, 22, 19);
+            (26, null, null, null, "", 50, 25, 22, 19);
             
