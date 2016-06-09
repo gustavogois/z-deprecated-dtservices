@@ -58,8 +58,6 @@
 					<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
 					<p:selectOneMenu id="tipoServicoList"
 						value="#{solicitanteEditMB.tipoServico.id}">
-						<p:ajax listener="#{solicitanteEditMB.onTipoServicoChange}"
-							update="valor" />
 						<f:selectItems value="#{solicitanteEditMB.tiposDeServico}"
 							var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo.id}" />
 					</p:selectOneMenu>
@@ -70,8 +68,8 @@
 					</p:inputText>
 					<p:commandButton id="btnAddTipo"
 						value="#{bundle.default_action_add}" process="tipoPanel"
-						update="tiposList,tipoPanel"
-						actionListener="#{solicitanteEditMB.addTipoDeServico}" />
+						update="tiposList,tipoPanel" ajax="true"
+						actionListener="#{solicitanteEditMB.addTipoDeServico()}" />
 					<p:outputLabel />
 				</p:panelGrid>
 			</p:panel>

@@ -23,7 +23,7 @@ public class Concelho implements Serializable {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public String getId() {
 		return this.id;
 	}
