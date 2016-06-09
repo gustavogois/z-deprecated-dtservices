@@ -68,13 +68,13 @@
 						value="#{solicitanteEditMB.tipoServicoSolicitante.valor}"
 						required="true">
 					</p:inputText>
-					<p:commandButton id="btnAddTipo" value="#{bundle.default_action_add}" 
-						process="tipoPanel"	update="tiposList,tipoPanel" 
+					<p:commandButton id="btnAddTipo"
+						value="#{bundle.default_action_add}" process="tipoPanel"
+						update="tiposList,tipoPanel"
 						actionListener="#{solicitanteEditMB.addTipoDeServico}" />
 					<p:outputLabel />
 				</p:panelGrid>
 			</p:panel>
-
 			<p:panel id="tiposList">
 				<p:dataTable id="tipoServicoSolicitanteList"
 					value="#{solicitanteEditMB.tiposServicoBySolicitante}"
@@ -92,6 +92,13 @@
 					</p:column>
 					<p:column headerText="#{bundle.default_field_valor}">
 						<h:outputText value="#{tipoServicoSolicitante.valor}" />
+					</p:column>
+					<p:column>
+						<h:commandLink value="#{bundle.default_action_del}"
+							styleClass="ui-icon-person"
+							action="#{solicitanteEditMB.deleteTipoDeServico(tipoServicoSolicitante)}" 
+								style="margin-right:20px">
+						</h:commandLink>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
