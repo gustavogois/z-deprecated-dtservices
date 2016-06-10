@@ -1,7 +1,6 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -25,142 +24,145 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private pt.gois.dtServices.business.SolicitanteSBLocal sb;
-	
+
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTiposServicoSolicitante;
 
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSBLocal sbTiposServico;
-	
+
 	Solicitante solicitante;
 	TipoServico tipoServico;
 	TipoServicoSolicitante tipoServicoSolicitante;
 	List<TipoServicoSolicitante> tiposServicoPorSolicitante;
-	
+
+	PaginatedDataModel<TipoServicoSolicitante> tipoServicoSolicitantesPDM;
+
 	public List<TipoServico> getTiposDeServico() throws Exception {
-		
+
 		List<TipoServico> tipoDeServicoNotYetSelected = sbTiposServico.findAll();
-		if(tiposServicoPorSolicitante == null) {
-			tiposServicoPorSolicitante = 
-				(List<TipoServicoSolicitante>) getTiposServicoBySolicitante().getWrappedData();
+		if (tiposServicoPorSolicitante == null) {
+			tiposServicoPorSolicitante = (List<TipoServicoSolicitante>) getTiposServicoBySolicitante().getWrappedData();
 		}
 		for (TipoServicoSolicitante tipoServicoPorSolicitante : tiposServicoPorSolicitante) {
 			TipoServico tipo = new TipoServico();
 			tipo.setId(tipoServicoPorSolicitante.getTipoServico().getId());
 			tipoDeServicoNotYetSelected.remove(tipo);
 		}
-		
-		if(tipoDeServicoNotYetSelected != null && tipoDeServicoNotYetSelected.size() > 0) {
+
+		if (tipoDeServicoNotYetSelected != null && tipoDeServicoNotYetSelected.size() > 0) {
 			tipoServico = tipoDeServicoNotYetSelected.get(0);
 			tipoServicoSolicitante = getTipoServicoSolicitante();
 			tipoServicoSolicitante.setValor(tipoServico.getValor());
 		}
 		return tipoDeServicoNotYetSelected;
 	}
-	
+
 	public void onTipoServicoChange() {
-		if(tipoServico != null) {
+		if (tipoServico != null) {
 			tipoServico = sbTiposServico.findById(tipoServico.getId());
 		}
 		tipoServicoSolicitante.setTipoServico(tipoServico);
 		tipoServicoSolicitante.setValor(tipoServico.getValor());
 	}
-	
+
 	public void addTipoDeServico() {
-		
+
 		System.out.println("=======================================");
 		tipoServicoSolicitante.setSolicitante(solicitante);
 		tipoServicoSolicitante.setTipoServico(sbTiposServico.findById(tipoServico.getId()));
-//		tiposServicoPorSolicitante.add(tipoServicoSolicitante);
+		// tiposServicoPorSolicitante.add(tipoServicoSolicitante);
 		sbTiposServicoSolicitante.save(tipoServicoSolicitante);
-		
+
 	}
 
 	public void deleteTipoDeServico(TipoServicoSolicitante tipoServicoSolicitante) {
-		
+
 		sbTiposServicoSolicitante.delete(tipoServicoSolicitante);
-		
+		tipoServicoSolicitantesPDM = null;
+
 	}
-	
+
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
 
 		if (name.trim().length() == 0) {
-			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
+			throw new ValidatorException(getMessage("default_msg_emptyTerm", FacesMessage.SEVERITY_ERROR));
 		}
 
 		SearchPageCtrl<Solicitante> searchPageCtrl = new SearchPageCtrl<Solicitante>();
 		searchPageCtrl.getFilters().put("nome", value);
 		List<Solicitante> solicitantes = sb.find(searchPageCtrl).getRows();
-		if (solicitantes != null && solicitantes.size() > 0 ) {
-			if( solicitantes.size() == 1 && ( solicitantes.get(0).getId() == solicitante.getId() ) ){
+		if (solicitantes != null && solicitantes.size() > 0) {
+			if (solicitantes.size() == 1 && (solicitantes.get(0).getId() == solicitante.getId())) {
 				return;
 			}
-			throw new ValidatorException(getMessage("default_msg_exists",FacesMessage.SEVERITY_ERROR));
+			throw new ValidatorException(getMessage("default_msg_exists", FacesMessage.SEVERITY_ERROR));
 		}
 	}
-	
+
 	public void validateNif(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-		
+
 	}
-	
+
 	public void validateTelefone(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-		
+
 	}
-	
+
 	public String create() {
 		solicitante = new Solicitante();
 		tipoServico = new TipoServico();
 		sb.create(solicitante);
 		return "solicitanteEdit";
 	}
-	
-	public String save(){
+
+	public String save() {
 		Solicitante solicitante = getSolicitante();
 		salvaSolicitante(solicitante);
 		return "solicitanteList";
 	}
 
 	private void salvaSolicitante(Solicitante solicitante) {
-		if( solicitante.getId() != null ){
-			sb.save( solicitante );
-		}else{
-			sb.create( solicitante );
+		if (solicitante.getId() != null) {
+			sb.save(solicitante);
+		} else {
+			sb.create(solicitante);
 		}
 	}
-	
-	public String delete( Solicitante solicitante ){
+
+	public String delete(Solicitante solicitante) {
 		sb.delete(solicitante);
 		return "solicitanteList";
 	}
-	
+
 	public Solicitante getSolicitante() {
-		if( solicitante == null ){
+		if (solicitante == null) {
 			Integer id = getId();
-			if( id != null ){
-				solicitante = sb.findById( getId() );
-			}else{
+			if (id != null) {
+				solicitante = sb.findById(getId());
+			} else {
 				solicitante = new Solicitante();
 			}
 		}
 		return solicitante;
 	}
-	
-	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception{
-		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
-		searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
-		
-		tiposServicoPorSolicitante = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
-		solicitante.setTipoServicoSolicitantes(tiposServicoPorSolicitante);
-		
-		PaginatedDataModel<TipoServicoSolicitante> paginatedDataModel = 
-			new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl, sbTiposServicoSolicitante);
-		paginatedDataModel.setWrappedData(tiposServicoPorSolicitante);
-		
-		return paginatedDataModel;
+
+	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception {
+		if (tipoServicoSolicitantesPDM == null) {
+			SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
+			searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
+
+			tiposServicoPorSolicitante = sbTiposServicoSolicitante.find(searchPageCtrl).getRows();
+			solicitante.setTipoServicoSolicitantes(tiposServicoPorSolicitante);
+
+			tipoServicoSolicitantesPDM = new PaginatedDataModel<TipoServicoSolicitante>(searchPageCtrl,
+					sbTiposServicoSolicitante);
+			tipoServicoSolicitantesPDM.setWrappedData(tiposServicoPorSolicitante);
+		}
+
+		return tipoServicoSolicitantesPDM;
 	}
 
-	
 	public void setSolicitante(Solicitante solicitante) {
 		this.solicitante = solicitante;
 	}
@@ -174,7 +176,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	}
 
 	public TipoServico getTipoServico() {
-		if(this.tipoServico == null) {
+		if (this.tipoServico == null) {
 			tipoServico = new TipoServico();
 		}
 		return tipoServico;
@@ -191,8 +193,9 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	public void setTiposServicoPorSolicitante(List<TipoServicoSolicitante> tiposServicoPorSolicitante) {
 		this.tiposServicoPorSolicitante = tiposServicoPorSolicitante;
 	}
+
 	public TipoServicoSolicitante getTipoServicoSolicitante() {
-		if(tipoServicoSolicitante == null) {
+		if (tipoServicoSolicitante == null) {
 			tipoServicoSolicitante = new TipoServicoSolicitante();
 		}
 		return tipoServicoSolicitante;

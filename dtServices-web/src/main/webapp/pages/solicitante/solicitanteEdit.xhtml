@@ -17,7 +17,7 @@
 		<f:metadata>
 			<f:viewParam name="id" value="#{solicitanteEditMB.id}" />
 		</f:metadata>
-		<h:form id="solicitanteNew">
+		<h:form id="solicitanteForm">
 			<div id="rightbox" class="fixright">
 				<p:panel>
 					<h:panelGrid columns="2">
@@ -53,11 +53,13 @@
 				</p:inputText>
 			</h:panelGrid>
 
-			<p:panel id="tipoPanel">
-				<p:panelGrid columns="2">
+			<p:panel id="tipoServicoSolicitantePanel" header="#{bundle.tipoDeServicoSolicitante_title}">
+				<p:panelGrid columns="6">
 					<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
 					<p:selectOneMenu id="tipoServicoList"
 						value="#{solicitanteEditMB.tipoServico.id}">
+						<p:ajax listener="#{solicitanteEditMB.onTipoServicoChange}"
+							update="valor" />
 						<f:selectItems value="#{solicitanteEditMB.tiposDeServico}"
 							var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo.id}" />
 					</p:selectOneMenu>
@@ -67,13 +69,11 @@
 						required="true">
 					</p:inputText>
 					<p:commandButton id="btnAddTipo"
-						value="#{bundle.default_action_add}" process="tipoPanel"
-						update="tiposList,tipoPanel" ajax="true"
+						value="#{bundle.default_action_add}" process="tipoServicoSolicitantePanel"
+						update="tipoServicoSolicitantePanel" ajax="true"
 						actionListener="#{solicitanteEditMB.addTipoDeServico()}" />
 					<p:outputLabel />
 				</p:panelGrid>
-			</p:panel>
-			<p:panel id="tiposList">
 				<p:dataTable id="tipoServicoSolicitanteList"
 					value="#{solicitanteEditMB.tiposServicoBySolicitante}"
 					var="tipoServicoSolicitante"
@@ -81,7 +81,8 @@
 					rows="20" lazy="true"
 					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
 					{NextPageLink} {LastPageLink}"
-					rowsPerPageTemplate="20, 50, 10" selectionMode="single">
+					rowsPerPageTemplate="20, 50, 10" selectionMode="single"
+					 rowKey="#{tipoServicoSolicitante}">
 					<p:column headerText="#{bundle.default_field_ID}">
 						<h:outputText value="#{tipoServicoSolicitante.id}" />
 					</p:column>
@@ -92,11 +93,12 @@
 						<h:outputText value="#{tipoServicoSolicitante.valor}" />
 					</p:column>
 					<p:column>
-						<h:commandLink value="#{bundle.default_action_del}"
-							styleClass="ui-icon-person"
+						<p:commandButton value="#{bundle.default_action_del}" 
+							styleClass="ui-icon-person" update=":solicitanteForm:tipoServicoSolicitantePanel" ajax="true"
 							action="#{solicitanteEditMB.deleteTipoDeServico(tipoServicoSolicitante)}" 
 								style="margin-right:20px">
-						</h:commandLink>
+							<f:setPropertyActionListener value="#{tipoServicoSolicitante}" target="#{solicitanteEditMB.tipoServicoSolicitante}" />
+						</p:commandButton>
 					</p:column>
 				</p:dataTable>
 			</p:panel>
