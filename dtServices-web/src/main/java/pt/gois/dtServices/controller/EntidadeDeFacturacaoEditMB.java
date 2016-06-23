@@ -56,12 +56,12 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 		}else{
 			sb.create( entidade );
 		}
-		return "entidadeFacturacaoList";
+		return "entidadeDeFacturacaoList";
 	}
 	
 	public String delete( EntidadeDeFacturacao entidade ){
 		sb.delete(entidade);
-		return "entidadeFacturacaoList";
+		return "entidadeDeFacturacaoList";
 	}
 	
 	public EntidadeDeFacturacao getEntidade() {
