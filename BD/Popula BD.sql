@@ -10,22 +10,22 @@ insert into tiposervico (id, nome, valor, descricao) values (null, "Abertura de 
 insert into tiposervico (id, nome, valor, descricao) values (null, "Abertura de Porta (Fechadura Especial)", 20, "");
 insert into tiposervico (id, nome, valor, descricao) values (null, "Pintura", 5, "O preço está por metro quadrado.");
 
-insert into grupo_tipos_estado (id, nome) values (null, "Processo externo");
-insert into grupo_tipos_estado (id, nome) values (null, "Processo interno");
-insert into grupo_tipos_estado (id, nome) values (null, "Serviços");
+insert into grupo_tipos_estado (id, nome) values (1, "Processo externo");
+insert into grupo_tipos_estado (id, nome) values (2, "Processo interno");
+insert into grupo_tipos_estado (id, nome) values (3, "Serviços");
 
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Criado", 8);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Em execução", 8);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Finalizado", 8);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Faturado", 8);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Pago", 8);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (1, "Criado", 1);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (2, "Em execução", 1);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (3, "Finalizado", 1);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (4, "Faturado", 1);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (5, "Pago", 1);
 
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Criado", 9);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Em execução", 9);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Finalizado", 9);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (6, "Criado", 2);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (7, "Em execução", 2);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (8, "Finalizado", 2);
 
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Criado", 10);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Em execução", 10);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (null, "Finalizado", 10);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (9, "Criado", 3);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (10, "Em execução", 3);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (11, "Finalizado", 3);
 
 
