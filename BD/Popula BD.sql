@@ -1,5 +1,3 @@
-
-
 insert into solicitante (id, nome, nif, telefone) values (null,"Banco Whitestar", "288653880", "243699012");
 insert into solicitante (id, nome, nif, telefone) values (null,"Banco de Negócios", "734221954", "217788432");
 
@@ -27,5 +25,3 @@ insert into tipos_de_estado (id, nome, grupo_estadoId) values (8, "Finalizado", 
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (9, "Criado", 3);
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (10, "Em execução", 3);
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (11, "Finalizado", 3);
-
-
