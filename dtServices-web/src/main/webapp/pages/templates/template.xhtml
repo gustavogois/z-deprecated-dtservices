@@ -35,16 +35,16 @@
 							icon="ui-icon-home" />
 
 						<p:menuButton value="#{bundle.menu_geral}" styleClass="pr1">
-							<p:menuitem value="#{bundle.menu_solicitante}" icon="ui-icon-gear"
-								immediate="true" ajax="true"
+							<p:menuitem value="#{bundle.menu_solicitante}"
+								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/solicitante/solicitanteList.jsf">
 							</p:menuitem>
-							<p:menuitem value="#{bundle.menu_entidadeDeFacturacao}" icon="ui-icon-gear"
-								immediate="true" ajax="true"
+							<p:menuitem value="#{bundle.menu_entidadeDeFacturacao}"
+								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/entidadeDeFacturacao/entidadeDeFacturacaoList.jsf">
 							</p:menuitem>
-							<p:menuitem value="#{bundle.menu_tipo_servicos}" icon="ui-icon-gear"
-								immediate="true" ajax="true"
+							<p:menuitem value="#{bundle.menu_tipo_servicos}"
+								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/tipoServicos/tipoServicoList.jsf">
 							</p:menuitem>
 							<p:menuitem value="#{bundle.menu_imovel}" icon="ui-icon-gear"
@@ -63,10 +63,21 @@
 					<h:panelGrid columns="4">
 						<h:form prependId="false" _style="display:inline-block">
 
-								<h:panelGroup>
-									<h:outputText value="Version. 0.1.1 " />
-									<h:outputText value="User Name" />
-								</h:panelGroup>
+							<h:panelGroup>
+								<h:outputText value="Version. 0.1.1 " />
+								<p:menuButton value="#{userSessionMB.user.name}"
+									styleClass="rolebutton" id="rolebutton">
+
+									<p:menuitem value="Profile" icon="ui-icon-gear"
+										immediate="true" ajax="true" update="userProfileDialogWrap"
+										oncomplete="PF('userProfileDialogWidget').show()">
+										<f:param name="profileDialog" value="true" />
+									</p:menuitem>
+
+									<p:menuitem value="Logout" icon="ui-icon-extlink" id="blogout"
+										actionListener="#{userSessionMB.logout}" />
+								</p:menuButton>
+							</h:panelGroup>
 							<h:graphicImage value="/img/realState.png" width="62" height="30" />
 						</h:form>
 
@@ -88,6 +99,7 @@
 
 		<ui:insert name="footer">
 		</ui:insert>
+		<ui:include src="/pages/user/userProfile.xhtml"></ui:include>
 	</h:body>
 </f:view>
 </html>

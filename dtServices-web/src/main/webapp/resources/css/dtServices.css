@@ -1,0 +1,108 @@
+.inputMilhar, .inputMilhar input {
+	width: 5em;
+}
+
+.column_id{
+	width: 5em;
+	text-align: right;
+}
+
+.column_value{
+	text-align: right;
+}
+
+.column_date{
+	text-align: center;
+}
+
+.column_action{
+	width: 300px;
+}
+
+#rightbox1 {
+	float: right;
+	max-width: 230px;
+	width: 230px;
+	z-index: 1000;
+}
+
+#rightbox1 table td{
+ 	padding: 4px;
+}
+
+#rightbox1 table td{
+ 	font-weight: bold;
+}
+
+.login_space{
+	height: 210px;
+	width: 100%;
+	position: absolute;
+	z-index: 2;
+	top:216px;
+}
+.login_space .ui-message{
+	height: 16px;
+}
+
+.login_mask{
+	width:400px;
+	text-align:left;
+	float: right;
+	background-color: #3399ff;
+	border-left: 1px solid #4679fb;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 0;
+	height:210px;
+}
+
+.login_mask  .ui-message-error {
+    margin: 0;
+    padding: 1px 5px;
+}
+
+.login_mask .ui-widget-content{
+	background-color: #3399ff;
+	border-left: 2px solid #65b2ff;
+	border-right: 0;
+	border-top: 0;
+	border-bottom: 0;
+	height:197px;
+}
+.login_mask table{
+	margin: 0px 0px 0px 65px;
+}
+
+.title{
+	font-family: Arial;
+	font-size: 200px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: bold;
+	line-height: 50px;	
+}
+img.bg {
+  /* Set rules to fill background */
+  min-height: 100%;
+  min-width: 1024px;
+	
+  /* Set up proportionate scaling */
+  width: 100%;
+  height: auto;
+	
+  /* Set up positioning */
+  position: fixed;
+  top: 0;
+  left: 0;
+  
+  opacity: 0.5; 
+  filter: alpha(opacity=50);
+}
+
+@media screen and (max-width: 1024px) { /* Specific to this particular image */
+  img.bg {
+    left: 50%;
+    margin-left: -512px;   /* 50% */
+  }
+}

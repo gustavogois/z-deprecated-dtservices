@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf">
+
+<ui:composition>
+
+	<h:panelGroup id="userProfileDialogWrap">
+
+		<p:dialog id="userProfileDialog"
+			rendered="#{param.profileDialog}"
+			header="Edit your profile" widgetVar="userProfileDialogWidget"
+			modal="true" width="400" closable="true" resizable="false"
+			showEffect="puff" hideEffect="puff">
+			<h:form prependId="false">
+				<h:panelGroup>
+
+					<h:panelGrid columns="2" styleClass="cell3">
+					
+						<h:outputLabel value="#{bundle.default_field_username}" for="Username" />
+						<p:inputText id="Username" value="#{userSessionMB.user.username}"
+							readonly="true" required="true">
+							<f:validateLength minimum="4" />
+						</p:inputText>
+						
+						<h:outputLabel value="#{bundle.default_field_nome}" for="name" />
+						<p:inputText id="name" value="#{userSessionMB.user.name}"
+							required="true" />
+
+
+						<h:outputLabel for="apwd1" value="#{bundle.default_field_password}" />
+						<p:password id="apwd1" value="#{userSessionMB.user.password}"
+							autocomplete="off" feedback="false" match="apwd2"
+							label="Password" required="true" redisplay="true">
+							<f:validateLength minimum="6" maximum="14" />
+						</p:password>
+
+						<h:outputLabel for="apwd2" value="#{bundle.default_field_confirmPassword}" />
+						<p:password id="apwd2" value="#{userSessionMB.user.password}"
+							autocomplete="off" feedback="false" label="Password 2"
+							required="true" redisplay="true" />
+
+						<h:outputLabel value="#{bundle.default_field_phone}" for="phone" />
+						<p:inputText id="phone" value="#{userSessionMB.user.phone}"
+							validatorMessage="Validation Error: Invalid phone number">
+							<f:validateRegex pattern="^([0-9\(\)\/\+ \-]*)$" />
+						</p:inputText>
+
+					</h:panelGrid>
+					<br />
+					<p:commandButton value="#{bundle.default_action_save}" actionListener="#{userSessionMB.saveUser}"
+						icon="ui-icon-disk"/>
+					<p:commandButton value="#{bundle.default_action_cancel}" immediate="true"
+						oncomplete="PF('userProfileDialogWidget').hide()" />
+
+				</h:panelGroup>
+			</h:form>
+
+		</p:dialog>
+
+	</h:panelGroup>
+</ui:composition>
+
+</html>
