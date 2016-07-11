@@ -25,3 +25,10 @@ insert into tipos_de_estado (id, nome, grupo_estadoId) values (8, "Finalizado", 
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (9, "Criado", 3);
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (10, "Em execução", 3);
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (11, "Finalizado", 3);
+
+INSERT INTO tipoDeUser( id, descricao ) VALUES( 0, 'Root' );
+INSERT INTO tipoDeUser( id, descricao ) VALUES( 1, 'Admin' );
+INSERT INTO tipoDeUser( id, descricao ) VALUES( 2, 'Gerente' );
+
+INSERT INTO users(id, tipoDeUserId, username, password, name, phone, expiryDate, createDt, updateDt,updateUser)
+VALUES(null, 0, 'root','rootPass','root','',null, now(),now(),0);
