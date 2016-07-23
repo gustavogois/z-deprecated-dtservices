@@ -148,7 +148,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	}
 
 	public PaginatedDataModel<TipoServicoSolicitante> getTiposServicoBySolicitante() throws Exception {
-		if (tipoServicoSolicitantesPDM == null) {
+		if (naoENovoSolicitante()) {
 			SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
 			searchPageCtrl.getFilters().put("obj.solicitante.id", solicitante.getId());
 
@@ -161,6 +161,10 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		}
 
 		return tipoServicoSolicitantesPDM;
+	}
+
+	private boolean naoENovoSolicitante() {
+		return solicitante != null && tipoServicoSolicitantesPDM == null;
 	}
 
 	public void setSolicitante(Solicitante solicitante) {
