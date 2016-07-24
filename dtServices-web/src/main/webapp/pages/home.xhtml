@@ -13,28 +13,31 @@
 	<ui:param name="pageTitle" value="#{bundle.menu_home}" />
 
 	<ui:define name="headHTML">
-	
-	<style>
-		table.home {
-			font-size: small;
-		}
-		
-		.hide {
-			display: none;
-		}
-	</style>
+
+		<style>
+table.home {
+	font-size: small;
+}
+
+.hide {
+	display: none;
+}
+</style>
 
 		<script>
 			$(document).ready(function() {
 				$(".more").click(function() {
 					var idDiv = $(this).attr('id');
 					switch (idDiv) {
-						case "moreDone":
-							$("#hideDone").slideToggle();
-							break;
-						case "moreToDo":
-							$("#hideToDo").slideToggle();
-							break;
+					case "moreDone":
+						$("#hideDone").slideToggle();
+						break;
+					case "moreToDo":
+						$("#hideToDo").slideToggle();
+						break;
+					case "moreBug":
+						$("#hideBug").slideToggle();
+						break;
 					}
 				});
 			});
@@ -43,16 +46,39 @@
 	</ui:define>
 
 	<ui:define name="body">
-		<a href="#"><h1><span id="moreDone" class="more">Done</span></h1></a>
+		<a href="#"><h1>
+				<span id="moreBug" class="more">Bugs</span>
+			</h1></a>
+		<div id="hideBug" class="hide">
+			<table border="1" class="home">
+				<tr>
+					<th>Funcionalidade</th>
+					<th>Bugs</th>
+				</tr>
+				<tr>
+					<td>Cadastro de Solicitantes</td>
+					<td>Ao inserir o tipo de serviço para um Solicitante ainda não
+						cadastrado, a tabela com a lista de tipo de serviços não é
+						atualizada, apesar de tudo ser gravado no banco normalmente.</td>
+				</tr>
+			</table>
+		</div>
+		<a href="#"><h1>
+				<span id="moreDone" class="more">Done</span>
+			</h1></a>
 		<div id="hideDone" class="hide">
 			<ul>
+				<li>24/07 - Cadastro de Solicitantes - Adicionar Tipos de Serviços a
+					Solicitante (Bug relacionado)</li>
 				<li>Cadastro de Entidades de Facturação (sem formatação)</li>
 				<li>Cadastro de Tipos de Serviços (sem formatação)</li>
 				<li>Endereço - Carga</li>
 				<li>Endereço - Consulta simples por código postal</li>
 			</ul>
 		</div>
-		<a href="#"><h1><span id="moreToDo" class="more">TO-DO / DOING</span></h1></a>
+		<a href="#"><h1>
+				<span id="moreToDo" class="more">TO-DO / DOING</span>
+			</h1></a>
 		<div id="hideToDo" class="hide">
 			<table border="1" class="home">
 				<tr>
@@ -70,7 +96,6 @@
 							<li>Cadastro de Processos Externos - Gerenciar estados</li>
 							<li>Cadastro de Processos Externos - Visualizar histórico</li>
 							<li>Cadastro de Imóveis - Relacionado com Processo Externo</li>
-							<li>Cadastro de Processos Internos (Dados Gerais)</li>
 							<li>Cadastro de Processos Internos (Cadastro de Serviços -
 								sem endereço e upload de imagens)</li>
 							<li>Cadastro de Processos Internos (Serviços - Gerenciar
@@ -83,8 +108,7 @@
 					</td>
 					<td>
 						<ul>
-							<li>Cadastro de Solicitantes - Adicionar Tipos de Serviços a
-								Solicitante</li>
+							<li>Cadastro de Processos Internos (Dados Gerais)</li>
 						</ul>
 					</td>
 				</tr>
@@ -122,7 +146,7 @@
 				</tr>
 			</table>
 		</div>
-		
+
 	</ui:define>
 
 </ui:composition>

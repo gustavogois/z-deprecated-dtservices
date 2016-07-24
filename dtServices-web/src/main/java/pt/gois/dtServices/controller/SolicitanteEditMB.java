@@ -68,10 +68,9 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public void addTipoDeServico() {
 
-		System.out.println("=======================================");
+		salvaSolicitante(solicitante);
 		tipoServicoSolicitante.setSolicitante(solicitante);
 		tipoServicoSolicitante.setTipoServico(sbTiposServico.findById(tipoServico.getId()));
-		// tiposServicoPorSolicitante.add(tipoServicoSolicitante);
 		sbTiposServicoSolicitante.save(tipoServicoSolicitante);
 
 	}

@@ -68,9 +68,13 @@
 						value="#{solicitanteEditMB.tipoServicoSolicitante.valor}"
 						required="true">
 					</p:inputText>
+					<!-- É preciso atualizar toda a tela (Ajax = false) para o caso de inserirmos tipos de serviços de Solicitantes ainda -->
+					<!-- não cadastrados, e também para o caso de editarem informações do Solicitante antes de inserir o tipo do serviço, -->
+					<!-- já que o Solicitante está sendo salvo quando o tipo do serviço é inserido (isso ficará claro para o usuário quando -->
+					<!-- a validação for implementada. -->
 					<p:commandButton id="btnAddTipo"
-						value="#{bundle.default_action_add}" process="tipoServicoSolicitantePanel"
-						update="tipoServicoSolicitantePanel" ajax="true"
+						value="#{bundle.default_action_add}" process="@form"
+						update="@all" ajax="false"
 						actionListener="#{solicitanteEditMB.addTipoDeServico()}" />
 					<p:outputLabel />
 				</p:panelGrid>
