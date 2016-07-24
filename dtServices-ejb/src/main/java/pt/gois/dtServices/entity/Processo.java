@@ -14,8 +14,7 @@ import java.util.List;
 public class Processo implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private byte comChaves;
-	private int estado;
+	private boolean comChaves;
 	private String observacoes;
 	private EntidadeDeFacturacao entidadeDeFacturacao;
 	private TiposDeEstado tiposDeEstado;
@@ -36,21 +35,12 @@ public class Processo implements Serializable {
 	}
 
 
-	public byte getComChaves() {
+	public boolean getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(byte comChaves) {
+	public void setComChaves(boolean comChaves) {
 		this.comChaves = comChaves;
-	}
-
-
-	public int getEstado() {
-		return this.estado;
-	}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
 	}
 
 

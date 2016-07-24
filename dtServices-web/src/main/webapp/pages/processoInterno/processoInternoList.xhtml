@@ -39,21 +39,15 @@
 				<p:column headerText="#{bundle.default_field_ID}">
 					<h:outputText value="#{processo.id}" />
 				</p:column>
-				<p:column headerText="#{bundle.processo_field_solicitante}">
-					<h:outputText value="#{processo.solicitante.nome}" />
-				</p:column>
-				<p:column headerText="#{bundle.processo_field_imovel}">
-					<h:outputText value="#{processo.imovel.endereco}" />
-				</p:column>
 				<p:column headerText="#{bundle.default_label_action}">
 					<h:link value="#{bundle.default_action_edit}"
-						styleClass="ui-icon-person" outcome="processoEdit"
+						styleClass="ui-icon-person" outcome="processoInternoEdit"
 						style="margin-right:20px">
 						<f:param name="id" value="#{processo.id}" />
 					</h:link>
 					<h:commandLink value="#{bundle.default_action_del}"
 						styleClass="ui-icon-person"
-						action="#{processoEditMB.delete(processo)}"
+						action="#{processoInternoEditMB.delete(processo)}"
 						style="margin-right:20px">
 					</h:commandLink>
 				</p:column>
