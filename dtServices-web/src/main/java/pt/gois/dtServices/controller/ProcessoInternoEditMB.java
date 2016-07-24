@@ -18,7 +18,7 @@ import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class ProcessoEditMB extends GeneralMB implements Serializable {
+public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB

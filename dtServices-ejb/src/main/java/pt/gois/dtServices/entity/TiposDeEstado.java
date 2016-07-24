@@ -18,7 +18,7 @@ public class TiposDeEstado implements Serializable {
 	private String nome;
 	private List<Historico> historicos;
 	private List<Processo> processos;
-	private List<Processocliente> processoclientes;
+	private List<ProcessoCliente> processoclientes;
 	private List<Servico> servicos;
 	private GrupoTiposEstado grupoTiposEstado;
 
@@ -98,22 +98,22 @@ public class TiposDeEstado implements Serializable {
 
 	//bi-directional many-to-one association to Processocliente
 	@OneToMany(mappedBy="tiposDeEstado")
-	public List<Processocliente> getProcessoclientes() {
+	public List<ProcessoCliente> getProcessoclientes() {
 		return this.processoclientes;
 	}
 
-	public void setProcessoclientes(List<Processocliente> processoclientes) {
+	public void setProcessoclientes(List<ProcessoCliente> processoclientes) {
 		this.processoclientes = processoclientes;
 	}
 
-	public Processocliente addProcessocliente(Processocliente processocliente) {
+	public ProcessoCliente addProcessocliente(ProcessoCliente processocliente) {
 		getProcessoclientes().add(processocliente);
 		processocliente.setTiposDeEstado(this);
 
 		return processocliente;
 	}
 
-	public Processocliente removeProcessocliente(Processocliente processocliente) {
+	public ProcessoCliente removeProcessocliente(ProcessoCliente processocliente) {
 		getProcessoclientes().remove(processocliente);
 		processocliente.setTiposDeEstado(null);
 

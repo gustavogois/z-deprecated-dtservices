@@ -3,7 +3,6 @@ package pt.gois.dtServices.entity;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -11,30 +10,29 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Processocliente.findAll", query="SELECT p FROM Processocliente p")
-public class Processocliente implements Serializable {
+@NamedQuery(name="ProcessoCliente.findAll", query="SELECT p FROM ProcessoCliente p")
+public class ProcessoCliente implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+	private int id;
 	private String codigo;
 	private String descricao;
 	private Date dtFim;
 	private Date dtInicio;
 	private Imovel imovel;
-	private List<Processo> processos;
 	private TiposDeEstado tiposDeEstado;
 	private Solicitante solicitante;
 
-	public Processocliente() {
+	public ProcessoCliente() {
 	}
 
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -78,7 +76,7 @@ public class Processocliente implements Serializable {
 
 
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processocliente", fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="processocliente", fetch=FetchType.LAZY)
 	public Imovel getImovel() {
 		return this.imovel;
 	}
@@ -88,33 +86,8 @@ public class Processocliente implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="processocliente")
-	public List<Processo> getProcessos() {
-		return this.processos;
-	}
-
-	public void setProcessos(List<Processo> processos) {
-		this.processos = processos;
-	}
-
-	public Processo addProcesso(Processo processo) {
-		getProcessos().add(processo);
-		processo.setProcessocliente(this);
-
-		return processo;
-	}
-
-	public Processo removeProcesso(Processo processo) {
-		getProcessos().remove(processo);
-		processo.setProcessocliente(null);
-
-		return processo;
-	}
-
-
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="estado_atual_Id")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
@@ -126,7 +99,7 @@ public class Processocliente implements Serializable {
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;

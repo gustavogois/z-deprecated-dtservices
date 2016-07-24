@@ -1,17 +1,8 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.List;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 
 /**
@@ -28,7 +19,6 @@ public class Processo implements Serializable {
 	private String observacoes;
 	private EntidadeDeFacturacao entidadeDeFacturacao;
 	private TiposDeEstado tiposDeEstado;
-	private Processocliente processocliente;
 	private List<Servico> servicos;
 
 	public Processo() {
@@ -73,20 +63,20 @@ public class Processo implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to EntidadeDeFacturacao
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to EntidadeDefacturacao
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="entidadeFacturacaoId")
-	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
+	public EntidadeDeFacturacao getEntidadeDefacturacao() {
 		return this.entidadeDeFacturacao;
 	}
 
-	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
+	public void setEntidadeDefacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
 		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="estado_atual_Id")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
@@ -94,18 +84,6 @@ public class Processo implements Serializable {
 
 	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
-	}
-
-
-	//bi-directional many-to-one association to Processocliente
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="processoClienteId")
-	public Processocliente getProcessocliente() {
-		return this.processocliente;
-	}
-
-	public void setProcessocliente(Processocliente processocliente) {
-		this.processocliente = processocliente;
 	}
 
 

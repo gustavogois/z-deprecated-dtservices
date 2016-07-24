@@ -17,17 +17,13 @@ import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class ProcessoListMB extends GeneralMB implements Serializable {
+public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
 	private pt.gois.dtServices.business.ProcessoSBLocal sb;
 
 	PaginatedDataModel<Processo> list;
-
-	public ProcessoListMB() {
-
-	}
 
 	public PaginatedDataModel<Processo> getList() {
 		if (list != null) {

@@ -17,7 +17,7 @@ public class Solicitante implements Serializable {
 	private String nif;
 	private String nome;
 	private String telefone;
-	private List<Processocliente> processoclientes;
+	private List<ProcessoCliente> processoclientes;
 	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 
 	public Solicitante() {
@@ -64,22 +64,22 @@ public class Solicitante implements Serializable {
 
 	//bi-directional many-to-one association to Processocliente
 	@OneToMany(mappedBy="solicitante")
-	public List<Processocliente> getProcessoclientes() {
+	public List<ProcessoCliente> getProcessoclientes() {
 		return this.processoclientes;
 	}
 
-	public void setProcessoclientes(List<Processocliente> processoclientes) {
+	public void setProcessoclientes(List<ProcessoCliente> processoclientes) {
 		this.processoclientes = processoclientes;
 	}
 
-	public Processocliente addProcessocliente(Processocliente processocliente) {
+	public ProcessoCliente addProcessocliente(ProcessoCliente processocliente) {
 		getProcessoclientes().add(processocliente);
 		processocliente.setSolicitante(this);
 
 		return processocliente;
 	}
 
-	public Processocliente removeProcessocliente(Processocliente processocliente) {
+	public ProcessoCliente removeProcessocliente(ProcessoCliente processocliente) {
 		getProcessoclientes().remove(processocliente);
 		processocliente.setSolicitante(null);
 

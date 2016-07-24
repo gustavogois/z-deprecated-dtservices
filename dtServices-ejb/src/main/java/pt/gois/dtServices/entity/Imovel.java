@@ -19,7 +19,7 @@ public class Imovel implements Serializable {
 	private String endereco;
 	private String inquilino;
 	private List<Imagem> imagems;
-	private Processocliente processocliente;
+	private ProcessoCliente processocliente;
 
 	public Imovel() {
 	}
@@ -86,11 +86,11 @@ public class Imovel implements Serializable {
 	//bi-directional one-to-one association to Processocliente
 	@OneToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="id")
-	public Processocliente getProcessocliente() {
+	public ProcessoCliente getProcessocliente() {
 		return this.processocliente;
 	}
 
-	public void setProcessocliente(Processocliente processocliente) {
+	public void setProcessocliente(ProcessoCliente processocliente) {
 		this.processocliente = processocliente;
 	}
 
