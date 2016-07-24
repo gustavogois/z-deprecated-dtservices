@@ -54,19 +54,19 @@ public class Processo implements Serializable {
 
 
 	//bi-directional many-to-one association to EntidadeDefacturacao
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="entidadeFacturacaoId")
-	public EntidadeDeFacturacao getEntidadeDefacturacao() {
+	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
 		return this.entidadeDeFacturacao;
 	}
 
-	public void setEntidadeDefacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
+	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
 		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="estado_atual_Id")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;

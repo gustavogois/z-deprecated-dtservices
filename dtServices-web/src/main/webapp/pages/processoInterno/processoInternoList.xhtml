@@ -39,6 +39,12 @@
 				<p:column headerText="#{bundle.default_field_ID}">
 					<h:outputText value="#{processo.id}" />
 				</p:column>
+				<p:column headerText="#{bundle.processo_field_entidade}">
+					<h:outputText value="#{processo.entidadeDeFacturacao.nome}" />
+				</p:column>
+				<p:column headerText="#{bundle.processo_field_status}">
+					<h:outputText value="#{processo.tiposDeEstado.nome}" />
+				</p:column>
 				<p:column headerText="#{bundle.default_label_action}">
 					<h:link value="#{bundle.default_action_edit}"
 						styleClass="ui-icon-person" outcome="processoInternoEdit"

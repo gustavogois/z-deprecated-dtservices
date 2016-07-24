@@ -42,7 +42,7 @@ public class EntidadeDeFacturacao implements Serializable {
 
 
 	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="entidadeDefacturacao")
+	@OneToMany(mappedBy="entidadeDeFacturacao")
 	public List<Processo> getProcessos() {
 		return this.processos;
 	}
@@ -53,14 +53,14 @@ public class EntidadeDeFacturacao implements Serializable {
 
 	public Processo addProcesso(Processo processo) {
 		getProcessos().add(processo);
-		processo.setEntidadeDefacturacao(this);
+		processo.setEntidadeDeFacturacao(this);
 
 		return processo;
 	}
 
 	public Processo removeProcesso(Processo processo) {
 		getProcessos().remove(processo);
-		processo.setEntidadeDefacturacao(null);
+		processo.setEntidadeDeFacturacao(null);
 
 		return processo;
 	}
