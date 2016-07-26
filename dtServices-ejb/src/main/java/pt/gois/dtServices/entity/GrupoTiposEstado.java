@@ -17,7 +17,7 @@ public class GrupoTiposEstado implements Serializable {
 	private Integer id;
 	private String nome;
 	private List<Historico> historicos;
-	private List<TiposDeEstado> tiposDeEstados;
+	private List<TipoDeEstado> tiposDeEstados;
 
 	public GrupoTiposEstado() {
 	}
@@ -70,22 +70,22 @@ public class GrupoTiposEstado implements Serializable {
 
 	//bi-directional many-to-one association to TiposDeEstado
 	@OneToMany(mappedBy="grupoTiposEstado")
-	public List<TiposDeEstado> getTiposDeEstados() {
+	public List<TipoDeEstado> getTiposDeEstados() {
 		return this.tiposDeEstados;
 	}
 
-	public void setTiposDeEstados(List<TiposDeEstado> tiposDeEstados) {
+	public void setTiposDeEstados(List<TipoDeEstado> tiposDeEstados) {
 		this.tiposDeEstados = tiposDeEstados;
 	}
 
-	public TiposDeEstado addTiposDeEstado(TiposDeEstado tiposDeEstado) {
+	public TipoDeEstado addTiposDeEstado(TipoDeEstado tiposDeEstado) {
 		getTiposDeEstados().add(tiposDeEstado);
 		tiposDeEstado.setGrupoTiposEstado(this);
 
 		return tiposDeEstado;
 	}
 
-	public TiposDeEstado removeTiposDeEstado(TiposDeEstado tiposDeEstado) {
+	public TipoDeEstado removeTiposDeEstado(TipoDeEstado tiposDeEstado) {
 		getTiposDeEstados().remove(tiposDeEstado);
 		tiposDeEstado.setGrupoTiposEstado(null);
 

@@ -17,7 +17,7 @@ public class Historico implements Serializable {
 	private Date data;
 	private int idObjeto;
 	private GrupoTiposEstado grupoTiposEstado;
-	private TiposDeEstado tiposDeEstado;
+	private TipoDeEstado tiposDeEstado;
 
 	public Historico() {
 	}
@@ -68,11 +68,11 @@ public class Historico implements Serializable {
 	//bi-directional many-to-one association to TiposDeEstado
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipos_de_estadoId")
-	public TiposDeEstado getTiposDeEstado() {
+	public TipoDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
 	}
 
-	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
+	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
 	}
 

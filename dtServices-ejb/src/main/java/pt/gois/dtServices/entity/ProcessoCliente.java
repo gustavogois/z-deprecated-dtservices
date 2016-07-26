@@ -19,7 +19,7 @@ public class ProcessoCliente implements Serializable {
 	private Date dtFim;
 	private Date dtInicio;
 	private Imovel imovel;
-	private TiposDeEstado tiposDeEstado;
+	private TipoDeEstado tiposDeEstado;
 	private Solicitante solicitante;
 
 	public ProcessoCliente() {
@@ -89,11 +89,11 @@ public class ProcessoCliente implements Serializable {
 	//bi-directional many-to-one association to TiposDeEstado
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="estado_atual_Id")
-	public TiposDeEstado getTiposDeEstado() {
+	public TipoDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
 	}
 
-	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
+	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
 	}
 

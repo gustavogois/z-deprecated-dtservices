@@ -11,8 +11,8 @@ import java.util.List;
  */
 @Entity
 @Table(name="tipos_de_estado")
-@NamedQuery(name="TiposDeEstado.findAll", query="SELECT t FROM TiposDeEstado t")
-public class TiposDeEstado implements Serializable {
+@NamedQuery(name="TiposDeEstado.findAll", query="SELECT t FROM TipoDeEstado t")
+public class TipoDeEstado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
@@ -22,7 +22,7 @@ public class TiposDeEstado implements Serializable {
 	private List<Servico> servicos;
 	private GrupoTiposEstado grupoTiposEstado;
 
-	public TiposDeEstado() {
+	public TipoDeEstado() {
 	}
 
 

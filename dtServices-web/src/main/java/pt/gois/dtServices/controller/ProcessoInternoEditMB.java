@@ -12,10 +12,12 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
+import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.TipoDeEstado;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -31,7 +33,10 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private EntidadeDeFacturacaoSBLocal sbEntidade;
-	
+
+	@EJB
+	private TipoDeEstadoSBLocal sbTipoDeEstado;
+
 	Processo processo;
 	Servico servico;
 	
@@ -70,17 +75,21 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		processo = new Processo();
 		processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 		sb.create(processo);
-		return "processoEdit";
+		return "processoInternoEdit";
 	}
 	
 	public String save(){
+		
 		Processo processo = getProcesso();
+		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.CRIADO); 
+		processo.setTiposDeEstado(tipoDeEstado);
+		
 		if( processo.getId() != null ){
 			sb.save( processo );
 		}else{
 			sb.create( processo );
 		}
-		return "processoList";
+		return "processoInternoList";
 	}
 	
 	public String delete( Processo processo ){

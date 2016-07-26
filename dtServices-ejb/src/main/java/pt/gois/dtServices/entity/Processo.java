@@ -17,7 +17,7 @@ public class Processo implements Serializable {
 	private boolean comChaves;
 	private String observacoes;
 	private EntidadeDeFacturacao entidadeDeFacturacao;
-	private TiposDeEstado tiposDeEstado;
+	private TipoDeEstado tiposDeEstado;
 	private List<Servico> servicos;
 
 	public Processo() {
@@ -68,11 +68,11 @@ public class Processo implements Serializable {
 	//bi-directional many-to-one association to TiposDeEstado
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="estado_atual_Id")
-	public TiposDeEstado getTiposDeEstado() {
+	public TipoDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
 	}
 
-	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
+	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
 	}
 
