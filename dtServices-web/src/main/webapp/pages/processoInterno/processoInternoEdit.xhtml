@@ -30,187 +30,25 @@
 					</h:panelGrid>
 				</p:panel>
 			</div>
-			<p:tabView>
-				<p:tab title="Dados básicos">
-					<h:panelGrid columns="2">
-						<p:outputLabel value="#{bundle.default_field_ID}" />
-						<p:outputLabel value="#{processoEditMB.processo.id}" />
-						<p:outputLabel value="#{bundle.processo_field_solicitante}" />
-						<p:inputText size="30"
-							label="#{bundle.processo_field_solicitante}"
-							value="#{processoEditMB.processo.solicitante.nome}"
-							required="true">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.imovel_field_inquilino}" />
-						<p:inputText size="30" label="#{bundle.imovel_field_inquilino}"
-							value="#{processoEditMB.processo.imovel.inquilino}"
-							required="true">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.imovel_field_endereco}" />
-						<p:inputText size="30" label="#{bundle.imovel_field_endereco}"
-							value="#{processoEditMB.processo.imovel.endereco}"
-							required="true">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.processo_field_entidade}" />
-						<p:inputText size="30" label="#{bundle.processo_field_entidade}"
-							value="#{processoEditMB.processo.entidadedefacturacao.nome}"
-							required="true">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.processo_field_observacoes}" />
-						<p:inputTextarea rows="5" cols="60" counter="display"
-							maxlength="300" counterTemplate="{0} caracteres restantes."
-							autoResize="false" />
-						<p:outputLabel />
-						<h:outputText id="display" />
-					</h:panelGrid>
-				</p:tab>
-				<p:tab title="Timeline">
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Status do Processo" />
-						<p:selectOneMenu id="comboEstadoProcesso"
-							value="#{processoEditMB.servico.tiposervicoSolicitante.tiposervico.id}"
-							style="width:300px" required="true">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="#{bundle.default_field_ID}" />
+				<p:outputLabel value="#{processoInternoEditMB.processo.id}" />
+				<p:outputLabel value="#{bundle.processo_field_status}" />
+				<p:outputLabel value="#{processoInternoEditMB.processo.tiposDeEstado.nome}" />
+				<p:outputLabel value="#{bundle.processo_field_entidade}" />
+				<p:selectOneMenu id="entidadeId"
+					value="#{processoInternoEditMB.processo.entidadeDeFacturacao.id}">
+					<f:selectItems value="#{processoInternoEditMB.entidadesList}"
+						var="entidade" itemLabel="#{entidade.nome}" itemValue="#{entidade.id}" />
+				</p:selectOneMenu>
+				<p:outputLabel value="#{bundle.processo_field_observacoes}" />
+				<p:inputTextarea rows="5" cols="60" counter="display"
+					maxlength="300" counterTemplate="{0} caracteres restantes."
+					autoResize="false" />
+				<p:outputLabel />
+				<h:outputText id="display" />
+			</h:panelGrid>
 
-							<f:selectItem itemLabel="Selecione o status do processo"
-								itemValue="" />
-							<f:selectItem itemLabel="Orçado" itemValue="Orçado" />
-							<f:selectItem itemLabel="Cadastrado" itemValue="Cadastrado" />
-							<f:selectItem itemLabel="Em execução" itemValue="Em execução" />
-							<f:selectItem itemLabel="Finalizado" itemValue="Finalizado" />
-							<f:selectItem itemLabel="Suspenso" itemValue="Suspenso" />
-						</p:selectOneMenu>
-						<p:outputLabel value="Data:" />
-						<p:inputMask id="date" value="" mask="99/99/9999" />
-						<p:outputLabel value="#{bundle.processo_field_observacoes}" />
-						<p:inputTextarea rows="5" cols="60" counter="displayStatus"
-							maxlength="300" counterTemplate="{0} caracteres restantes."
-							autoResize="false" />
-						<p:outputLabel />
-						<h:outputText id="displayStatus" />
-
-						<p:outputLabel />
-						<p:commandButton value="Gravar mudança de status"
-							action="#{processoEditMB.servicoByProcesso}" icon="ui-icon-disk"
-							update="@all" />
-
-					</h:panelGrid>
-					<pe:timeline id="timeline" value="#{basicTimelineController.model}"
-						height="250px" selectable="#{basicTimelineController.selectable}"
-						zoomable="#{basicTimelineController.zoomable}"
-						moveable="#{basicTimelineController.moveable}"
-						stackEvents="#{basicTimelineController.stackEvents}"
-						axisOnTop="#{basicTimelineController.axisOnTop}"
-						eventStyle="#{basicTimelineController.eventStyle}"
-						showCurrentTime="#{basicTimelineController.showCurrentTime}"
-						showNavigation="#{basicTimelineController.showNavigation}">
-						<p:ajax event="select"
-							listener="#{basicTimelineController.onSelect}" />
-					</pe:timeline>
-				</p:tab>
-				<p:tab title="Serviços">
-					<h:panelGrid columns="2" cellpadding="5">
-						<p:outputLabel value="#{bundle.default_field_name}" />
-						<p:selectOneMenu id="comboServicosBySolicitante"
-							value="#{processoEditMB.servico.tiposervicoSolicitante.tiposervico.id}"
-							style="width:300px" required="true">
-
-							<f:selectItem itemLabel="Selecione o serviço a ser inserido"
-								itemValue="" />
-							<f:selectItem itemLabel="Serviço 01" itemValue="Serviço 01" />
-							<f:selectItem itemLabel="Serviço 02" itemValue="Serviço 02" />
-							<f:selectItem itemLabel="Serviço 03" itemValue="Serviço 03" />
-						</p:selectOneMenu>
-						<p:outputLabel value="Valor" />
-						<p:inputText size="30" label="Valor" value="0.0" required="true">
-						</p:inputText>
-						<p:outputLabel value="Data:" />
-						<p:inputMask id="dateServico" value="" mask="99/99/9999" />
-						<p:outputLabel value="Estado" />
-						<p:selectOneMenu id="comboEstado"
-							value="#{processoEditMB.servico.tiposervicoSolicitante.tiposervico.id}"
-							style="width:300px" required="true">
-
-							<f:selectItem itemLabel="Selecione o estado do serviço"
-								itemValue="" />
-							<f:selectItem itemLabel="Cadastrado" itemValue="Cadastrado" />
-							<f:selectItem itemLabel="Em execução" itemValue="Em execução" />
-							<f:selectItem itemLabel="Finalizado" itemValue="Finalizado" />
-							<f:selectItem itemLabel="Suspenso" itemValue="Suspenso" />
-						</p:selectOneMenu>
-						<p:outputLabel />
-						<p:commandButton value="Inserir serviço"
-							action="#{processoEditMB.servicoByProcesso}" icon="ui-icon-disk"
-							update="@all" />
-					</h:panelGrid>
-
-						<pe:timeline id="timelineServicos"
-							value="#{customTimelineController.model}" editable="true"
-							eventMargin="10" eventMarginAxis="0"
-							locale="#{customTimelineController.locale}"
-							start="#{customTimelineController.start}"
-							end="#{customTimelineController.end}" showNavigation="true"
-							showButtonNew="true" axisOnTop="true" stackEvents="false"
-							themable="false" />
-
-
-					<h:panelGrid columns="1" cellpadding="5">
-						<p:dataTable id="servicoList"
-							value="#{processoEditMB.servicoByProcesso}" var="servico"
-							emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
-							rows="20" lazy="true"
-							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
-						{NextPageLink} {LastPageLink}"
-							rowsPerPageTemplate="20, 50, 10" selectionMode="single">
-							<p:column headerText="#{bundle.default_field_ID}">
-								<h:outputText value="#{servico.id}" />
-							</p:column>
-							<p:column headerText="#{bundle.default_field_name}">
-								<h:outputText
-									value="#{servico.tiposervicoSolicitante.tiposervico.nome}" />
-							</p:column>
-							<p:column headerText="#{bundle.default_field_valor}">
-								<h:outputText value="#{servico.tiposervicoSolicitante.valor}" />
-							</p:column>
-							<p:column headerText="Estado">
-								<h:outputText value="Em execução" />
-							</p:column>
-							<p:column headerText="#{bundle.default_label_action}">
-								<h:link value="#{bundle.default_action_edit}"
-									styleClass="ui-icon-person" outcome="processoEdit"
-									style="margin-right:20px" />
-
-								<h:commandLink value="#{bundle.default_action_del}"
-									styleClass="ui-icon-person"
-									action="#{tipoServicoEditMB.delete(tipoServico)}"
-									style="margin-right:20px">
-								</h:commandLink>
-							</p:column>
-
-						</p:dataTable>
-					</h:panelGrid>
-
-				</p:tab>
-				<p:tab title="Fornecedores">
-		            Relação de Fornecedores para cada um dos tipos dos serviços relacionados aos processos.<br />
-					<br />
-		            Cadastro de Fornecedores possuem os seguintes campos:<br />
-					<ul>
-						<li>Tipos de Serviços associados (é possível associar o
-							Fornecedor com n serviços)</li>
-						<li>Nome</li>
-						<li>Identificação PF ou PJ</li>
-						<li>Custo fixo ou variável?</li>
-						<ul>
-							<li>Se custo fixo, qual a periodicidade de pagamento
-								(diária, semanal, mensal) e o valor.</li>
-							<li>Se custo variável, valor do custo variável por tipo de
-								serviço. Ex.: Para o serviço de pintura, qual o custo por m2.</li>
-						</ul>
-					</ul>
-				</p:tab>
-			</p:tabView>
-			<br />
-			<br />
 		</h:form>
 
 	</ui:define>

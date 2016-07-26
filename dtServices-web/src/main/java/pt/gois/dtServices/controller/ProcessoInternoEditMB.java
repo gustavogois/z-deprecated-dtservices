@@ -11,7 +11,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
+import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.util.SearchPageCtrl;
@@ -27,10 +29,18 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.ServicoSBLocal sbServico;
 
-	Processo processo;
+	@EJB
+	private EntidadeDeFacturacaoSBLocal sbEntidade;
 	
+	Processo processo;
 	Servico servico;
 	
+	public List<EntidadeDeFacturacao> getEntidadesList() throws Exception {
+
+		List<EntidadeDeFacturacao> entidades = sbEntidade.findAll();
+		return entidades;
+	}
+
 	public PaginatedDataModel<Servico> getServicoByProcesso() throws Exception{
 		SearchPageCtrl<Servico> searchPageCtrl = new SearchPageCtrl<Servico>();
 		searchPageCtrl.getFilters().put("obj.processo.id", processo.getId());
@@ -58,6 +68,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	public String create() {
 		processo = new Processo();
+		processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 		sb.create(processo);
 		return "processoEdit";
 	}
@@ -84,8 +95,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				processo = sb.findById( getId() );
 			}else{
 				processo = new Processo();
-//				processo.setProcessos(new ArrayList<Processo>());
-//				processo.setTiposervicoSolicitantes(new ArrayList<TipoServicoSolicitante>());
+				processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 			}
 		}
 		return processo;
@@ -108,6 +118,14 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	public void setServico(Servico servico) {
 		this.servico = servico;
+	}
+
+	public EntidadeDeFacturacaoSBLocal getSbEntidade() {
+		return sbEntidade;
+	}
+
+	public void setSbEntidade(EntidadeDeFacturacaoSBLocal sbEntidade) {
+		this.sbEntidade = sbEntidade;
 	}
 
 }
