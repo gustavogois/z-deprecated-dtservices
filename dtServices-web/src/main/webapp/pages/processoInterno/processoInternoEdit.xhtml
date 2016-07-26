@@ -65,18 +65,16 @@
 					<h:panelGrid columns="2" cellpadding="5">
 						<p:outputLabel value="#{bundle.default_field_name}" />
 						<p:selectOneMenu id="comboServicosBySolicitante" value="#{processoInternoEditMB.tipoServico.id}" required="true">
-
 							<f:selectItems value="#{processoInternoEditMB.servicos}" var="servico" itemLabel="#{servico.nome}"
 								itemValue="#{servico.id}" />
 						</p:selectOneMenu>
-						<p:outputLabel value="Valor" />
-						<p:inputText size="30" label="Valor" value="0.0" required="true">
-						</p:inputText>
-						<p:outputLabel value="Data:" />
-						<p:inputMask id="dateServico" value="" mask="99/99/9999" />
+						<p:outputLabel value="#{bundle.default_field_valor}" />
+						<p:inputText size="30" label="Valor" value="#{processoInternoEditMB.servico.valor}" required="true" />
+						<p:outputLabel value="#{bundle.servico_field_data_inicio}" />
+						<p:calendar value="#{processoInternoEditMB.servico.dtInicio}" showOn="button" />
 						<p:outputLabel value="Estado" />
 						<p:selectOneMenu id="comboEstado"
-							value="#{processoInternoEditMB.servico.tiposervicoSolicitante.tiposervico.id}"
+							value="#{processoInternoEditMB.servico}"
 							style="width:300px" required="true">
 
 							<f:selectItem itemLabel="Selecione o estado do serviço"
