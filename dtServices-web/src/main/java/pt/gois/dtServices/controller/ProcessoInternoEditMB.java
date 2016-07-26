@@ -94,7 +94,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	public String delete( Processo processo ){
 		sb.delete(processo);
-		return "processoList";
+		return "processoInternoList";
 	}
 	
 	public Processo getProcesso() {

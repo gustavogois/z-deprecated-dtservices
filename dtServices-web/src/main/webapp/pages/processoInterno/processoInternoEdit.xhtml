@@ -15,7 +15,7 @@
 
 	<ui:define name="body">
 		<f:metadata>
-			<f:viewParam name="id" value="#{processoEditMB.id}" />
+			<f:viewParam name="id" value="#{processoInternoEditMB.id}" />
 		</f:metadata>
 		<h:form id="processoNew">
 			<div id="rightbox" class="fixright">
@@ -26,7 +26,7 @@
 							action="#{processoInternoEditMB.save}" />
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_cancel}" immediate="true"
-							action="processoList" />
+							action="processoInternoList" />
 					</h:panelGrid>
 				</p:panel>
 			</div>
@@ -35,6 +35,9 @@
 				<p:outputLabel value="#{processoInternoEditMB.processo.id}" />
 				<p:outputLabel value="#{bundle.processo_field_status}" />
 				<p:outputLabel value="#{processoInternoEditMB.processo.tiposDeEstado.nome}" />
+				<p:outputLabel value="#{bundle.processo_field_com_chaves}" />
+				<p:selectBooleanButton value="#{processoInternoEditMB.processo.comChaves}" onLabel="#{bundle.default_label_yes}" 
+					offLabel="#{bundle.default_label_no}" />
 				<p:outputLabel value="#{bundle.processo_field_entidade}" />
 				<p:selectOneMenu id="entidadeId"
 					value="#{processoInternoEditMB.processo.entidadeDeFacturacao.id}">
@@ -42,7 +45,7 @@
 						var="entidade" itemLabel="#{entidade.nome}" itemValue="#{entidade.id}" />
 				</p:selectOneMenu>
 				<p:outputLabel value="#{bundle.processo_field_observacoes}" />
-				<p:inputTextarea rows="5" cols="60" counter="display"
+				<p:inputTextarea value="#{processoInternoEditMB.processo.observacoes}" rows="5" cols="60" counter="display"
 					maxlength="300" counterTemplate="{0} caracteres restantes."
 					autoResize="false" />
 				<p:outputLabel />
