@@ -38,6 +38,9 @@ table.home {
 					case "moreBug":
 						$("#hideBug").slideToggle();
 						break;
+					case "moreMelhoria":
+						$("#hideMelhoria").slideToggle();
+						break;
 					}
 				});
 			});
@@ -159,6 +162,15 @@ table.home {
 					<td></td>
 				</tr>
 			</table>
+		</div>
+		<a href="#"><h1>
+				<span id="moreMelhoria" class="more">Melhorias</span>
+			</h1></a>
+		<div id="hideMelhoria" class="hide">
+			<ul>
+				<li>Modificar nome da tabela tipos_de_estado para
+					tipo_de_estado.</li>
+			</ul>
 		</div>
 
 	</ui:define>

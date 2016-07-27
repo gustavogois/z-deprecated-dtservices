@@ -73,16 +73,9 @@
 						<p:outputLabel value="#{bundle.servico_field_data_inicio}" />
 						<p:calendar value="#{processoInternoEditMB.servico.dtInicio}" showOn="button" />
 						<p:outputLabel value="Estado" />
-						<p:selectOneMenu id="comboEstado"
-							value="#{processoInternoEditMB.servico}"
-							style="width:300px" required="true">
-
-							<f:selectItem itemLabel="Selecione o estado do serviço"
-								itemValue="" />
-							<f:selectItem itemLabel="Cadastrado" itemValue="Cadastrado" />
-							<f:selectItem itemLabel="Em execução" itemValue="Em execução" />
-							<f:selectItem itemLabel="Finalizado" itemValue="Finalizado" />
-							<f:selectItem itemLabel="Suspenso" itemValue="Suspenso" />
+						<p:selectOneMenu id="comboEstado" value="#{processoInternoEditMB.servico.tipoDeEstado.id}" required="true">
+							<f:selectItems value="#{processoInternoEditMB.estadosServico}" var="estado" itemLabel="#{estado.nome}"
+								itemValue="#{estado.id}" />
 						</p:selectOneMenu>
 						<p:outputLabel />
 						<p:commandButton value="Inserir serviço"

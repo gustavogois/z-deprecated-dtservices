@@ -43,9 +43,19 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private ServicoSBLocal sbServico;
 
+	@EJB
+	private TipoDeEstadoSBLocal sbTipoEstado;
+	
 	Processo processo;
 	Servico servico;
 	TipoServico tipoServico;
+	
+	public List<TipoDeEstado> getEstadosServico() throws Exception {
+
+		List<TipoDeEstado> estados = sbTipoDeEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);
+		
+		return estados;
+	}
 	
 	public List<TipoServico> getServicos() throws Exception {
 
@@ -120,6 +130,9 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				
 				processo = new Processo();
 				processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
+				
+				servico = new Servico();
+				servico.setTipoDeEstado(new TipoDeEstado());
 				
 				tipoServico = new TipoServico();
 			}

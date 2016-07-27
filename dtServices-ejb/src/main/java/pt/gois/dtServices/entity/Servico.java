@@ -32,7 +32,7 @@ public class Servico implements Serializable {
 	private String observacoes;
 	private double valor;
 	private List<Imagem> imagems;
-	private TipoDeEstado tiposDeEstado;
+	private TipoDeEstado tipoDeEstado;
 	private Processo processo;
 	private TipoServicoSolicitante tipoServicoSolicitante;
 
@@ -112,12 +112,12 @@ public class Servico implements Serializable {
 	//bi-directional many-to-one association to TiposDeEstado
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="estado_atual_Id")
-	public TipoDeEstado getTiposDeEstado() {
-		return this.tiposDeEstado;
+	public TipoDeEstado getTipoDeEstado() {
+		return this.tipoDeEstado;
 	}
 
-	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
-		this.tiposDeEstado = tiposDeEstado;
+	public void setTipoDeEstado(TipoDeEstado tipoDeEstado) {
+		this.tipoDeEstado = tipoDeEstado;
 	}
 
 

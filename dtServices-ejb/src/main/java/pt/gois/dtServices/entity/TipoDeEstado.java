@@ -11,7 +11,10 @@ import java.util.List;
  */
 @Entity
 @Table(name="tipos_de_estado")
-@NamedQuery(name="TiposDeEstado.findAll", query="SELECT t FROM TipoDeEstado t")
+@NamedQueries({
+@NamedQuery(name="TiposDeEstado.findAll", query="SELECT t FROM TipoDeEstado t"),
+@NamedQuery(name = "findTipoDeEstadoByGroup", query = "select t from TipoDeEstado t where t.grupoTiposEstado.id=:pGrupoId")
+})
 public class TipoDeEstado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
@@ -122,7 +125,7 @@ public class TipoDeEstado implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@OneToMany(mappedBy="tiposDeEstado")
+	@OneToMany(mappedBy="tipoDeEstado")
 	public List<Servico> getServicos() {
 		return this.servicos;
 	}
@@ -133,14 +136,14 @@ public class TipoDeEstado implements Serializable {
 
 	public Servico addServico(Servico servico) {
 		getServicos().add(servico);
-		servico.setTiposDeEstado(this);
+		servico.setTipoDeEstado(this);
 
 		return servico;
 	}
 
 	public Servico removeServico(Servico servico) {
 		getServicos().remove(servico);
-		servico.setTiposDeEstado(null);
+		servico.setTipoDeEstado(null);
 
 		return servico;
 	}
