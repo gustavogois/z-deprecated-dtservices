@@ -59,9 +59,8 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 		return "entidadeDeFacturacaoList";
 	}
 	
-	public String delete( EntidadeDeFacturacao entidade ){
+	public void delete( EntidadeDeFacturacao entidade ){
 		sb.delete(entidade);
-		return "entidadeDeFacturacaoList";
 	}
 	
 	public EntidadeDeFacturacao getEntidade() {
