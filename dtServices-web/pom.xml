@@ -132,7 +132,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
-	<groupId>pt.gois</groupId>
-	<version>1.0</version>
 </project>

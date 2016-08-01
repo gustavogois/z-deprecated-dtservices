@@ -1,10 +1,12 @@
 package pt.gois.dtServices.business;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,6 +18,9 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 
 	@PersistenceContext(unitName = "dtServices")
 	private EntityManager em;
+	
+	@EJB
+	private LogSBLocal sbLog;
 
 	public GeneralSB(Class<T> entityClass) {
 		this.entityClass = entityClass;
@@ -25,16 +30,27 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 		return em;
 	}
 
+	public LogSBLocal getSbLog() {
+	    return sbLog;
+	}
+
+	public void setSbLog(LogSBLocal sbLog) {
+	    this.sbLog = sbLog;
+	}
+
 	public void create(Object entity) {
 		getEM().persist(entity);
+		getSbLog().writeLog( entity.getClass().getName() + " %s criada", new Object[] { entity });
 	}
 
 	public void save(Object entity) {
 		getEM().merge(entity);
+		getSbLog().writeLog( entity.getClass().getName() + " %s alterada", new Object[] { entity });
 	}
 
 	public void delete(Object entity) {
 		getEM().remove(getEM().merge(entity));
+		getSbLog().writeLog( entity.getClass().getName() + " %s removida", new Object[] { entity });
 	}
 
 	public T findById(Object id) {
@@ -72,17 +88,9 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 		String queryJPQL;
 		String queryJPQLCount;
 		try {
-			if( searchPageCtrl.getJpql() != null ){
-				queryJPQL = searchPageCtrl.getJpql();
-			}else{
-				queryJPQL = "SELECT distinct obj FROM " + entityClass.getName() + " obj where 1 = 1 ";
-			}
-			
-			if( searchPageCtrl.getJpqlCount() != null ){
-				queryJPQLCount = searchPageCtrl.getJpqlCount();
-			}else{
-				queryJPQLCount = "SELECT count(distinct obj) FROM " + entityClass.getName() + " obj where 1 = 1 ";
-			}
+			String classeName = ( (ParameterizedType)this.getClass().getGenericSuperclass() ).getActualTypeArguments()[0].getTypeName();
+			queryJPQL = "SELECT distinct obj FROM " + classeName + " obj where 1 = 1 ";
+			queryJPQLCount = "SELECT count(distinct obj) FROM " + classeName + " obj where 1 = 1 ";
 
 			String filter = "";
 			Map<String,Object> filters = searchPageCtrl.getFilters();
@@ -121,8 +129,12 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 				}
 				queryJPQL += "order by " + orderBy;
 			}
-
+			searchPageCtrl.setJpql(queryJPQL);
+			searchPageCtrl.setJpqlCount(queryJPQLCount);
+			
 			Query queryCount = getEM().createQuery(queryJPQLCount);
+
+			getSbLog().writeLog("Pesquisaando: %s - Params( %s )", new Object[] { searchPageCtrl.getJpql(), searchPageCtrl.getFilters() }); 
 
 			Query query = getEM().createQuery(queryJPQL);
 			if (filters != null){
@@ -162,8 +174,10 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 			searchPageCtrl.setCount(count);
 		} catch (Exception e) {
 			e.printStackTrace();
+			getSbLog().writeLog("Pesquisando: %s - %s Erro: %s", new Object[] { searchPageCtrl.getJpql(), searchPageCtrl.getFilters(), e.getMessage() }); 
 		}
 		return searchPageCtrl;
 	}
+
 
 }
