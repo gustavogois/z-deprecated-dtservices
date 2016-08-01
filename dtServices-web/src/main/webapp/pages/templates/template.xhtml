@@ -11,15 +11,17 @@
 	xmlns:rich="http://richfaces.org/rich"
 	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
-<f:view contentType="text/html">
+<f:view contentType="text/html" locale="pt_BR">
 	<h:head>
 		<meta http-equiv="pragma" content="no-cache" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="author" content="Gois" />
 
 		<title>#{bundle.titulo_pagina}</title>
-		
+
 		<ui:insert name="headHTML" />
+		<h:outputStylesheet library="css" name="dtServices.css" />
+		<h:outputScript library="js" name="dtServices.js" />
 	</h:head>
 
 	<h:body>
@@ -57,7 +59,7 @@
 								outcome="/pages/processoInterno/processoInternoList.jsf">
 							</p:menuitem>
 						</p:menuButton>
-						
+
 						<p:menuButton value="#{bundle.menu_admin}" styleClass="pr1"
 							rendered="#{userSessionMB.user.tipoDeUser.id lt 2}">
 							<p:menuitem value="#{bundle.menu_user}" icon="ui-icon-gear"
@@ -67,13 +69,13 @@
 								immediate="true" ajax="true" outcome="/pages/log/logList.jsf">
 							</p:menuitem>
 						</p:menuButton>
-						
+
 					</h:form>
 				</p:toolbarGroup>
 
 				<p:toolbarGroup align="right">
-					<h:panelGrid columns="4">
-						<h:form prependId="false" _style="display:inline-block">
+					<h:form prependId="false" _style="display:inline-block">
+						<h:panelGrid columns="4">
 
 							<h:panelGroup>
 								<h:outputText value="Version. 0.1.1 " />
@@ -89,15 +91,10 @@
 									<p:menuitem value="Logout" icon="ui-icon-extlink" id="blogout"
 										actionListener="#{userSessionMB.logout}" />
 								</p:menuButton>
+								<p:commandButton icon="ui-icon-help" styleClass="helpright" />
 							</h:panelGroup>
-							<h:graphicImage value="/img/realState.png" width="62" height="30" />
-						</h:form>
-
-						<h:form prependId="false" target="_new">
-							<p:commandButton icon="ui-icon-help" styleClass="helpright" />
-						</h:form>
-
-					</h:panelGrid>
+						</h:panelGrid>
+					</h:form>
 				</p:toolbarGroup>
 
 			</p:toolbar>
@@ -111,6 +108,7 @@
 
 		<ui:insert name="footer">
 		</ui:insert>
+
 		<ui:include src="/pages/user/userProfile.xhtml"></ui:include>
 	</h:body>
 </f:view>
