@@ -10,12 +10,12 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle" value="#{bundle.menu_user}" />
+	<ui:param name="pageTitle" value="#{bundle.menu_log}" />
 
 	<ui:define name="body">
-		<h:form id="userForm" prependId="false">
-			<ui:include src="userTableList.xhtml" >
-				<ui:param name="list" value="#{userListMB.list}"/>
+		<h:form id="puleForm" prependId="false">
+			<ui:include src="logTableList.xhtml">
+				<ui:param name="list" value="#{logListMB.list}" />
 			</ui:include>
 		</h:form>
 	</ui:define>

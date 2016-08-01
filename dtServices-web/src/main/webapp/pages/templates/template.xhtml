@@ -57,6 +57,17 @@
 								outcome="/pages/processoInterno/processoInternoList.jsf">
 							</p:menuitem>
 						</p:menuButton>
+						
+						<p:menuButton value="#{bundle.menu_admin}" styleClass="pr1"
+							rendered="#{userSessionMB.user.tipoDeUser.id lt 2}">
+							<p:menuitem value="#{bundle.menu_user}" icon="ui-icon-gear"
+								immediate="true" ajax="true" outcome="/pages/user/userList.jsf">
+							</p:menuitem>
+							<p:menuitem value="#{bundle.menu_log}" icon="ui-icon-gear"
+								immediate="true" ajax="true" outcome="/pages/log/logList.jsf">
+							</p:menuitem>
+						</p:menuButton>
+						
 					</h:form>
 				</p:toolbarGroup>
 

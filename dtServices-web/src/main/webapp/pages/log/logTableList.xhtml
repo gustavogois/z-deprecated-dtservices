@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component">
+
+<p:dataTable id="puleList" value="#{list}" var="log"
+	emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+	rows="20" lazy="true"
+	currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	rowsPerPageTemplate="20, 50, 10" selectionMode="single">
+	<p:column headerText="#{bundle.default_field_ID}"
+		styleClass="column_id">
+		<h:outputText value="#{log.id}" />
+	</p:column>
+	<p:column headerText="#{bundle.default_field_updateDt}"
+		styleClass="column_date">
+		<h:outputText value="#{log.updateDt}">
+			<f:convertDateTime type="time" pattern="dd/MM/yyyy HH:mm" />
+		</h:outputText>
+	</p:column>
+	<p:column headerText="#{bundle.default_field_level}"
+		styleClass="column_date">
+		<h:outputText value="#{log.level}" />
+	</p:column>
+	<p:column headerText="#{bundle.default_field_description}">
+		<h:outputText value="#{log.descricao}" />
+	</p:column>
+</p:dataTable>
+</html>
