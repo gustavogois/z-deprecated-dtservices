@@ -4,7 +4,7 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="PlayPen Database" />
+   <property key="Logical" value="Modelo de Dados" />
   </data-source>
   <data-source id="DS2">
    <property key="Connection Type" value="MySQL" />
@@ -631,13 +631,13 @@
     <column id="COL184" populated="true" UUID="47325b87-6894-4215-8239-c3ca89edbff9" autoIncrement="true" autoIncrementSequenceName="logSeq" defaultValue="" name="id" nullable="0" physicalName="id" precision="0" primaryKeySeq="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL185" populated="true" UUID="4a6fa768-451b-4621-adba-4fc54728af47" autoIncrement="false" autoIncrementSequenceName="log_level_seq" defaultValue="" name="level" nullable="0" physicalName="level" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL185" populated="true" UUID="4a6fa768-451b-4621-adba-4fc54728af47" autoIncrement="false" autoIncrementSequenceName="log_level_seq" defaultValue="" name="level" nullable="0" physicalName="level" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL186" populated="true" UUID="70ec03b6-c455-47dc-9945-a48ba8af7822" autoIncrement="false" autoIncrementSequenceName="log_codigo_seq" defaultValue="" name="codigo" nullable="1" physicalName="codigo" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL186" populated="true" UUID="70ec03b6-c455-47dc-9945-a48ba8af7822" autoIncrement="false" autoIncrementSequenceName="log_codigo_seq" defaultValue="" name="codigo" nullable="1" physicalName="codigo" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL187" populated="true" UUID="87e405fd-a9a0-4f92-9108-5c9b6dcbe677" autoIncrement="false" autoIncrementSequenceName="log_table_seq" defaultValue="" name="table" nullable="1" physicalName="table_1" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL187" populated="true" UUID="87e405fd-a9a0-4f92-9108-5c9b6dcbe677" autoIncrement="false" autoIncrementSequenceName="log_table_seq" defaultValue="" name="table" nullable="1" physicalName="table_1" precision="10" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL188" populated="true" UUID="857f30a4-3154-43a9-87c1-3ab6d2a3cce0" autoIncrement="false" autoIncrementSequenceName="log_tableId_seq" defaultValue="" name="tableId" nullable="1" physicalName="tableId" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
@@ -723,7 +723,7 @@
  <ddl-generator type="ca.sqlpower.architect.ddl.MySqlDDLGenerator" allow-connection="false" target-catalog="dt_services"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="0.9027993779160184" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="0.9027993779160184" viewportX="409" viewportY="332" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB20" x="1100" y="573" bgColor="0xb9bbf6" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB28" x="65" y="23" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB35" x="670" y="91" bgColor="0xeeeeee" fgColor="0x000000" rounded="false" dashed="false"/>
