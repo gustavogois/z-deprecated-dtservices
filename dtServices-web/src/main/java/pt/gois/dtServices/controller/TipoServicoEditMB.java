@@ -63,9 +63,8 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 		return "tipoServicoList";
 	}
 	
-	public String delete( TipoServico tipoServico ){
+	public void delete( TipoServico tipoServico ){
 		sb.delete(tipoServico);
-		return "tipoServicoList";
 	}
 	
 	public TipoServico getTipoServico() {

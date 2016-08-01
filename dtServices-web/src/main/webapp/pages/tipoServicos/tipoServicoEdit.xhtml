@@ -19,34 +19,35 @@
 		</f:metadata>
 		<h:form id="tipoServicoNew">
 			<div id="rightbox" class="fixright">
-				<p:panel>
-					<h:panelGrid columns="2">
-						<p:commandButton ajax="false"
-							value="#{bundle.default_action_save}"
-							action="#{tipoServicoEditMB.save}" />
-						<p:commandButton ajax="false"
-							value="#{bundle.default_action_cancel}" immediate="true"
-							action="tipoServicoList" />
-					</h:panelGrid>
-				</p:panel>
+				<h:panelGrid columns="2">
+					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
+						action="#{tipoServicoEditMB.save}" icon="ui-icon-disk" />
+					<p:commandButton ajax="false"
+						value="#{bundle.default_action_cancel}" immediate="true"
+						action="tipoServicoList" />
+				</h:panelGrid>
 			</div>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="#{bundle.default_field_ID}" />
-				<p:outputLabel value="#{tipoServicoEditMB.tipoServico.id}" />
-				
-				<p:outputLabel value="#{bundle.default_field_name}" />
-				<p:inputText size="60" label="#{bundle.default_field_nome}"
-					value="#{tipoServicoEditMB.tipoServico.nome}"
-					validator="#{tipoServicoEditMB.validateName}" required="true"
-					validatorMessage="#{bundle.default_msg_invalidName}">
-				</p:inputText>
-				<p:outputLabel value="#{bundle.default_field_valor}" />
-				<p:inputText size="8" label="#{bundle.default_field_valor}"
-					value="#{tipoServicoEditMB.tipoServico.valor}"
-					validator="#{tipoServicoEditMB.validateValor}" required="true"
-					validatorMessage="#{bundle.default_msg_invalidValor}">
-				</p:inputText>
-			</h:panelGrid>
+			<p:tabView dynamic="true" cache="true" prependId="false">
+				<p:tab title="#{bundle.tab_main}" id="mainTab">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="#{bundle.default_field_ID}" />
+						<p:outputLabel value="#{tipoServicoEditMB.tipoServico.id}" />
+
+						<p:outputLabel value="#{bundle.default_field_name}" />
+						<p:inputText size="60" label="#{bundle.default_field_nome}"
+							value="#{tipoServicoEditMB.tipoServico.nome}"
+							validator="#{tipoServicoEditMB.validateName}" required="true"
+							validatorMessage="#{bundle.default_msg_invalidName}">
+						</p:inputText>
+						<p:outputLabel value="#{bundle.default_field_valor}" />
+						<p:inputText size="8" label="#{bundle.default_field_valor}"
+							value="#{tipoServicoEditMB.tipoServico.valor}"
+							validator="#{tipoServicoEditMB.validateValor}" required="true"
+							validatorMessage="#{bundle.default_msg_invalidValor}">
+						</p:inputText>
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
 		</h:form>
 
 	</ui:define>
