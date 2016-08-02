@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component">
+
+<h:panelGrid columns="2">
+	<p:commandButton ajax="true" value="#{bundle.default_action_add}"
+		icon="ui-icon-document" action="/pages/solicitante/solicitanteEdit" />
+
+	<h:panelGrid columns="3" style="float: right">
+	</h:panelGrid>
+</h:panelGrid>
+<p:dataTable id="solicitanteList" value="#{list}" var="solicitante"
+	emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+	rows="20" lazy="true"
+	currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	rowsPerPageTemplate="20, 50, 10">
+	<p:column headerText="#{bundle.default_field_ID}"
+		styleClass="column_id">
+		<h:outputText value="#{solicitante.id}" />
+	</p:column>
+	<p:column headerText="#{bundle.default_field_name}">
+		<h:outputText value="#{solicitante.nome}" />
+	</p:column>
+	<p:column headerText="#{bundle.solicitante_field_nif}">
+		<h:outputText value="#{solicitante.nif}" />
+	</p:column>
+	<p:column headerText="#{bundle.default_field_name}">
+		<h:outputText value="#{solicitante.telefone}" />
+	</p:column>
+	<p:column headerText="#{bundle.default_label_action}"
+		styleClass="column_action">
+		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"
+			styleClass="action_edit" outcome="/pages/solicitante/solicitanteEdit">
+			<f:param name="id" value="#{solicitante.id}" />
+		</p:button>
+		<p:commandButton value="#{bundle.default_action_del}" icon="ui-icon-trash"
+			styleClass="action_del" action="#{solicitanteEditMB.delete(solicitante)}"
+			update="solicitanteList" ajax="true">
+		</p:commandButton>
+	</p:column>
+</p:dataTable>
+</html>
