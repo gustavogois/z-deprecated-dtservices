@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component">
+
+<h:panelGrid columns="2">
+		<h:panelGrid columns="3" style="float: right">
+			<h:outputText value="#{bundle.default_label_termSearch}	" />
+			<p:remoteCommand name="enderecoSearchTrigger" update="enderecoList"
+				actionListener="#{enderecoListMB.search}" />
+			<p:inputText id="enderecoSearch" value="#{enderecoListMB.term}"
+				onkeydown="if(event.keyCode == 13) { enderecoSearchTrigger(); event.preventDefault()}" />
+		</h:panelGrid>
+</h:panelGrid>
+<p:dataTable id="enderecoList" value="#{list}" var="endereco"
+	emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+	rows="20" lazy="true"
+	currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	rowsPerPageTemplate="20, 50, 10" selectionMode="single">
+	<p:column headerText="#{bundle.default_field_ID}"
+		styleClass="column_id">
+		<h:outputText value="#{endereco.id}" />
+	</p:column>
+	<p:column headerText="#{bundle.endereco_field_ruaPorta}">
+		<h:outputText value="#{endereco.ruaPorta}" />
+	</p:column>
+	<p:column headerText="#{bundle.endereco_field_complemento}">
+		<h:outputText value="#{endereco.complemento}" />
+	</p:column>
+	<p:column headerText="#{bundle.endereco_field_cp}">
+		<h:outputText value="#{endereco.cp}" />
+	</p:column>	
+	<p:column headerText="#{bundle.endereco_field_distrito}">
+		<h:outputText value="#{endereco.distrito.nome}" />
+	</p:column>
+	<p:column headerText="#{bundle.endereco_field_concelho}">
+		<h:outputText value="#{endereco.concelho.nome}" />
+	</p:column>
+	<p:column headerText="#{bundle.endereco_field_localidade}">
+		<h:outputText value="#{endereco.localidade}" />
+	</p:column>
+	<p:column headerText="#{bundle.default_label_action}"
+		styleClass="column_action">
+		
+	</p:column>
+</p:dataTable>
+</html>
