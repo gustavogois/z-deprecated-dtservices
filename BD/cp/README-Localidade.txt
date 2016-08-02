@@ -4,12 +4,24 @@ mysql -u USER_ADMIN -p DATABASE_NAME < codigo_postal.sql
 
 Este script criara as tabelas caso nao existam e carga dos dados;
 
+Script só para referencia:
 
-select *
-from 
+DROP TABLE IF EXISTS AddressVW;
+
+CREATE TABLE AddressVW AS
+SELECT substr( id, 1, length(id) ) id, distritoNome distrito, concelhoNome concelho, localidadeNome localidade, ruaPorta, complemento, cp
+FROM( 
+SELECT @rowid := @rowid + 1 id
+  , dd.nome distritoNome
+  , cc.nome concelhoNome
+  , lo.localidade localidadeNome
+  , concat( concat_WS( ' ', lo.art_tipo, lo.pri_prep, lo.art_titulo, lo.art_desig ), concat_WS( ',', trim(lo.porta), trim(lo.troco) ) ) ruaPorta
+  , concat_WS( ' - ', lo.art_local, cc.nome, dd.nome ) complemento
+  , concat_WS( '-', lo.codigoPostal4, lo.codigoPostal3 ) cp
+FROM 
   distrito dd
-  join concelho cc on dd.dd = cc.dd
-  join localidade lo on cc.cc = lo.cc and lo.dd = cc.dd
+  JOIN concelho cc ON dd.dd = cc.dd
+  JOIN localidade lo ON cc.cc = lo.cc AND lo.dd = cc.dd
+  , (SELECT @rowid:=0 ) AS init ) address
 ;
 
-create index localidade_DDCC_idx on localidade(dd,cc);
