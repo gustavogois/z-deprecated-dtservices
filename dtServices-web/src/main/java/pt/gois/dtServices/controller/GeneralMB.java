@@ -5,14 +5,15 @@ import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
 
 public class GeneralMB implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-//	@ManagedProperty(value = "#{userSessionMB}")
-//	UserSessionMB userSessionMB;
+	@ManagedProperty(value = "#{userSessionMB}")
+	UserSessionMB userSessionMB;
 
 	Integer id;
 
@@ -55,12 +56,12 @@ public class GeneralMB implements Serializable {
 		this.term = term;
 	}
 
-//	public UserSessionMB getUserSessionMB() {
-//		return userSessionMB;
-//	}
-//
-//	public void setUserSessionMB(UserSessionMB userSessionMB) {
-//		this.userSessionMB = userSessionMB;
-//	}
+	public UserSessionMB getUserSessionMB() {
+		return userSessionMB;
+	}
+
+	public void setUserSessionMB(UserSessionMB userSessionMB) {
+		this.userSessionMB = userSessionMB;
+	}
 
 }

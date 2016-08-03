@@ -23,6 +23,8 @@ public class UserSessionMB implements Serializable {
 	private UserSBLocal sbUser;
 	
 	User user;
+	
+	Integer solicitanteId;
 
 	public UserSessionMB() {
 	}
@@ -60,6 +62,14 @@ public class UserSessionMB implements Serializable {
 
 	public void setSbUser(UserSBLocal sbUser) {
 		this.sbUser = sbUser;
+	}
+	
+	public Integer getSolicitanteId() {
+		return solicitanteId;
+	}
+
+	public void setSolicitanteId(Integer solicitanteId) {
+		this.solicitanteId = solicitanteId;
 	}
 
 }

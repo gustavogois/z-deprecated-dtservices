@@ -19,94 +19,48 @@
 		</f:metadata>
 		<h:form id="solicitanteForm">
 			<div id="rightbox" class="fixright">
-				<p:panel>
-					<h:panelGrid columns="2">
-						<p:commandButton ajax="false"
-							value="#{bundle.default_action_save}"
-							action="#{solicitanteEditMB.save}" />
-						<p:commandButton ajax="false"
-							value="#{bundle.default_action_cancel}" immediate="true"
-							action="solicitanteList" />
-					</h:panelGrid>
-				</p:panel>
+				<h:panelGrid columns="2">
+					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
+						action="#{solicitanteEditMB.save}" icon="ui-icon-disk" />
+					<p:commandButton ajax="false"
+						value="#{bundle.default_action_cancel}" immediate="true"
+						action="solicitanteList" />
+				</h:panelGrid>
 			</div>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="#{bundle.default_field_ID}" />
-				<p:outputLabel value="#{solicitanteEditMB.solicitante.id}" />
-				<p:outputLabel value="#{bundle.default_field_name}" />
-				<p:inputText size="30" label="#{bundle.default_field_nome}"
-					value="#{solicitanteEditMB.solicitante.nome}"
-					validator="#{solicitanteEditMB.validateName}" required="true"
-					validatorMessage="#{bundle.solicitante_msg_invalidName}">
-				</p:inputText>
-				<p:outputLabel value="#{bundle.solicitante_field_nif}" />
-				<p:inputText size="30" label="#{bundle.solicitante_field_nif}"
-					value="#{solicitanteEditMB.solicitante.nif}"
-					validator="#{solicitanteEditMB.validateNif}" required="true"
-					validatorMessage="#{bundle.solicitante_msg_invalidNif}">
-				</p:inputText>
-				<p:outputLabel value="#{bundle.default_field_telefone}" />
-				<p:inputText size="30" label="#{bundle.default_field_telefone}"
-					value="#{solicitanteEditMB.solicitante.telefone}"
-					validator="#{solicitanteEditMB.validateTelefone}" required="true"
-					validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
-				</p:inputText>
-			</h:panelGrid>
+			<p:tabView dynamic="true" cache="true" prependId="false">
+				<p:tab title="#{bundle.tab_main}" id="mainTab">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="#{bundle.default_field_ID}" />
+						<p:outputLabel value="#{solicitanteEditMB.solicitante.id}" />
+						<p:outputLabel value="#{bundle.default_field_name}" />
+						<p:inputText size="30" label="#{bundle.default_field_nome}"
+							value="#{solicitanteEditMB.solicitante.nome}"
+							validator="#{solicitanteEditMB.validateName}" required="true"
+							validatorMessage="#{bundle.solicitante_msg_invalidName}">
+						</p:inputText>
+						<p:outputLabel value="#{bundle.solicitante_field_nif}" />
+						<p:inputText size="30" label="#{bundle.solicitante_field_nif}"
+							value="#{solicitanteEditMB.solicitante.nif}"
+							validator="#{solicitanteEditMB.validateNif}" required="true"
+							validatorMessage="#{bundle.solicitante_msg_invalidNif}">
+						</p:inputText>
+						<p:outputLabel value="#{bundle.default_field_telefone}" />
+						<p:inputText size="30" label="#{bundle.default_field_telefone}"
+							value="#{solicitanteEditMB.solicitante.telefone}"
+							validator="#{solicitanteEditMB.validateTelefone}" required="true"
+							validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
+						</p:inputText>
+					</h:panelGrid>
+				</p:tab>
 
-			<p:panel id="tipoServicoSolicitantePanel" header="#{bundle.tipoDeServicoSolicitante_title}">
-				<p:panelGrid columns="6">
-					<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
-					<p:selectOneMenu id="tipoServicoList"
-						value="#{solicitanteEditMB.tipoServico.id}">
-						<p:ajax listener="#{solicitanteEditMB.onTipoServicoChange}"
-							update="valor" />
-						<f:selectItems value="#{solicitanteEditMB.tiposDeServico}"
-							var="tipo" itemLabel="#{tipo.nome}" itemValue="#{tipo.id}" />
-					</p:selectOneMenu>
-					<p:outputLabel value="#{bundle.default_field_valor}" />
-					<p:inputText size="10" id="valor"
-						value="#{solicitanteEditMB.tipoServicoSolicitante.valor}"
-						required="true">
-					</p:inputText>
-					<!-- É preciso atualizar toda a tela (Ajax = false) para o caso de inserirmos tipos de serviços de Solicitantes ainda -->
-					<!-- não cadastrados, e também para o caso de editarem informações do Solicitante antes de inserir o tipo do serviço, -->
-					<!-- já que o Solicitante está sendo salvo quando o tipo do serviço é inserido (isso ficará claro para o usuário quando -->
-					<!-- a validação for implementada. -->
-					<p:commandButton id="btnAddTipo"
-						value="#{bundle.default_action_add}" process="@form"
-						update="@all" ajax="false"
-						actionListener="#{solicitanteEditMB.addTipoDeServico()}" />
-					<p:outputLabel />
-				</p:panelGrid>
-				<p:dataTable id="tipoServicoSolicitanteList"
-					value="#{solicitanteEditMB.tiposServicoBySolicitante}"
-					var="tipoServicoSolicitante"
-					emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
-					rows="20" lazy="true"
-					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
-					{NextPageLink} {LastPageLink}"
-					rowsPerPageTemplate="20, 50, 10" selectionMode="single"
-					 rowKey="#{tipoServicoSolicitante}">
-					<p:column headerText="#{bundle.default_field_ID}">
-						<h:outputText value="#{tipoServicoSolicitante.id}" />
-					</p:column>
-					<p:column headerText="#{bundle.default_field_name}">
-						<h:outputText value="#{tipoServicoSolicitante.tipoServico.nome}" />
-					</p:column>
-					<p:column headerText="#{bundle.default_field_valor}">
-						<h:outputText value="#{tipoServicoSolicitante.valor}" />
-					</p:column>
-					<p:column>
-						<p:commandButton value="#{bundle.default_action_del}" 
-							styleClass="ui-icon-person" update=":solicitanteForm:tipoServicoSolicitantePanel" ajax="true"
-							action="#{solicitanteEditMB.deleteTipoDeServico(tipoServicoSolicitante)}" 
-								style="margin-right:20px">
-							<f:setPropertyActionListener value="#{tipoServicoSolicitante}" target="#{solicitanteEditMB.tipoServicoSolicitante}" />
-						</p:commandButton>
-					</p:column>
-				</p:dataTable>
-			</p:panel>
-
+				<p:tab title="#{bundle.menu_cadastro_tipoServico}"
+					disabled="#{solicitanteEditMB.solicitante.id == null}"
+					id="tipoServicoTab">
+					<ui:include src="../tipoServicos/tipoServicoTableList.xhtml">
+						<ui:param name="list" value="#{tipoServicoListMB.list}" />
+					</ui:include>
+				</p:tab>
+			</p:tabView>
 		</h:form>
 
 	</ui:define>

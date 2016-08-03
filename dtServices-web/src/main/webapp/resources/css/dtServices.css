@@ -216,3 +216,7 @@ img.bg {
     margin-left: -512px;   /* 50% */
   }
 }
+
+.ui-picklist .ui-picklist-list{
+    width:900px 
+}
