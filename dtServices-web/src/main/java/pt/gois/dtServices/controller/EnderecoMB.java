@@ -36,10 +36,7 @@ public class EnderecoMB extends GeneralMB implements Serializable {
 	    Map<String, Object> filters = searchPageCtrl.getFilters();
 	    searchPageCtrl.setAndFilter(true);
 	    if (term != null && !"".equals(term = term.trim())) {
-		filters.put("obj.", term);
-		if (StringUtils.isNumeric(term)) {
-		    filters.put("obj.id", new Integer(term));
-		}
+		filters.put("obj.completo", term);
 	    }
 	    list = new PaginatedDataModel<Endereco>(searchPageCtrl, sb);
 	}

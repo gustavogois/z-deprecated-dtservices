@@ -25,6 +25,7 @@ public class Endereco implements Serializable {
     String localidade;
     String ruaPorta;
     String complemento;
+    String completo;
     String cp;
 
     private Concelho concelho;
@@ -95,6 +96,14 @@ public class Endereco implements Serializable {
 
     public void setCp(String cp) {
 	this.cp = cp;
+    }
+
+    public String getCompleto() {
+        return completo;
+    }
+
+    public void setCompleto(String completo) {
+        this.completo = completo;
     }
 
 }
