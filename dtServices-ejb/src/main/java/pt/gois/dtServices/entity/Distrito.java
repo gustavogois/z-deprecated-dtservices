@@ -17,13 +17,13 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
-@NamedQuery(name="Distrito.findAll", query="SELECT d FROM Distrito d")
+@NamedQuery(name="Distrito.findAll", query="SELECT d FROM Distrito d order by d.nome")
 public class Distrito implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String nome;
 	private List<Concelho> concelhos;
-	private List<Endereco> enderecos;
+	private List<EnderecoVW> enderecos;
 
 	public Distrito() {
 	}
@@ -77,11 +77,11 @@ public class Distrito implements Serializable {
 
 	//bi-directional many-to-one association to Endereco
 	@OneToMany(mappedBy="distrito")
-	public List<Endereco> getEnderecos() {
+	public List<EnderecoVW> getEnderecos() {
 		return this.enderecos;
 	}
 
-	public void setEnderecos(List<Endereco> enderecos) {
+	public void setEnderecos(List<EnderecoVW> enderecos) {
 		this.enderecos = enderecos;
 	}
 }
