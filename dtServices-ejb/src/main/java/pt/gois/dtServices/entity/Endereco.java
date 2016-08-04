@@ -13,7 +13,7 @@ public class Endereco implements Serializable {
 	String localidade;
 	String ruaPorta;
 	String complemento;
-	String cp;
+	String codigoPostal;
 
 	Concelho concelho;
 	Distrito distrito;
@@ -66,12 +66,14 @@ public class Endereco implements Serializable {
 		this.complemento = complemento;
 	}
 
-	public String getCp() {
-		return cp;
+	public String getCodigoPostal() {
+		return codigoPostal;
 	}
 
-	public void setCp(String cp) {
-		this.cp = cp;
+	public void setCodigoPostal(String codigoPostal) {
+		this.codigoPostal = codigoPostal;
 	}
+
+
 
 }

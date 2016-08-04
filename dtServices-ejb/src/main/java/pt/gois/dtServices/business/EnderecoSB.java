@@ -16,12 +16,14 @@ public class EnderecoSB extends GeneralSB<EnderecoVW> implements EnderecoSBLocal
 		super(EnderecoVW.class);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Distrito> getDistritos() {
 		Query query = getEM().createNamedQuery("Distrito.findAll");
 		return query.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Concelho> getConcelhos(Distrito distrito) {
 		Query query = getEM().createNamedQuery("Concelho.findAll");
