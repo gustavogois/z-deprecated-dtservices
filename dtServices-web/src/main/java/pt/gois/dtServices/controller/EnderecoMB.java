@@ -1,78 +1,95 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.commons.lang3.StringUtils;
-
 import pt.gois.dtServices.business.EnderecoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.Endereco;
+import pt.gois.dtServices.entity.Concelho;
+import pt.gois.dtServices.entity.Distrito;
+import pt.gois.dtServices.entity.EnderecoVW;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
 public class EnderecoMB extends GeneralMB implements Serializable {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @EJB
-    private EnderecoSBLocal sb;
+	@EJB
+	private EnderecoSBLocal sb;
 
-    PaginatedDataModel<Endereco> list;
+	PaginatedDataModel<EnderecoVW> list;
+	List<Distrito> distritos;
+	List<Concelho> concelhos;
 
-    Integer recolheId;
+	Integer recolheId;
 
-    public EnderecoMB() {
+	public EnderecoMB() {
 
-    }
-
-    public PaginatedDataModel<Endereco> getList() {
-	if (list == null) {
-	    SearchPageCtrl<Endereco> searchPageCtrl = new SearchPageCtrl<Endereco>();
-	    Map<String, Object> filters = searchPageCtrl.getFilters();
-	    searchPageCtrl.setAndFilter(true);
-	    if (term != null && !"".equals(term = term.trim())) {
-		filters.put("obj.completo", term);
-	    }
-	    list = new PaginatedDataModel<Endereco>(searchPageCtrl, sb);
 	}
-	return list;
-    }
 
-    public PaginatedDataModel<Endereco> getListByRecolheId(Integer recolheId) {
-	this.recolheId = recolheId;
-	return getList();
-    }
+	public PaginatedDataModel<EnderecoVW> getList() {
+		if (list == null) {
+			SearchPageCtrl<EnderecoVW> searchPageCtrl = new SearchPageCtrl<EnderecoVW>();
+			Map<String, Object> filters = searchPageCtrl.getFilters();
+			searchPageCtrl.setAndFilter(true);
+			if (term != null && !"".equals(term = term.trim())) {
+				filters.put("obj.completo", term);
+			}
+			list = new PaginatedDataModel<EnderecoVW>(searchPageCtrl, sb);
+		}
+		return list;
+	}
 
-    public void setList(PaginatedDataModel<Endereco> list) {
-	this.list = list;
-    }
+	public PaginatedDataModel<EnderecoVW> getListByRecolheId(Integer recolheId) {
+		this.recolheId = recolheId;
+		return getList();
+	}
 
-    public void setEnderecos(PaginatedDataModel<Endereco> list) {
-	this.list = list;
-    }
+	public void setList(PaginatedDataModel<EnderecoVW> list) {
+		this.list = list;
+	}
 
-    public void search() throws Exception {
-	list = null;
-    }
+	public void setEnderecos(PaginatedDataModel<EnderecoVW> list) {
+		this.list = list;
+	}
 
-    public EnderecoSBLocal getSb() {
-	return sb;
-    }
+	public void search() throws Exception {
+		list = null;
+	}
 
-    public void setSb(EnderecoSBLocal sb) {
-	this.sb = sb;
-    }
+	public EnderecoSBLocal getSb() {
+		return sb;
+	}
 
-    public Integer getRecolheId() {
-	return recolheId;
-    }
+	public void setSb(EnderecoSBLocal sb) {
+		this.sb = sb;
+	}
 
-    public void setRecolheId(Integer recolheId) {
-	this.recolheId = recolheId;
-    }
+	public Integer getRecolheId() {
+		return recolheId;
+	}
+
+	public void setRecolheId(Integer recolheId) {
+		this.recolheId = recolheId;
+	}
+	
+	public List<Distrito> getDistritos(){
+		if(distritos == null){
+			distritos = sb.getDistritos();
+		}
+		return distritos;
+	}
+	
+	public List<Concelho> getConcelhos(Distrito distrito){
+		if(concelhos == null){
+			concelhos = sb.getConcelhos(distrito);
+		}
+		return concelhos;
+	}
 }

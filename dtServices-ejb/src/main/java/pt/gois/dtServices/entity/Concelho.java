@@ -11,25 +11,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 @Entity
-@NamedQuery(name="Concelho.findAll", query="SELECT c FROM Concelho c")
+@NamedQueries({ @NamedQuery(name = "Concelho.findAll", query = "SELECT c FROM Concelho c order by c.nome"),
+		@NamedQuery(name = "Concelho.findByDistrito", query = "SELECT c FROM Concelho c where c.distrito.id = :distritoId order by c.nome") })
 public class Concelho implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id;
 	private String nome;
 	private Distrito distrito;
-	private List<Endereco> enderecos;
+	private List<EnderecoVW> enderecos;
 
 	public Concelho() {
 	}
 
-
 	@Id
-	@Column(name="cc")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "cc")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public String getId() {
 		return this.id;
 	}
@@ -37,7 +38,6 @@ public class Concelho implements Serializable {
 	public void setId(String id) {
 		this.id = id;
 	}
-
 
 	public String getNome() {
 		return this.nome;
@@ -47,10 +47,9 @@ public class Concelho implements Serializable {
 		this.nome = nome;
 	}
 
-
-	//bi-directional many-to-one association to Distrito
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="dd")
+	// bi-directional many-to-one association to Distrito
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "dd")
 	public Distrito getDistrito() {
 		return this.distrito;
 	}
@@ -59,14 +58,13 @@ public class Concelho implements Serializable {
 		this.distrito = distrito;
 	}
 
-
-	//bi-directional many-to-one association to Localidade
-	@OneToMany(mappedBy="concelho")
-	public List<Endereco> getEnderecos() {
+	// bi-directional many-to-one association to Localidade
+	@OneToMany(mappedBy = "concelho")
+	public List<EnderecoVW> getEnderecos() {
 		return this.enderecos;
 	}
 
-	public void setEnderecos(List<Endereco> enderecos) {
+	public void setEnderecos(List<EnderecoVW> enderecos) {
 		this.enderecos = enderecos;
 	}
 
