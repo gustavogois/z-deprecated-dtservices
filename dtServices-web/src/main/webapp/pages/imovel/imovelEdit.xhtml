@@ -58,20 +58,44 @@
 				</p:inputText>
 
 				<p:outputLabel value="#{bundle.endereco_field_cp}" />
-				<p:inputText size="60" label="#{bundle.endereco_field_cp}"
-					value="#{imovelEditMB.imovel.codigoPostal}" required="true">
-				</p:inputText>
+				<p:autoComplete id="cp" value="#{imovelEditMB.endereco}"
+					completeMethod="#{enderecoMB.search}" var="end"
+					converter="enderecoConverter"
+					itemLabel="#{end.codigoPostal}" itemValue="#{end.id}" forceSelection="true">
+					<p:ajax event="itemSelect" listener="#{imovelEditMB.onEnderecoSelect}" update="imovelNew" />
+					<p:column style="width:10%">
+						<h:outputText value="#{end.codigoPostal}" />
+					</p:column>
+
+					<p:column>
+						<h:outputText value="#{end.ruaPorta}" />
+					</p:column>
+					
+					<p:column>
+						<h:outputText value="#{end.complemento}" />
+					</p:column>
+					
+					<p:column>
+						<h:outputText value="#{end.concelho.nome}" />
+					</p:column>
+					
+					<p:column>
+						<h:outputText value="#{end.distrito.nome}" />
+					</p:column>
+				</p:autoComplete>
 
 				<p:outputLabel value="#{bundle.endereco_field_concelho}" />
-				<p:selectOneMenu value="#{imovelEditMB.imovel.concelho}"
+				<p:selectOneMenu value="#{imovelEditMB.imovel.concelho.id}"
 					style="width:125px" required="true"
 					label="#{bundle.endereco_field_concelho}">
-					<f:selectItems value="#{enderecoMB.getConcelhos(imovelEditMB.imovel.distrito)}" var="concelho"
-						itemValue="#{concelho.id}" itemLabel="#{concelho.nome}" />
+					<f:selectItems
+						value="#{enderecoMB.getConcelhos(imovelEditMB.imovel.distrito)}"
+						var="concelho" itemValue="#{concelho.id}"
+						itemLabel="#{concelho.nome}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="#{bundle.endereco_field_distrito}" />
-				<p:selectOneMenu value="#{imovelEditMB.imovel.distrito}"
+				<p:selectOneMenu value="#{imovelEditMB.imovel.distrito.id}"
 					style="width:125px" required="true"
 					label="#{bundle.endereco_field_distrito}">
 					<f:selectItems value="#{enderecoMB.distritos}" var="distrito"

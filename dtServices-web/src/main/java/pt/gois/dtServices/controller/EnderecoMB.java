@@ -34,15 +34,13 @@ public class EnderecoMB extends GeneralMB implements Serializable {
 	}
 
 	public PaginatedDataModel<EnderecoVW> getList() {
-		if (list == null) {
-			SearchPageCtrl<EnderecoVW> searchPageCtrl = new SearchPageCtrl<EnderecoVW>();
-			Map<String, Object> filters = searchPageCtrl.getFilters();
-			searchPageCtrl.setAndFilter(true);
-			if (term != null && !"".equals(term = term.trim())) {
-				filters.put("obj.completo", term);
-			}
-			list = new PaginatedDataModel<EnderecoVW>(searchPageCtrl, sb);
+		SearchPageCtrl<EnderecoVW> searchPageCtrl = new SearchPageCtrl<EnderecoVW>();
+		Map<String, Object> filters = searchPageCtrl.getFilters();
+		searchPageCtrl.setAndFilter(true);
+		if (term != null && !"".equals(term = term.trim())) {
+			filters.put("obj.completo", term);
 		}
+		list = new PaginatedDataModel<EnderecoVW>(searchPageCtrl, sb);
 		return list;
 	}
 
@@ -78,18 +76,30 @@ public class EnderecoMB extends GeneralMB implements Serializable {
 	public void setRecolheId(Integer recolheId) {
 		this.recolheId = recolheId;
 	}
-	
-	public List<Distrito> getDistritos(){
-		if(distritos == null){
+
+	public List<Distrito> getDistritos() {
+		if (distritos == null) {
 			distritos = sb.getDistritos();
 		}
 		return distritos;
 	}
-	
-	public List<Concelho> getConcelhos(Distrito distrito){
-		if(concelhos == null){
+
+	public List<Concelho> getConcelhos(Distrito distrito) {
+		if (concelhos == null) {
 			concelhos = sb.getConcelhos(distrito);
 		}
 		return concelhos;
+	}
+
+	public List<EnderecoVW> search(String query) {
+		SearchPageCtrl<EnderecoVW> searchPageCtrl = new SearchPageCtrl<EnderecoVW>();
+		searchPageCtrl.setPageSize(10);
+		Map<String, Object> filters = searchPageCtrl.getFilters();
+		searchPageCtrl.setAndFilter(true);
+		if (query != null && !"".equals(query = query.trim())) {
+			filters.put("obj.completo", "%" + query + "%");
+		}
+		sb.find(searchPageCtrl);
+		return searchPageCtrl.getRows();
 	}
 }

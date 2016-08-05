@@ -11,6 +11,9 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.event.SelectEvent;
+
+import pt.gois.dtServices.entity.EnderecoVW;
 import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
@@ -22,8 +25,21 @@ public class ImovelEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.ImovelSBLocal sb;
 	
+	@EJB
+	private pt.gois.dtServices.business.EnderecoSBLocal sbEndereco;
+	
 	Imovel imovel;
 	
+	EnderecoVW endereco;
+	
+	public EnderecoVW getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoVW endereco) {
+		this.endereco = endereco;
+	}
+
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
 
@@ -99,4 +115,28 @@ public class ImovelEditMB extends GeneralMB implements Serializable {
 		this.sb = sb;
 	}
 
+	public pt.gois.dtServices.business.EnderecoSBLocal getSbEndereco() {
+		return sbEndereco;
+	}
+
+	public void setSbEndereco(pt.gois.dtServices.business.EnderecoSBLocal sbEndereco) {
+		this.sbEndereco = sbEndereco;
+	}
+
+	public void setSb(pt.gois.dtServices.business.ImovelSBLocal sb) {
+		this.sb = sb;
+	}
+
+	public void onEnderecoSelect(SelectEvent event) {
+        Imovel imovel = getImovel();
+        EnderecoVW end = (EnderecoVW)event.getObject();
+        end = sbEndereco.findById(new Integer(end.getId()));
+        this.setEndereco(end);
+        
+        imovel.setRuaPorta(end.getRuaPorta());
+        imovel.setComplemento(end.getComplemento());
+        imovel.setDistrito(end.getDistrito());
+        imovel.setConcelho(end.getConcelho());
+        imovel.setCodigoPostal(end.getCodigoPostal());
+    }
 }
