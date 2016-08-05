@@ -17,6 +17,10 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="author" content="Gois" />
 
+		<script
+			src="http://maps.google.com/maps/api/js?key=AIzaSyALOb9WLySUY-P7EGHvgXRPB9ymPq1tR_I"
+			type="text/javascript"></script>
+
 		<title>#{bundle.titulo_pagina}</title>
 
 		<ui:insert name="headHTML" />
@@ -50,8 +54,9 @@
 								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/tipoServicos/tipoServicoList.jsf">
 							</p:menuitem>
-							<p:menuitem value="#{bundle.menu_cadastro_tipoServicoSolicitante}" 
-								icon="ui-icon-gear"	immediate="true" ajax="true"
+							<p:menuitem
+								value="#{bundle.menu_cadastro_tipoServicoSolicitante}"
+								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/tipoServicoSolicitante/tipoServicoSolicitanteList.jsf">
 							</p:menuitem>
 							<p:menuitem value="#{bundle.menu_processo}" icon="ui-icon-gear"

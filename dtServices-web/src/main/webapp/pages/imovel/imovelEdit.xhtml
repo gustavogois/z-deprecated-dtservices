@@ -11,13 +11,19 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
+
 	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_imovel}" />
 
 	<ui:define name="body">
+		<script>
+    function geocode( value ) {
+        PF('geoGmap').geocode( value );
+    }
+    </script>
 		<f:metadata>
 			<f:viewParam name="id" value="#{imovelEditMB.id}" />
 		</f:metadata>
-		<h:form id="imovelNew">
+		<h:form id="imovelNew" prependId="false">
 			<div id="rightbox" class="fixright">
 				<p:panel>
 					<h:panelGrid columns="2">
@@ -30,7 +36,7 @@
 					</h:panelGrid>
 				</p:panel>
 			</div>
-			<h:panelGrid columns="2">
+			<h:panelGrid columns="2" id="endereco">
 				<p:outputLabel value="#{bundle.default_field_ID}" />
 				<p:outputLabel value="#{imovelEditMB.imovel.id}" />
 				<p:outputLabel value="#{bundle.default_field_name}" />
@@ -46,11 +52,15 @@
 					validatorMessage="#{bundle.imovel_msg_invalidCrp}">
 				</p:inputText>
 				<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
-				<p:inputText size="60" label="#{bundle.endereco_field_ruaPorta}"
-					value="#{imovelEditMB.imovel.ruaPorta}"
-					validator="#{imovelEditMB.validateEndereco}" required="true"
-					validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
-				</p:inputText>
+				<h:panelGrid columns="2">
+					<p:inputText id="ruaPorta" size="60" label="#{bundle.endereco_field_ruaPorta}"
+						value="#{imovelEditMB.imovel.ruaPorta}"
+						validator="#{imovelEditMB.validateEndereco}" required="true"
+						validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
+					</p:inputText>
+					<p:commandButton value="Geocode" icon="ui-icon-search"
+						onclick="geocode( $( '#concelho_label' ).html() + ' ' + $( '#ruaPorta' ).val() )" type="button" />
+				</h:panelGrid>
 
 				<p:outputLabel value="#{bundle.endereco_field_complemento}" />
 				<p:inputText size="60" label="#{bundle.endereco_field_complemento}"
@@ -58,34 +68,39 @@
 				</p:inputText>
 
 				<p:outputLabel value="#{bundle.endereco_field_cp}" />
-				<p:autoComplete id="cp" value="#{imovelEditMB.endereco}"
-					completeMethod="#{enderecoMB.search}" var="end"
-					converter="enderecoConverter"
-					itemLabel="#{end.codigoPostal}" itemValue="#{end.id}" forceSelection="true">
-					<p:ajax event="itemSelect" listener="#{imovelEditMB.onEnderecoSelect}" update="imovelNew" />
-					<p:column style="width:10%">
-						<h:outputText value="#{end.codigoPostal}" />
-					</p:column>
+				<h:panelGrid columns="2">
+					<p:autoComplete id="cp" value="#{imovelEditMB.endereco}"
+						completeMethod="#{enderecoMB.search}" var="end"
+						converter="enderecoConverter" itemLabel="#{end.codigoPostal}"
+						itemValue="#{end.id}" forceSelection="true">
+						<p:ajax event="itemSelect"
+							listener="#{imovelEditMB.onEnderecoSelect}" update="endereco" />
+						<p:column style="width:10%">
+							<h:outputText value="#{end.codigoPostal}" />
+						</p:column>
 
-					<p:column>
-						<h:outputText value="#{end.ruaPorta}" />
-					</p:column>
-					
-					<p:column>
-						<h:outputText value="#{end.complemento}" />
-					</p:column>
-					
-					<p:column>
-						<h:outputText value="#{end.concelho.nome}" />
-					</p:column>
-					
-					<p:column>
-						<h:outputText value="#{end.distrito.nome}" />
-					</p:column>
-				</p:autoComplete>
+						<p:column>
+							<h:outputText value="#{end.ruaPorta}" />
+						</p:column>
+
+						<p:column>
+							<h:outputText value="#{end.complemento}" />
+						</p:column>
+
+						<p:column>
+							<h:outputText value="#{end.concelho.nome}" />
+						</p:column>
+
+						<p:column>
+							<h:outputText value="#{end.distrito.nome}" />
+						</p:column>
+					</p:autoComplete>
+					<p:commandButton value="Geocode" icon="ui-icon-search"
+						onclick="geocode( $( '#cp_input' ).val() )" type="button" />
+				</h:panelGrid>
 
 				<p:outputLabel value="#{bundle.endereco_field_concelho}" />
-				<p:selectOneMenu value="#{imovelEditMB.imovel.concelho.id}"
+				<p:selectOneMenu id="concelho" value="#{imovelEditMB.imovel.concelho.id}"
 					style="width:125px" required="true"
 					label="#{bundle.endereco_field_concelho}">
 					<f:selectItems
@@ -103,6 +118,12 @@
 				</p:selectOneMenu>
 
 			</h:panelGrid>
+			<p:gmap id="geoGmap" widgetVar="geoGmap"
+				center="#{gMapsMB.centerGeoMap}" zoom="8" type="ROADMAP"
+				model="#{gMapsMB.geoModel}" style="width:100%;height:400px">
+				<p:ajax event="geocode" listener="#{gMapsMB.onGeocode}"
+					update="@this" />
+			</p:gmap>
 		</h:form>
 
 	</ui:define>
