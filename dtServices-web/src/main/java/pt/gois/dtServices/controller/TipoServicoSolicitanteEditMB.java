@@ -10,8 +10,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.model.DualListModel;
-
 import pt.gois.dtServices.business.SolicitanteSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal;
@@ -40,17 +38,10 @@ public class TipoServicoSolicitanteEditMB extends GeneralMB implements Serializa
 		return sbSolicitante.findAll();
 	}
 	
-	public DualListModel<String> getTiposServico() {
+	public List<TipoServico> getTiposServico() {
 		
-		List<TipoServico> tiposServico = sbTipoServico.findAll();
+		return sbTipoServico.findAll();
 		
-        List<String> tiposServicoSource = new ArrayList<String>();
-        List<String> tiposServicoTarget = new ArrayList<String>();
-         
-        for (TipoServico tipo : tiposServico) {
-			tiposServicoSource.add(tipo.getNome());
-		}
-        return new DualListModel<String>(tiposServicoSource, tiposServicoTarget);
 	}
 	
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {

@@ -44,14 +44,18 @@
 								itemLabel="#{solicitante.nome}" />
 						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
-						<p:pickList id="tipoServico" value="#{tipoServicoSolicitanteEditMB.tiposServico}"
-							var="tipoServico" itemLabel="#{tipoServico}" itemValue="#{tipoServico}" />
-
+						<p:selectOneMenu
+							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.tipoServico.id}"
+							style="width:300px" required="true">
+							<f:selectItems
+								value="#{tipoServicoSolicitanteEditMB.tiposServico}"
+								var="ts" itemValue="#{ts.id}"
+								itemLabel="#{ts.nome}" />
+						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.default_field_valor}" />
 						<p:inputText size="8" label="#{bundle.default_field_valor}"
-							value="#{tipoServicoEditMB.tipoServico.valor}"
-							validator="#{tipoServicoEditMB.validateValor}" required="true"
-							validatorMessage="#{bundle.default_msg_invalidValor}">
+							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.valor}"
+							required="true">
 						</p:inputText>
 					</h:panelGrid>
 				</p:tab>

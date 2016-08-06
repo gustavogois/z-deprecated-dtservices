@@ -33,7 +33,7 @@
 		<h:outputText value="#{tipoServicoSolicitante.solicitante.nome}" />
 	</p:column>
 	<p:column headerText="#{bundle.solicitante_field_tipo_de_servico}">
-		<h:outputText value="#{tipoServicoSolicitante.TipoServico.nome}" />
+		<h:outputText value="#{tipoServicoSolicitante.tipoServico.nome}" />
 	</p:column>
 	<p:column headerText="#{bundle.default_field_valor}">
 		<h:outputText value="#{tipoServicoSolicitante.valor}" />
@@ -49,7 +49,7 @@
 		<p:commandButton value="#{bundle.default_action_del}"
 			icon="ui-icon-trash" styleClass="action_del"
 			action="#{tipoServicoSolicitanteEditMB.delete(tipoServicoSolicitante)}"
-			update="tipoServicoList" ajax="true">
+			update="tipoServicoSolicitanteList" ajax="true">
 		</p:commandButton>
 	</p:column>
 </p:dataTable>
