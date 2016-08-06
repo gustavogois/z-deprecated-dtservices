@@ -34,6 +34,11 @@ public class TipoServicoSolicitanteEditMB extends GeneralMB implements Serializa
 	
 	TipoServicoSolicitante tipoServicoSolicitante;
 	
+	public void onTipoDeServicoChange() {
+		TipoServico tipoServico = sbTipoServico.findById(tipoServicoSolicitante.getTipoServico().getId());
+		tipoServicoSolicitante.setValor(tipoServico.getValor());
+	}
+	
 	public List<Solicitante> getSolicitantes() {
 		return sbSolicitante.findAll();
 	}

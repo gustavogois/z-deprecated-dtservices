@@ -51,9 +51,11 @@
 								value="#{tipoServicoSolicitanteEditMB.tiposServico}"
 								var="ts" itemValue="#{ts.id}"
 								itemLabel="#{ts.nome}" />
+							<p:ajax listener="#{tipoServicoSolicitanteEditMB.onTipoDeServicoChange}" 
+								update="valorId"/>
 						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.default_field_valor}" />
-						<p:inputText size="8" label="#{bundle.default_field_valor}"
+						<p:inputText id="valorId" size="8" label="#{bundle.default_field_valor}"
 							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.valor}"
 							required="true">
 						</p:inputText>
