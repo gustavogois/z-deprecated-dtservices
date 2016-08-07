@@ -43,7 +43,8 @@
 								itemLabel="#{solicitante.nome}" />
 						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
-						<p:inputTextarea rows="5" cols="30" counter="display"
+						<p:inputTextarea value="#{processoExternoEditMB.processoExterno.descricao}" 
+							rows="5" cols="30" counter="display"
 							maxlength="120" counterTemplate="{0} caracteres restantes"
 							autoResize="false" />
 						<h:outputLabel/>

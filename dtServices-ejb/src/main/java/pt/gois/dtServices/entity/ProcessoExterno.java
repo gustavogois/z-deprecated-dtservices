@@ -80,7 +80,7 @@ public class ProcessoExterno implements Serializable {
 
 
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processoExterno", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="processoExterno", fetch=FetchType.EAGER)
 	public Imovel getImovel() {
 		return this.imovel;
 	}
