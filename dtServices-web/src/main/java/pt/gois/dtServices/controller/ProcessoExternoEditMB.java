@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import pt.gois.dtServices.business.ProcessoExternoSBLocal;
 import pt.gois.dtServices.business.SolicitanteSBLocal;
+import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoDeEstado;
@@ -42,12 +43,18 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	public String save(){
-//		TipoServicoSolicitante tipoServicoSolicitante = getTipoServicoSolicitante();
-//		if( tipoServicoSolicitante.getId() != null ){
-//			sb.save( tipoServicoSolicitante );
-//		}else{
-//			sb.create( tipoServicoSolicitante );
-//		}
+		ProcessoExterno processoExterno = getProcessoExterno();
+		
+		TipoDeEstado criado = new TipoDeEstado();
+		criado.setId(TipoDeEstadoSBLocal.CRIADO);
+		
+		processoExterno.setTipoDeEstado(criado);
+		
+		if( processoExterno.getId() != null ){
+			sb.save( processoExterno );
+		}else{
+			sb.create( processoExterno );
+		}
 		return "processoExternoList";
 		
 	}

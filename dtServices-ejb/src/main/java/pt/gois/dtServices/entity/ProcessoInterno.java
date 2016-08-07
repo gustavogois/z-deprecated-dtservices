@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -87,7 +88,7 @@ public class ProcessoInterno implements Serializable {
 
 
 	//bi-directional many-to-one association to Processoexterno
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="processoExternoId")
 	public ProcessoExterno getProcessoExterno() {
 		return this.processoExterno;

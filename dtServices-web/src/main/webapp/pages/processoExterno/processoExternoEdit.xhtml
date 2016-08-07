@@ -33,16 +33,21 @@
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
 						<p:outputLabel value="#{processoExternoEditMB.processoExterno.id}" />
-
-						<p:outputLabel value="#{bundle.processo_externo_field_solicitante}" />
+						<p:outputLabel
+							value="#{bundle.processo_externo_field_solicitante}" />
 						<p:selectOneMenu
 							value="#{processoExternoEditMB.processoExterno.solicitante.id}"
 							style="width:300px" required="true">
-							<f:selectItems
-								value="#{processoExternoEditMB.solicitantes}"
+							<f:selectItems value="#{processoExternoEditMB.solicitantes}"
 								var="solicitante" itemValue="#{solicitante.id}"
 								itemLabel="#{solicitante.nome}" />
 						</p:selectOneMenu>
+						<p:outputLabel value="#{bundle.default_field_observacoes}" />
+						<p:inputTextarea rows="5" cols="30" counter="display"
+							maxlength="120" counterTemplate="{0} caracteres restantes"
+							autoResize="false" />
+						<h:outputLabel/>
+						<h:outputText id="display" />
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>

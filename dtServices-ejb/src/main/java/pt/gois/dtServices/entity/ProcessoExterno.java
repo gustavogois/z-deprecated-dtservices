@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,6 @@ import javax.persistence.TemporalType;
 public class ProcessoExterno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private String codigo;
 	private String descricao;
 	private Date dtFim;
 	private Date dtInicio;
@@ -47,15 +47,6 @@ public class ProcessoExterno implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-
-	public String getCodigo() {
-		return this.codigo;
-	}
-
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
 	}
 
 
@@ -89,7 +80,7 @@ public class ProcessoExterno implements Serializable {
 
 
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processoExterno")
+	@OneToOne(mappedBy="processoExterno", fetch=FetchType.LAZY)
 	public Imovel getImovel() {
 		return this.imovel;
 	}
@@ -100,7 +91,7 @@ public class ProcessoExterno implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="estado_atual_Id")
 	public TipoDeEstado getTipoDeEstado() {
 		return this.tipoDeEstado;
@@ -112,7 +103,7 @@ public class ProcessoExterno implements Serializable {
 
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
