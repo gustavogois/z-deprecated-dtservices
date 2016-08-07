@@ -17,7 +17,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
-import pt.gois.dtServices.entity.Processo;
+import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TipoDeEstado;
 import pt.gois.dtServices.entity.TipoServico;
@@ -46,7 +46,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private TipoDeEstadoSBLocal sbTipoEstado;
 	
-	Processo processo;
+	ProcessoInterno processo;
 	Servico servico;
 	TipoServico tipoServico;
 	
@@ -84,9 +84,9 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
 		}
 
-		SearchPageCtrl<Processo> searchPageCtrl = new SearchPageCtrl<Processo>();
+		SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
 		searchPageCtrl.getFilters().put("nome", value);
-		List<Processo> processos = sb.find(searchPageCtrl).getRows();
+		List<ProcessoInterno> processos = sb.find(searchPageCtrl).getRows();
 		if (processos != null && processos.size() > 0 ) {
 			if( processos.size() == 1 && ( processos.get(0).getId() == processo.getId() ) ){
 				return;
@@ -96,7 +96,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	public String create() {
-		processo = new Processo();
+		processo = new ProcessoInterno();
 		processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 		sb.create(processo);
 		return "processoInternoEdit";
@@ -104,9 +104,9 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	public String save(){
 		
-		Processo processo = getProcesso();
+		ProcessoInterno processo = getProcesso();
 		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.CRIADO); 
-		processo.setTiposDeEstado(tipoDeEstado);
+		processo.setTipoDeEstado(tipoDeEstado);
 		
 		if( processo.getId() != null ){
 			sb.save( processo );
@@ -116,19 +116,19 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return "processoInternoList";
 	}
 	
-	public String delete( Processo processo ){
+	public String delete( ProcessoInterno processo ){
 		sb.delete(processo);
 		return "processoInternoList";
 	}
 	
-	public Processo getProcesso() {
+	public ProcessoInterno getProcesso() {
 		if( processo == null ){
 			Integer id = getId();
 			if( id != null ){
 				processo = sb.findById( getId() );
 			}else{
 				
-				processo = new Processo();
+				processo = new ProcessoInterno();
 				processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 				
 				servico = new Servico();
@@ -140,7 +140,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return processo;
 	}
 	
-	public void setProcesso(Processo processo) {
+	public void setProcesso(ProcessoInterno processo) {
 		this.processo = processo;
 	}
 

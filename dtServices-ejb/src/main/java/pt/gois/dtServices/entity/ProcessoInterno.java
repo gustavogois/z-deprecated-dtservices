@@ -1,26 +1,35 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
- * The persistent class for the processo database table.
+ * The persistent class for the processointerno database table.
  * 
  */
 @Entity
-@NamedQuery(name="Processo.findAll", query="SELECT p FROM Processo p")
-public class Processo implements Serializable {
+@NamedQuery(name="ProcessoInterno.findAll", query="SELECT p FROM ProcessoInterno p")
+public class ProcessoInterno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private boolean comChaves;
+	private byte comChaves;
 	private String observacoes;
 	private EntidadeDeFacturacao entidadeDeFacturacao;
-	private TipoDeEstado tiposDeEstado;
+	private TipoDeEstado tipoDeEstado;
+	private ProcessoExterno processoExterno;
 	private List<Servico> servicos;
 
-	public Processo() {
+	public ProcessoInterno() {
 	}
 
 
@@ -35,11 +44,11 @@ public class Processo implements Serializable {
 	}
 
 
-	public boolean getComChaves() {
+	public byte getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(boolean comChaves) {
+	public void setComChaves(byte comChaves) {
 		this.comChaves = comChaves;
 	}
 
@@ -53,9 +62,9 @@ public class Processo implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to EntidadeDefacturacao
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="entidadeFacturacaoId")
+	//bi-directional many-to-one association to Entidadedefacturacao
+	@ManyToOne
+	@JoinColumn(name="entidaDeFacturacaoId")
 	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
 		return this.entidadeDeFacturacao;
 	}
@@ -66,19 +75,31 @@ public class Processo implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="estado_atual_Id")
-	public TipoDeEstado getTiposDeEstado() {
-		return this.tiposDeEstado;
+	public TipoDeEstado getTipoDeEstado() {
+		return this.tipoDeEstado;
 	}
 
-	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
-		this.tiposDeEstado = tiposDeEstado;
+	public void setTipoDeEstado(TipoDeEstado tipoDeEstado) {
+		this.tipoDeEstado = tipoDeEstado;
+	}
+
+
+	//bi-directional many-to-one association to Processoexterno
+	@ManyToOne
+	@JoinColumn(name="processoExternoId")
+	public ProcessoExterno getProcessoExterno() {
+		return this.processoExterno;
+	}
+
+	public void setProcessoExterno(ProcessoExterno processoExterno) {
+		this.processoExterno = processoExterno;
 	}
 
 
 	//bi-directional many-to-one association to Servico
-	@OneToMany(mappedBy="processo")
+	@OneToMany(mappedBy="processoInterno")
 	public List<Servico> getServicos() {
 		return this.servicos;
 	}
@@ -89,14 +110,14 @@ public class Processo implements Serializable {
 
 	public Servico addServico(Servico servico) {
 		getServicos().add(servico);
-		servico.setProcesso(this);
+		servico.setProcessoInterno(this);
 
 		return servico;
 	}
 
 	public Servico removeServico(Servico servico) {
 		getServicos().remove(servico);
-		servico.setProcesso(null);
+		servico.setProcessoInterno(null);
 
 		return servico;
 	}

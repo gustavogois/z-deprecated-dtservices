@@ -1,8 +1,17 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToOne;
 
 /**
  * The persistent class for the imovel database table.
@@ -20,7 +29,7 @@ public class Imovel extends Endereco implements Serializable {
 	String longitude;
 	
 	private List<Imagem> imagems;
-	private ProcessoCliente processocliente;
+	private ProcessoExterno processoExterno;
 
 	public Imovel() {
 	}
@@ -64,12 +73,12 @@ public class Imovel extends Endereco implements Serializable {
 	// bi-directional one-to-one association to Processocliente
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id")
-	public ProcessoCliente getProcessocliente() {
-		return this.processocliente;
+	public ProcessoExterno getProcessoExterno() {
+		return this.processoExterno;
 	}
 
-	public void setProcessocliente(ProcessoCliente processocliente) {
-		this.processocliente = processocliente;
+	public void setProcessoExterno(ProcessoExterno processoExterno) {
+		this.processoExterno = processoExterno;
 	}
 
 	public String getLatitude() {
@@ -87,7 +96,4 @@ public class Imovel extends Endereco implements Serializable {
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
 	}
-	
-	
-
 }

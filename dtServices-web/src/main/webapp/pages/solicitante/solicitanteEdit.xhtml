@@ -56,8 +56,9 @@
 				<p:tab title="#{bundle.menu_cadastro_tipoServico}"
 					disabled="#{solicitanteEditMB.solicitante.id == null}"
 					id="tipoServicoTab">
-					<ui:include src="../tipoServicos/tipoServicoTableList.xhtml">
-						<ui:param name="list" value="#{tipoServicoListMB.list}" />
+					<ui:include src="../tipoServicoSolicitante/tipoServicoSolicitanteTableList.xhtml">
+						<ui:param name="list" value="#{tipoServicoSolicitanteListMB.list}" />
+						<ui:param name="#{userSessionMB.solicitanteId}" value="#{solicitanteEditMB.solicitante.id}" />
 					</ui:include>
 				</p:tab>
 			</p:tabView>

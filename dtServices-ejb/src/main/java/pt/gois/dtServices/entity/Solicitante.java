@@ -1,8 +1,14 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
@@ -17,7 +23,7 @@ public class Solicitante implements Serializable {
 	private String nif;
 	private String nome;
 	private String telefone;
-	private List<ProcessoCliente> processoclientes;
+	private List<ProcessoExterno> processoExterno;
 	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 
 	public Solicitante() {
@@ -64,26 +70,26 @@ public class Solicitante implements Serializable {
 
 	//bi-directional many-to-one association to Processocliente
 	@OneToMany(mappedBy="solicitante")
-	public List<ProcessoCliente> getProcessoclientes() {
-		return this.processoclientes;
+	public List<ProcessoExterno> getProcessoExterno() {
+		return this.processoExterno;
 	}
 
-	public void setProcessoclientes(List<ProcessoCliente> processoclientes) {
-		this.processoclientes = processoclientes;
+	public void setProcessoExterno(List<ProcessoExterno> processoExterno) {
+		this.processoExterno = processoExterno;
 	}
 
-	public ProcessoCliente addProcessocliente(ProcessoCliente processocliente) {
-		getProcessoclientes().add(processocliente);
-		processocliente.setSolicitante(this);
+	public ProcessoExterno addProcessoExterno(ProcessoExterno processoExterno) {
+		getProcessoExterno().add(processoExterno);
+		processoExterno.setSolicitante(this);
 
-		return processocliente;
+		return processoExterno;
 	}
 
-	public ProcessoCliente removeProcessocliente(ProcessoCliente processocliente) {
-		getProcessoclientes().remove(processocliente);
-		processocliente.setSolicitante(null);
+	public ProcessoExterno removeProcessoExterno(ProcessoExterno processoExterno) {
+		getProcessoExterno().remove(processoExterno);
+		processoExterno.setSolicitante(null);
 
-		return processocliente;
+		return processoExterno;
 	}
 
 

@@ -12,7 +12,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import pt.gois.dtServices.business.ProcessoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.Processo;
+import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -23,24 +23,24 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.ProcessoSBLocal sb;
 
-	PaginatedDataModel<Processo> list;
+	PaginatedDataModel<ProcessoInterno> list;
 
-	public PaginatedDataModel<Processo> getList() {
+	public PaginatedDataModel<ProcessoInterno> getList() {
 		if (list != null) {
 			return list;
 		}
-		SearchPageCtrl<Processo> searchPageCtrl = new SearchPageCtrl<Processo>();
+		SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-		list = new PaginatedDataModel<Processo>(searchPageCtrl, sb);
+		list = new PaginatedDataModel<ProcessoInterno>(searchPageCtrl, sb);
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<Processo> list) {
+	public void setList(PaginatedDataModel<ProcessoInterno> list) {
 		this.list = list;
 	}
 
@@ -56,7 +56,7 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 		this.sb = sb;
 	}
 
-	public List<Processo> getProcessos(){
+	public List<ProcessoInterno> getProcessos(){
 		return sb.findAll();
 	}
 

@@ -64,6 +64,9 @@ table.home {
 						<ul>
 							<li>Pesquisas</li>
 							<li>Validações</li>
+							<li>Rever a lógica de fluxo, onde após salvar os dados de
+								uma primeira aba, enquanto as demais estão desabilitadas, vai
+								para a listagem. Não deveria habilitar as demais abas?</li>
 							<li>Formatações gerais</li>
 							<li>Inserir os logs</li>
 						</ul>
@@ -75,17 +78,19 @@ table.home {
 				</tr>
 				<tr>
 					<td>Cadastro de Solicitantes</td>
-					<td>Ao inserir o tipo de serviço para um Solicitante ainda não
-						cadastrado, a tabela com a lista de tipo de serviços não é
-						atualizada, apesar de tudo ser gravado no banco normalmente.</td>
+					<td><ul>
+							<li>Lógica do SolicitanteId. Em que / quais momento(s) ele deve ser resetado?</li>
+						</ul></td>
 				</tr>
 				<tr>
 					<td>Cadastro de Tipos de Serviço por Solicitante</td>
 					<td><ul>
 							<li>O campo valor não é atualizado para o primeiro tipo de
 								serviço selecionado.</li>
-							<li>Na tela de adição, trazer apenas os solicitantes e tipos de serviço que ainda não existem.</li>
-							<li>Não permitir a tela de adição de um tipo de serviço de solicitante, caso todos já tenham sido inseridos.</li>
+							<li>Na tela de adição, trazer apenas os solicitantes e tipos
+								de serviço que ainda não existem.</li>
+							<li>Não permitir a tela de adição de um tipo de serviço de
+								solicitante, caso todos já tenham sido inseridos.</li>
 						</ul></td>
 				</tr>
 			</table>

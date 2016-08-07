@@ -20,8 +20,8 @@ public class TipoDeEstado implements Serializable {
 	private Integer id;
 	private String nome;
 	private List<Historico> historicos;
-	private List<Processo> processos;
-	private List<ProcessoCliente> processoclientes;
+	private List<ProcessoInterno> processosInterno;
+	private List<ProcessoExterno> processosExterno;
 	private List<Servico> servicos;
 	private GrupoTiposEstado grupoTiposEstado;
 
@@ -74,53 +74,53 @@ public class TipoDeEstado implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="tiposDeEstado")
-	public List<Processo> getProcessos() {
-		return this.processos;
+	//bi-directional many-to-one association to ProcessoInterno
+	@OneToMany(mappedBy="tipoDeEstado")
+	public List<ProcessoInterno> getProcessosInterno() {
+		return this.processosInterno;
 	}
 
-	public void setProcessos(List<Processo> processos) {
-		this.processos = processos;
+	public void setProcessosInterno(List<ProcessoInterno> processosInterno) {
+		this.processosInterno = processosInterno;
 	}
 
-	public Processo addProcesso(Processo processo) {
-		getProcessos().add(processo);
-		processo.setTiposDeEstado(this);
+	public ProcessoInterno addProcessoInterno(ProcessoInterno processoInterno) {
+		getProcessosInterno().add(processoInterno);
+		processoInterno.setTipoDeEstado(this);
 
-		return processo;
+		return processoInterno;
 	}
 
-	public Processo removeProcesso(Processo processo) {
-		getProcessos().remove(processo);
-		processo.setTiposDeEstado(null);
+	public ProcessoInterno removeProcessoInterno(ProcessoInterno processoInterno) {
+		getProcessosInterno().remove(processoInterno);
+		processoInterno.setTipoDeEstado(null);
 
-		return processo;
+		return processoInterno;
 	}
 
 
 	//bi-directional many-to-one association to Processocliente
-	@OneToMany(mappedBy="tiposDeEstado")
-	public List<ProcessoCliente> getProcessoclientes() {
-		return this.processoclientes;
+	@OneToMany(mappedBy="tipoDeEstado")
+	public List<ProcessoExterno> getProcessosExterno() {
+		return this.processosExterno;
 	}
 
-	public void setProcessoclientes(List<ProcessoCliente> processoclientes) {
-		this.processoclientes = processoclientes;
+	public void setProcessosExterno(List<ProcessoExterno> processosExterno) {
+		this.processosExterno = processosExterno;
 	}
 
-	public ProcessoCliente addProcessocliente(ProcessoCliente processocliente) {
-		getProcessoclientes().add(processocliente);
-		processocliente.setTiposDeEstado(this);
+	public ProcessoExterno addProcessosExterno(ProcessoExterno processosExterno) {
+		getProcessosExterno().add(processosExterno);
+		processosExterno.setTipoDeEstado(this);
 
-		return processocliente;
+		return processosExterno;
 	}
 
-	public ProcessoCliente removeProcessocliente(ProcessoCliente processocliente) {
-		getProcessoclientes().remove(processocliente);
-		processocliente.setTiposDeEstado(null);
+	public ProcessoExterno removeProcessosExterno(ProcessoExterno processosExterno) {
+		getProcessosExterno().remove(processosExterno);
+		processosExterno.setTipoDeEstado(null);
 
-		return processocliente;
+		return processosExterno;
 	}
 
 

@@ -33,7 +33,7 @@ public class Servico implements Serializable {
 	private double valor;
 	private List<Imagem> imagems;
 	private TipoDeEstado tipoDeEstado;
-	private Processo processo;
+	private ProcessoInterno processoInterno;
 	private TipoServicoSolicitante tipoServicoSolicitante;
 
 	public Servico() {
@@ -121,15 +121,15 @@ public class Servico implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processo
+	//bi-directional many-to-one association to ProcessoInterno
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="processoId")
-	public Processo getProcesso() {
-		return this.processo;
+	public ProcessoInterno getProcessoInterno() {
+		return this.processoInterno;
 	}
 
-	public void setProcesso(Processo processo) {
-		this.processo = processo;
+	public void setProcessoInterno(ProcessoInterno processoInterno) {
+		this.processoInterno = processoInterno;
 	}
 
 
