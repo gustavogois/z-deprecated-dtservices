@@ -29,7 +29,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.ProcessoSBLocal sb;
+	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
 	
 	@EJB
 	private EntidadeDeFacturacaoSBLocal sbEntidade;
@@ -144,11 +144,11 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		this.processo = processo;
 	}
 
-	public pt.gois.dtServices.business.ProcessoSBLocal getSb() {
+	public pt.gois.dtServices.business.ProcessoInternoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSBLocalb(pt.gois.dtServices.business.ProcessoSBLocal sb) {
+	public void setSBLocalb(pt.gois.dtServices.business.ProcessoInternoSBLocal sb) {
 		this.sb = sb;
 	}
 	public Servico getServico() {

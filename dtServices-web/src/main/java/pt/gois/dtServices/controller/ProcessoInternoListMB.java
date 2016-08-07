@@ -10,7 +10,7 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
-import pt.gois.dtServices.business.ProcessoSBLocal;
+import pt.gois.dtServices.business.ProcessoInternoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.util.SearchPageCtrl;
@@ -21,7 +21,7 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.ProcessoSBLocal sb;
+	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
 
 	PaginatedDataModel<ProcessoInterno> list;
 
@@ -48,11 +48,11 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 		list = null;
 	}
 
-	public ProcessoSBLocal getSb() {
+	public ProcessoInternoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSb(ProcessoSBLocal sb) {
+	public void setSb(ProcessoInternoSBLocal sb) {
 		this.sb = sb;
 	}
 

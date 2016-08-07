@@ -42,6 +42,10 @@
 							icon="ui-icon-home" />
 
 						<p:menuButton value="#{bundle.menu_geral}" styleClass="pr1">
+							<p:menuitem value="#{bundle.menu_processo_externo}" icon="ui-icon-gear"
+								immediate="true" ajax="true"
+								outcome="/pages/processoExterno/processoExternoList.jsf">
+							</p:menuitem>
 							<p:menuitem value="#{bundle.menu_solicitante}"
 								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/solicitante/solicitanteList.jsf">
@@ -58,10 +62,6 @@
 								value="#{bundle.menu_cadastro_tipoServicoSolicitante}"
 								icon="ui-icon-gear" immediate="true" ajax="true"
 								outcome="/pages/tipoServicoSolicitante/tipoServicoSolicitanteList.jsf">
-							</p:menuitem>
-							<p:menuitem value="#{bundle.menu_processo}" icon="ui-icon-gear"
-								immediate="true" ajax="true"
-								outcome="/pages/processoInterno/processoInternoList.jsf">
 							</p:menuitem>
 						</p:menuButton>
 
