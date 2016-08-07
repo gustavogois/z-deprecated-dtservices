@@ -90,8 +90,7 @@ public class ProcessoExterno implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name="estado_atual_Id")
 	public TipoDeEstado getTipoDeEstado() {
 		return this.tipoDeEstado;
@@ -102,8 +101,7 @@ public class ProcessoExterno implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
