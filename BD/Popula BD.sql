@@ -1,3 +1,7 @@
+/* Lembrar de executar o comando abaixo para a carga de endereços 
+mysql -u root -p dt_services < BD\cp\codigo_postal.sql
+*/
+
 insert into solicitante (id, nome, nif, telefone) values (null,"Banco Whitestar", "288653880", "243699012");
 insert into solicitante (id, nome, nif, telefone) values (null,"Banco de Negócios", "734221954", "217788432");
 
