@@ -130,12 +130,12 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				
 				processo = new ProcessoInterno();
 				processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
-				
-				servico = new Servico();
-				servico.setTipoDeEstado(new TipoDeEstado());
-				
-				tipoServico = new TipoServico();
 			}
+			
+			servico = new Servico();
+			servico.setTipoDeEstado(new TipoDeEstado());
+			
+			tipoServico = new TipoServico();
 		}
 		return processo;
 	}
