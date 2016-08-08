@@ -17,6 +17,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
+import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TipoDeEstado;
@@ -28,6 +29,9 @@ import pt.gois.dtServices.util.SearchPageCtrl;
 public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@EJB
+	private pt.gois.dtServices.business.ProcessoExternoSBLocal sbProcessoExterno;
+	
 	@EJB
 	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
 	
@@ -46,7 +50,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private TipoDeEstadoSBLocal sbTipoEstado;
 	
-	ProcessoInterno processo;
+	ProcessoInterno processoInterno;
 	Servico servico;
 	TipoServico tipoServico;
 	
@@ -63,16 +67,16 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return servicos;
 	}
 	
-	public List<EntidadeDeFacturacao> getEntidadesList() throws Exception {
+	public List<EntidadeDeFacturacao> getEntidades() throws Exception {
 
 		List<EntidadeDeFacturacao> entidades = sbEntidade.findAll();
 		return entidades;
 	}
 
 	public PaginatedDataModel<Servico> getServicoByProcesso() throws Exception{
-		processo = getProcesso();
+		processoInterno = getProcessoInterno();
 		SearchPageCtrl<Servico> searchPageCtrl = new SearchPageCtrl<Servico>();
-		searchPageCtrl.getFilters().put("obj.processo.id", processo.getId());
+		searchPageCtrl.getFilters().put("obj.processo.id", processoInterno.getId());
 		
 		return new PaginatedDataModel<Servico>(searchPageCtrl, sbServico);
 	}
@@ -88,7 +92,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		searchPageCtrl.getFilters().put("nome", value);
 		List<ProcessoInterno> processos = sb.find(searchPageCtrl).getRows();
 		if (processos != null && processos.size() > 0 ) {
-			if( processos.size() == 1 && ( processos.get(0).getId() == processo.getId() ) ){
+			if( processos.size() == 1 && ( processos.get(0).getId() == processoInterno.getId() ) ){
 				return;
 			}
 			throw new ValidatorException(getMessage("default_msg_exists",FacesMessage.SEVERITY_ERROR));
@@ -96,17 +100,20 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	public String create() {
-		processo = new ProcessoInterno();
-		processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
-		sb.create(processo);
+		processoInterno = new ProcessoInterno();
+		processoInterno.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
+		sb.create(processoInterno);
 		return "processoInternoEdit";
 	}
 	
 	public String save(){
 		
-		ProcessoInterno processo = getProcesso();
+		ProcessoInterno processo = getProcessoInterno();
 		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.CRIADO); 
 		processo.setTipoDeEstado(tipoDeEstado);
+		
+		ProcessoExterno processoExterno = sbProcessoExterno.findById(1);
+		processo.setProcessoExterno(processoExterno);
 		
 		if( processo.getId() != null ){
 			sb.save( processo );
@@ -121,15 +128,15 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return "processoInternoList";
 	}
 	
-	public ProcessoInterno getProcesso() {
-		if( processo == null ){
+	public ProcessoInterno getProcessoInterno() {
+		if( processoInterno == null ){
 			Integer id = getId();
 			if( id != null ){
-				processo = sb.findById( getId() );
+				processoInterno = sb.findById( getId() );
 			}else{
 				
-				processo = new ProcessoInterno();
-				processo.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
+				processoInterno = new ProcessoInterno();
+				processoInterno.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 			}
 			
 			servico = new Servico();
@@ -137,11 +144,11 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			
 			tipoServico = new TipoServico();
 		}
-		return processo;
+		return processoInterno;
 	}
 	
-	public void setProcesso(ProcessoInterno processo) {
-		this.processo = processo;
+	public void setProcessoInterno(ProcessoInterno processo) {
+		this.processoInterno = processo;
 	}
 
 	public pt.gois.dtServices.business.ProcessoInternoSBLocal getSb() {
