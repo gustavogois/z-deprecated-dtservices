@@ -9,9 +9,15 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.event.SelectEvent;
+
 import pt.gois.dtServices.business.ProcessoExternoSBLocal;
 import pt.gois.dtServices.business.SolicitanteSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
+import pt.gois.dtServices.entity.Concelho;
+import pt.gois.dtServices.entity.Distrito;
+import pt.gois.dtServices.entity.EnderecoVW;
+import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoDeEstado;
@@ -27,7 +33,34 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private SolicitanteSBLocal sbSolicitante;
 	
+	@EJB
+	private pt.gois.dtServices.business.EnderecoSBLocal sbEndereco;
+	
 	ProcessoExterno processoExterno;
+	
+	EnderecoVW endereco;
+	
+	public EnderecoVW getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoVW endereco) {
+		this.endereco = endereco;
+	}
+
+	public void onEnderecoSelect(SelectEvent event) {
+        Imovel imovel = getProcessoExterno().getImovel();
+        EnderecoVW end = (EnderecoVW)event.getObject();
+        end = sbEndereco.findById(new Integer(end.getId()));
+        this.setEndereco(end);
+        
+        imovel.setRuaPorta(end.getRuaPorta());
+        imovel.setComplemento(end.getComplemento());
+        imovel.setDistrito(end.getDistrito());
+        imovel.setConcelho(end.getConcelho());
+        imovel.setCodigoPostal(end.getCodigoPostal());
+    }
+
 	
 	public List<Solicitante> getSolicitantes() {
 		return sbSolicitante.findAll();
@@ -63,6 +96,18 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		sb.delete(processoExterno);
 	}
 	
+	public void validateEndereco(FacesContext context, UIComponent toValidate, Object value) throws Exception {
+		
+	}
+	
+	public void validateCrp(FacesContext context, UIComponent toValidate, Object value) throws Exception {
+		
+	}
+	
+	public void validateInquilino(FacesContext context, UIComponent toValidate, Object value) throws Exception {
+		
+	}
+	
 	public ProcessoExterno getProcessoExterno() {
 		if( processoExterno == null ){
 			Integer id = getId();
@@ -72,6 +117,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				processoExterno = new ProcessoExterno();
 				processoExterno.setSolicitante(new Solicitante());
 				processoExterno.setTipoDeEstado(new TipoDeEstado());
+				Imovel imovel = new Imovel();
+				imovel.setConcelho(new Concelho());
+				imovel.setDistrito(new Distrito());
+				processoExterno.setImovel(imovel);
 			}
 		}
 		return processoExterno;
