@@ -113,13 +113,16 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		processo.setTipoDeEstado(tipoDeEstado);
 		
 		ProcessoExterno processoExterno = sbProcessoExterno.findById(1);
-		processo.setProcessoExterno(processoExterno);
+//		processo.setProcessoExterno(processoExterno);
+		List<ProcessoInterno> processosInterno = processoExterno.getProcessosInterno();
+		processosInterno.add(processo);
+		sbProcessoExterno.save(processoExterno);
 		
-		if( processo.getId() != null ){
-			sb.save( processo );
-		}else{
-			sb.create( processo );
-		}
+//		if( processo.getId() != null ){
+//			sb.save( processo );
+//		}else{
+//			sb.create( processo );
+//		}
 		return "processoInternoList";
 	}
 	
