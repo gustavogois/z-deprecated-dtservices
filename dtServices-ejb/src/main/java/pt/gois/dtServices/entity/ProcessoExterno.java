@@ -114,6 +114,7 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 
 
 	//bi-directional many-to-one association to Processointerno
+	//@OneToMany(mappedBy="processoExterno")
 	@OneToMany(mappedBy="processoExterno")
 	public List<ProcessoInterno> getProcessosInterno() {
 		return this.processosInterno;
