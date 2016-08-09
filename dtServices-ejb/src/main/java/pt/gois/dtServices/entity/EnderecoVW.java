@@ -41,5 +41,9 @@ public class EnderecoVW extends Endereco implements Serializable {
 	public void setCompleto(String completo) {
 		this.completo = completo;
 	}
+	
+	public String toString(){
+		return id != null? id.toString(): null;
+	}
 
 }

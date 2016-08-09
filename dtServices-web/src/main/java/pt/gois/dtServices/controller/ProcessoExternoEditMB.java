@@ -56,6 +56,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
         
         imovel.setRuaPorta(end.getRuaPorta());
         imovel.setComplemento(end.getComplemento());
+        imovel.setLocalidade(end.getLocalidade());
         imovel.setDistrito(end.getDistrito());
         imovel.setConcelho(end.getConcelho());
         imovel.setCodigoPostal(end.getCodigoPostal());
@@ -113,6 +114,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			Integer id = getId();
 			if( id != null ){
 				processoExterno = sb.findById( getId() );
+				endereco = new EnderecoVW();
+				endereco.setCodigoPostal(processoExterno.getImovel().getCodigoPostal());
 			}else{
 				processoExterno = new ProcessoExterno();
 				processoExterno.setSolicitante(new Solicitante());
@@ -121,6 +124,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				imovel.setConcelho(new Concelho());
 				imovel.setDistrito(new Distrito());
 				processoExterno.setImovel(imovel);
+				imovel.setProcessoExterno(processoExterno);
 			}
 		}
 		return processoExterno;

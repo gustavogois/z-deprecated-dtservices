@@ -35,8 +35,10 @@ public class Imovel extends Endereco implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public Integer getId() {
+		if( id == null ){
+			id = processoExterno.getId();
+		}
 		return this.id;
 	}
 

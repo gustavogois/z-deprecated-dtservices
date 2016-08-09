@@ -23,7 +23,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name="Servico.findAll", query="SELECT s FROM Servico s")
-public class Servico implements Serializable {
+public class Servico extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date dtCadastro;

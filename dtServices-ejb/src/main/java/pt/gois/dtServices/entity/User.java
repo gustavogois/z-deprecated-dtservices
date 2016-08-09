@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "users", schema = "dt_services")
-public class User implements Serializable {
+public class User extends GeneralEntity implements Serializable {
 	static final long serialVersionUID = 1L;
 
 	Integer id;

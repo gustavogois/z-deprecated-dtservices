@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -24,7 +25,7 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name="ProcessoExterno.findAll", query="SELECT p FROM ProcessoExterno p")
-public class ProcessoExterno implements Serializable {
+public class ProcessoExterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String descricao;
@@ -80,7 +81,7 @@ public class ProcessoExterno implements Serializable {
 
 
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processoExterno", fetch=FetchType.EAGER)
+	@OneToOne(mappedBy="processoExterno", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Imovel getImovel() {
 		return this.imovel;
 	}

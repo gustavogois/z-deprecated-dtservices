@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQuery(name="Solicitante.findAll", query="SELECT s FROM Solicitante s")
-public class Solicitante implements Serializable {
+public class Solicitante extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nif;

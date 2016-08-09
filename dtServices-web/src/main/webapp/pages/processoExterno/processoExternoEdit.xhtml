@@ -24,7 +24,7 @@
 		<f:metadata>
 			<f:viewParam name="id" value="#{processoExternoEditMB.id}" />
 		</f:metadata>
-		<h:form id="processoExternoNew">
+		<h:form id="processoExternoNew" prependId="false">
 			<div id="rightbox" class="fixright">
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
@@ -58,95 +58,7 @@
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="#{bundle.tab_imovel}" id="tabImovel">
-					<h:panelGrid columns="2" id="endereco">
-						<p:outputLabel value="#{bundle.default_field_name}" />
-						<p:inputText size="60" label="#{bundle.imovel_field_inquilino}"
-							value="#{processoExternoEditMB.processoExterno.imovel.inquilino}"
-							validator="#{processoExternoEditMB.validateInquilino}" required="true"
-							validatorMessage="#{bundle.imovel_msg_invalidInquilino}">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.imovel_field_crp}" />
-						<p:inputText size="60" label="#{bundle.imovel_field_crp}"
-							value="#{processoExternoEditMB.processoExterno.imovel.crp}"
-							validator="#{processoExternoEditMB.validateCrp}" required="true"
-							validatorMessage="#{bundle.imovel_msg_invalidCrp}">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
-						<h:panelGrid columns="2">
-							<p:inputText id="ruaPorta" size="60"
-								label="#{bundle.endereco_field_ruaPorta}"
-								value="#{processoExternoEditMB.processoExterno.imovel.ruaPorta}"
-								validator="#{processoExternoEditMB.validateEndereco}" required="true"
-								validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
-							</p:inputText>
-							<p:commandButton value="Geocode" icon="ui-icon-search"
-								onclick="geocode( $( '#concelho_label' ).html() + ' ' + $( '#ruaPorta' ).val() )"
-								type="button" />
-						</h:panelGrid>
-
-						<p:outputLabel value="#{bundle.endereco_field_complemento}" />
-						<p:inputText size="60"
-							label="#{bundle.endereco_field_complemento}"
-							value="#{processoExternoEditMB.processoExterno.imovel.complemento}" required="true">
-						</p:inputText>
-
-						<p:outputLabel value="#{bundle.endereco_field_cp}" />
-						<h:panelGrid columns="2">
-							<p:autoComplete id="cp" value="#{processoExternoEditMB.endereco}"
-								completeMethod="#{enderecoMB.search}" var="end"
-								converter="enderecoConverter" itemLabel="#{end.codigoPostal}"
-								itemValue="#{end.id}" forceSelection="true">
-								<p:ajax event="itemSelect"
-									listener="#{processoExternoEditMB.onEnderecoSelect}" update="endereco" />
-								<p:column style="width:10%">
-									<h:outputText value="#{end.codigoPostal}" />
-								</p:column>
-
-								<p:column>
-									<h:outputText value="#{end.ruaPorta}" />
-								</p:column>
-
-								<p:column>
-									<h:outputText value="#{end.complemento}" />
-								</p:column>
-
-								<p:column>
-									<h:outputText value="#{end.concelho.nome}" />
-								</p:column>
-
-								<p:column>
-									<h:outputText value="#{end.distrito.nome}" />
-								</p:column>
-							</p:autoComplete>
-							<p:commandButton value="Geocode" icon="ui-icon-search"
-								onclick="geocode( $( '#cp_input' ).val() )" type="button" />
-						</h:panelGrid>
-
-						<p:outputLabel value="#{bundle.endereco_field_concelho}" />
-						<p:selectOneMenu id="concelho"
-							value="#{processoExternoEditMB.processoExterno.imovel.concelho.id}" style="width:125px"
-							required="true" label="#{bundle.endereco_field_concelho}">
-							<f:selectItems
-								value="#{enderecoMB.getConcelhos(processoExternoEditMB.processoExterno.imovel.distrito)}"
-								var="concelho" itemValue="#{concelho.id}"
-								itemLabel="#{concelho.nome}" />
-						</p:selectOneMenu>
-
-						<p:outputLabel value="#{bundle.endereco_field_distrito}" />
-						<p:selectOneMenu value="#{processoExternoEditMB.processoExterno.imovel.distrito.id}"
-							style="width:125px" required="true"
-							label="#{bundle.endereco_field_distrito}">
-							<f:selectItems value="#{enderecoMB.distritos}" var="distrito"
-								itemValue="#{distrito.id}" itemLabel="#{distrito.nome}" />
-						</p:selectOneMenu>
-
-					</h:panelGrid>
-					<p:gmap id="geoGmap" widgetVar="geoGmap"
-						center="#{gMapsMB.centerGeoMap}" zoom="8" type="ROADMAP"
-						model="#{gMapsMB.geoModel}" style="width:100%;height:400px">
-						<p:ajax event="geocode" listener="#{gMapsMB.onGeocode}"
-							update="@this" />
-					</p:gmap>
+					<ui:include src="imovel.xhtml" />
 				</p:tab>
 			</p:tabView>
 		</h:form>

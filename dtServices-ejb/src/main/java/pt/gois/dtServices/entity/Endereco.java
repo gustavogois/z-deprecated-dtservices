@@ -8,7 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Endereco implements Serializable {
+public class Endereco extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	String localidade;
 	String ruaPorta;

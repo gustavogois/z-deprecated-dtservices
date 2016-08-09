@@ -21,7 +21,7 @@
     }
     </script>
 		<f:metadata>
-			<f:viewParam name="id" value="#{imovelEditMB.id}" />
+			<f:viewParam name="id" value="#{processoExternoEditMB.id}" />
 		</f:metadata>
 		<h:form id="imovelNew" prependId="false">
 			<div id="rightbox" class="fixright">
@@ -29,7 +29,7 @@
 					<h:panelGrid columns="2">
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_save}"
-							action="#{imovelEditMB.save}" />
+							action="#{processoExternoEditMB.save}" />
 						<p:commandButton ajax="false"
 							value="#{bundle.default_action_cancel}" immediate="true"
 							action="imovelList" />
@@ -38,43 +38,29 @@
 			</div>
 			<h:panelGrid columns="2" id="endereco">
 				<p:outputLabel value="#{bundle.default_field_ID}" />
-				<p:outputLabel value="#{imovelEditMB.imovel.id}" />
+				<p:outputLabel value="#{processoExternoEditMB.imovel.id}" />
 				<p:outputLabel value="#{bundle.default_field_name}" />
 				<p:inputText size="60" label="#{bundle.imovel_field_inquilino}"
-					value="#{imovelEditMB.imovel.inquilino}"
-					validator="#{imovelEditMB.validateInquilino}" required="true"
+					value="#{processoExternoEditMB.imovel.inquilino}"
+					validator="#{processoExternoEditMB.validateInquilino}" required="true"
 					validatorMessage="#{bundle.imovel_msg_invalidInquilino}">
 				</p:inputText>
+				
 				<p:outputLabel value="#{bundle.imovel_field_crp}" />
 				<p:inputText size="60" label="#{bundle.imovel_field_crp}"
-					value="#{imovelEditMB.imovel.crp}"
-					validator="#{imovelEditMB.validateCrp}" required="true"
+					value="#{processoExternoEditMB.imovel.crp}"
+					validator="#{processoExternoEditMB.validateCrp}" required="true"
 					validatorMessage="#{bundle.imovel_msg_invalidCrp}">
 				</p:inputText>
-				<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
+				
+								<p:outputLabel value="#{bundle.endereco_field_cp}" />
 				<h:panelGrid columns="2">
-					<p:inputText id="ruaPorta" size="60" label="#{bundle.endereco_field_ruaPorta}"
-						value="#{imovelEditMB.imovel.ruaPorta}"
-						validator="#{imovelEditMB.validateEndereco}" required="true"
-						validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
-					</p:inputText>
-					<p:commandButton value="Geocode" icon="ui-icon-search"
-						onclick="geocode( $( '#concelho_label' ).html() + ' ' + $( '#ruaPorta' ).val() )" type="button" />
-				</h:panelGrid>
-
-				<p:outputLabel value="#{bundle.endereco_field_complemento}" />
-				<p:inputText size="60" label="#{bundle.endereco_field_complemento}"
-					value="#{imovelEditMB.imovel.complemento}" required="true">
-				</p:inputText>
-
-				<p:outputLabel value="#{bundle.endereco_field_cp}" />
-				<h:panelGrid columns="2">
-					<p:autoComplete id="cp" value="#{imovelEditMB.endereco}"
+					<p:autoComplete id="cp" value="#{processoExternoEditMB.endereco}"
 						completeMethod="#{enderecoMB.search}" var="end"
 						converter="enderecoConverter" itemLabel="#{end.codigoPostal}"
-						itemValue="#{end.id}" forceSelection="true">
+						itemValue="#{end}" forceSelection="true">
 						<p:ajax event="itemSelect"
-							listener="#{imovelEditMB.onEnderecoSelect}" update="endereco" />
+							listener="#{processoExternoEditMB.onEnderecoSelect}" update="endereco" />
 						<p:column style="width:10%">
 							<h:outputText value="#{end.codigoPostal}" />
 						</p:column>
@@ -99,24 +85,49 @@
 						onclick="geocode( $( '#cp_input' ).val() )" type="button" />
 				</h:panelGrid>
 
+				<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
+				<h:panelGrid columns="2">
+					<p:inputText id="ruaPorta" size="60" label="#{bundle.endereco_field_ruaPorta}"
+						value="#{processoExternoEditMB.imovel.ruaPorta}"
+						validator="#{processoExternoEditMB.validateEndereco}" required="true"
+						validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
+					</p:inputText>
+					<p:commandButton value="Geocode" icon="ui-icon-search"
+						onclick="geocode( $( '#concelho_label' ).html() + ' ' + $( '#ruaPorta' ).val() )" type="button" />
+				</h:panelGrid>
+
+				<p:outputLabel value="#{bundle.endereco_field_complemento}" />
+				<p:inputText size="60" label="#{bundle.endereco_field_complemento}"
+					value="#{processoExternoEditMB.imovel.complemento}" required="true">
+				</p:inputText>
+
 				<p:outputLabel value="#{bundle.endereco_field_concelho}" />
-				<p:selectOneMenu id="concelho" value="#{imovelEditMB.imovel.concelho.id}"
+				<p:selectOneMenu id="concelho" value="#{processoExternoEditMB.imovel.concelho.id}"
 					style="width:125px" required="true"
 					label="#{bundle.endereco_field_concelho}">
 					<f:selectItems
-						value="#{enderecoMB.getConcelhos(imovelEditMB.imovel.distrito)}"
+						value="#{enderecoMB.getConcelhos(processoExternoEditMB.imovel.distrito)}"
 						var="concelho" itemValue="#{concelho.id}"
 						itemLabel="#{concelho.nome}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="#{bundle.endereco_field_distrito}" />
-				<p:selectOneMenu value="#{imovelEditMB.imovel.distrito.id}"
+				<p:selectOneMenu value="#{processoExternoEditMB.imovel.distrito.id}"
 					style="width:125px" required="true"
 					label="#{bundle.endereco_field_distrito}">
 					<f:selectItems value="#{enderecoMB.distritos}" var="distrito"
 						itemValue="#{distrito.id}" itemLabel="#{distrito.nome}" />
 				</p:selectOneMenu>
 
+				<p:outputLabel value="#{bundle.imovel_field_latitude}" />
+				<p:inputText size="60" label="#{bundle.imovel_field_latitude}"
+					value="#{processoExternoEditMB.imovel.latitude}">
+				</p:inputText>
+				
+				<p:outputLabel value="#{bundle.imovel_field_longitude}" />
+				<p:inputText size="60" label="#{bundle.imovel_field_longitude}"
+					value="#{processoExternoEditMB.imovel.longitude}">
+				</p:inputText>
 			</h:panelGrid>
 			<p:gmap id="geoGmap" widgetVar="geoGmap"
 				center="#{gMapsMB.centerGeoMap}" zoom="8" type="ROADMAP"

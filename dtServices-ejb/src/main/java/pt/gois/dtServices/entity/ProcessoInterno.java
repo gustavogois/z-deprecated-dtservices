@@ -20,7 +20,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQuery(name="ProcessoInterno.findAll", query="SELECT p FROM ProcessoInterno p")
-public class ProcessoInterno implements Serializable {
+public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private boolean comChaves;
