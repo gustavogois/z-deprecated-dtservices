@@ -14,47 +14,70 @@
 	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_servico}" />
 
 	<ui:define name="body">
+		<script>
+			function geocode(value) {
+				PF('geoGmap').geocode(value);
+			}
+		</script>
+
 		<f:metadata>
 			<f:viewParam name="id" value="#{servicoEditMB.id}" />
-			<f:viewParam name="solicitanteId" value="#{servicoEditMB.servico.solicitante.id}" />
+			<f:viewParam name="idProcessoInterno"
+				value="#{servicoEditMB.idProcessoInterno}" />
 		</f:metadata>
 		<h:form id="servicoNew">
 			<div id="rightbox" class="fixright">
-				<p:panel>
-					<h:panelGrid columns="2">
-						<p:commandButton ajax="false"
-							value="#{bundle.default_action_save}"
-							action="#{servicoEditMB.save}" />
-						<p:commandButton ajax="false"
-							value="#{bundle.default_action_cancel}" immediate="true"
-							action="servicoList" />
-					</h:panelGrid>
-				</p:panel>
+				<h:panelGrid columns="2">
+					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
+						action="#{servicoEditMB.save}" icon="ui-icon-disk" />
+					<p:commandButton ajax="false"
+						value="#{bundle.default_action_cancel}" immediate="true"
+						action="servicoList" />
+				</h:panelGrid>
 			</div>
-			<h:panelGrid columns="2">
-				<p:outputLabel value="#{bundle.default_field_ID}" />
-				<p:outputLabel value="#{servicoEditMB.servico.id}" />
-				
-				<p:outputLabel value="#{bundle.servico_field_solicitante}" />
-				<p:selectOneMenu value="#{servicoEditMB.servico.solicitante.id}"
-					style="width:300px" required="true">
-					<f:selectItems value="#{solicitanteListMB.solicitantes}" var="solicitante"
-						itemValue="#{solicitante.id}" itemLabel="#{solicitante.nome}" />
-				</p:selectOneMenu>
-				
-				<p:outputLabel value="#{bundle.default_field_name}" />
-				<p:inputText size="60" label="#{bundle.default_field_nome}"
-					value="#{servicoEditMB.servico.nome}"
-					validator="#{servicoEditMB.validateName}" required="true"
-					validatorMessage="#{bundle.default_msg_invalidName}">
-				</p:inputText>
-				<p:outputLabel value="#{bundle.default_field_valor}" />
-				<p:inputText size="8" label="#{bundle.default_field_valor}"
-					value="#{servicoEditMB.servico.valor}"
-					validator="#{servicoEditMB.validateValor}" required="true"
-					validatorMessage="#{bundle.default_msg_invalidValor}">
-				</p:inputText>
-			</h:panelGrid>
+			<p:tabView dynamic="true" cache="true" prependId="false">
+				<p:tab title="#{bundle.tab_main}" id="mainTab">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="#{bundle.default_field_ID}" />
+						<p:outputLabel value="#{servicoEditMB.servico.id}" />
+
+						<p:outputLabel value="#{bundle.servico_field_processo_interno}" />
+						<p:selectOneMenu
+							value="#{servicoEditMB.servico.processoInterno.id}"
+							style="width:125px" required="true"
+							disabled="#{servicoEditMB.idProcessoInterno != null}">
+							<f:selectItems value="#{servicoEditMB.processosInterno}"
+								var="processo" itemValue="#{processo.id}"
+								itemLabel="#{processo.id}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="#{bundle.servico}" />
+						<p:selectOneMenu
+							value="#{servicoEditMB.servico.tipoServicoSolicitante.id}"
+							style="width:125px" required="true">
+							<f:selectItems value="#{servicoEditMB.tiposServicoSolicitante}"
+								var="tss" itemValue="#{tss.id}"
+								itemLabel="#{tss.tipoServico.nome}" />
+							<p:ajax
+								listener="#{servicoEditMB.onServicoChange}"
+								update="valorId" />
+						</p:selectOneMenu>
+						<p:outputLabel value="#{bundle.default_field_valor}" />
+						<p:inputText id="valorId" size="8"
+							label="#{bundle.default_field_valor}"
+							value="#{servicoEditMB.servico.valor}"
+							required="true">
+						</p:inputText>
+
+						<p:outputLabel value="#{bundle.default_field_observacoes}" />
+						<p:inputTextarea value="#{servicoEditMB.servico.observacoes}"
+							rows="5" cols="30" counter="display" maxlength="120"
+							counterTemplate="{0} caracteres restantes" autoResize="false" />
+						<h:outputLabel />
+						<h:outputText id="display" />
+					</h:panelGrid>
+				</p:tab>
+			</p:tabView>
 		</h:form>
 
 	</ui:define>

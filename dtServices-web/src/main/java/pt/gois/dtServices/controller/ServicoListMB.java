@@ -23,6 +23,8 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 	private pt.gois.dtServices.business.ServicoSBLocal sb;
 
 	PaginatedDataModel<Servico> list;
+	
+	Integer idProcessoInterno;
 
 	public ServicoListMB() {
 
@@ -38,6 +40,9 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 			if (StringUtils.isNumeric(term)) {
 				filters.put("obj.id", new Integer( term ) );
 			}
+		}
+		if (idProcessoInterno != null) {
+			filters.put("obj.processoInterno", idProcessoInterno);
 		}
 		list = new PaginatedDataModel<Servico>(searchPageCtrl, sb);
 		return list;
@@ -57,5 +62,12 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 
 	public void setSb(ServicoSBLocal sb) {
 		this.sb = sb;
+	}
+	public Integer getIdProcessoInterno() {
+		return idProcessoInterno;
+	}
+
+	public void setIdProcessoInterno(Integer idProcessoInterno) {
+		this.idProcessoInterno = idProcessoInterno;
 	}
 }

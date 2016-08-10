@@ -10,59 +10,16 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_servico}" />
+	<ui:param name="pageTitle"
+		value="#{bundle.menu_cadastro_servico}" />
 
 	<ui:define name="body">
-		<h:panelGrid columns="2">
-			<h:form id="form2" prependId="false">
-				<p:commandButton ajax="true" value="#{bundle.default_action_add}"
-					icon="ui-icon-document" action="servicoEdit" />
-			</h:form>
-			<h:form id="servicoSearch" prependId="false">
-				<h:panelGrid columns="3" style="float: right">
-					<h:outputText value="#{bundle.default_label_termSearch} " />
-					<p:remoteCommand name="searchTrigger" update=":servicoListId"
-						actionListener="#{servicoListMB.search}" />
-					<p:inputText id="search" value="#{servicoListMB.term}"
-						onkeydown="if(event.keyCode == 13) { searchTrigger(); }" />
-				</h:panelGrid>
-			</h:form>
-		</h:panelGrid>
-
-		<h:form id="servicoListId">
-			<p:dataTable id="servicoList" value="#{servicoListMB.list}"
-				var="servico" emptyMessage="#{bundle.default_msg_notFound}"
-				paginator="true" rows="20" lazy="true"
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} 
-					{NextPageLink} {LastPageLink}"
-				rowsPerPageTemplate="20, 50, 10" selectionMode="single">
-				<p:column headerText="#{bundle.default_field_ID}">
-					<h:outputText value="#{servico.id}" />
-				</p:column>
-				<p:column headerText="#{bundle.servico_field_solicitante}">
-					<h:outputText value="#{servico.solicitante.nome}" />
-				</p:column>
-				<p:column headerText="#{bundle.default_field_name}">
-					<h:outputText value="#{servico.nome}" />
-				</p:column>
-				<p:column headerText="#{bundle.default_field_valor}">
-					<h:outputText value="#{servico.valor}" />
-				</p:column>
-				<p:column headerText="#{bundle.default_label_action}">
-					<h:link value="#{bundle.default_action_edit}"
-						styleClass="ui-icon-person" outcome="servicoEdit"
-						style="margin-right:20px">
-						<f:param name="id" value="#{servico.id}" />
-					</h:link>
-					<h:commandLink value="#{bundle.default_action_del}"
-						styleClass="ui-icon-person"
-						action="#{servicoEditMB.delete(servico)}"
-						style="margin-right:20px">
-					</h:commandLink>
-				</p:column>
-			</p:dataTable>
+		<h:form id="servicoForm" prependId="false">
+			<ui:include src="servicoTableList.xhtml">
+				<ui:param name="list" value="#{servicoListMB.list}" />
+				<ui:param name="idProcessoInterno" value="#{servicoListMB.idProcessoInterno}" />
+			</ui:include>
 		</h:form>
 	</ui:define>
 </ui:composition>
-
 </html>

@@ -11,7 +11,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.TipoServico;
+import pt.gois.dtServices.entity.TipoServicoSolicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -22,7 +25,37 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.ServicoSBLocal sb;
 	
+	@EJB
+	private pt.gois.dtServices.business.ProcessoInternoSBLocal sbProcessoInterno;
+	
+	@EJB
+	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTipoServicoSolicitante;
+	
 	Servico servico;
+	
+	Integer idProcessoInterno;
+	
+
+	public List<ProcessoInterno> getProcessosInterno() {
+		return sbProcessoInterno.findAll();
+	}
+	
+	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
+		
+		ProcessoInterno processo = sbProcessoInterno.findById(idProcessoInterno);
+		
+		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
+		searchPageCtrl.getFilters().put("id", processo.getProcessoExterno().getSolicitante().getId());
+		List<TipoServicoSolicitante> tss = sbTipoServicoSolicitante.find(searchPageCtrl).getRows();
+		
+		return tss;
+		
+	}
+	
+	public void onServicoChange() {
+		TipoServicoSolicitante tss = sbTipoServicoSolicitante.findById(servico.getTipoServicoSolicitante().getId());
+		servico.setValor(tss.getValor());
+	}
 	
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
@@ -93,4 +126,11 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		this.sb = sb;
 	}
 
+	public Integer getIdProcessoInterno() {
+		return idProcessoInterno;
+	}
+
+	public void setIdProcessoInterno(Integer idProcessoInterno) {
+		this.idProcessoInterno = idProcessoInterno;
+	}
 }

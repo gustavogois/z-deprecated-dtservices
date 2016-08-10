@@ -61,6 +61,14 @@
 						<h:outputText id="display" />
 					</h:panelGrid>
 				</p:tab>
+				<p:tab title="#{bundle.tab_servicos}"
+					disabled="#{processoInternoEditMB.processoInterno.id == null}" id="cambistaTab">
+					<ui:include src="../servico/servicoTableList.xhtml">
+						<ui:param name="list" value="#{servicoListMB.list}" />
+						<ui:param name="idProcessoInterno" value="#{processoInternoEditMB.processoInterno.id}" />
+					</ui:include>
+				</p:tab>
+
 			</p:tabView>
 		</h:form>
 
