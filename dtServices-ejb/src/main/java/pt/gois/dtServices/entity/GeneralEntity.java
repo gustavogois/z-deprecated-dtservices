@@ -15,7 +15,7 @@ public class GeneralEntity extends GeneralEntityRef{
 	static final long serialVersionUID = 1L;
 
 	Date updateDt;
-	Integer updateUser;
+	String updateUser;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "updateDt", nullable = false, length = 29)
@@ -30,21 +30,18 @@ public class GeneralEntity extends GeneralEntityRef{
 		this.updateDt = updateDt;
 	}
 	
-	public Integer getUpdateUser() {
-		if( updateUser == null ){
-			updateUser = 0;
-		}
+	public String getUpdateUser() {
 		return updateUser;
 	}
 	
-	public void setUpdateUser(Integer updateUser) {
+	public void setUpdateUser(String updateUser) {
 		this.updateUser = updateUser;
 	}
 	
 	@PreUpdate
 	@PrePersist
 	public void updateUserUpdate(){
-		this.updateUser = 0;
+//		this.updateUser = 0;
 	}
 
 }
