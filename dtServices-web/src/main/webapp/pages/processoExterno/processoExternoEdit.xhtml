@@ -18,6 +18,20 @@
 		<script>
 			function geocode(value) {
 				PF('geoGmap').geocode(value);
+
+				PF('gmapDlg').show();
+			}
+
+			var currentMarker;
+
+			function handlePointClick(event) {
+			        console.log( event.latLng.lat() + ' ' + event.latLng.lng() )
+			        document.getElementById('lat').value = event.latLng.lat();
+			        document.getElementById('lng').value = event.latLng.lng();	
+
+			        //PF('map').addOverlay(currentMarker);
+
+			        //PF('dlg').show();
 			}
 		</script>
 
@@ -34,7 +48,7 @@
 						action="processoExternoList" />
 				</h:panelGrid>
 			</div>
-			<p:tabView dynamic="true" cache="true" prependId="false">
+			<p:tabView dynamic="false" cache="true" prependId="false">
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
@@ -56,8 +70,6 @@
 						<h:outputLabel />
 						<h:outputText id="display" />
 					</h:panelGrid>
-				</p:tab>
-				<p:tab title="#{bundle.tab_imovel}" id="tabImovel">
 					<ui:include src="imovel.xhtml" />
 				</p:tab>
 			</p:tabView>

@@ -120,20 +120,22 @@
 				</p:selectOneMenu>
 
 				<p:outputLabel value="#{bundle.imovel_field_latitude}" />
-				<p:inputText size="60" label="#{bundle.imovel_field_latitude}"
+				<p:inputText id="lat" size="60" label="#{bundle.imovel_field_latitude}"
 					value="#{processoExternoEditMB.imovel.latitude}">
 				</p:inputText>
 				
 				<p:outputLabel value="#{bundle.imovel_field_longitude}" />
-				<p:inputText size="60" label="#{bundle.imovel_field_longitude}"
+				<p:inputText id="lng" size="60" label="#{bundle.imovel_field_longitude}"
 					value="#{processoExternoEditMB.imovel.longitude}">
 				</p:inputText>
 			</h:panelGrid>
 			<p:gmap id="geoGmap" widgetVar="geoGmap"
-				center="#{gMapsMB.centerGeoMap}" zoom="8" type="ROADMAP"
-				model="#{gMapsMB.geoModel}" style="width:100%;height:400px">
-				<p:ajax event="geocode" listener="#{gMapsMB.onGeocode}"
+				center="#{processoExternoEditMB.centerGeoMap}" zoom="8" type="HYBRID"
+				model="#{processoExternoEditMB.geoModel}" style="width:100%;height:400px"
+				onPointClick="handlePointClick(event);">
+				<p:ajax event="geocode" listener="#{processoExternoEditMB.onGeocode}"
 					update="@this" />
+				<p:ajax event="pointSelect" listener="#{processoExternoEditMB.onPointSelect}" update=":lat,:lng" />
 			</p:gmap>
 		</h:form>
 

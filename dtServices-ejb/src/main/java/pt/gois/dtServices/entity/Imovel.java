@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
@@ -90,6 +88,10 @@ public class Imovel extends Endereco implements Serializable {
 	public void setLatitude(String latitude) {
 		this.latitude = latitude;
 	}
+	
+	public void setLatitude(Double latitude) {
+		this.latitude = latitude.toString();
+	}
 
 	public String getLongitude() {
 		return longitude;
@@ -97,5 +99,9 @@ public class Imovel extends Endereco implements Serializable {
 
 	public void setLongitude(String longitude) {
 		this.longitude = longitude;
+	}
+	
+	public void setLongitude(Double longitude) {
+		this.longitude = longitude.toString();
 	}
 }
