@@ -1,0 +1,19 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+
+<p:commandButton value="Adicionar" onclick="PF('imagemDlg').show();"/>
+
+<p:contentFlow id="imagens" value="#{processoExternoEditMB.images}" var="image">
+	<p:graphicImage value="#{processoExternoEditMB.getImagem(image.id)}" stream="false"  />
+	<div class="caption">#{image.descricao}</div>
+</p:contentFlow>
+</html>

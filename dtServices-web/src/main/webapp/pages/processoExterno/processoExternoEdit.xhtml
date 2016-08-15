@@ -48,7 +48,7 @@
 						action="processoExternoList" />
 				</h:panelGrid>
 			</div>
-			<p:tabView dynamic="false" cache="true" prependId="false">
+			<p:tabView dynamic="true" cache="true" prependId="false">
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
@@ -72,9 +72,30 @@
 					</h:panelGrid>
 					<ui:include src="imovel.xhtml" />
 				</p:tab>
+				<p:tab title="#{bundle.tab_imagem}" id="imageTab">
+					<ui:include src="imagem.xhtml" />
+				</p:tab>
 			</p:tabView>
 		</h:form>
 
+		<p:dialog id="imageDialog" widgetVar="imagemDlg" width="625"
+			height="400" modal="true">
+			<h:form enctype="multipart/form-data">
+				<p:fileUpload value="#{processoExternoEditMB.file}" mode="simple"
+					skinSimple="true" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+
+				<h:panelGrid columns="2">
+					<p:outputLabel value="#{bundle.default_field_observacoes}" />
+					<p:inputTextarea value="#{processoExternoEditMB.descricao}"
+						rows="5" cols="30" counter="display" maxlength="120"
+						counterTemplate="{0} caracteres restantes" autoResize="false" />
+
+					<p:commandButton value="Submit" ajax="false"
+						actionListener="#{processoExternoEditMB.upload}" update=":imagens" />
+					<p:commandButton value="Close" ajax="true" update=":imageTab" onclick="PF('imagemDlg').close()" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
 	</ui:define>
 
 </ui:composition>

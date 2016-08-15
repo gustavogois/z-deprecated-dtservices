@@ -2,6 +2,8 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -10,7 +12,11 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i")
+@NamedQueries( {
+	@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i"),
+	@NamedQuery(name="Imagem.findByImovel", query="SELECT i FROM Imagem i join i.imovels im WHERE im.id = :imovelId"),
+	@NamedQuery(name="Imagem.findById", query="SELECT i FROM Imagem i WHERE i.id = :id")
+})
 public class Imagem extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
@@ -65,6 +71,9 @@ public class Imagem extends GeneralEntity implements Serializable {
 			}
 		)
 	public List<Imovel> getImovels() {
+		if( this.imovels == null ){
+			this.imovels = new ArrayList<Imovel>();
+		}
 		return this.imovels;
 	}
 

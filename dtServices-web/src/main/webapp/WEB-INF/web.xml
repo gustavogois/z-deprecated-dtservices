@@ -51,4 +51,13 @@
     <security-role>
         <role-name>USER</role-name>
     </security-role>
+
+	<mime-mapping>
+		<extension>png</extension>
+		<mime-type>image/png</mime-type>
+	</mime-mapping>
+	<mime-mapping>
+    	<extension>xhtml</extension>
+    	<mime-type>application/xml</mime-type>
+	</mime-mapping>
 </web-app>

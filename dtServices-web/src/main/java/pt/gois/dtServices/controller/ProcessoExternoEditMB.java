@@ -1,10 +1,12 @@
 package pt.gois.dtServices.controller;
 
+import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -15,6 +17,9 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
+import org.primefaces.model.UploadedFile;
 import org.primefaces.model.map.DefaultMapModel;
 import org.primefaces.model.map.GeocodeResult;
 import org.primefaces.model.map.LatLng;
@@ -27,6 +32,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.Concelho;
 import pt.gois.dtServices.entity.Distrito;
 import pt.gois.dtServices.entity.EnderecoVW;
+import pt.gois.dtServices.entity.Imagem;
 import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
@@ -45,6 +51,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private pt.gois.dtServices.business.EnderecoSBLocal sbEndereco;
+	
+	@EJB
+	private pt.gois.dtServices.business.ImagemSBLocal sbImagem;
+	
 
 	ProcessoExterno processoExterno;
 
@@ -53,25 +63,34 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	MapModel geoModel;
 
 	String centerGeoMap = "39.1708764,-8.629546,8";
+	
+	UploadedFile file;
+	String descricao;
+	 
+    public void upload() {
+        if(file != null) {
+        	Imagem imagem = new Imagem();
+        	imagem.setDescricao(this.getDescricao());
+        	imagem.getImovels().add(processoExterno.getImovel());
+        	imagem.setImagem( file.getContents() );
+        	sbImagem.create(imagem);
+            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
+            FacesContext.getCurrentInstance().addMessage(null, message);
+        }
+    }
+    
+    public StreamedContent getImagem(Integer id) {
+    	byte[] bin = sbImagem.getBin(id);
+        return new DefaultStreamedContent(new ByteArrayInputStream(bin), "image/png"); 
+    }
 
 	@PostConstruct
 	public void init() {
 		geoModel = new DefaultMapModel();
 	}
 
-	public EnderecoVW getEndereco() {
-		return endereco;
-	}
-
-	public void setEndereco(EnderecoVW endereco) {
-		this.endereco = endereco;
-	}
-
 	public List<Solicitante> getSolicitantes() {
 		return sbSolicitante.findAll();
-	}
-
-	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 	}
 
 	public void onEnderecoSelect(SelectEvent event) {
@@ -136,6 +155,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		}
 		return processoExterno;
 	}
+	
+	public List<Imagem> getImages(){
+		return sb.getImages(processoExterno.getId());
+	}
 
 	public void delete(ProcessoExterno processoExterno) {
 		sb.delete(processoExterno);
@@ -173,6 +196,16 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		processoExterno.getImovel().setLatitude(marker.getLatlng().getLat());
 		processoExterno.getImovel().setLongitude(marker.getLatlng().getLng());
     }
+
+	public EnderecoVW getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(EnderecoVW endereco) {
+		this.endereco = endereco;
+	}
+	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
+	}
 
 	public void validateEndereco(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 
@@ -229,4 +262,19 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public void setProcessoExterno(ProcessoExterno processoExterno) {
 		this.processoExterno = processoExterno;
 	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+    public UploadedFile getFile() {
+        return file;
+    }
+ 
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
 }
