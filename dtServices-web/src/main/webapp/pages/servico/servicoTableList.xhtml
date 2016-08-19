@@ -10,8 +10,14 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
 
 <h:panelGrid columns="2">
+		<f:metadata>
+			<f:viewParam name="idProcessoInterno" value="#{servicoListMB.idProcessoInterno}" />
+		</f:metadata>
+
 	<p:commandButton ajax="true" value="#{bundle.default_action_add}"
-		icon="ui-icon-document" action="/pages/servico/servicoEdit" />
+		icon="ui-icon-document" action="/pages/servico/servicoEdit" >
+			<f:param name="idProcessoInterno" value="#{servicoListMB.idProcessoInterno}" />
+	</p:commandButton>
 
 	<h:panelGrid columns="3" style="float: right">
 		<h:outputText value="#{bundle.default_label_termSearch}	" />

@@ -25,13 +25,13 @@
 			var currentMarker;
 
 			function handlePointClick(event) {
-			        console.log( event.latLng.lat() + ' ' + event.latLng.lng() )
-			        document.getElementById('lat').value = event.latLng.lat();
-			        document.getElementById('lng').value = event.latLng.lng();	
+				console.log(event.latLng.lat() + ' ' + event.latLng.lng())
+				document.getElementById('lat').value = event.latLng.lat();
+				document.getElementById('lng').value = event.latLng.lng();
 
-			        //PF('map').addOverlay(currentMarker);
+				//PF('map').addOverlay(currentMarker);
 
-			        //PF('dlg').show();
+				//PF('dlg').show();
 			}
 		</script>
 
@@ -75,6 +75,14 @@
 				<p:tab title="#{bundle.tab_imagem}" id="imageTab">
 					<ui:include src="imagem.xhtml" />
 				</p:tab>
+				<p:tab title="#{bundle.tab_processos_internos}"
+					disabled="#{processoExternoEditMB.processoExterno.id == null}"
+					id="processoInternoTab">
+					<ui:include src="../processoInterno/processoInternoTableList.xhtml">
+						<ui:param name="idProcessoExterno" value="#{processoExternoEditMB.processoExterno.id}" />
+					</ui:include>
+				</p:tab>
+
 			</p:tabView>
 		</h:form>
 
@@ -92,7 +100,8 @@
 
 					<p:commandButton value="Submit" ajax="false"
 						actionListener="#{processoExternoEditMB.upload}" update=":imagens" />
-					<p:commandButton value="Close" ajax="true" update=":imageTab" onclick="PF('imagemDlg').close()" />
+					<p:commandButton value="Close" ajax="true" update=":imageTab"
+						onclick="PF('imagemDlg').close()" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

@@ -22,8 +22,6 @@
 
 		<f:metadata>
 			<f:viewParam name="id" value="#{servicoEditMB.id}" />
-			<f:viewParam name="idProcessoInterno"
-				value="#{servicoEditMB.idProcessoInterno}" />
 		</f:metadata>
 		<h:form id="servicoNew">
 			<div id="rightbox" class="fixright">
@@ -45,7 +43,7 @@
 						<p:selectOneMenu
 							value="#{servicoEditMB.servico.processoInterno.id}"
 							style="width:125px" required="true"
-							disabled="#{servicoEditMB.idProcessoInterno != null}">
+							disabled="#{processoInternoEditMB.processoInterno.id != null}">
 							<f:selectItems value="#{servicoEditMB.processosInterno}"
 								var="processo" itemValue="#{processo.id}"
 								itemLabel="#{processo.id}" />

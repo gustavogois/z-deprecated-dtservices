@@ -24,19 +24,22 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
 
 	PaginatedDataModel<ProcessoInterno> list;
-
+	Integer idProcessoExterno;
+	
 	public PaginatedDataModel<ProcessoInterno> getList() {
-		if (list != null) {
-			return list;
-		}
-		SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
-		Map<String, Object> filters = searchPageCtrl.getFilters();
-		if (term != null && !"".equals(term = term.trim())) {
-			if (StringUtils.isNumeric(term)) {
-				filters.put("obj.id", new Integer( term ) );
+		if (list == null) {
+			SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
+			Map<String, Object> filters = searchPageCtrl.getFilters();
+			searchPageCtrl.setAndFilter(true);
+			if (term != null && !"".equals(term = term.trim())) {
+				filters.put("obj.loteria.nome", term);
+				if (StringUtils.isNumeric(term)) {
+					filters.put("obj.id", new Integer(term));
+				}
 			}
+			filters.put("obj.processoExterno.id", idProcessoExterno);
+			list = new PaginatedDataModel<ProcessoInterno>(searchPageCtrl, sb);
 		}
-		list = new PaginatedDataModel<ProcessoInterno>(searchPageCtrl, sb);
 		return list;
 	}
 
@@ -60,4 +63,11 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 		return sb.findAll();
 	}
 
+	public Integer getIdProcessoExterno() {
+		return idProcessoExterno;
+	}
+
+	public void setIdProcessoExterno(Integer idProcessoExterno) {
+		this.idProcessoExterno = idProcessoExterno;
+	}
 }

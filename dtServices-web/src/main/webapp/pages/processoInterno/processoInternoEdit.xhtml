@@ -62,11 +62,67 @@
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="#{bundle.tab_servicos}"
-					disabled="#{processoInternoEditMB.processoInterno.id == null}" id="cambistaTab">
-					<ui:include src="../servico/servicoTableList.xhtml">
-						<ui:param name="list" value="#{servicoListMB.list}" />
-						<ui:param name="idProcessoInterno" value="#{processoInternoEditMB.processoInterno.id}" />
-					</ui:include>
+					disabled="#{processoInternoEditMB.processoInterno.id == null}"
+					id="cambistaTab">
+					<h:panelGrid columns="2">
+
+						<p:commandButton ajax="true" value="#{bundle.default_action_add}"
+							icon="ui-icon-document" action="/pages/servico/servicoEdit">
+							<f:param name="idProcessoInterno"
+								value="#{processoInternoEditMB.processoInterno.id}" />
+						</p:commandButton>
+
+						<h:panelGrid columns="3" style="float: right">
+							<h:outputText value="#{bundle.default_label_termSearch}	" />
+							<p:remoteCommand name="servicoSearchTrigger" update="servicoList"
+								actionListener="#{servicoListMB.search}" />
+							<p:inputText id="servicoSearch" value="#{servicoListMB.term}"
+								onkeydown="if(event.keyCode == 13) { servicoSearchTrigger(); event.preventDefault() }" />
+						</h:panelGrid>
+					</h:panelGrid>
+					<p:dataTable id="servicoList" value="#{servicoListMB.list}" var="servico"
+						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+						rows="20" lazy="true"
+						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20, 50, 10">
+
+						<p:column headerText="#{bundle.default_field_ID}"
+							styleClass="column_id">
+							<h:outputText value="#{servico.id}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.servico_field_processo_interno}">
+							<h:outputText value="#{servico.processoInterno.nome}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.servico}">
+							<h:outputText
+								value="#{servico.tipoServicoSolicitante.tipoServico.nome}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.servico_field_estado}">
+							<h:outputText value="#{servico.tipoDeEstado.nome}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.default_field_valor}">
+							<h:outputText value="#{servico.valor}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.default_label_action}"
+							styleClass="column_action">
+							<p:button value="#{bundle.default_action_edit}"
+								icon="ui-icon-pencil" styleClass="action_edit"
+								outcome="/pages/servico/servicoEdit">
+								<f:param name="id" value="#{servico.id}" />
+							</p:button>
+							<p:commandButton value="#{bundle.default_action_del}"
+								icon="ui-icon-trash" styleClass="action_del"
+								action="#{servicoEditMB.delete(servico)}" update="servicoList"
+								ajax="true">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
 				</p:tab>
 
 			</p:tabView>
