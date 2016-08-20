@@ -13,6 +13,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.event.FileUploadEvent;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
@@ -51,10 +52,9 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private pt.gois.dtServices.business.EnderecoSBLocal sbEndereco;
-	
+
 	@EJB
 	private pt.gois.dtServices.business.ImagemSBLocal sbImagem;
-	
 
 	ProcessoExterno processoExterno;
 
@@ -63,29 +63,29 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	MapModel geoModel;
 
 	String centerGeoMap = "39.1708764,-8.629546,8";
-	
-	UploadedFile file;
+
 	String descricao;
-	 
-    public void upload() {
-        if(file != null) {
-        	Imagem imagem = new Imagem();
-        	imagem.setDescricao(this.getDescricao());
-        	imagem.getImovels().add(processoExterno.getImovel());
-        	imagem.setImagem( file.getContents() );
-        	imagem.setFilename(file.getFileName());
-        	imagem.setSize(file.getSize());
-        	imagem.setMimeType(file.getContentType());
-        	sbImagem.create(imagem);
-            FacesMessage message = new FacesMessage("Succesful", file.getFileName() + " is uploaded.");
-            FacesContext.getCurrentInstance().addMessage(null, message);
-        }
-    }
-    
-    public StreamedContent getImagem(Imagem imagem) {
-    	byte[] bin = sbImagem.getBin(imagem.getId());
-        return new DefaultStreamedContent(new ByteArrayInputStream(bin), imagem.getMimeType(), imagem.getFilename() ); 
-    }
+
+	public void handleFileUpload(FileUploadEvent event) {
+		Imagem imagem = new Imagem();
+
+		UploadedFile file = event.getFile();
+		imagem.setDescricao(file.getFileName());
+		imagem.getImovels().add(processoExterno.getImovel());
+		imagem.setImagem(file.getContents());
+		imagem.setFilename(file.getFileName());
+		imagem.setSize(file.getSize());
+		imagem.setMimeType(file.getContentType());
+		sbImagem.create(imagem);
+
+		FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
+		FacesContext.getCurrentInstance().addMessage(null, message);
+	}
+
+	public StreamedContent getImagem(Imagem imagem) {
+		byte[] bin = sbImagem.getBin(imagem.getId());
+		return new DefaultStreamedContent(new ByteArrayInputStream(bin), imagem.getMimeType(), imagem.getFilename());
+	}
 
 	@PostConstruct
 	public void init() {
@@ -140,10 +140,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				processoExterno = sb.findById(getId());
 				endereco = new EnderecoVW();
 				Imovel imovel = processoExterno.getImovel();
-				if( !StringUtils.isEmpty( imovel.getLatitude() ) && !StringUtils.isEmpty( imovel.getLongitude() ) ){
-					LatLng latlng = new LatLng( new Double(imovel.getLatitude()), new Double(imovel.getLongitude()) );
-					geoModel.addOverlay(new Marker( latlng, imovel.getCrp() ));
-				}				
+				if (!StringUtils.isEmpty(imovel.getLatitude()) && !StringUtils.isEmpty(imovel.getLongitude())) {
+					LatLng latlng = new LatLng(new Double(imovel.getLatitude()), new Double(imovel.getLongitude()));
+					geoModel.addOverlay(new Marker(latlng, imovel.getCrp()));
+				}
 				endereco.setCodigoPostal(imovel.getCodigoPostal());
 			} else {
 				processoExterno = new ProcessoExterno();
@@ -158,8 +158,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		}
 		return processoExterno;
 	}
-	
-	public List<Imagem> getImages(){
+
+	public List<Imagem> getImages() {
 		return sb.getImages(processoExterno.getId());
 	}
 
@@ -192,13 +192,13 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			}
 		}
 	}
-	
+
 	public void onMarkerSelect(OverlaySelectEvent event) {
 		Marker marker = (Marker) event.getOverlay();
-         
+
 		processoExterno.getImovel().setLatitude(marker.getLatlng().getLat());
 		processoExterno.getImovel().setLongitude(marker.getLatlng().getLng());
-    }
+	}
 
 	public EnderecoVW getEndereco() {
 		return endereco;
@@ -207,6 +207,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public void setEndereco(EnderecoVW endereco) {
 		this.endereco = endereco;
 	}
+
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 	}
 
@@ -273,11 +274,4 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
-    public UploadedFile getFile() {
-        return file;
-    }
- 
-    public void setFile(UploadedFile file) {
-        this.file = file;
-    }
 }

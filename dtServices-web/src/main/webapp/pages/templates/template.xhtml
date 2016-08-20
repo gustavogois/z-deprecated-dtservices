@@ -111,6 +111,8 @@
 		<br />
 		<p:panel id="main" header="#{pageTitle}" toggleable="true"
 			styleClass="entry">
+			
+			<p:growl id="messages" showDetail="true" />
 			<p:messages autoUpdate="true" />
 			<ui:insert name="body">Page Body</ui:insert>
 		</p:panel>
