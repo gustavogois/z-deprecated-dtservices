@@ -13,16 +13,12 @@
 <ui:composition template="/pages/templates/template.xhtml">
 	<ui:param name="pageTitle"
 		value="#{bundle.menu_cadastro_processo_interno}" />
-
+		
 	<ui:define name="body">
-		<script>
-			function geocode(value) {
-				PF('geoGmap').geocode(value);
-			}
-		</script>
-
 		<f:metadata>
 			<f:viewParam name="id" value="#{processoInternoEditMB.id}" />
+
+			<f:viewParam name="idProcessoExterno" value="#{processoInternoEditMB.idProcessoExterno}" />
 		</f:metadata>
 		<h:form id="processoInternoNew">
 			<div id="rightbox" class="fixright">

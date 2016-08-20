@@ -54,6 +54,8 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	Servico servico;
 	TipoServico tipoServico;
 	
+	Integer idProcessoExterno;
+	
 	public List<TipoDeEstado> getEstadosServico() throws Exception {
 
 		List<TipoDeEstado> estados = sbTipoDeEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);
@@ -108,17 +110,17 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	public String save(){
 		
-		ProcessoInterno processo = getProcessoInterno();
+		ProcessoInterno procInterno = getProcessoInterno();
 		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.CRIADO); 
-		processo.setTipoDeEstado(tipoDeEstado);
+		procInterno.setTipoDeEstado(tipoDeEstado);
 		
-		ProcessoExterno processoExterno = sbProcessoExterno.findById(1);
-		processo.setProcessoExterno(processoExterno);
+		ProcessoExterno processoExterno = sbProcessoExterno.findById(procInterno.getProcessoExterno().getId());
+		procInterno.setProcessoExterno(processoExterno);
 		
-		if( processo.getId() != null ){
-			sb.save( processo );
+		if( procInterno.getId() != null ){
+			sb.save( procInterno );
 		}else{
-			sb.create( processo );
+			sb.create( procInterno );
 		}
 		return "processoInternoList";
 	}
@@ -134,15 +136,17 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			if( id != null ){
 				processoInterno = sb.findById( getId() );
 			}else{
-				
 				processoInterno = new ProcessoInterno();
 				processoInterno.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
+				processoInterno.setProcessoExterno( new ProcessoExterno() );
+				processoInterno.getProcessoExterno().setId(getIdProcessoExterno());
+				processoInterno.setTipoDeEstado(new TipoDeEstado());
+				servico = new Servico();
+				servico.setTipoDeEstado(new TipoDeEstado());
+				
+				tipoServico = new TipoServico();
+
 			}
-			
-			servico = new Servico();
-			servico.setTipoDeEstado(new TipoDeEstado());
-			
-			tipoServico = new TipoServico();
 		}
 		return processoInterno;
 	}
@@ -181,5 +185,59 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	public void setTipoServico(TipoServico tipoServico) {
 		this.tipoServico = tipoServico;
 	}
+
+	public pt.gois.dtServices.business.ProcessoExternoSBLocal getSbProcessoExterno() {
+		return sbProcessoExterno;
+	}
+
+	public void setSbProcessoExterno(pt.gois.dtServices.business.ProcessoExternoSBLocal sbProcessoExterno) {
+		this.sbProcessoExterno = sbProcessoExterno;
+	}
+
+	public TipoDeEstadoSBLocal getSbTipoDeEstado() {
+		return sbTipoDeEstado;
+	}
+
+	public void setSbTipoDeEstado(TipoDeEstadoSBLocal sbTipoDeEstado) {
+		this.sbTipoDeEstado = sbTipoDeEstado;
+	}
+
+	public TipoServicoSBLocal getSbTipoServico() {
+		return sbTipoServico;
+	}
+
+	public void setSbTipoServico(TipoServicoSBLocal sbTipoServico) {
+		this.sbTipoServico = sbTipoServico;
+	}
+
+	public ServicoSBLocal getSbServico() {
+		return sbServico;
+	}
+
+	public void setSbServico(ServicoSBLocal sbServico) {
+		this.sbServico = sbServico;
+	}
+
+	public TipoDeEstadoSBLocal getSbTipoEstado() {
+		return sbTipoEstado;
+	}
+
+	public void setSbTipoEstado(TipoDeEstadoSBLocal sbTipoEstado) {
+		this.sbTipoEstado = sbTipoEstado;
+	}
+
+	public void setSb(pt.gois.dtServices.business.ProcessoInternoSBLocal sb) {
+		this.sb = sb;
+	}
+
+	public Integer getIdProcessoExterno() {
+		return idProcessoExterno;
+	}
+
+	public void setIdProcessoExterno(Integer idProcessoExterno) {
+		this.idProcessoExterno = idProcessoExterno;
+	}
+	
+	
 
 }

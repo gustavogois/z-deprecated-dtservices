@@ -27,6 +27,11 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 	Integer idProcessoExterno;
 	
 	public PaginatedDataModel<ProcessoInterno> getList() {
+		return getList(null);
+	}
+
+	public PaginatedDataModel<ProcessoInterno> getList(Integer idProcessoExterno) {
+		this.setIdProcessoExterno(idProcessoExterno);
 		if (list == null) {
 			SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
 			Map<String, Object> filters = searchPageCtrl.getFilters();
@@ -37,7 +42,9 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 					filters.put("obj.id", new Integer(term));
 				}
 			}
-			filters.put("obj.processoExterno.id", idProcessoExterno);
+			if( idProcessoExterno != null ){
+				filters.put("obj.processoExterno.id", idProcessoExterno);
+			}
 			list = new PaginatedDataModel<ProcessoInterno>(searchPageCtrl, sb);
 		}
 		return list;

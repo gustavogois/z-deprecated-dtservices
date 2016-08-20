@@ -27,7 +27,6 @@ import javax.persistence.TemporalType;
 @NamedQuery(name="ProcessoExterno.findAll", query="SELECT p FROM ProcessoExterno p")
 public class ProcessoExterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
 	private String descricao;
 	private Date dtFim;
 	private Date dtInicio;
@@ -113,8 +112,6 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processointerno
-	//@OneToMany(mappedBy="processoExterno")
 	@OneToMany(mappedBy="processoExterno")
 	public List<ProcessoInterno> getProcessosInterno() {
 		return this.processosInterno;

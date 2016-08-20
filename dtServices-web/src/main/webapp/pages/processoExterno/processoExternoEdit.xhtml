@@ -80,6 +80,7 @@
 					id="processoInternoTab">
 					<ui:include src="../processoInterno/processoInternoTableList.xhtml">
 						<ui:param name="idProcessoExterno" value="#{processoExternoEditMB.processoExterno.id}" />
+						<ui:param name="list" value="#{processoInternoListMB.getList(processoExternoEditMB.processoExterno.id)}" />
 					</ui:include>
 				</p:tab>
 
