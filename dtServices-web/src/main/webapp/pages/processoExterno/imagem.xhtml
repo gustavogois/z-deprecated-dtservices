@@ -13,7 +13,7 @@
 <p:commandButton value="Adicionar" onclick="PF('imagemDlg').show();"/>
 
 <p:contentFlow id="imagens" value="#{processoExternoEditMB.images}" var="image">
-	<p:graphicImage value="#{processoExternoEditMB.getImagem(image.id)}" stream="false"  />
+	<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}" styleClass="content" stream="false"/>
 	<div class="caption">#{image.descricao}</div>
 </p:contentFlow>
 </html>

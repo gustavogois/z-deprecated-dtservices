@@ -375,7 +375,7 @@
     <column id="COL110" populated="true" UUID="11d7a1ca-eef6-4c12-8c24-277087f5497f" autoIncrement="false" autoIncrementSequenceName="imagem_size_seq" defaultValue="" name="size" nullable="0" physicalName="size" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL111" populated="true" UUID="bf35aa05-1fef-4715-8c43-d043228098ce" autoIncrement="false" autoIncrementSequenceName="imagem_mymeType_seq" defaultValue="" name="mymeType" nullable="0" physicalName="mymeType" precision="20" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL111" populated="true" UUID="bf35aa05-1fef-4715-8c43-d043228098ce" autoIncrement="false" autoIncrementSequenceName="imagem_mimeType_seq" defaultValue="" name="mimeType" nullable="0" physicalName="mimeType" precision="20" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL112" populated="true" UUID="d0d1323d-3114-41b3-9048-9f1a2b393e03" autoIncrement="false" autoIncrementSequenceName="imagem_updateDt_seq" defaultValue="" name="updateDt" nullable="1" physicalName="updateDt" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >

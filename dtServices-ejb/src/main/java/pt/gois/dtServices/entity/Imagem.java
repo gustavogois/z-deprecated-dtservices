@@ -22,6 +22,9 @@ public class Imagem extends GeneralEntity implements Serializable {
 	private Integer id;
 	private String descricao;
 	private byte[] imagem;
+	String filename;
+	String mimeType;
+	Long size;
 	private List<Imovel> imovels;
 	private List<Servico> servicos;
 
@@ -100,4 +103,36 @@ public class Imagem extends GeneralEntity implements Serializable {
 	public void setServicos(List<Servico> servicos) {
 		this.servicos = servicos;
 	}
+
+
+	public String getFilename() {
+		return filename;
+	}
+
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
+	public String getMimeType() {
+		return mimeType;
+	}
+
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
+	}
+
+
+	public Long getSize() {
+		return size;
+	}
+
+
+	public void setSize(Long size) {
+		this.size = size;
+	}
+	
+	
 }
