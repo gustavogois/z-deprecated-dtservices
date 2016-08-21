@@ -10,10 +10,16 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-<p:commandButton value="Adicionar" onclick="PF('imagemDlg').show();"/>
+<p:fileUpload
+	fileUploadListener="#{processoExternoEditMB.handleFileUpload}"
+	mode="advanced" dragDropSupport="false" update="messages, imagens"
+	fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
-<p:contentFlow id="imagens" value="#{processoExternoEditMB.images}" var="image">
-	<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}" styleClass="content" stream="false"/>
-	<div class="caption">#{image.descricao}</div>
-</p:contentFlow>
+<p:panel id="imagens">
+	<p:contentFlow value="#{processoExternoEditMB.images}" var="image">
+		<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}"
+			styleClass="content" stream="false" />
+		<div class="caption">#{image.descricao}</div>
+	</p:contentFlow>
+</p:panel>
 </html>
