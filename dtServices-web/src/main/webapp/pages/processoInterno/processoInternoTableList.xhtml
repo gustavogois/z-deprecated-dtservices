@@ -27,6 +27,7 @@
 			onkeydown="if(event.keyCode == 13) { processoInternoSearchTrigger(); event.preventDefault() }" />
 	</h:panelGrid>
 </h:panelGrid>
+
 <p:dataTable id="processoInternoList" value="#{list}"
 	var="processoInterno" emptyMessage="#{bundle.default_msg_notFound}"
 	paginator="true" rows="20" lazy="true"

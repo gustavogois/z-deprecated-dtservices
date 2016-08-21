@@ -31,21 +31,23 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTipoServicoSolicitante;
 	
-	@ManagedProperty(value = "#{processoInternoEditMB}")
-	ProcessoInternoEditMB processoInternoEditMB;
-
 	Servico servico;
 	
+	Integer idProcessoInterno;
+	
+
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
 	}
 	
 	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
 		
-		ProcessoInterno processoInterno = processoInternoEditMB.getProcessoInterno();
+		ProcessoInterno processoInterno = sbProcessoInterno.findById(idProcessoInterno);
+		
+		Integer idSolicitante = processoInterno.getProcessoExterno().getSolicitante().getId();
 		
 		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
-		searchPageCtrl.getFilters().put("id", processoInternoEditMB.getProcessoInterno().getProcessoExterno().getSolicitante().getId());
+		searchPageCtrl.getFilters().put("solicitante.id", idSolicitante);
 		List<TipoServicoSolicitante> tss = sbTipoServicoSolicitante.find(searchPageCtrl).getRows();
 		
 		return tss;
@@ -125,13 +127,12 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public void setSBLocalb(pt.gois.dtServices.business.ServicoSBLocal sb) {
 		this.sb = sb;
 	}
-
-	public ProcessoInternoEditMB getProcessoInternoEditMB() {
-		return processoInternoEditMB;
+	public Integer getIdProcessoInterno() {
+		return idProcessoInterno;
 	}
 
-	public void setProcessoInternoEditMB(ProcessoInternoEditMB processoInternoEditMB) {
-		this.processoInternoEditMB = processoInternoEditMB;
+	public void setIdProcessoInterno(Integer idProcessoInterno) {
+		this.idProcessoInterno = idProcessoInterno;
 	}
 
 }
