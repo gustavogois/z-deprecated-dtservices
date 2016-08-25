@@ -82,7 +82,6 @@
 						<h:panelGrid columns="4">
 
 							<h:panelGroup>
-								<h:outputText value="Version. 0.1.1 " />
 								<p:menuButton value="#{userSessionMB.user.name}"
 									styleClass="rolebutton" id="rolebutton">
 
@@ -102,6 +101,7 @@
 				</p:toolbarGroup>
 
 			</p:toolbar>
+			<h:outputText style="font-size: 80%; float: right;" value="#{bundle.app_version}" />
 		</ui:insert>
 		<br />
 		<p:panel id="main" header="#{pageTitle}" toggleable="true"

@@ -16,6 +16,7 @@
 	<properties>
 		<endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.build.timestamp.format>dd/MM/yyyy HH:mm</maven.build.timestamp.format>
 	</properties>
 	<repositories>
 		<repository>
@@ -106,8 +107,8 @@
 			</plugin>
 			<plugin>
 				<groupId>com.google.code.maven-replacer-plugin</groupId>
-				<artifactId>maven-replacer-plugin</artifactId>
-				<version>1.3.2</version>
+				<artifactId>replacer</artifactId>
+				<version>1.5.3</version>
 				<executions>
 					<execution>
 						<!-- the replace should happen before the app is packaged -->
@@ -119,16 +120,19 @@
 				</executions>
 
 				<configuration>
+					<timestampFormat>{0,date,dd/MM/yyyy HH:mm}</timestampFormat>
+					<basedir>${project.build.directory}</basedir>
 					<includes>
-						<!-- replace the token in this file -->
-						<include>target/myproject/version.jsp</include>
+						<include>classes/Bundle.properties</include>
 					</includes>
-					<regex>false</regex>
-					<!-- the name of the token to replace -->
-					<token>PROJECT_VERSION</token>
-					<!-- replace it with the maven project version -->
-					<value>${project.version}(${build.time})</value>
+					<replacements>
+						<replacement>
+							<token>%PROJECT_VERSION%</token>
+							<value>DTServices-${project.version} (${maven.build.timestamp})</value>
+						</replacement>
+					</replacements>
 				</configuration>
+
 			</plugin>
 		</plugins>
 	</build>
