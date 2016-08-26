@@ -6,14 +6,19 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.interceptor.Interceptors;
+import javax.transaction.Transactional;
 
 @ManagedBean
 @ViewScoped
+@Transactional
+@Interceptors(MyInterceptor.class)
 public class TestViewMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	int id;
 	int idInterno;
+	
 	
 	public void grava() {
 		

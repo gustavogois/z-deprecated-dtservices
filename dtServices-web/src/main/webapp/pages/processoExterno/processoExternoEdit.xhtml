@@ -78,10 +78,59 @@
 				<p:tab title="#{bundle.tab_processos_internos}"
 					disabled="#{processoExternoEditMB.processoExterno.id == null}"
 					id="processoInternoTab">
-					<ui:include src="../processoInterno/processoInternoTableList.xhtml">
-						<ui:param name="idProcessoExterno" value="#{processoExternoEditMB.processoExterno.id}" />
-						<ui:param name="list" value="#{processoInternoListMB.getList(processoExternoEditMB.processoExterno.id)}" />
-					</ui:include>
+					<c:set var="processoInternoListMB.idProcessoExterno"
+						value="#{processoExternoEditMB.processoExterno.id}" />
+					<h:panelGrid columns="2">
+						<p:button value="#{bundle.default_action_add}"
+							icon="ui-icon-document"
+							outcome="/pages/processoInterno/processoInternoEdit">
+							<f:param name="idProcessoExterno" value="#{processoExternoEditMB.processoExterno.id}" />
+						</p:button>
+
+						<h:panelGrid columns="3" style="float: right">
+							<h:outputText value="#{bundle.default_label_termSearch}	" />
+							<p:remoteCommand name="processoInternoSearchTrigger"
+								update="processoInternoList"
+								actionListener="#{processoInternoListMB.search}" />
+							<p:inputText id="processoInternoSearch"
+								value="#{processoInternoListMB.term}"
+								onkeydown="if(event.keyCode == 13) { processoInternoSearchTrigger(); event.preventDefault() }" />
+						</h:panelGrid>
+					</h:panelGrid>
+
+					<p:dataTable id="processoInternoList" value="#{processoInternoListMB.getList(processoExternoEditMB.processoExterno.id)}"
+						var="processoInterno"
+						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+						rows="20" lazy="true"
+						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20, 50, 10">
+
+						<p:column headerText="#{bundle.default_field_ID}"
+							styleClass="column_id">
+							<h:outputText value="#{processoInterno.id}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.processo_interno_field_entidade}">
+							<h:outputText
+								value="#{processoInterno.entidadeDeFacturacao.nome}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.default_label_action}"
+							styleClass="column_action">
+							<p:button value="#{bundle.default_action_edit}"
+								icon="ui-icon-pencil" styleClass="action_edit"
+								outcome="/pages/processoInterno/processoInternoEdit">
+								<f:param name="id" value="#{processoInterno.id}" />
+								<f:param name="idProcessoExterno" value="#{processoExternoEditMB.processoExterno.id}" />
+							</p:button>
+							<p:commandButton value="#{bundle.default_action_del}"
+								icon="ui-icon-trash" styleClass="action_del"
+								action="#{processoInternoEditMB.delete(processoInterno)}"
+								update="processoInternoList" ajax="true">
+							</p:commandButton>
+						</p:column>
+					</p:dataTable>
 				</p:tab>
 
 			</p:tabView>
