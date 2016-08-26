@@ -75,11 +75,14 @@
 				<p:tab title="#{bundle.tab_imagem}" id="imageTab">
 					<ui:include src="imagem.xhtml" />
 				</p:tab>
-				<p:tab title="#{bundle.tab_processos_internos}"
-					disabled="#{processoExternoEditMB.processoExterno.id == null}"
+				
+				<p:tab 
+					title="#{bundle.tab_processos_internos}" disabled="#{processoExternoEditMB.processoExterno.id == null}"
 					id="processoInternoTab">
+					
 					<c:set var="processoInternoListMB.idProcessoExterno"
 						value="#{processoExternoEditMB.processoExterno.id}" />
+						
 					<h:panelGrid columns="2">
 						<p:button value="#{bundle.default_action_add}"
 							icon="ui-icon-document"
