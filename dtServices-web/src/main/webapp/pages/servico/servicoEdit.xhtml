@@ -42,7 +42,7 @@
 						<p:outputLabel value="#{bundle.servico}" />
 						<p:selectOneMenu
 							value="#{servicoEditMB.servico.tipoServicoSolicitante.id}"
-							style="width:125px" required="true">
+							style="width:125px" required="true" >
 							<f:selectItems value="#{servicoEditMB.tiposServicoSolicitante}"
 								var="tss" itemValue="#{tss.id}"
 								itemLabel="#{tss.tipoServico.nome}" />

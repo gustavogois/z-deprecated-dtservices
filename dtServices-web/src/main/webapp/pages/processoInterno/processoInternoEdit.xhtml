@@ -15,6 +15,7 @@
 	<ui:define name="body">
 		<f:metadata>
 			<f:viewParam name="id" value="#{processoInternoEditMB.id}" />
+			<f:viewParam name="id" value="#{servicoListMB.idProcessoInterno}" />
 			<f:viewParam name="idProcessoExterno"
 				value="#{processoInternoEditMB.idProcessoExterno}" />
 		</f:metadata>
@@ -85,10 +86,6 @@
 						<p:column headerText="#{bundle.default_field_ID}"
 							styleClass="column_id">
 							<h:outputText value="#{servico.id}" />
-						</p:column>
-
-						<p:column headerText="#{bundle.servico_field_processo_interno}">
-							<h:outputText value="#{servico.processoInterno.nome}" />
 						</p:column>
 
 						<p:column headerText="#{bundle.servico}">

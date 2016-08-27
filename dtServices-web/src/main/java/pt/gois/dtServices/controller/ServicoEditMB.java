@@ -6,14 +6,15 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.TipoDeEstado;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
@@ -35,6 +36,8 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	Integer idProcessoInterno;
 	
+	boolean existeTipoServicoSolicitante=true;
+	
 
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
@@ -49,6 +52,11 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
 		searchPageCtrl.getFilters().put("obj.solicitante.id", idSolicitante);
 		List<TipoServicoSolicitante> tss = sbTipoServicoSolicitante.find(searchPageCtrl).getRows();
+		
+		existeTipoServicoSolicitante = true;
+		if(tss == null || tss.size() == 0){
+			existeTipoServicoSolicitante = false;
+		}
 		
 		return tss;
 		
@@ -90,12 +98,16 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	public String save(){
 		Servico servico = getServico();
+		servico.setProcessoInterno(sbProcessoInterno.findById(idProcessoInterno));
+		TipoDeEstado tipoDeEstado = new TipoDeEstado();
+		tipoDeEstado.setId(TipoDeEstadoSBLocal.CRIADO);
+		servico.setTipoDeEstado(tipoDeEstado);
 		if( servico.getId() != null ){
 			sb.save( servico );
 		}else{
 			sb.create( servico );
 		}
-		return "servicoList";
+		return "../processoInterno/processoInternoEdit";
 	}
 	
 	public String delete( Servico Servico ){
@@ -111,6 +123,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			}else{
 				servico = new Servico();
 				servico.setProcessoInterno(new ProcessoInterno());
+				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
 			}
 		}
 		return servico;
@@ -135,4 +148,15 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		this.idProcessoInterno = idProcessoInterno;
 	}
 
+	public boolean isNotExisteTipoServicoSolicitante() {
+		return ! existeTipoServicoSolicitante;
+	}
+	
+	public boolean isExisteTipoServicoSolicitante() {
+		return existeTipoServicoSolicitante;
+	}
+
+	public void setExisteTipoServicoSolicitante(boolean existeTipoServicoSolicitante) {
+		this.existeTipoServicoSolicitante = existeTipoServicoSolicitante;
+	}
 }

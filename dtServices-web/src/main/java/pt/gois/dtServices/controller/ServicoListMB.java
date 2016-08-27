@@ -42,7 +42,7 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 			}
 		}
 		if (idProcessoInterno != null) {
-			filters.put("obj.processoInterno", idProcessoInterno);
+			filters.put("processoInterno.id", idProcessoInterno);
 		}
 		list = new PaginatedDataModel<Servico>(searchPageCtrl, sb);
 		return list;
