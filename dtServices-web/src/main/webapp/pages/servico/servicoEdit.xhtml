@@ -11,7 +11,6 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_servico}" />
 
 	<ui:define name="body">
 		<script>
@@ -39,16 +38,6 @@
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
 						<p:outputLabel value="#{servicoEditMB.servico.id}" />
-
-						<p:outputLabel value="#{bundle.servico_field_processo_interno}" />
-						<p:selectOneMenu
-							value="#{servicoEditMB.servico.processoInterno.id}"
-							style="width:125px" required="true"
-							disabled="#{processoInternoEditMB.processoInterno.id != null}">
-							<f:selectItems value="#{servicoEditMB.processosInterno}"
-								var="processo" itemValue="#{processo.id}"
-								itemLabel="#{processo.id}" />
-						</p:selectOneMenu>
 
 						<p:outputLabel value="#{bundle.servico}" />
 						<p:selectOneMenu
@@ -80,6 +69,9 @@
 		</h:form>
 
 	</ui:define>
+	
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_processo_interno}: #{servicoEditMB.idProcessoInterno} - #{bundle.menu_cadastro_servico}" />
+	
 
 </ui:composition>
 

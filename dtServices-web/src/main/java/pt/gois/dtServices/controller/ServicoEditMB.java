@@ -47,7 +47,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		Integer idSolicitante = processoInterno.getProcessoExterno().getSolicitante().getId();
 		
 		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
-		searchPageCtrl.getFilters().put("solicitante.id", idSolicitante);
+		searchPageCtrl.getFilters().put("obj.solicitante.id", idSolicitante);
 		List<TipoServicoSolicitante> tss = sbTipoServicoSolicitante.find(searchPageCtrl).getRows();
 		
 		return tss;

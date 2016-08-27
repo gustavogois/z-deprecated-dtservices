@@ -61,11 +61,11 @@
 					id="servicosTab">
 					<h:panelGrid columns="2">
 
-						<p:commandButton ajax="true" value="#{bundle.default_action_add}"
-							icon="ui-icon-document" action="/pages/servico/servicoEdit">
+						<p:button value="#{bundle.default_action_add}"
+							icon="ui-icon-document" outcome="/pages/servico/servicoEdit">
 							<f:param name="idProcessoInterno"
 								value="#{processoInternoEditMB.processoInterno.id}" />
-						</p:commandButton>
+						</p:button>
 
 						<h:panelGrid columns="3" style="float: right">
 							<h:outputText value="#{bundle.default_label_termSearch}	" />
