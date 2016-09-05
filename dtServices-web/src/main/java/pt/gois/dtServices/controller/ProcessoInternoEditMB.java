@@ -122,12 +122,12 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		}else{
 			sb.create( procInterno );
 		}
-		return "processoInternoList";
+		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + processoExterno.getId();
 	}
 	
-	public String delete( ProcessoInterno processo ){
+	public void delete( ProcessoInterno processo ){
 		sb.delete(processo);
-		return "processoInternoList";
+		
 	}
 	
 	public ProcessoInterno getProcessoInterno() {

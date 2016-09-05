@@ -11,8 +11,6 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle"
-		value="#{bundle.menu_cadastro_processo_externo}" />
 
 	<ui:define name="body">
 		<script>
@@ -140,6 +138,9 @@
 		</h:form>
 	</ui:define>
 
+	<ui:param name="pageTitle"
+		value="#{bundle.menu_cadastro_processo_externo}: #{processoExternoEditMB.processoExterno.id}" />
+		
 </ui:composition>
 
 </html>

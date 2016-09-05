@@ -107,7 +107,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		}else{
 			sb.create( servico );
 		}
-		return "../processoInterno/processoInternoEdit";
+		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
 	
 	public String delete( Servico Servico ){
