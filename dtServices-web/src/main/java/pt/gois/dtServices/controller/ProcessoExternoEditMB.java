@@ -120,7 +120,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		ProcessoExterno processoExterno = getProcessoExterno();
 
 		TipoDeEstado criado = new TipoDeEstado();
-		criado.setId(TipoDeEstadoSBLocal.CRIADO);
+		criado.setId(TipoDeEstadoSBLocal.PE_CRIADO);
 
 		processoExterno.setTipoDeEstado(criado);
 

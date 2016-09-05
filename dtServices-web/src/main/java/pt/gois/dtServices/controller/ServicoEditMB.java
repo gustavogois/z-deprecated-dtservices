@@ -32,6 +32,9 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTipoServicoSolicitante;
 	
+	@EJB
+	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
+	
 	Servico servico;
 	
 	Integer idProcessoInterno;
@@ -41,6 +44,10 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
+	}
+	
+	public List<TipoDeEstado> getNovosEstados() {
+		return sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTipoDeEstado().getId());
 	}
 	
 	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
@@ -100,7 +107,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		Servico servico = getServico();
 		servico.setProcessoInterno(sbProcessoInterno.findById(idProcessoInterno));
 		TipoDeEstado tipoDeEstado = new TipoDeEstado();
-		tipoDeEstado.setId(TipoDeEstadoSBLocal.CRIADO);
+		tipoDeEstado.setId(TipoDeEstadoSBLocal.SRV_CRIADO);
 		servico.setTipoDeEstado(tipoDeEstado);
 		if( servico.getId() != null ){
 			sb.save( servico );

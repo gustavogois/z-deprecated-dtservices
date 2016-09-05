@@ -65,7 +65,7 @@ public class TipoServicoSolicitanteEditMB extends GeneralMB implements Serializa
 		}else{
 			sb.create( tipoServicoSolicitante );
 		}
-		return "tipoServicoSolicitanteList";
+		return "/pages/solicitante/solicitanteEdit?faces-redirect=true&id=" + tipoServicoSolicitante.getSolicitante().getId();
 	}
 	
 	public void delete( TipoServicoSolicitante tipoServicoSolicitante ){

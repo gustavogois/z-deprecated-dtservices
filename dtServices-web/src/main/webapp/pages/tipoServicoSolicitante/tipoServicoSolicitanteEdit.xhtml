@@ -11,11 +11,11 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle"
-		value="#{bundle.menu_cadastro_tipoServicoSolicitante}" />
 
 	<ui:define name="body">
 		<f:metadata>
+			<f:viewParam name="idSolicitante"
+				value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.solicitante.id}" />
 			<f:viewParam name="id" value="#{tipoServicoSolicitanteEditMB.id}" />
 		</f:metadata>
 		<h:form id="tipoServicoSolicitanteNew">
@@ -25,37 +25,30 @@
 						action="#{tipoServicoSolicitanteEditMB.save}" icon="ui-icon-disk" />
 					<p:commandButton ajax="false"
 						value="#{bundle.default_action_cancel}" immediate="true"
-						action="tipoServicoSolicitanteList" />
+						action="/pages/solicitante/solicitanteEdit" />
 				</h:panelGrid>
 			</div>
 			<p:tabView dynamic="true" cache="true" prependId="false">
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
-						<p:outputLabel value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.id}" />
+						<p:outputLabel
+							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.id}" />
 
-						<p:outputLabel value="#{bundle.servico_field_solicitante}" />
-						<p:selectOneMenu
-							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.solicitante.id}"
-							style="width:300px" required="true">
-							<f:selectItems
-								value="#{tipoServicoSolicitanteEditMB.solicitantes}"
-								var="solicitante" itemValue="#{solicitante.id}"
-								itemLabel="#{solicitante.nome}" />
-						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.solicitante_field_tipo_de_servico}" />
 						<p:selectOneMenu
 							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.tipoServico.id}"
 							style="width:300px" required="true">
 							<f:selectItems
-								value="#{tipoServicoSolicitanteEditMB.tiposServico}"
-								var="ts" itemValue="#{ts.id}"
-								itemLabel="#{ts.nome}" />
-							<p:ajax listener="#{tipoServicoSolicitanteEditMB.onTipoDeServicoChange}" 
-								update="valorId"/>
+								value="#{tipoServicoSolicitanteEditMB.tiposServico}" var="ts"
+								itemValue="#{ts.id}" itemLabel="#{ts.nome}" />
+							<p:ajax
+								listener="#{tipoServicoSolicitanteEditMB.onTipoDeServicoChange}"
+								update="valorId" />
 						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.default_field_valor}" />
-						<p:inputText id="valorId" size="8" label="#{bundle.default_field_valor}"
+						<p:inputText id="valorId" size="8"
+							label="#{bundle.default_field_valor}"
 							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.valor}"
 							required="true">
 						</p:inputText>
@@ -65,6 +58,8 @@
 		</h:form>
 
 	</ui:define>
+	<ui:param name="pageTitle"
+		value="#{bundle.menu_cadastro_solicitante}: #{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.solicitante.id} - #{bundle.menu_cadastro_tipoServicoSolicitante}" />
 
 </ui:composition>
 

@@ -111,7 +111,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	public String save(){
 		
 		ProcessoInterno procInterno = getProcessoInterno();
-		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.CRIADO); 
+		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO); 
 		procInterno.setTipoDeEstado(tipoDeEstado);
 		
 		ProcessoExterno processoExterno = sbProcessoExterno.findById(procInterno.getProcessoExterno().getId());
