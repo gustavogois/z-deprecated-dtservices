@@ -107,6 +107,7 @@
 								icon="ui-icon-pencil" styleClass="action_edit"
 								outcome="/pages/servico/servicoEdit">
 								<f:param name="id" value="#{servico.id}" />
+								<f:param name="idProcessoInterno" value="#{processoInternoEditMB.processoInterno.id}" />
 							</p:button>
 							<p:commandButton value="#{bundle.default_action_del}"
 								icon="ui-icon-trash" styleClass="action_del"
