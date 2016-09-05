@@ -65,6 +65,23 @@
 						<h:outputText id="display" />
 					</h:panelGrid>
 				</p:tab>
+				
+				<p:tab title="#{bundle.tab_estado_historico}" id="stateTab">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="#{bundle.servico_field_estado_atual}" />
+						<p:outputLabel value="#{servicoEditMB.servico.tipoDeEstado.nome}" />
+					
+						<p:outputLabel value="#{bundle.servico_field_novo_estado}" />
+						<p:selectOneMenu
+							value="#{servicoEditMB.servico.tipoDeEstado.id}"
+							style="width:125px" required="true" >
+							<f:selectItems value="#{servicoEditMB.novosEstados}"
+								var="newState" itemValue="#{newState.id}"
+								itemLabel="#{newState.nome}" />
+						</p:selectOneMenu>
+						
+					</h:panelGrid>
+				</p:tab>
 			</p:tabView>
 		</h:form>
 
