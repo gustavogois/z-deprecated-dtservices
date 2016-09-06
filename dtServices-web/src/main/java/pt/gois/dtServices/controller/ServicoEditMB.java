@@ -106,9 +106,6 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public String save(){
 		Servico servico = getServico();
 		servico.setProcessoInterno(sbProcessoInterno.findById(idProcessoInterno));
-		TipoDeEstado tipoDeEstado = new TipoDeEstado();
-		tipoDeEstado.setId(TipoDeEstadoSBLocal.SRV_CRIADO);
-		servico.setTipoDeEstado(tipoDeEstado);
 		if( servico.getId() != null ){
 			sb.save( servico );
 		}else{
@@ -130,6 +127,10 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 				servico = new Servico();
 				servico.setProcessoInterno(new ProcessoInterno());
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
+				TipoDeEstado tipoDeEstado = new TipoDeEstado();
+				tipoDeEstado.setId(TipoDeEstadoSBLocal.SRV_CRIADO);
+				servico.setTipoDeEstado(tipoDeEstado);
+
 			}
 		}
 		return servico;
