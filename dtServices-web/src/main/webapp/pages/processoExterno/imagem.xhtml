@@ -13,13 +13,33 @@
 <p:fileUpload
 	fileUploadListener="#{processoExternoEditMB.handleFileUpload}"
 	mode="advanced" dragDropSupport="false" update="messages, imagens"
-	fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+	allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
 
 <p:panel id="imagens">
-	<p:contentFlow value="#{processoExternoEditMB.images}" var="image">
-		<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}"
-			styleClass="content" stream="false" />
-		<div class="caption">#{image.descricao}</div>
-	</p:contentFlow>
+
+	<p:tabView value="#{processoExternoEditMB.images}" var="image"
+		orientation="left">
+		<p:tab title="#{image.filename}">
+			<h:panelGrid columns="2" cellpadding="5">
+				<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}"
+					stream="false" title="#{image.descricao}" alt="#{image.filename}" />
+				<p:inputTextarea value="#{image.descricao}" />
+			</h:panelGrid>
+		</p:tab>
+	</p:tabView>
+
+	<p:commandButton type="button" value="#{bundle.imagem_showAll}"
+		onclick="PF('dlg').show()" icon="ui-icon-extlink" />
+	<p:dialog header="Images" widgetVar="dlg" modal="true"
+		closeOnEscape="true" closable="true">
+
+		<p:galleria value="#{processoExternoEditMB.images}" var="image"
+			showCaption="true" autoPlay="true">
+			<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}"
+				stream="false" title="#{image.descricao}" alt="#{image.filename}" />
+		</p:galleria>
+	</p:dialog>
+
+
 </p:panel>
 </html>
