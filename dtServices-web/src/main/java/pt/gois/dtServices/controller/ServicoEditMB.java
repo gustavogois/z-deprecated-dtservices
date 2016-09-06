@@ -60,7 +60,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public List<TipoDeEstado> getNovosEstados() {
 		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
 		if(getServico().getTipoDeEstado().getId() != null) {
-			novosEstados.add(getServico().getTipoDeEstado());
+			novosEstados.add(sbTipoDeEstado.findById(getServico().getTipoDeEstado().getId()));
 		}
 		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTipoDeEstado().getId()));
 		return novosEstados;
