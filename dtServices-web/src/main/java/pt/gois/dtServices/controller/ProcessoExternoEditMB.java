@@ -67,19 +67,22 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	String descricao;
 
 	public void handleFileUpload(FileUploadEvent event) {
-		Imagem imagem = new Imagem();
-
-		UploadedFile file = event.getFile();
-		imagem.setDescricao(file.getFileName());
-		imagem.getImovels().add(processoExterno.getImovel());
-		imagem.setImagem(file.getContents());
-		imagem.setFilename(file.getFileName());
-		imagem.setSize(file.getSize());
-		imagem.setMimeType(file.getContentType());
-		sbImagem.create(imagem);
-
-		FacesMessage message = new FacesMessage("Succesful", event.getFile().getFileName() + " is uploaded.");
-		FacesContext.getCurrentInstance().addMessage(null, message);
+		try{
+			Imagem imagem = new Imagem();
+	
+			UploadedFile file = event.getFile();
+			imagem.setDescricao(file.getFileName());
+			imagem.getImovels().add(processoExterno.getImovel());
+			imagem.setImagem(file.getContents());
+			imagem.setFilename(file.getFileName());
+			imagem.setSize(file.getSize());
+			imagem.setMimeType(file.getContentType());
+			sbImagem.create(imagem);
+	
+			addMessage(event.getFile().getFileName() + " is uploaded.");
+		}catch(Exception e){
+			addError(e);
+		}
 	}
 
 	public StreamedContent getImagem(Imagem imagem) {

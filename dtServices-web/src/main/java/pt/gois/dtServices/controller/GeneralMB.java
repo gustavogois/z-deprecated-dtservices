@@ -1,6 +1,7 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 import javax.faces.application.FacesMessage;
@@ -26,6 +27,16 @@ public class GeneralMB implements Serializable {
 	public void addMessage(String msg, Severity severity) {
 		FacesContext.getCurrentInstance().addMessage(null, getMessage(msg, severity));
 	}
+	
+	public void addError(Throwable e){
+		if( e instanceof SQLException ){
+			addMessage(e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}else if( e.getCause() != null ){
+			addError(e.getCause());
+		}else{
+			addMessage(e.getLocalizedMessage(), FacesMessage.SEVERITY_ERROR);
+		}
+	}
 
 	public FacesMessage getMessage(String msg, Severity severity) {
 		FacesMessage message = new FacesMessage();
@@ -37,7 +48,11 @@ public class GeneralMB implements Serializable {
 	public String translate(String key) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "bundle");
-		return bundle.getString(key);
+		if( bundle.containsKey(key) ){
+			return bundle.getString(key);
+		}else{
+			return key;
+		}
 	}
 
 	public Integer getId() {
