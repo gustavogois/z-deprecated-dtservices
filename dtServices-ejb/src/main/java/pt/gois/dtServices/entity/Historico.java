@@ -15,16 +15,14 @@ public class Historico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date data;
-	private int idObjeto;
-	private GrupoTiposEstado grupoTiposEstado;
-	private TipoDeEstado tiposDeEstado;
+	private String descricao;
+	private Integer idObjeto;
 
 	public Historico() {
 	}
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return this.id;
 	}
@@ -44,36 +42,21 @@ public class Historico implements Serializable {
 	}
 
 
-	public int getIdObjeto() {
+	public String getDescricao() {
+		return this.descricao;
+	}
+
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+
+
+	public Integer getIdObjeto() {
 		return this.idObjeto;
 	}
 
-	public void setIdObjeto(int idObjeto) {
+	public void setIdObjeto(Integer idObjeto) {
 		this.idObjeto = idObjeto;
-	}
-
-
-	//bi-directional many-to-one association to GrupoTiposEstado
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="grupo_tipos_estadoId")
-	public GrupoTiposEstado getGrupoTiposEstado() {
-		return this.grupoTiposEstado;
-	}
-
-	public void setGrupoTiposEstado(GrupoTiposEstado grupoTiposEstado) {
-		this.grupoTiposEstado = grupoTiposEstado;
-	}
-
-
-	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="tipos_de_estadoId")
-	public TipoDeEstado getTiposDeEstado() {
-		return this.tiposDeEstado;
-	}
-
-	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
-		this.tiposDeEstado = tiposDeEstado;
 	}
 
 }

@@ -33,7 +33,6 @@ public class TipoDeEstado implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
-	private List<Historico> historicos;
 	private List<ProcessoInterno> processosInterno;
 	private List<ProcessoExterno> processosExterno;
 	private List<Servico> servicos;
@@ -61,32 +60,6 @@ public class TipoDeEstado implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-
-	//bi-directional many-to-one association to Historico
-	@OneToMany(mappedBy="tiposDeEstado")
-	public List<Historico> getHistoricos() {
-		return this.historicos;
-	}
-
-	public void setHistoricos(List<Historico> historicos) {
-		this.historicos = historicos;
-	}
-
-	public Historico addHistorico(Historico historico) {
-		getHistoricos().add(historico);
-		historico.setTiposDeEstado(this);
-
-		return historico;
-	}
-
-	public Historico removeHistorico(Historico historico) {
-		getHistoricos().remove(historico);
-		historico.setTiposDeEstado(null);
-
-		return historico;
-	}
-
 
 	//bi-directional many-to-one association to ProcessoInterno
 	@OneToMany(mappedBy="tipoDeEstado")

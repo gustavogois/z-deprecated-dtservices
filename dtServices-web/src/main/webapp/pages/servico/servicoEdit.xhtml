@@ -20,7 +20,7 @@
 		</script>
 
 		<f:metadata>
-			<f:viewParam name="id" value="#{servicoEditMB.id}" />
+			<f:viewParam name="id" value="#{servicoEditMB.servico.id}" />
 			<f:viewParam name="idProcessoInterno" value="#{servicoEditMB.idProcessoInterno}" />
 		</f:metadata>
 		<h:form id="servicoNew">
@@ -66,7 +66,7 @@
 					</h:panelGrid>
 				</p:tab>
 				
-				<p:tab title="#{bundle.tab_estado_historico}" id="stateTab">
+				<p:tab title="#{bundle.tab_estado_historico}" disabled="#{servicoEditMB.servico.id == null}" id="stateTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.servico_field_estado_atual}" />
 						<p:outputLabel value="#{servicoEditMB.servico.tipoDeEstado.nome}" />

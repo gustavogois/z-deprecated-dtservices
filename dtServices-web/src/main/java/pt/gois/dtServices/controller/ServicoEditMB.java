@@ -1,8 +1,11 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -12,6 +15,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
+import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TipoDeEstado;
@@ -37,17 +41,29 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	Servico servico;
 	
+	Integer idEstadoAtual;
+	
 	Integer idProcessoInterno;
 	
 	boolean existeTipoServicoSolicitante=true;
 	
 
+	@PostConstruct
+	public void init() {
+		idEstadoAtual = getServico().getTipoDeEstado().getId();
+	}
+	
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
 	}
 	
 	public List<TipoDeEstado> getNovosEstados() {
-		return sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTipoDeEstado().getId());
+		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
+		if(getServico().getTipoDeEstado().getId() != null) {
+			novosEstados.add(getServico().getTipoDeEstado());
+		}
+		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTipoDeEstado().getId()));
+		return novosEstados;
 	}
 	
 	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
@@ -111,6 +127,14 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		}else{
 			sb.create( servico );
 		}
+		
+		if(!idEstadoAtual.equals(servico.getTipoDeEstado().getId())) {
+			Historico historico = new Historico();
+			historico.setIdObjeto(servico.getId());
+			historico.setData(new Date());
+			historico.setDescricao("Estado do serviço " + servico.getId() + " alterado para: " + servico.getTipoDeEstado().getNome());
+		}
+		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
 	
