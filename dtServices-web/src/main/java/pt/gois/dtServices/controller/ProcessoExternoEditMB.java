@@ -65,6 +65,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	String centerGeoMap = "39.1708764,-8.629546,8";
 
 	String descricao;
+	
+	Imagem selectedImage;
 
 	public void handleFileUpload(FileUploadEvent event) {
 		try{
@@ -163,11 +165,19 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	}
 
 	public List<Imagem> getImages() {
-		return sb.getImages(processoExterno.getId());
+		return sb.getImages(getProcessoExterno().getId());
 	}
 
 	public void delete(ProcessoExterno processoExterno) {
 		sb.delete(processoExterno);
+	}
+	
+	public void deleteImage(Imagem imagem){
+		sbImagem.delete(imagem);
+	}
+	
+	public void updateImage(Imagem imagem){
+		sbImagem.save(imagem);
 	}
 
 	public void onPointSelect(PointSelectEvent event) {
@@ -277,4 +287,21 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
 	}
+
+	public pt.gois.dtServices.business.ImagemSBLocal getSbImagem() {
+		return sbImagem;
+	}
+
+	public void setSbImagem(pt.gois.dtServices.business.ImagemSBLocal sbImagem) {
+		this.sbImagem = sbImagem;
+	}
+
+	public Imagem getSelectedImage() {
+		return selectedImage;
+	}
+
+	public void setSelectedImage(Imagem selectedImage) {
+		this.selectedImage = selectedImage;
+	}
+	
 }
