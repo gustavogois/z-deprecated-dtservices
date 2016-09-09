@@ -14,6 +14,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoInterno;
@@ -39,20 +40,16 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
 	
+	@EJB
+	HistoricoSBLocal sbHistorico;
+	
 	Servico servico;
-	
-	Integer idEstadoAtual;
-	
 	Integer idProcessoInterno;
+	Integer idEstadoAtual;
 	
 	boolean existeTipoServicoSolicitante=true;
 	
 
-	@PostConstruct
-	public void init() {
-		idEstadoAtual = getServico().getTipoDeEstado().getId();
-	}
-	
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
 	}
@@ -129,10 +126,12 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		}
 		
 		if(!idEstadoAtual.equals(servico.getTipoDeEstado().getId())) {
+			servico = sb.findById(servico.getId());
 			Historico historico = new Historico();
 			historico.setIdObjeto(servico.getId());
 			historico.setData(new Date());
 			historico.setDescricao("Estado do serviço " + servico.getId() + " alterado para: " + servico.getTipoDeEstado().getNome());
+			sbHistorico.create(historico);
 		}
 		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
@@ -147,13 +146,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			Integer id = getId();
 			if( id != null ){
 				servico = sb.findById( getId() );
+				idEstadoAtual = servico.getTipoDeEstado().getId();
 			}else{
 				servico = new Servico();
 				servico.setProcessoInterno(new ProcessoInterno());
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
-				TipoDeEstado tipoDeEstado = new TipoDeEstado();
-				tipoDeEstado.setId(TipoDeEstadoSBLocal.SRV_CRIADO);
-				servico.setTipoDeEstado(tipoDeEstado);
+				servico.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.SRV_CRIADO));
+				idEstadoAtual = TipoDeEstadoSBLocal.SRV_CRIADO;
 
 			}
 		}

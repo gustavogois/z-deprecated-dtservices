@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
+	xmlns:cat="http://java.sun.com/jsf/composite/component">
+
+<ui:composition template="/pages/templates/template.xhtml">
+	<ui:param name="pageTitle" value="#{bundle.menu_home}" />
+
+	<ui:define name="headHTML">
+
+		<style>
+table.home {
+	font-size: small;
+}
+
+.hide {
+	display: none;
+}
+</style>
+
+		<script>
+			$(document).ready(function() {
+				$(".more").click(function() {
+					var idDiv = $(this).attr('id');
+					switch (idDiv) {
+					case "moreDone":
+						$("#hideDone").slideToggle();
+						break;
+					case "moreToDo":
+						$("#hideToDo").slideToggle();
+						break;
+					case "moreBug":
+						$("#hideBug").slideToggle();
+						break;
+					case "moreMelhoria":
+						$("#hideMelhoria").slideToggle();
+						break;
+					}
+				});
+			});
+		</script>
+
+	</ui:define>
+
+	<ui:define name="body">
+		<a href="#"><h1>
+				<span id="moreBug" class="more">Bugs</span>
+			</h1></a>
+		<div id="hideBug" class="hide">
+			<table border="1" class="home">
+				<tr>
+					<th>Funcionalidade</th>
+					<th>Bugs</th>
+				</tr>
+				<tr>
+					<td>Exclusão de registros relacionados a Solicitantes</td>
+					<td>Implementar o delete cascade. O melhor seria informar para o usuário que há processos relacionados, e informar que os 
+					mesmos serão excluídos também. Só com a confirmação do usuário excluir os registros.</td>
+				</tr>
+				<tr>
+					<td>Cadastro de Solicitante</td>
+					<td>Inclusão de um Tipo de Serviço para um Solicitante.</td>
+				</tr>
+			</table>
+		</div>
+		<a href="#"><h1>
+				<span id="moreDone" class="more">Done</span>
+			</h1></a>
+		<div id="hideDone" class="hide">
+			<ul>
+				<li>Cadastro de Processos Externos (Dados gerais e Imóvel)</li>
+			</ul>
+		</div>
+		<a href="#"><h1>
+				<span id="moreToDo" class="more">TO-DO / DOING</span>
+			</h1></a>
+		<div id="hideToDo" class="hide">
+			<table border="1" class="home">
+				<tr>
+					<th>Sprints / Fase</th>
+					<th>TO DO</th>
+					<th>DOING</th>
+				</tr>
+				<tr>
+					<td>Atual</td>
+					<td>
+						<ul>
+							<li>Cadastro de Processos Externos - Processo Interno</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<td>Próxima</td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>Backlog</td>
+					<td>
+						<ul>
+							<li>Em todas as funcionalidades:</li>
+							<li>
+								<ul>
+									<li>Pesquisas</li>
+									<li>Validações</li>
+									<li>Rever a lógica de fluxo, onde após salvar os dados de
+										uma primeira aba, enquanto as demais estão desabilitadas, vai
+										para a listagem. Não deveria habilitar as demais abas?</li>
+									<li>Formatações gerais</li>
+									<li>Inserir os logs</li>
+								</ul>
+							</li>
+							<li>Revisar formatações de todas as telas</li>
+							<li>Acesso concorrente - Controle de Acesso</li>
+							<li>Relatórios: Processos Externos (Excel, PDF, com
+								templates por Solicitante)</li>
+							<li>Notificações e Alertas</li>
+							<li>Tornar o sistema configurável</li>
+							<li>Tornar temas configurável</li>
+							<li>Mobile</li>
+						</ul>
+					</td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<a href="#"><h1>
+				<span id="moreMelhoria" class="more">Melhorias</span>
+			</h1></a>
+		<div id="hideMelhoria" class="hide">
+			<ul>
+				<li>Largura do Menu</li>
+			</ul>
+		</div>
+
+	</ui:define>
+
+</ui:composition>
+
+</html>
