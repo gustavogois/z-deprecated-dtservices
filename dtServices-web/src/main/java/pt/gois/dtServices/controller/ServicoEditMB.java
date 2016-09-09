@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -50,6 +49,14 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	boolean existeTipoServicoSolicitante=true;
 	
 
+	public List<Historico> getHistorico() {
+		SearchPageCtrl<Historico> searchPageCtrl = new SearchPageCtrl<Historico>();
+		searchPageCtrl.getFilters().put("idObjeto", getId());
+		List<Historico> historicos = sbHistorico.find(searchPageCtrl).getRows();
+		
+		return historicos;
+	}
+	
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
 	}

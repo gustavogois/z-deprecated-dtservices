@@ -21,7 +21,8 @@
 
 		<f:metadata>
 			<f:viewParam name="id" value="#{servicoEditMB.id}" />
-			<f:viewParam name="idProcessoInterno" value="#{servicoEditMB.idProcessoInterno}" />
+			<f:viewParam name="idProcessoInterno"
+				value="#{servicoEditMB.idProcessoInterno}" />
 		</f:metadata>
 		<h:form id="servicoNew">
 			<div id="rightbox" class="fixright">
@@ -42,19 +43,17 @@
 						<p:outputLabel value="#{bundle.servico}" />
 						<p:selectOneMenu
 							value="#{servicoEditMB.servico.tipoServicoSolicitante.id}"
-							style="width:125px" required="true" >
+							style="width:125px" required="true">
 							<f:selectItems value="#{servicoEditMB.tiposServicoSolicitante}"
 								var="tss" itemValue="#{tss.id}"
 								itemLabel="#{tss.tipoServico.nome}" />
-							<p:ajax
-								listener="#{servicoEditMB.onServicoChange}"
+							<p:ajax listener="#{servicoEditMB.onServicoChange}"
 								update="valorId" />
 						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.default_field_valor}" />
 						<p:inputText id="valorId" size="8"
 							label="#{bundle.default_field_valor}"
-							value="#{servicoEditMB.servico.valor}"
-							required="true">
+							value="#{servicoEditMB.servico.valor}" required="true">
 						</p:inputText>
 
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
@@ -65,30 +64,46 @@
 						<h:outputText id="display" />
 					</h:panelGrid>
 				</p:tab>
-				
-				<p:tab title="#{bundle.tab_estado_historico}" disabled="#{servicoEditMB.servico.id == null}" id="stateTab">
+
+				<p:tab title="#{bundle.tab_estado_historico}"
+					disabled="#{servicoEditMB.servico.id == null}" id="stateTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.servico_field_estado_atual}" />
 						<p:outputLabel value="#{servicoEditMB.servico.tipoDeEstado.nome}" />
-					
+
 						<p:outputLabel value="#{bundle.servico_field_novo_estado}" />
-						<p:selectOneMenu
-							value="#{servicoEditMB.servico.tipoDeEstado.id}"
-							style="width:125px" required="true" >
+						<p:selectOneMenu value="#{servicoEditMB.servico.tipoDeEstado.id}"
+							style="width:125px" required="true">
 							<f:selectItems value="#{servicoEditMB.novosEstados}"
 								var="newState" itemValue="#{newState.id}"
 								itemLabel="#{newState.nome}" />
 						</p:selectOneMenu>
-						
 					</h:panelGrid>
+					<p:dataTable id="historicoList" value="#{servicoEditMB.historico}"
+						var="historico" emptyMessage="#{bundle.default_msg_notFound}"
+						paginator="true" rows="20" lazy="true"
+						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20, 50, 10">
+
+						<p:column headerText="#{bundle.default_label_data}">
+							<h:outputText value="#{historico.data}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.default_field_description}">
+							<h:outputText value="#{historico.descricao}" />
+						</p:column>
+						
+					</p:dataTable>
 				</p:tab>
 			</p:tabView>
 		</h:form>
 
 	</ui:define>
-	
-	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_processo_interno}: #{servicoEditMB.idProcessoInterno} - #{bundle.menu_cadastro_servico}" />
-	
+
+	<ui:param name="pageTitle"
+		value="#{bundle.menu_cadastro_processo_interno}: #{servicoEditMB.idProcessoInterno} - #{bundle.menu_cadastro_servico}" />
+
 
 </ui:composition>
 
