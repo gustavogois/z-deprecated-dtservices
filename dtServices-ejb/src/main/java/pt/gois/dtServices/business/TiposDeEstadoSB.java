@@ -9,66 +9,66 @@ import javax.persistence.TypedQuery;
 import pt.gois.dtServices.entity.TipoDeEstado;
 
 @Stateless
-public class TiposDeEstadoSB extends GeneralSB<TipoDeEstado> implements TipoDeEstadoSBLocal{
+public class TiposDeEstadoSB extends GeneralSB<TipoDeEstado> implements TipoDeEstadoSBLocal {
 
 	public TiposDeEstadoSB() {
 		super(TipoDeEstado.class);
 	}
-	
+
 	public List<TipoDeEstado> findByGroup(Integer group) {
-		TypedQuery<TipoDeEstado> query = getEM().createNamedQuery("findTipoDeEstadoByGroup", TipoDeEstado.class);
+		TypedQuery<TipoDeEstado> query = getEM().createNamedQuery("TiposDeEstado.findTipoDeEstadoByGroup", TipoDeEstado.class);
 		query.setParameter("pGrupoId", group);
 		return query.getResultList();
 	}
-	
+
 	public List<TipoDeEstado> findNextStates(Integer idGroup, Integer idActualState) {
-		
+
 		ArrayList<TipoDeEstado> nextStates = new ArrayList<TipoDeEstado>();
-		
-		if(idGroup.equals(SERVICOS)) {
-			
-			if(idActualState.equals(SRV_CRIADO)) {
+
+		if (idGroup.equals(SERVICOS)) {
+
+			if (idActualState.equals(SRV_CRIADO)) {
 				nextStates.add(findById(SRV_EM_EXECUCAO));
 				nextStates.add(findById(SRV_SUSPENSO));
-			} else if(idActualState.equals(SRV_EM_EXECUCAO)) {
+			} else if (idActualState.equals(SRV_EM_EXECUCAO)) {
 				nextStates.add(findById(SRV_FINALIZADO));
 				nextStates.add(findById(SRV_SUSPENSO));
-			} else if(idActualState.equals(SRV_SUSPENSO)) {
+			} else if (idActualState.equals(SRV_SUSPENSO)) {
 				nextStates.add(findById(SRV_EM_EXECUCAO));
 				nextStates.add(findById(SRV_FINALIZADO));
 			}
-			
-		} else if(idGroup.equals(PROCESSO_INTERNO)) {
-			
-			if(idActualState.equals(PI_CRIADO)) {
+
+		} else if (idGroup.equals(PROCESSO_INTERNO)) {
+
+			if (idActualState.equals(PI_CRIADO)) {
 				nextStates.add(findById(PI_EM_EXECUCAO));
 				nextStates.add(findById(PI_SUSPENSO));
-			} else if(idActualState.equals(PI_EM_EXECUCAO)) {
+			} else if (idActualState.equals(PI_EM_EXECUCAO)) {
 				nextStates.add(findById(PI_AGUARDANDO_FATURAMENTO));
 				nextStates.add(findById(PI_SUSPENSO));
-			} else if(idActualState.equals(PI_AGUARDANDO_FATURAMENTO)) {
+			} else if (idActualState.equals(PI_AGUARDANDO_FATURAMENTO)) {
 				nextStates.add(findById(PI_AGUARDANDO_PAGAMENTO));
 				nextStates.add(findById(PI_SUSPENSO));
-			} else if(idActualState.equals(PI_AGUARDANDO_PAGAMENTO)) {
+			} else if (idActualState.equals(PI_AGUARDANDO_PAGAMENTO)) {
 				nextStates.add(findById(PI_PAGO));
-			} else if(idActualState.equals(PI_SUSPENSO)) {
+			} else if (idActualState.equals(PI_SUSPENSO)) {
 				nextStates.add(findById(PI_EM_EXECUCAO));
 				nextStates.add(findById(PI_AGUARDANDO_FATURAMENTO));
 			}
-		} else if(idGroup.equals(PROCESSO_EXTERNO)) {
-			
-			if(idActualState.equals(PE_CRIADO)) {
+		} else if (idGroup.equals(PROCESSO_EXTERNO)) {
+
+			if (idActualState.equals(PE_CRIADO)) {
 				nextStates.add(findById(PE_EM_EXECUCAO));
 				nextStates.add(findById(PE_SUSPENSO));
-			} else if(idActualState.equals(PE_EM_EXECUCAO)) {
+			} else if (idActualState.equals(PE_EM_EXECUCAO)) {
 				nextStates.add(findById(PE_FINALIZADO));
 				nextStates.add(findById(PE_SUSPENSO));
-			} else if(idActualState.equals(PE_SUSPENSO)) {
+			} else if (idActualState.equals(PE_SUSPENSO)) {
 				nextStates.add(findById(PE_EM_EXECUCAO));
 				nextStates.add(findById(PE_FINALIZADO));
 			}
-		} 
-			
+		}
+
 		return nextStates;
 	}
 }

@@ -10,7 +10,10 @@ import java.util.Date;
  * 
  */
 @Entity
-@NamedQuery(name="Historico.findAll", query="SELECT h FROM Historico h")
+@NamedQueries({
+@NamedQuery(name="Historico.findAll", query="SELECT h FROM Historico h"),
+@NamedQuery(name="Historico.findByObjectAndType", query="SELECT h FROM Historico h where h.idObjeto=:pObjectId and h.tipoObjeto=:pType")
+})
 public class Historico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;

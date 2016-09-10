@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
+import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.ServicoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
@@ -52,6 +53,9 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private TipoDeEstadoSBLocal sbTipoEstado;
+	
+	@EJB
+	private HistoricoSBLocal sbHistorico;
 	
 	ProcessoInterno processoInterno;
 	Servico servico;
@@ -130,9 +134,11 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		ProcessoExterno processoExterno = sbProcessoExterno.findById(procInterno.getProcessoExterno().getId());
 		procInterno.setProcessoExterno(processoExterno);
 		
+		boolean novo = false;
 		if( procInterno.getId() != null ){
 			sb.save( procInterno );
 		}else{
+			novo = true;
 			sb.create( procInterno );
 		}
 		
@@ -142,16 +148,26 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			Historico historico = new Historico();
 			historico.setIdObjeto(processoInterno.getId());
 			historico.setTipoObjeto(TipoDeEstadoSBLocal.PROCESSO_INTERNO);
-			this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_INTERNO);
 			historico.setData(new Date());
-			historico.setDescricao("Estado do Processo Interno " + processoInterno.getId() + " alterado para: " + 
-					processoInterno.getTipoDeEstado().getNome());
+			String descricao;
+			if(novo) {
+				descricao = "Processo Interno criado";
+			} else {
+				descricao = "Estado do Processo Interno alterado para: " + processoInterno.getTipoDeEstado().getNome();
+			}
+			historico.setDescricao(descricao);
 			sbHistorico.create(historico);
 		}
 
 		
 		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + processoExterno.getId();
 	}
+	
+	public List<Historico> getHistorico() {
+		
+		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_INTERNO);
+	}
+
 	
 	public void delete( ProcessoInterno processo ){
 		sb.delete(processo);
@@ -177,9 +193,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				
 				tipoServico = new TipoServico();
 				
-				this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_INTERNO);
-
-
 			}
 		}
 		return processoInterno;

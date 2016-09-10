@@ -27,7 +27,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 @Table(name="tipos_de_estado")
 @NamedQueries({
 @NamedQuery(name="TiposDeEstado.findAll", query="SELECT t FROM TipoDeEstado t"),
-@NamedQuery(name = "findTipoDeEstadoByGroup", query = "select t from TipoDeEstado t where t.grupoTiposEstado.id=:pGrupoId")
+@NamedQuery(name = "TiposDeEstado.findTipoDeEstadoByGroup", query = "select t from TipoDeEstado t where t.grupoTiposEstado.id=:pGrupoId")
 })
 public class TipoDeEstado implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -484,7 +484,7 @@
     <column id="COL138" populated="true" UUID="d07dc2a0-8654-4a9e-b941-b65409e4419f" autoIncrement="false" autoIncrementSequenceName="historico_tipoObjeto_seq" defaultValue="" name="tipoObjeto" nullable="0" physicalName="tipoObjeto" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="4" userDefinedTypeUUID="63b011c7-c81f-4c75-8271-632b3c87f727" >
      <remarks></remarks>
     </column>
-    <column id="COL139" populated="true" UUID="3cd64f0d-0899-4204-b347-9211fc375861" autoIncrement="false" autoIncrementSequenceName="historico_data_seq" defaultValue="" name="data" nullable="0" physicalName="data" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
+    <column id="COL139" populated="true" UUID="3cd64f0d-0899-4204-b347-9211fc375861" autoIncrement="false" autoIncrementSequenceName="historico_data_seq" defaultValue="" name="data" nullable="0" physicalName="data" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
      <remarks></remarks>
     </column>
     <column id="COL140" populated="true" UUID="627cd38c-8d1c-44cc-9362-a4724569eb08" autoIncrement="false" autoIncrementSequenceName="historico_descricao_seq" defaultValue="" name="descricao" nullable="0" physicalName="descricao" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
@@ -807,7 +807,7 @@
  <ddl-generator type="ca.sqlpower.architect.ddl.MySqlDDLGenerator" allow-connection="false" target-catalog="dt_services"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="0.9323177366702938" viewportX="185" viewportY="164" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="0.9323177366702938" viewportX="185" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB20" x="1095" y="543" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB31" x="33" y="22" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB40" x="579" y="80" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>

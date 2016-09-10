@@ -41,6 +41,7 @@ import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoDeEstado;
+import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
@@ -61,6 +62,9 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
+	
+	@EJB
+	private pt.gois.dtServices.business.HistoricoSBLocal sbHistorico;
 	
 	ProcessoExterno processoExterno;
 	
@@ -141,10 +145,12 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public String save() {
 		ProcessoExterno processoExterno = getProcessoExterno();
 
+		boolean novo = false;
 		if (processoExterno.getId() != null) {
 			sb.save(processoExterno);
 		} else {
 			sb.create(processoExterno);
+			novo = true;
 		}
 		
 		if(!idEstadoAtual.equals(getProcessoExterno().getTipoDeEstado().getId())) {
@@ -153,16 +159,25 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			Historico historico = new Historico();
 			historico.setIdObjeto(processoExterno.getId());
 			historico.setTipoObjeto(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
-			this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
 			historico.setData(new Date());
-			historico.setDescricao("Estado do Processo Externo " + processoExterno.getId() + " alterado para: " + 
-					processoExterno.getTipoDeEstado().getNome());
+			String descricao;
+			if(novo) {
+				descricao = "Processo Externo criado";
+			} else {
+				descricao = "Estado do Processo Externo alterado para: " + processoExterno.getTipoDeEstado().getNome();
+			}
+			historico.setDescricao(descricao);
 			sbHistorico.create(historico);
 		}
 
 		
 		return "processoExternoList";
 
+	}
+	
+	public List<Historico> getHistorico() {
+		
+		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
 	}
 
 	public ProcessoExterno getProcessoExterno() {
@@ -193,8 +208,6 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				processoExterno.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PE_CRIADO));
 				idEstadoAtual = TipoDeEstadoSBLocal.PE_CRIADO;
 				
-				this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
-
 			}
 		}
 		return processoExterno;

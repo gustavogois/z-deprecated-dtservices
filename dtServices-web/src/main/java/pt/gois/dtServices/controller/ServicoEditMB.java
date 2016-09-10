@@ -117,26 +117,38 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public String save(){
 		Servico servico = getServico();
 		servico.setProcessoInterno(sbProcessoInterno.findById(idProcessoInterno));
+		boolean novo = false;
 		if( servico.getId() != null ){
 			sb.save( servico );
 		}else{
+			novo = true;
 			sb.create( servico );
 		}
 		
-		if(!idEstadoAtual.equals(servico.getTipoDeEstado().getId())) {
+		if(!idEstadoAtual.equals(servico.getTipoDeEstado().getId()) || novo) {
 			
 			servico = sb.findById(servico.getId());
 			Historico historico = new Historico();
 			historico.setIdObjeto(servico.getId());
 			historico.setTipoObjeto(TipoDeEstadoSBLocal.SERVICOS);
-			this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.SERVICOS);
 			historico.setData(new Date());
-			historico.setDescricao("Estado do serviço " + servico.getId() + " alterado para: " + servico.getTipoDeEstado().getNome());
+			String descricao;
+			if(novo) {
+				descricao = "Serviço criado";
+			} else {
+				descricao = "Estado do serviço alterado para: " + servico.getTipoDeEstado().getNome();
+			}
+			historico.setDescricao(descricao);
 			sbHistorico.create(historico);
 		}
 		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
+	
+	public List<Historico> getHistorico() {
+		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.SERVICOS);
+	}
+
 	
 	public void delete( Servico Servico ){
 		sb.delete(Servico);
@@ -155,8 +167,6 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 				servico.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.SRV_CRIADO));
 				idEstadoAtual = TipoDeEstadoSBLocal.SRV_CRIADO;
 				
-				this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.SERVICOS);
-
 			}
 		}
 		return servico;

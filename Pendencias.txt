@@ -1,0 +1,10 @@
+Estados / Histórico
+	- Mostrar a hora no histórico
+	- Criar um registro na criação
+	
+Verificar as exclusões em Cascade
+
+Navegação
+
+Validações e Perfumaria
+	- Confirmar as variações de valores para TipoDeServico, TipoDeServicoSolicitante e Servico
