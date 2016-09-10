@@ -141,6 +141,8 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			processoInterno = sb.findById(getProcessoInterno().getId());
 			Historico historico = new Historico();
 			historico.setIdObjeto(processoInterno.getId());
+			historico.setTipoObjeto(TipoDeEstadoSBLocal.PROCESSO_INTERNO);
+			this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_INTERNO);
 			historico.setData(new Date());
 			historico.setDescricao("Estado do Processo Interno " + processoInterno.getId() + " alterado para: " + 
 					processoInterno.getTipoDeEstado().getNome());
@@ -174,6 +176,9 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				servico.setTipoDeEstado(new TipoDeEstado());
 				
 				tipoServico = new TipoServico();
+				
+				this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_INTERNO);
+
 
 			}
 		}

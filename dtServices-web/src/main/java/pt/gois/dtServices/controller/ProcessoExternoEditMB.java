@@ -2,6 +2,8 @@ package pt.gois.dtServices.controller;
 
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -33,6 +35,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.Concelho;
 import pt.gois.dtServices.entity.Distrito;
 import pt.gois.dtServices.entity.EnderecoVW;
+import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.Imagem;
 import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
@@ -56,7 +59,12 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.ImagemSBLocal sbImagem;
 
+	@EJB
+	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
+	
 	ProcessoExterno processoExterno;
+	
+	Integer idEstadoAtual;
 
 	EnderecoVW endereco;
 
@@ -68,6 +76,15 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	
 	Imagem selectedImage;
 
+	public List<TipoDeEstado> getNovosEstados() {
+		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
+		if(getProcessoExterno().getTipoDeEstado().getId() != null) {
+			novosEstados.add(sbTipoDeEstado.findById(getProcessoExterno().getTipoDeEstado().getId()));
+		}
+		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_EXTERNO, getProcessoExterno().getTipoDeEstado().getId()));
+		return novosEstados;
+	}
+	
 	public void handleFileUpload(FileUploadEvent event) {
 		try{
 			Imagem imagem = new Imagem();
@@ -124,16 +141,26 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public String save() {
 		ProcessoExterno processoExterno = getProcessoExterno();
 
-		TipoDeEstado criado = new TipoDeEstado();
-		criado.setId(TipoDeEstadoSBLocal.PE_CRIADO);
-
-		processoExterno.setTipoDeEstado(criado);
-
 		if (processoExterno.getId() != null) {
 			sb.save(processoExterno);
 		} else {
 			sb.create(processoExterno);
 		}
+		
+		if(!idEstadoAtual.equals(getProcessoExterno().getTipoDeEstado().getId())) {
+			
+			processoExterno = sb.findById(getProcessoExterno().getId());
+			Historico historico = new Historico();
+			historico.setIdObjeto(processoExterno.getId());
+			historico.setTipoObjeto(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
+			this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
+			historico.setData(new Date());
+			historico.setDescricao("Estado do Processo Externo " + processoExterno.getId() + " alterado para: " + 
+					processoExterno.getTipoDeEstado().getNome());
+			sbHistorico.create(historico);
+		}
+
+		
 		return "processoExternoList";
 
 	}
@@ -150,15 +177,24 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 					geoModel.addOverlay(new Marker(latlng, imovel.getCrp()));
 				}
 				endereco.setCodigoPostal(imovel.getCodigoPostal());
+				
+				idEstadoAtual = processoExterno.getTipoDeEstado().getId();
+
+				
 			} else {
 				processoExterno = new ProcessoExterno();
 				processoExterno.setSolicitante(new Solicitante());
-				processoExterno.setTipoDeEstado(new TipoDeEstado());
 				Imovel imovel = new Imovel();
 				imovel.setConcelho(new Concelho());
 				imovel.setDistrito(new Distrito());
 				processoExterno.setImovel(imovel);
 				imovel.setProcessoExterno(processoExterno);
+				
+				processoExterno.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PE_CRIADO));
+				idEstadoAtual = TipoDeEstadoSBLocal.PE_CRIADO;
+				
+				this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
+
 			}
 		}
 		return processoExterno;

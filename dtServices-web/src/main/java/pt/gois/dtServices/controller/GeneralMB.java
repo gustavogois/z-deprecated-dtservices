@@ -23,6 +23,7 @@ public class GeneralMB implements Serializable {
 	UserSessionMB userSessionMB;
 
 	Integer id;
+	Integer tipoObjetoHistorico;
 
 	String term;
 
@@ -32,6 +33,7 @@ public class GeneralMB implements Serializable {
 	public List<Historico> getHistorico() {
 		SearchPageCtrl<Historico> searchPageCtrl = new SearchPageCtrl<Historico>();
 		searchPageCtrl.getFilters().put("idObjeto", getId());
+		searchPageCtrl.getFilters().put("tipoObjeto", getTipoObjetoHistorico());
 		List<Historico> historicos = sbHistorico.find(searchPageCtrl).getRows();
 		
 		return historicos;
@@ -96,4 +98,11 @@ public class GeneralMB implements Serializable {
 		this.userSessionMB = userSessionMB;
 	}
 
+	public Integer getTipoObjetoHistorico() {
+		return tipoObjetoHistorico;
+	}
+
+	public void setTipoObjetoHistorico(Integer tipoObjetoHistorico) {
+		this.tipoObjetoHistorico = tipoObjetoHistorico;
+	}
 }

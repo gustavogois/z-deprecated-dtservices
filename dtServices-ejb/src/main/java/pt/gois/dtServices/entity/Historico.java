@@ -17,6 +17,9 @@ public class Historico implements Serializable {
 	private Date data;
 	private String descricao;
 	private Integer idObjeto;
+	private Integer tipoObjeto;
+
+
 
 	public Historico() {
 	}
@@ -58,6 +61,14 @@ public class Historico implements Serializable {
 
 	public void setIdObjeto(Integer idObjeto) {
 		this.idObjeto = idObjeto;
+	}
+	public Integer getTipoObjeto() {
+		return tipoObjeto;
+	}
+
+
+	public void setTipoObjeto(Integer tipoObjeto) {
+		this.tipoObjeto = tipoObjeto;
 	}
 
 }

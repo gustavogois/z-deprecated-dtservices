@@ -55,6 +55,18 @@ public class TiposDeEstadoSB extends GeneralSB<TipoDeEstado> implements TipoDeEs
 				nextStates.add(findById(PI_EM_EXECUCAO));
 				nextStates.add(findById(PI_AGUARDANDO_FATURAMENTO));
 			}
+		} else if(idGroup.equals(PROCESSO_EXTERNO)) {
+			
+			if(idActualState.equals(PE_CRIADO)) {
+				nextStates.add(findById(PE_EM_EXECUCAO));
+				nextStates.add(findById(PE_SUSPENSO));
+			} else if(idActualState.equals(PE_EM_EXECUCAO)) {
+				nextStates.add(findById(PE_FINALIZADO));
+				nextStates.add(findById(PE_SUSPENSO));
+			} else if(idActualState.equals(PE_SUSPENSO)) {
+				nextStates.add(findById(PE_EM_EXECUCAO));
+				nextStates.add(findById(PE_FINALIZADO));
+			}
 		} 
 			
 		return nextStates;

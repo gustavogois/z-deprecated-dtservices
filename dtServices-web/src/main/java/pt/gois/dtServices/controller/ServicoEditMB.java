@@ -128,6 +128,8 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			servico = sb.findById(servico.getId());
 			Historico historico = new Historico();
 			historico.setIdObjeto(servico.getId());
+			historico.setTipoObjeto(TipoDeEstadoSBLocal.SERVICOS);
+			this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.SERVICOS);
 			historico.setData(new Date());
 			historico.setDescricao("Estado do serviço " + servico.getId() + " alterado para: " + servico.getTipoDeEstado().getNome());
 			sbHistorico.create(historico);
@@ -152,6 +154,8 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
 				servico.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.SRV_CRIADO));
 				idEstadoAtual = TipoDeEstadoSBLocal.SRV_CRIADO;
+				
+				this.setTipoObjetoHistorico(TipoDeEstadoSBLocal.SERVICOS);
 
 			}
 		}
