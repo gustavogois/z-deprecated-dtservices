@@ -1,6 +1,5 @@
 Estados / Histórico
 	- Mostrar a hora no histórico
-	- Criar um registro na criação
 	
 Verificar as exclusões em Cascade
 
