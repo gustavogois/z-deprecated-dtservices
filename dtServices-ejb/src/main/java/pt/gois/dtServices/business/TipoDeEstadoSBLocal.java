@@ -23,8 +23,8 @@ public interface TipoDeEstadoSBLocal extends GeneralSBLocal<TipoDeEstado>{
 	// Processo Interno
 	public static final Integer PI_CRIADO = 5;
 	public static final Integer PI_EM_EXECUCAO = 6;
-	public static final Integer PI_FINALIZADO = 7;
-	public static final Integer PI_FATURADO = 8;
+	public static final Integer PI_AGUARDANDO_FATURAMENTO = 7;
+	public static final Integer PI_AGUARDANDO_PAGAMENTO = 8;
 	public static final Integer PI_PAGO = 9;
 	public static final Integer PI_SUSPENSO = 10;
 	

@@ -1,6 +1,8 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -17,6 +19,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
+import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
@@ -56,6 +59,18 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	Integer idProcessoExterno;
 	
+	Integer idEstadoAtual;
+	
+
+	public List<TipoDeEstado> getNovosEstados() {
+		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
+		if(getProcessoInterno().getTipoDeEstado().getId() != null) {
+			novosEstados.add(sbTipoDeEstado.findById(getProcessoInterno().getTipoDeEstado().getId()));
+		}
+		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_INTERNO, getProcessoInterno().getTipoDeEstado().getId()));
+		return novosEstados;
+	}
+
 	public List<TipoDeEstado> getEstadosServico() throws Exception {
 
 		List<TipoDeEstado> estados = sbTipoDeEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);
@@ -111,8 +126,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	public String save(){
 		
 		ProcessoInterno procInterno = getProcessoInterno();
-		TipoDeEstado tipoDeEstado = sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO); 
-		procInterno.setTipoDeEstado(tipoDeEstado);
 		
 		ProcessoExterno processoExterno = sbProcessoExterno.findById(procInterno.getProcessoExterno().getId());
 		procInterno.setProcessoExterno(processoExterno);
@@ -122,6 +135,19 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		}else{
 			sb.create( procInterno );
 		}
+		
+		if(!idEstadoAtual.equals(getProcessoInterno().getTipoDeEstado().getId())) {
+			
+			processoInterno = sb.findById(getProcessoInterno().getId());
+			Historico historico = new Historico();
+			historico.setIdObjeto(processoInterno.getId());
+			historico.setData(new Date());
+			historico.setDescricao("Estado do Processo Interno " + processoInterno.getId() + " alterado para: " + 
+					processoInterno.getTipoDeEstado().getNome());
+			sbHistorico.create(historico);
+		}
+
+		
 		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + processoExterno.getId();
 	}
 	
@@ -135,12 +161,15 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			Integer id = getId();
 			if( id != null ){
 				processoInterno = sb.findById( getId() );
+				idEstadoAtual = processoInterno.getTipoDeEstado().getId();
 			}else{
 				processoInterno = new ProcessoInterno();
 				processoInterno.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 				processoInterno.setProcessoExterno( new ProcessoExterno() );
 				processoInterno.getProcessoExterno().setId(getIdProcessoExterno());
-				processoInterno.setTipoDeEstado(new TipoDeEstado());
+				processoInterno.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO));
+				idEstadoAtual = TipoDeEstadoSBLocal.PI_CRIADO;
+				
 				servico = new Servico();
 				servico.setTipoDeEstado(new TipoDeEstado());
 				

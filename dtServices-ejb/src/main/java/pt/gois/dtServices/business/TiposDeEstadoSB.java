@@ -26,6 +26,7 @@ public class TiposDeEstadoSB extends GeneralSB<TipoDeEstado> implements TipoDeEs
 		ArrayList<TipoDeEstado> nextStates = new ArrayList<TipoDeEstado>();
 		
 		if(idGroup.equals(SERVICOS)) {
+			
 			if(idActualState.equals(SRV_CRIADO)) {
 				nextStates.add(findById(SRV_EM_EXECUCAO));
 				nextStates.add(findById(SRV_SUSPENSO));
@@ -36,7 +37,25 @@ public class TiposDeEstadoSB extends GeneralSB<TipoDeEstado> implements TipoDeEs
 				nextStates.add(findById(SRV_EM_EXECUCAO));
 				nextStates.add(findById(SRV_FINALIZADO));
 			}
-		}
+			
+		} else if(idGroup.equals(PROCESSO_INTERNO)) {
+			
+			if(idActualState.equals(PI_CRIADO)) {
+				nextStates.add(findById(PI_EM_EXECUCAO));
+				nextStates.add(findById(PI_SUSPENSO));
+			} else if(idActualState.equals(PI_EM_EXECUCAO)) {
+				nextStates.add(findById(PI_AGUARDANDO_FATURAMENTO));
+				nextStates.add(findById(PI_SUSPENSO));
+			} else if(idActualState.equals(PI_AGUARDANDO_FATURAMENTO)) {
+				nextStates.add(findById(PI_AGUARDANDO_PAGAMENTO));
+				nextStates.add(findById(PI_SUSPENSO));
+			} else if(idActualState.equals(PI_AGUARDANDO_PAGAMENTO)) {
+				nextStates.add(findById(PI_PAGO));
+			} else if(idActualState.equals(PI_SUSPENSO)) {
+				nextStates.add(findById(PI_EM_EXECUCAO));
+				nextStates.add(findById(PI_AGUARDANDO_FATURAMENTO));
+			}
+		} 
 			
 		return nextStates;
 	}

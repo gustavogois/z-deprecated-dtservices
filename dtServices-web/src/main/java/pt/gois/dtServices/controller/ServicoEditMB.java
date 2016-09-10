@@ -48,15 +48,6 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	boolean existeTipoServicoSolicitante=true;
 	
-
-	public List<Historico> getHistorico() {
-		SearchPageCtrl<Historico> searchPageCtrl = new SearchPageCtrl<Historico>();
-		searchPageCtrl.getFilters().put("idObjeto", getId());
-		List<Historico> historicos = sbHistorico.find(searchPageCtrl).getRows();
-		
-		return historicos;
-	}
-	
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
 	}
@@ -133,6 +124,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		}
 		
 		if(!idEstadoAtual.equals(servico.getTipoDeEstado().getId())) {
+			
 			servico = sb.findById(servico.getId());
 			Historico historico = new Historico();
 			historico.setIdObjeto(servico.getId());

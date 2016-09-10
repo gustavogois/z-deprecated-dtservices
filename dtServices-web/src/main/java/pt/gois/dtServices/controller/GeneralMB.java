@@ -2,12 +2,18 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
+
+import pt.gois.dtServices.business.HistoricoSBLocal;
+import pt.gois.dtServices.entity.Historico;
+import pt.gois.dtServices.util.SearchPageCtrl;
 
 public class GeneralMB implements Serializable {
 
@@ -19,6 +25,17 @@ public class GeneralMB implements Serializable {
 	Integer id;
 
 	String term;
+
+	@EJB
+	HistoricoSBLocal sbHistorico;
+	
+	public List<Historico> getHistorico() {
+		SearchPageCtrl<Historico> searchPageCtrl = new SearchPageCtrl<Historico>();
+		searchPageCtrl.getFilters().put("idObjeto", getId());
+		List<Historico> historicos = sbHistorico.find(searchPageCtrl).getRows();
+		
+		return historicos;
+	}
 
 	public void addMessage(String msg) {
 		addMessage(msg, FacesMessage.SEVERITY_INFO);

@@ -23,9 +23,9 @@ insert into tipos_de_estado (id, nome, grupo_estadoId) values (4, "Suspenso", 1)
 
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (5, "Criado", 2);
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (6, "Em execução", 2);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (7, "Finalizado", 2);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (8, "Faturado", 2);
-insert into tipos_de_estado (id, nome, grupo_estadoId) values (9, "Pago", 2);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (7, "Finalizado - Aguardando Faturamento", 2);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (8, "Faturado - Aguardando Pagamento", 2);
+insert into tipos_de_estado (id, nome, grupo_estadoId) values (9, "Finalizado", 2);
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (10, "Suspenso", 2);
 
 insert into tipos_de_estado (id, nome, grupo_estadoId) values (11, "Criado", 3);

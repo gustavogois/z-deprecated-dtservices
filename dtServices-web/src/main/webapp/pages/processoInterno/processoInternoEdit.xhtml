@@ -57,6 +57,38 @@
 						<h:outputText id="display" />
 					</h:panelGrid>
 				</p:tab>
+				<p:tab title="#{bundle.tab_estado_historico}"
+					disabled="#{processoInternoEditMB.processoInterno.id == null}" id="stateTab">
+					<h:panelGrid columns="2">
+						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
+						<p:outputLabel value="#{processoInternoEditMB.processoInterno.tipoDeEstado.nome}" />
+
+						<p:outputLabel value="#{bundle.default_label_novo_estado}" />
+						<p:selectOneMenu value="#{processoInternoEditMB.processoInterno.tipoDeEstado.id}"
+							style="width:125px" required="true">
+							<f:selectItems value="#{processoInternoEditMB.novosEstados}"
+								var="newState" itemValue="#{newState.id}"
+								itemLabel="#{newState.nome}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
+					<p:dataTable id="historicoList" value="#{processoInternoEditMB.historico}"
+						var="historico" emptyMessage="#{bundle.default_msg_notFound}"
+						paginator="true" rows="20" lazy="true"
+						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20, 50, 10">
+
+						<p:column headerText="#{bundle.default_label_data}">
+							<h:outputText value="#{historico.data}" />
+						</p:column>
+
+						<p:column headerText="#{bundle.default_field_description}">
+							<h:outputText value="#{historico.descricao}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:tab>
+
 				<p:tab title="#{bundle.tab_servicos}"
 					disabled="#{processoInternoEditMB.processoInterno.id == null}"
 					id="servicosTab">
@@ -107,7 +139,8 @@
 								icon="ui-icon-pencil" styleClass="action_edit"
 								outcome="/pages/servico/servicoEdit">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idProcessoInterno" value="#{processoInternoEditMB.processoInterno.id}" />
+								<f:param name="idProcessoInterno"
+									value="#{processoInternoEditMB.processoInterno.id}" />
 							</p:button>
 							<p:commandButton value="#{bundle.default_action_del}"
 								icon="ui-icon-trash" styleClass="action_del"
