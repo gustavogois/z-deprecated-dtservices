@@ -79,7 +79,10 @@
 						rowsPerPageTemplate="20, 50, 10">
 
 						<p:column headerText="#{bundle.default_label_data}">
-							<h:outputText value="#{historico.data}" />
+							<h:outputText value="#{historico.data}" >
+								<f:convertDateTime pattern="dd-MM-yyyy hh:mm" />
+							</h:outputText>
+							
 						</p:column>
 
 						<p:column headerText="#{bundle.default_field_description}">
