@@ -4,9 +4,12 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
@@ -22,7 +25,9 @@ public class EntidadeDeFacturacao implements Serializable {
 	private Integer id;
 	private String nome;
 	private List<ProcessoInterno> processosInternos;
-
+	private String nif;
+	private Solicitante solicitante;
+	
 	public EntidadeDeFacturacao() {
 	}
 
@@ -69,6 +74,26 @@ public class EntidadeDeFacturacao implements Serializable {
 		processoInterno.setEntidadeDeFacturacao(null);
 
 		return processoInterno;
+	}
+	
+	public String getNif() {
+		return nif;
+	}
+
+
+	public void setNif(String nif) {
+		this.nif = nif;
+	}
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="solicitanteId")
+	public Solicitante getSolicitante() {
+		return solicitante;
+	}
+
+
+	public void setSolicitante(Solicitante solicitante) {
+		this.solicitante = solicitante;
 	}
 
 }

@@ -25,6 +25,7 @@ public class Solicitante extends GeneralEntity implements Serializable {
 	private String telefone;
 	private List<ProcessoExterno> processoExterno;
 	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
+	private List<EntidadeDeFacturacao> entidadeDeFacturacao;
 
 	public Solicitante() {
 	}
@@ -115,6 +116,16 @@ public class Solicitante extends GeneralEntity implements Serializable {
 		tipoServicoSolicitante.setSolicitante(null);
 
 		return tipoServicoSolicitante;
+	}
+	
+	@OneToMany(mappedBy="solicitante")
+	public List<EntidadeDeFacturacao> getEntidadeDeFacturacao() {
+		return entidadeDeFacturacao;
+	}
+
+
+	public void setEntidadeDeFacturacao(List<EntidadeDeFacturacao> entidadeDeFacturacao) {
+		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
 
 }

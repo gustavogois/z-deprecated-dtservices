@@ -28,6 +28,10 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private TipoDeEstado tipoDeEstado;
 	private ProcessoExterno processoExterno;
 	private List<Servico> servicos;
+	private String fatura;
+	private String numeroChave;
+	private String nomeSolicitante;
+
 
 	public ProcessoInterno() {
 	}
@@ -120,6 +124,32 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 		servico.setProcessoInterno(null);
 
 		return servico;
+	}
+	public String getFatura() {
+		return fatura;
+	}
+
+
+	public void setFatura(String fatura) {
+		this.fatura = fatura;
+	}
+
+
+	public String getNumeroChave() {
+		return numeroChave;
+	}
+
+
+	public void setNumeroChave(String numeroChave) {
+		this.numeroChave = numeroChave;
+	}
+	public String getNomeSolicitante() {
+		return nomeSolicitante;
+	}
+
+
+	public void setNomeSolicitante(String nomeSolicitante) {
+		this.nomeSolicitante = nomeSolicitante;
 	}
 
 }
