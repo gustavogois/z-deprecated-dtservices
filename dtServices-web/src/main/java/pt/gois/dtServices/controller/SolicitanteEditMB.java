@@ -1,6 +1,7 @@
 package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -11,7 +12,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.model.DualListModel;
+
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
+import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoServico;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
@@ -31,13 +35,39 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSBLocal sbTiposServico;
 
+	@EJB
+	private pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sbEntidade;
+	
 	Solicitante solicitante;
 	TipoServico tipoServico;
 	TipoServicoSolicitante tipoServicoSolicitante;
 	List<TipoServicoSolicitante> tiposServicoPorSolicitante;
 
 	PaginatedDataModel<TipoServicoSolicitante> tipoServicoSolicitantesPDM;
+	
+	DualListModel<EntidadeDeFacturacao> entidades;
 
+	public DualListModel<EntidadeDeFacturacao> getEntidades() {
+		
+		ArrayList<EntidadeDeFacturacao> entidadesNaoAssociadas = new ArrayList<EntidadeDeFacturacao>();
+		ArrayList<EntidadeDeFacturacao> entidadesAssociadas = new ArrayList<EntidadeDeFacturacao>();
+		List<EntidadeDeFacturacao> todasEntidades = sbEntidade.findAll();
+		for (EntidadeDeFacturacao entidade : todasEntidades) {
+			if(entidade.getSolicitante().getId().equals(solicitante.getId())) {
+				entidadesAssociadas.add(entidade);
+			} else {
+				entidadesNaoAssociadas.add(entidade);
+			}
+		}
+		
+		List<EntidadeDeFacturacao> entidadesSource = entidadesNaoAssociadas;
+        List<EntidadeDeFacturacao> entidadesTarget = entidadesAssociadas;
+         
+        entidades = new DualListModel<EntidadeDeFacturacao>(entidadesSource, entidadesTarget);
+        
+        return entidades;
+	}
+	
 	public List<TipoServico> getTiposDeServico() throws Exception {
 
 		List<TipoServico> tipoDeServicoNotYetSelected = sbTiposServico.findAll();

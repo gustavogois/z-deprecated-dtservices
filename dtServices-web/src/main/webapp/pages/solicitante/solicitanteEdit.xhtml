@@ -52,22 +52,45 @@
 					</h:panelGrid>
 				</p:tab>
 
+				<p:tab title="#{bundle.tab_entidade_de_facturacao}"
+					disabled="#{solicitanteEditMB.solicitante.id == null}"
+					id="entidadeTab">
+
+					<p:pickList id="entidadeList" value="#{solicitanteEditMB.entidades}"
+						var="entidade" effect="bounce" itemValue="#{entidade.id}"
+						itemLabel="#{entidade.nome}" showSourceControls="true"
+						showTargetControls="true" showCheckbox="true" responsive="true"
+						showSourceFilter="true" showTargetFilter="true"
+						filterMatchMode="contains" >
+
+						<f:facet name="sourceCaption">#{bundle.solicitante_field_entidades_nao_associadas}</f:facet>
+						<f:facet name="targetCaption">#{bundle.solicitante_field_entidades_associadas}</f:facet>
+
+						<p:column>
+							<h:outputText value="#{entidade.nome}" />
+						</p:column>
+					</p:pickList>
+
+				</p:tab>
 				<p:tab title="#{bundle.menu_cadastro_tipoServico}"
 					disabled="#{solicitanteEditMB.solicitante.id == null}"
 					id="tipoServicoTab">
 
 					<h:panelGrid columns="2">
 						<p:button value="#{bundle.default_action_add}"
-							icon="ui-icon-document" outcome="/pages/tipoServicoSolicitante/tipoServicoSolicitanteEdit">
+							icon="ui-icon-document"
+							outcome="/pages/tipoServicoSolicitante/tipoServicoSolicitanteEdit">
 							<f:param name="idSolicitante"
 								value="#{solicitanteEditMB.solicitante.id}" />
 						</p:button>
 
 						<h:panelGrid columns="3" style="float: right">
 							<h:outputText value="#{bundle.default_label_termSearch}	" />
-							<p:remoteCommand name="tipoServicoSolicitanteSearchTrigger" update="tipoServicoSolicitanteList"
+							<p:remoteCommand name="tipoServicoSolicitanteSearchTrigger"
+								update="tipoServicoSolicitanteList"
 								actionListener="#{tipoServicoSolicitanteListMB.search}" />
-							<p:inputText id="tssSearch" value="#{tipoServicoSolicitanteListMB.term}"
+							<p:inputText id="tssSearch"
+								value="#{tipoServicoSolicitanteListMB.term}"
 								onkeydown="if(event.keyCode == 13) { tipoServicoSolicitanteSearchTrigger(); event.preventDefault() }" />
 						</h:panelGrid>
 					</h:panelGrid>
