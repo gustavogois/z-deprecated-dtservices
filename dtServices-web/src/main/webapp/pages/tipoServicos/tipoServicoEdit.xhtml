@@ -47,9 +47,11 @@
 						</p:inputText>
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
 						<p:inputTextarea
-							value="#{tipoServicoEditMB.processoExterno.descricao}"
-							rows="5" cols="30" counter="display" maxlength="120"
+							value="#{tipoServicoEditMB.tipoServico.descricao}" rows="5"
+							cols="30" counter="display" maxlength="300"
 							counterTemplate="{0} caracteres restantes" autoResize="false" />
+						<h:outputLabel />
+						<h:outputText id="display" />
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>
