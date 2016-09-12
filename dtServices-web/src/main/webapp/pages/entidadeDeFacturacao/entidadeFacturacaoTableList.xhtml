@@ -32,6 +32,9 @@
 	<p:column headerText="#{bundle.default_field_name}">
 		<h:outputText value="#{entidadeDeFacturacao.nome}" />
 	</p:column>
+	<p:column headerText="#{bundle.servico_field_solicitante}">
+		<h:outputText value="#{entidadeDeFacturacao.solicitante.nome}" />
+	</p:column>
 	<p:column headerText="#{bundle.default_label_action}" styleClass="column_action">
 		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"
 			styleClass="action_edit" outcome="/pages/entidadeDeFacturacao/entidadeDeFacturacaoEdit">

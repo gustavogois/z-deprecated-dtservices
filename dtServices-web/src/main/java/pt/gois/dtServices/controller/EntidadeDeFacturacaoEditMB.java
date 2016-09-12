@@ -12,7 +12,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
-import pt.gois.dtServices.entity.EntidadeDeFacturacao;
+import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -22,6 +22,9 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 
 	@EJB
 	private pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sb;
+	
+	@EJB
+	private pt.gois.dtServices.business.SolicitanteSBLocal sbSolicitante;
 	
 	EntidadeDeFacturacao entidade;
 	
@@ -59,6 +62,11 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 		return "entidadeDeFacturacaoList";
 	}
 	
+	public List<Solicitante> getSolicitantes() {
+		return sbSolicitante.findAll();
+	}
+
+	
 	public void delete( EntidadeDeFacturacao entidade ){
 		sb.delete(entidade);
 	}
@@ -70,6 +78,7 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 				entidade = sb.findById( getId() );
 			}else{
 				entidade = new EntidadeDeFacturacao();
+				entidade.setSolicitante(new Solicitante());
 			}
 		}
 		return entidade;

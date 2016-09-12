@@ -41,6 +41,18 @@
 							required="true"
 							validatorMessage="#{bundle.entidadeDeFacturacao_msg_invalidName}">
 						</p:inputText>
+						<p:outputLabel value="#{bundle.default_field_nif}" />
+						<p:inputText size="9" label="#{bundle.default_field_nif}"
+							value="#{entidadeDeFacturacaoEditMB.entidade.nif}" />
+						<p:outputLabel value="#{bundle.servico_field_solicitante}" />
+						<p:selectOneMenu
+							value="#{entidadeDeFacturacaoEditMB.entidade.solicitante.id}"
+							style="width:125px" required="true">
+							<f:selectItems value="#{entidadeDeFacturacaoEditMB.solicitantes}"
+								var="solicitante" itemValue="#{solicitante.id}"
+								itemLabel="#{solicitante.nome}" />
+						</p:selectOneMenu>
+
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>
