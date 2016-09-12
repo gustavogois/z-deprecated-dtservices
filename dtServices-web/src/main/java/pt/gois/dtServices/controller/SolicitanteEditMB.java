@@ -147,6 +147,9 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public String save() {
 		Solicitante solicitante = getSolicitante();
+		
+		solicitante.setEntidadeDeFacturacao(entidades.getTarget());
+		
 		salvaSolicitante(solicitante);
 		return "solicitanteList";
 	}
@@ -236,6 +239,10 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
 		this.tipoServicoSolicitante = tipoServicoSolicitante;
+	}
+
+	public void setEntidades(DualListModel<EntidadeDeFacturacao> entidades) {
+		this.entidades = entidades;
 	}
 
 }
