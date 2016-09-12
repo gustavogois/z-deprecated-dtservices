@@ -45,6 +45,11 @@
 							validator="#{tipoServicoEditMB.validateValor}" required="true"
 							validatorMessage="#{bundle.default_msg_invalidValor}">
 						</p:inputText>
+						<p:outputLabel value="#{bundle.default_field_observacoes}" />
+						<p:inputTextarea
+							value="#{tipoServicoEditMB.processoExterno.descricao}"
+							rows="5" cols="30" counter="display" maxlength="120"
+							counterTemplate="{0} caracteres restantes" autoResize="false" />
 					</h:panelGrid>
 				</p:tab>
 			</p:tabView>

@@ -247,7 +247,7 @@
     <column id="COL71" populated="true" UUID="e8af4738-bd29-48c5-8f8a-8db08a8f83b0" autoIncrement="false" autoIncrementSequenceName="tipoServico_valor_seq" defaultValue="" name="valor" nullable="0" physicalName="valor" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="8" userDefinedTypeUUID="4fc90970-b2e5-41dd-911c-cc605d87e7a8" >
      <remarks></remarks>
     </column>
-    <column id="COL72" populated="true" UUID="1cf5691f-9d40-4aaf-b795-7d5d9a715aaa" autoIncrement="false" autoIncrementSequenceName="tipoServico_descricao_seq" defaultValue="" name="descricao" nullable="1" physicalName="descricao" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL72" populated="true" UUID="1cf5691f-9d40-4aaf-b795-7d5d9a715aaa" autoIncrement="false" autoIncrementSequenceName="tipoServico_descricao_seq" defaultValue="" name="descricao" nullable="1" physicalName="descricao" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     <column id="COL73" populated="true" UUID="a7545892-2a23-472d-855d-d04d67de7f1e" autoIncrement="false" autoIncrementSequenceName="tipoServico_updateDt_seq" defaultValue="" name="updateDt" nullable="1" physicalName="updateDt" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
