@@ -13,6 +13,7 @@ public class SearchPageCtrl<T> {
 	Integer position = 0;
 	Map<String, String> fieldToSort = new HashMap<String,String>();
 	Map<String, Object> filters = new HashMap<String,Object>();
+	Map<String, Object> textualFilters = new HashMap<String,Object>();
 	Boolean andFilter = false;
 
 	public String getJpql() {
@@ -69,6 +70,13 @@ public class SearchPageCtrl<T> {
 	public void setAndFilter(Boolean andFilter) {
 		this.andFilter = andFilter;
 	}
+	public Map<String, Object> getTextualFilters() {
+		return textualFilters;
+	}
+	public void setTextualFilters(Map<String, Object> textualFilters) {
+		this.textualFilters = textualFilters;
+	}
+
 	
 	
 }

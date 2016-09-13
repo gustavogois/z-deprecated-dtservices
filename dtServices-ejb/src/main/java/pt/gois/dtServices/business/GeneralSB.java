@@ -113,9 +113,29 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 			if( filter.length() > 0 ){
 				filter = " and ( " + filter + " ) ";
 			}
-			queryJPQL = queryJPQL + filter;
-			queryJPQLCount = queryJPQLCount + filter;
+			
+			queryJPQL += filter;
+			queryJPQLCount += filter;
+			
+			filter = "";
+			Map<String,Object> textualFilters = searchPageCtrl.getTextualFilters();
+			if (filters != null){
+				for (Iterator<String> it = textualFilters.keySet().iterator(); it.hasNext();) {
+					if( filter.length() != 0 ){
+						filter += searchPageCtrl.getAndFilter()? " and ": " or ";
+					}
+					String filterProperty = it.next();
+					Object filterValue = textualFilters.get(filterProperty);
+					filter += filterProperty.replaceAll( ":query", "'" + filterValue.toString() + "'" );
+				}
+			}
 
+			if( filter.length() > 0 ){
+				filter = " and ( " + filter + " ) ";
+			}
+			
+			queryJPQL += filter;
+			queryJPQLCount += filter;
 			// sort
 			Map<String,String> fieldToSort = searchPageCtrl.getFieldToSort();
 			if (fieldToSort.size() > 0) {

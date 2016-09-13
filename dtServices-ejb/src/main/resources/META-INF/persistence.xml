@@ -15,7 +15,7 @@
 			
 			<property name="hibernate.id.new_generator_mappings" value="false" />
 			
-			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect"/>
+			<property name="hibernate.dialect" value="pt.gois.dtServices.util.MyMySQL5InnoDBDialect"/>
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.format_sql" value="false" />
 			<property name="hibernate.generate_statistics" value="true" />

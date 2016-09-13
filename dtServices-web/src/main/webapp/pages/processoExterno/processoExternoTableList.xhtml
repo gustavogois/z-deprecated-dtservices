@@ -50,6 +50,7 @@
 		<p:commandButton value="#{bundle.default_action_del}"
 			icon="ui-icon-trash" styleClass="action_del"
 			action="#{processoExternoEditMB.delete(processoExterno)}"
+			onclick="if( confirm( '#{bundle.processo_}' ) ){ return false }]"
 			update="processoExternoList" ajax="true">
 		</p:commandButton>
 	</p:column>
