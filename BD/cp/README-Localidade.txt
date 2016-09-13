@@ -30,6 +30,29 @@ alter table AddressVW MODIFY updateDt DATE default null;
 CREATE FULLTEXT INDEX addressvw_idx ON addressvw(completo);
 CREATE FULLTEXT INDEX addressvw_cpidx ON addressvw(codigoPostal);
 
+DROP FUNCTION searchAddress;
+
+CREATE FUNCTION searchAddress(
+  p_search varchar(30),
+  p_full int
+) RETURNS int  DETERMINISTIC
+BEGIN
+    DECLARE p_has int;
+    SELECT 1 INTO p_has;
+    
+    IF p_full > 0 THEN
+      select count(1) into p_has
+      from addressvw
+      where MATCH(completo) AGAINST(p_search);
+    ELSE
+      select count(1) into p_has
+      from addressvw
+      where MATCH(codigoPostal) AGAINST(p_search);
+    END IF;
+    
+    return p_has;
+END;
+
 create or replace view concelhoVW as
 Select dd, concat_WS( '-', dd, cc) cc, nome 
 from concelho;
