@@ -102,7 +102,7 @@ public class EnderecoMB extends GeneralMB implements Serializable {
 //		}
 		Map<String, Object> textualFilters = searchPageCtrl.getTextualFilters();
 		if (query != null && !"".equals(query = query.trim())) {
-			textualFilters.put(" fulltextSearch( 'searchAddress', :query )", query );
+			textualFilters.put(" '' = fulltextSearch( 'searchAddress', :query )", query );
 		}
 
 		

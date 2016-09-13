@@ -4,13 +4,17 @@ import java.util.List;
 
 import org.hibernate.QueryException;
 import org.hibernate.dialect.function.SQLFunction;
+import org.hibernate.dialect.function.StandardSQLFunction;
 import org.hibernate.engine.spi.Mapping;
 import org.hibernate.engine.spi.SessionFactoryImplementor;
 import org.hibernate.type.BooleanType;
 import org.hibernate.type.Type;
 
-public class MySqlFulltextSearch implements SQLFunction {
+public class MySqlFulltextSearch extends StandardSQLFunction implements SQLFunction{
 
+    public MySqlFulltextSearch(){
+	super("MySqlFulltextSearch");
+    }
     @Override
     public Type getReturnType(Type arg0, Mapping arg1) throws QueryException {
 	return new BooleanType();
