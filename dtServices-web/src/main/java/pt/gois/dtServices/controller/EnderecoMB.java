@@ -96,14 +96,14 @@ public class EnderecoMB extends GeneralMB implements Serializable {
 		searchPageCtrl.setPageSize(10);
 		searchPageCtrl.setAndFilter(true);
 
-		Map<String, Object> filters = searchPageCtrl.getFilters();
-		if (query != null && !"".equals(query = query.trim())) {
-			filters.put("obj.completo", "%" + query + "%");
-		}
-//		Map<String, Object> textualFilters = searchPageCtrl.getTextualFilters();
+//		Map<String, Object> filters = searchPageCtrl.getFilters();
 //		if (query != null && !"".equals(query = query.trim())) {
-//			textualFilters.put("1 < function( 'searchAddress', :query, 1 )", query );
+//			filters.put("obj.completo", "%" + query + "%");
 //		}
+		Map<String, Object> textualFilters = searchPageCtrl.getTextualFilters();
+		if (query != null && !"".equals(query = query.trim())) {
+			textualFilters.put(" fulltextSearch( 'searchAddress', :query )", query );
+		}
 
 		
 		sb.find(searchPageCtrl);

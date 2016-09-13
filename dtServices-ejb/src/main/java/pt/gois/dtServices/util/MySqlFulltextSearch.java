@@ -34,7 +34,7 @@ public class MySqlFulltextSearch implements SQLFunction {
 
 	String field = (String) args.get(0);
 	String value = (String) args.get(1);
-	String fragment = "  MATCH(" + field + ") AGAINST('" + value + "') ";
+	String fragment = " MATCH(" + field + ") AGAINST('" + value + "') ";
 	return fragment;
     }
 
