@@ -125,7 +125,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	public void onEnderecoSelect(SelectEvent event) {
 		Imovel imovel = getProcessoExterno().getImovel();
 		EnderecoVW end = (EnderecoVW) event.getObject();
-		end = sbEndereco.findById(new Integer(end.getId()));
+		end = sbEndereco.findById(end.getId());
 		this.setEndereco(end);
 
 		imovel.setRuaPorta(end.getRuaPorta());

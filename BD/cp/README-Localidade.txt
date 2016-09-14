@@ -39,9 +39,14 @@ FROM
 
 alter table AddressVW MODIFY updateDt DATE default null;
 
-CREATE FULLTEXT INDEX addressvw_idx ON addressvw(completo);
-CREATE FULLTEXT INDEX addressvw_cpidx ON addressvw(codigoPostal1);
+CREATE FULLTEXT INDEX addressvw_compx ON addressvw(completo);
+CREATE FULLTEXT INDEX addressvw_cpx ON addressvw(codigoPostal1);
+create index AddressVW_idx on AddressVW(id);
 
-create or replace view concelhoVW as
+DROP TABLE IF EXISTS concelhoVW; 
+
+CREATE TABLE concelhoVW as
 Select dd, concat_WS( '-', dd, cc) cc, nome 
 from concelho;
+
+CREATE INDEX concelhoVW_idx ON concelhoVW(cc);

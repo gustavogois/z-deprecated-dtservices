@@ -3,8 +3,6 @@ package pt.gois.dtServices.entity;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -18,7 +16,7 @@ import javax.persistence.Table;
 @NamedQuery(name = "AddressVW.findAll", query = "SELECT l FROM EnderecoVW l")
 public class EnderecoVW extends Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
-	Integer id;
+	String id;
 	String completo;
 
 	public EnderecoVW() {
@@ -26,7 +24,7 @@ public class EnderecoVW extends Endereco implements Serializable {
 	
 	public EnderecoVW( Object [] end ){
 		int i = 0;
-		this.setId(new Integer( end[i++].toString() ));
+		this.setId(end[i++].toString());
 		this.setLocalidade((String)end[i++]);
 		this.setRuaPorta((String)end[i++]);
 		this.setComplemento((String)end[i++]);
@@ -44,12 +42,11 @@ public class EnderecoVW extends Endereco implements Serializable {
 	}
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public Integer getId() {
+	public String getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

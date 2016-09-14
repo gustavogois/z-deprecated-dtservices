@@ -16,7 +16,7 @@ public class EnderecoConverter implements Converter {
         if(value != null && value.trim().length() > 0) {
             try {
             	EnderecoVW end = new EnderecoVW();
-            	end.setId(new Integer(value));
+            	end.setId(value);
                 return end;
             } catch(NumberFormatException e) {
                 throw new ConverterException(new FacesMessage(FacesMessage.SEVERITY_ERROR, "Conversion Error", "Not a valid theme."));
