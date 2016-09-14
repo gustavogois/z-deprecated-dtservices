@@ -23,6 +23,25 @@ public class EnderecoVW extends Endereco implements Serializable {
 
 	public EnderecoVW() {
 	}
+	
+	public EnderecoVW( Object [] end ){
+		int i = 0;
+		this.setId(new Integer( end[i++].toString() ));
+		this.setLocalidade((String)end[i++]);
+		this.setRuaPorta((String)end[i++]);
+		this.setComplemento((String)end[i++]);
+		this.setCodigoPostal((String)end[i++]);
+		
+		Concelho concelho = new Concelho();
+		concelho.setId((String)end[i++]);
+		concelho.setNome((String)end[i++]);
+		this.setConcelho(concelho);
+		
+		Distrito distrito = new Distrito();
+		distrito.setId((String)end[i++]);
+		distrito.setNome((String)end[i++]);
+		this.setDistrito(distrito);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
