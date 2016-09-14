@@ -131,7 +131,7 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 			}
 
 			if( filter.length() > 0 ){
-				filter = " and ( " + filter + " ) ";
+				filter = " and " + filter + " ";
 			}
 			
 			queryJPQL += filter;

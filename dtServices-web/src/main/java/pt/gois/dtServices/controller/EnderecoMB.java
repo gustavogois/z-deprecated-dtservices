@@ -92,21 +92,6 @@ public class EnderecoMB extends GeneralMB implements Serializable {
 	}
 
 	public List<EnderecoVW> search(String query) {
-		SearchPageCtrl<EnderecoVW> searchPageCtrl = new SearchPageCtrl<EnderecoVW>();
-		searchPageCtrl.setPageSize(10);
-		searchPageCtrl.setAndFilter(true);
-
-		Map<String, Object> filters = searchPageCtrl.getFilters();
-		if (query != null && !"".equals(query = query.trim())) {
-			filters.put("obj.completo", "%" + query + "%");
-		}
-//		Map<String, Object> textualFilters = searchPageCtrl.getTextualFilters();
-//		if (query != null && !"".equals(query = query.trim())) {
-//			textualFilters.put("1 < function( 'searchAddress', :query, 1 )", query );
-//		}
-
-		
-		sb.find(searchPageCtrl);
-		return searchPageCtrl.getRows();
+		return sb.getEnderecos(query, true);
 	}
 }

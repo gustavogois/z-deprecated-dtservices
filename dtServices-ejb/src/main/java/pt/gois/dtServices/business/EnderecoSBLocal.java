@@ -12,4 +12,6 @@ import pt.gois.dtServices.entity.EnderecoVW;
 public interface EnderecoSBLocal extends GeneralSBLocal<EnderecoVW>{
 	List<Distrito> getDistritos();
 	List<Concelho> getConcelhos(Distrito distrito);
+	
+	List<EnderecoVW> getEnderecos(String query, boolean byCp);
 }
