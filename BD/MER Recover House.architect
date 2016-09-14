@@ -4,16 +4,7 @@
  <print-settings numCopies="1" zoom="1.0" pageNumbersPrinted="true" orientation="1" paperWidth="612.0" paperHeight="792.0" leftBorder="50.0" rightBorder="50.0" topBorder="50.0" bottomBorder="50.0" />
  <project-data-sources>
   <data-source id="DS0">
-   <property key="Logical" value="(Banco de dados alvo)" />
-   <property key="Connection Type" value="MySQL" />
-   <property key="JDBC URL" value="jdbc:mysql://:3306/dt_services" />
-   <property key="UID" value="root" />
-   <property key="PWD" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.database" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.port" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.hostname" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.login" value="" />
-   <property key="ca.sqlpower.architect.etl.kettle.repos.password" value="" />
+   <property key="Logical" value="Modelo de Dados" />
   </data-source>
   <data-source id="DS2">
    <property key="Connection Type" value="MySQL" />
@@ -775,8 +766,8 @@
    <relationship id="REL228" populated="true" UUID="a931c88c-ae89-4a7d-a765-0ffe703ef8e5" deferrability="7" deleteRule="0" fk-table-ref="TAB100" fkCardinality="7" identifying="false" name="solicitante_processoCliente_fk" physicalName="solicitante_processocliente_fk" pk-table-ref="TAB34" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP229" populated="true" UUID="dba362e1-1e77-4fcf-b87b-20f3c0b6f84f" fk-column-ref="COL102" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
    </relationship>
-   <relationship id="REL230" populated="true" UUID="2de9da45-3ca3-4102-bd9c-3a6c9e558069" deferrability="7" deleteRule="3" fk-table-ref="TAB59" fkCardinality="7" identifying="false" name="solicitante_entidadeDeFacturacao_fk" physicalName="solicitante_entidadedefacturacao_fk" pk-table-ref="TAB34" pkCardinality="2" updateRule="3" >
-    <column-mapping id="CMP231" populated="true" UUID="b7986d7d-2f8a-4fbf-9e19-189bf8c006f1" fk-column-ref="COL61" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
+   <relationship id="REL230" populated="true" UUID="2de9da45-3ca3-4102-bd9c-3a6c9e558069" deferrability="7" deleteRule="3" fk-table-ref="TAB59" fkCardinality="7" identifying="false" name="solicitante_entidadeDeFacturacao_fk" physicalName="solicitante_entidadeDeFacturacao_fk" pk-table-ref="TAB34" pkCardinality="3" updateRule="3" >
+    <column-mapping id="CMP231" populated="true" UUID="6da61643-35b8-4d05-a96a-79b28501977e" fk-column-ref="COL61" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL35" />
    </relationship>
    <relationship id="REL232" populated="true" UUID="d2228571-baeb-4757-9445-1cab423e868a" deferrability="7" deleteRule="0" fk-table-ref="TAB122" fkCardinality="7" identifying="false" name="imovel_imagem_imovel_fk" physicalName="imovel_imagem_imovel_fk" pk-table-ref="TAB43" pkCardinality="2" updateRule="3" >
     <column-mapping id="CMP233" populated="true" UUID="c99262cc-952d-4b80-835a-baec76795295" fk-column-ref="COL123" name="Column Mapping" physicalName="Column Mapping" pk-column-ref="COL44" />
@@ -825,7 +816,7 @@
  <ddl-generator type="ca.sqlpower.architect.ddl.MySqlDDLGenerator" allow-connection="false" target-catalog="dt_services"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="0.7839826426435067" viewportX="0" viewportY="38" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="0.7839826426435067" viewportX="0" viewportY="0" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB20" x="1206" y="515" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB34" x="33" y="22" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB43" x="579" y="80" bgColor="0xbfd6ff" fgColor="0x000000" rounded="false" dashed="false"/>
@@ -857,7 +848,7 @@
   <table-link relationship-ref="REL240" pkConnection="0.4134275618374558" fkConnection="0.4009433962264151" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
   <table-link relationship-ref="REL248" pkConnection="0.46524064171123" fkConnection="0.27692307692307694" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL250" pkConnection="0.9295774647887324" fkConnection="0.21311475409836064" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="18"/>
-  <table-link relationship-ref="REL252" pkConnection="0.8784313725490196" fkConnection="0.0" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="36"/>
+  <table-link relationship-ref="REL252" pkConnection="0.8588235294117647" fkConnection="0.0" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="36"/>
   <table-link relationship-ref="REL254" pkConnection="0.6446700507614214" fkConnection="0.34684684684684686" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="72"/>
   <table-link relationship-ref="REL256" pkConnection="0.7247191011235955" fkConnection="0.2857142857142857" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="132"/>
   <table-link relationship-ref="REL258" pkConnection="0.8245614035087719" fkConnection="0.5683060109289617" rLineColor="0x000000" pkLabelText="" fkLabelText="" orientation="33"/>
