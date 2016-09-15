@@ -23,14 +23,14 @@
 			var currentMarker;
 
 			function handlePointClick(event) {
-				console.log(event.latLng.lat() + ' ' + event.latLng.lng())
-				document.getElementById('lat').value = event.latLng.lat();
-				document.getElementById('lng').value = event.latLng.lng();
+				currentMarker = new google.maps.Marker({
+	                position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
+	            });
 
-				//PF('map').addOverlay(currentMarker);
+	            PF('geoGmap').addOverlay(currentMarker);
 
-				//PF('dlg').show();
 			}
+
 		</script>
 
 		<f:metadata>

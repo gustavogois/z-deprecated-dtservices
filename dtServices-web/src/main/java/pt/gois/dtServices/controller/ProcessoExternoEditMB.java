@@ -8,7 +8,6 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
@@ -41,7 +40,6 @@ import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoDeEstado;
-import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
@@ -75,6 +73,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	MapModel geoModel;
 
 	String centerGeoMap = "39.1708764,-8.629546,8";
+	
+	int zoomLevel = 13;
 
 	String descricao;
 	
@@ -235,6 +235,11 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		Imovel imovel = processoExterno.getImovel();
 		imovel.setLatitude(latlng.getLat());
 		imovel.setLongitude(latlng.getLng());
+		
+		geoModel.getMarkers().clear();
+		geoModel.addOverlay(new Marker(latlng));
+		zoomLevel = 15;
+		centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 	}
 
 	public void onGeocode(GeocodeEvent event) {
@@ -244,9 +249,12 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			LatLng latlng = results.get(0).getLatLng();
 			centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 
+			geoModel.getMarkers().clear();
 			for (int i = 0; i < results.size(); i++) {
 				GeocodeResult result = results.get(i);
 				geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
+				zoomLevel = 15;
+				centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 			}
 			if (results.size() == 1) {
 				processoExterno.getImovel().setLatitude(latlng.getLat());
@@ -351,6 +359,14 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	public void setSelectedImage(Imagem selectedImage) {
 		this.selectedImage = selectedImage;
+	}
+
+	public int getZoomLevel() {
+		return zoomLevel;
+	}
+
+	public void setZoomLevel(int zoomLevel) {
+		this.zoomLevel = zoomLevel;
 	}
 	
 }
