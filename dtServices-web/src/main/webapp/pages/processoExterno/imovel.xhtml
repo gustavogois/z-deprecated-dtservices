@@ -10,7 +10,8 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
-<p:fieldset legend="#{bundle.menu_cadastro_imovel}" toggleable="true" toggleSpeed="500">
+<p:fieldset legend="#{bundle.menu_cadastro_imovel}" toggleable="true"
+	toggleSpeed="500">
 
 	<h:panelGrid columns="2" id="endereco">
 		<p:outputLabel value="#{bundle.default_field_name}" />
@@ -41,16 +42,17 @@
 		</h:panelGrid>
 
 		<p:outputLabel value="#{bundle.endereco_field_complemento}" />
-		<p:inputText id="complemento" size="60" label="#{bundle.endereco_field_complemento}"
+		<p:inputText id="complemento" size="60"
+			label="#{bundle.endereco_field_complemento}"
 			value="#{processoExternoEditMB.processoExterno.imovel.complemento}"
 			required="true">
 		</p:inputText>
 
 		<p:outputLabel value="#{bundle.endereco_field_cp}" />
 		<h:panelGrid columns="2">
-			<p:autoComplete id="cp" value="#{processoExternoEditMB.endereco}"
+			<p:autoComplete id="cp" value="#{processoExternoEditMB.endereco.codigoPostal}"
 				completeMethod="#{enderecoMB.search}" var="end"
-				converter="enderecoConverter" itemLabel="#{end.codigoPostal}"
+				converter="enderecoConverter" itemLabel="#{end}"
 				itemValue="#{end.id}" forceSelection="true">
 				<p:ajax event="itemSelect"
 					listener="#{processoExternoEditMB.onEnderecoSelect}"
@@ -110,23 +112,67 @@
 			label="#{bundle.endereco_field_longitude}"
 			value="#{processoExternoEditMB.processoExterno.imovel.longitude}">
 		</p:inputText>
-		<p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Show Map" onclick="PF('gmapDlg').show();" />
+		<p:commandButton id="btn" type="button" icon="ui-icon-pin-s"
+			value="Show Map" onclick="geocodeReverse();" />
 
 	</h:panelGrid>
-	<p:dialog id="gmapDialog" widgetVar="gmapDlg" width="625" height="400"
-		modal="true" closeOnEscape="true">
-		<p:gmap id="geoGmap" widgetVar="geoGmap" 
+	<p:dialog id="gmapDialog" widgetVar="gmapDlg" width="800" height="600"
+		resizable="false" modal="true" closeOnEscape="true" closable="true"
+		header="#{bundle.imovel_msg_chooseAPoint}">
+		<p:panelGrid style="width: 100%" id="gmapPnl">
+			<p:row>
+				<p:column colspan="2">
+					<p:gmap id="geoGmap" widgetVar="geoGmap"
+						center="#{processoExternoEditMB.centerGeoMap}" type="ROADMAP"
+						zoom="#{processoExternoEditMB.zoomLevel}"
+						model="#{processoExternoEditMB.geoModel}" draggable="true"
+						style="width:100%;height:500px" fitBounds="true"
+						mapTypeControl="true" navigationControl="true" streetView="true">
+						<p:ajax event="geocode"
+							listener="#{processoExternoEditMB.onGeocode}"
+							update="lat,lng,gmapPnl,gmapDialogShow" />
+						<p:ajax event="pointSelect"
+							listener="#{processoExternoEditMB.onPointSelect}"
+							update="lat,lng,gmapPnl,gmapDialogShow" />
+						<p:ajax event="overlaySelect"
+							listener="#{processoExternoEditMB.onMarkerSelect}"
+							update="lat,lng,gmapPnl,gmapDialogShow" />
+						<p:ajax event="stateChange" listener="#{processoExternoEditMB.onStateChange}" />
+					</p:gmap>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="#{bundle.endereco_field_latitude}" />
+				</p:column>
+				<p:column>
+					<p:inputText id="lat1" size="30"
+						label="#{bundle.endereco_field_latitude}"
+						value="#{processoExternoEditMB.processoExterno.imovel.latitude}">
+					</p:inputText>
+				</p:column>
+			</p:row>
+			<p:row>
+				<p:column>
+					<p:outputLabel value="#{bundle.endereco_field_longitude}" />
+				</p:column>
+				<p:column>
+					<p:inputText id="lng1" size="30"
+						label="#{bundle.endereco_field_longitude}"
+						value="#{processoExternoEditMB.processoExterno.imovel.longitude}">
+					</p:inputText>
+				</p:column>
+			</p:row>
+		</p:panelGrid>
+	</p:dialog>
+	<p:dialog id="gmapDialogShow" widgetVar="gmapShowDlg" width="800" height="600" resizable="false" modal="true" closeOnEscape="true"
+		closable="true" header="#{bundle.imovel_msg_showPoint}">
+		<p:gmap id="geoGmapShow" widgetVar="geoGmapShow"
 			center="#{processoExternoEditMB.centerGeoMap}" type="ROADMAP"
 			zoom="#{processoExternoEditMB.zoomLevel}"
 			model="#{processoExternoEditMB.geoModel}" draggable="true"
-			style="width:100%;height:400px" mapTypeControl="true"
-			navigationControl="true" streetView="true" >
-			<p:ajax event="geocode" listener="#{processoExternoEditMB.onGeocode}"
-				update="lat,lng,geoGmap" />
-			<p:ajax event="pointSelect"
-				listener="#{processoExternoEditMB.onPointSelect}" update="lat,lng,geoGmap" />
-			<p:ajax event="overlaySelect"
-				listener="#{processoExternoEditMB.onMarkerSelect}" update="lat,lng,geoGmap" />
+			style="width:100%;height:600px" mapTypeControl="true"
+			navigationControl="true" streetView="true">
 		</p:gmap>
 	</p:dialog>
 </p:fieldset>

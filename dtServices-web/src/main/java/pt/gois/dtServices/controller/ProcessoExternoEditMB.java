@@ -19,6 +19,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.event.map.StateChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -194,7 +195,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				endereco.setCodigoPostal(imovel.getCodigoPostal());
 				
 				idEstadoAtual = processoExterno.getTipoDeEstado().getId();
-
+				
+				centerGeoMap = imovel.getLatitude() + "," + imovel.getLongitude();
 				
 			} else {
 				processoExterno = new ProcessoExterno();
@@ -238,7 +240,6 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		
 		geoModel.getMarkers().clear();
 		geoModel.addOverlay(new Marker(latlng));
-		zoomLevel = 15;
 		centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 	}
 
@@ -253,7 +254,6 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			for (int i = 0; i < results.size(); i++) {
 				GeocodeResult result = results.get(i);
 				geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
-				zoomLevel = 15;
 				centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 			}
 			if (results.size() == 1) {
@@ -268,6 +268,12 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 		processoExterno.getImovel().setLatitude(marker.getLatlng().getLat());
 		processoExterno.getImovel().setLongitude(marker.getLatlng().getLng());
+	}
+	
+	public void onStateChange(StateChangeEvent event){
+		setZoomLevel( event.getZoomLevel() + 1 );
+		LatLng center = event.getCenter();
+		setCenterGeoMap( center.getLat() + "," + center.getLng() );
 	}
 
 	public EnderecoVW getEndereco() {
