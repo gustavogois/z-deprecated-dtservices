@@ -53,7 +53,7 @@
 			<p:autoComplete id="cp" value="#{processoExternoEditMB.endereco.codigoPostal}"
 				completeMethod="#{enderecoMB.search}" var="end"
 				converter="enderecoConverter" itemLabel="#{end}"
-				itemValue="#{end.id}" forceSelection="true">
+				itemValue="#{end.id}" forceSelection="true" required="true">
 				<p:ajax event="itemSelect"
 					listener="#{processoExternoEditMB.onEnderecoSelect}"
 					update="ruaPorta,complemento,cp,concelho,distrito" />
