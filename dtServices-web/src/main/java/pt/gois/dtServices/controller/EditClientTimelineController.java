@@ -19,6 +19,8 @@ import org.primefaces.extensions.model.timeline.TimelineModel;
 @ViewScoped
 public class EditClientTimelineController implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private TimelineModel model;
 
 	private TimeZone timeZone = TimeZone.getTimeZone("Europe/Berlin");

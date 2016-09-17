@@ -10,8 +10,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.FileUploadEvent;
@@ -149,8 +147,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		boolean novo = false;
 		if (processoExterno.getId() != null) {
 			sb.save(processoExterno);
+			addMessage("default_msg_saved");
 		} else {
 			sb.create(processoExterno);
+			addMessage("default_msg_created");
 			novo = true;
 		}
 		
@@ -282,21 +282,6 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	public void setEndereco(EnderecoVW endereco) {
 		this.endereco = endereco;
-	}
-
-	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-	}
-
-	public void validateEndereco(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-
-	}
-
-	public void validateCrp(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-
-	}
-
-	public void validateInquilino(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-
 	}
 
 	public void setSb(ProcessoExternoSBLocal sb) {

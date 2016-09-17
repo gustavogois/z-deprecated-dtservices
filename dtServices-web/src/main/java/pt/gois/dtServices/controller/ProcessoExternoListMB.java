@@ -12,7 +12,6 @@ import org.apache.commons.lang3.StringUtils;
 import pt.gois.dtServices.business.ProcessoExternoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.ProcessoExterno;
-import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean

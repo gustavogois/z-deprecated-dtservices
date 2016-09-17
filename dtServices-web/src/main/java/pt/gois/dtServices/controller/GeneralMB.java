@@ -2,18 +2,12 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.util.List;
 import java.util.ResourceBundle;
 
-import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.context.FacesContext;
-
-import pt.gois.dtServices.business.HistoricoSBLocal;
-import pt.gois.dtServices.entity.Historico;
-import pt.gois.dtServices.util.SearchPageCtrl;
 
 public class GeneralMB implements Serializable {
 

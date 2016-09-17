@@ -16,11 +16,11 @@
 		<f:metadata>
 			<f:viewParam name="id" value="#{solicitanteEditMB.id}" />
 		</f:metadata>
-		<h:form id="solicitanteForm">
+		<h:form id="solicitanteForm" prependId="false">
 			<div id="rightbox" class="fixright">
 				<h:panelGrid columns="2">
-					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
-						action="#{solicitanteEditMB.save}" icon="ui-icon-disk" />
+					<p:commandButton ajax="true" value="#{bundle.default_action_save}"
+						actionListener="#{solicitanteEditMB.save}" icon="ui-icon-disk" update="solicitanteForm"/>
 					<p:commandButton ajax="false"
 						value="#{bundle.default_action_cancel}" immediate="true"
 						action="solicitanteList" />
@@ -49,6 +49,72 @@
 							validator="#{solicitanteEditMB.validateTelefone}" required="true"
 							validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
 						</p:inputText>
+
+						<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
+						<p:inputText id="ruaPorta" size="60"
+							label="#{bundle.endereco_field_ruaPorta}"
+							value="#{solicitanteEditMB.solicitante.ruaPorta}"
+							required="true"
+							validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
+						</p:inputText>
+
+						<p:outputLabel value="#{bundle.endereco_field_complemento}" />
+						<p:inputText id="complemento" size="60"
+							label="#{bundle.endereco_field_complemento}"
+							value="#{solicitanteEditMB.solicitante.complemento}"
+							required="true">
+						</p:inputText>
+
+						<p:outputLabel value="#{bundle.endereco_field_cp}" />
+						<p:autoComplete id="cp"
+							value="#{solicitanteEditMB.solicitante.codigoPostal}"
+							completeMethod="#{enderecoMB.search}" var="end"
+							converter="enderecoConverter" itemLabel="#{end}"
+							itemValue="#{end.id}" forceSelection="true" required="true">
+							<p:ajax event="itemSelect"
+								listener="#{solicitanteEditMB.onEnderecoSelect}"
+								update="ruaPorta,complemento,cp,concelho,distrito" />
+							<p:column style="width:10%">
+								<h:outputText value="#{end.codigoPostal}" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="#{end.ruaPorta}" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="#{end.complemento}" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="#{end.concelho.nome}" />
+							</p:column>
+
+							<p:column>
+								<h:outputText value="#{end.distrito.nome}" />
+							</p:column>
+						</p:autoComplete>
+
+						<p:outputLabel value="#{bundle.endereco_field_concelho}" />
+						<p:selectOneMenu id="concelho"
+							value="#{solicitanteEditMB.solicitante.concelho.id}"
+							style="width:125px" required="true"
+							label="#{bundle.endereco_field_concelho}">
+							<f:selectItems
+								value="#{enderecoMB.getConcelhos(solicitanteEditMB.solicitante.distrito)}"
+								var="concelho" itemValue="#{concelho.id}"
+								itemLabel="#{concelho.nome}" />
+						</p:selectOneMenu>
+
+						<p:outputLabel value="#{bundle.endereco_field_distrito}" />
+						<p:selectOneMenu id="distrito"
+							value="#{solicitanteEditMB.solicitante.distrito.id}"
+							style="width:125px" required="true"
+							label="#{bundle.endereco_field_distrito}">
+							<f:selectItems value="#{enderecoMB.distritos}" var="distrito"
+								itemValue="#{distrito.id}" itemLabel="#{distrito.nome}" />
+						</p:selectOneMenu>
+
 					</h:panelGrid>
 				</p:tab>
 
@@ -56,12 +122,13 @@
 					disabled="#{solicitanteEditMB.solicitante.id == null}"
 					id="entidadeTab">
 
-					<p:pickList id="entidadeList" value="#{solicitanteEditMB.entidades}"
-						var="entidade" effect="bounce" itemValue="#{entidade.id}"
+					<p:pickList id="entidadeList"
+						value="#{solicitanteEditMB.entidades}" var="entidade"
+						effect="bounce" itemValue="#{entidade.id}"
 						itemLabel="#{entidade.nome}" showSourceControls="true"
 						showTargetControls="true" showCheckbox="true" responsive="true"
 						showSourceFilter="true" showTargetFilter="true"
-						filterMatchMode="contains" >
+						filterMatchMode="contains">
 
 						<f:facet name="sourceCaption">#{bundle.solicitante_field_entidades_nao_associadas}</f:facet>
 						<f:facet name="targetCaption">#{bundle.solicitante_field_entidades_associadas}</f:facet>
