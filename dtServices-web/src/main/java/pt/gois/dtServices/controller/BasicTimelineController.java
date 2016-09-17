@@ -17,6 +17,8 @@ import org.primefaces.extensions.model.timeline.TimelineModel;
 @ViewScoped
 public class BasicTimelineController implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private TimelineModel model;
 
 	private boolean selectable = true;

@@ -16,6 +16,8 @@ import org.primefaces.extensions.model.timeline.TimelineModel;
 @ViewScoped
 public class CustomTimelineController implements Serializable {
 
+	private static final long serialVersionUID = 1L;
+
 	private TimelineModel model;
 	private String locale; // current locale as String, java.util.Locale is possible too.
 	private Date start;

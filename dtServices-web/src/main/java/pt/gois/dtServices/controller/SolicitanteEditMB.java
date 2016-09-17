@@ -12,9 +12,11 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DualListModel;
 
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
+import pt.gois.dtServices.entity.EnderecoVW;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoServico;
@@ -31,6 +33,9 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTiposServicoSolicitante;
+	
+	@EJB
+	private pt.gois.dtServices.business.EnderecoSBLocal sbEndereco;
 
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSBLocal sbTiposServico;
@@ -134,6 +139,14 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public String save() {
 		Solicitante solicitante = getSolicitante();
+<<<<<<< HEAD
+=======
+		
+		if( entidades != null ){
+			solicitante.setEntidadeDeFacturacao(entidades.getTarget());
+		}
+		
+>>>>>>> d4a69be626be8bf13a1c8fd7cdacdf008a6450a6
 		salvaSolicitante(solicitante);
 		return "solicitanteList";
 	}
@@ -141,8 +154,10 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	private void salvaSolicitante(Solicitante solicitante) {
 		if (solicitante.getId() != null) {
 			sb.save(solicitante);
+			addMessage("default_msg_saved");
 		} else {
 			sb.create(solicitante);
+			addMessage("default_msg_created");
 		}
 	}
 
@@ -178,6 +193,19 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		}
 
 		return tipoServicoSolicitantesPDM;
+	}
+	
+	public void onEnderecoSelect(SelectEvent event) {
+		Solicitante solicitante = getSolicitante();
+		EnderecoVW end = (EnderecoVW) event.getObject();
+		end = sbEndereco.findById(end.getId());
+
+		solicitante.setRuaPorta(end.getRuaPorta());
+		solicitante.setComplemento(end.getComplemento());
+		solicitante.setLocalidade(end.getLocalidade());
+		solicitante.setDistrito(end.getDistrito());
+		solicitante.setConcelho(end.getConcelho());
+		solicitante.setCodigoPostal(end.getCodigoPostal());
 	}
 
 	private boolean naoENovoSolicitante() {
@@ -226,4 +254,48 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		this.tipoServicoSolicitante = tipoServicoSolicitante;
 	}
 
+<<<<<<< HEAD
+=======
+	public void setEntidades(DualListModel<EntidadeDeFacturacao> entidades) {
+		this.entidades = entidades;
+	}
+
+	public pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal getSbTiposServicoSolicitante() {
+		return sbTiposServicoSolicitante;
+	}
+
+	public void setSbTiposServicoSolicitante(
+			pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTiposServicoSolicitante) {
+		this.sbTiposServicoSolicitante = sbTiposServicoSolicitante;
+	}
+
+	public pt.gois.dtServices.business.EnderecoSBLocal getSbEndereco() {
+		return sbEndereco;
+	}
+
+	public void setSbEndereco(pt.gois.dtServices.business.EnderecoSBLocal sbEndereco) {
+		this.sbEndereco = sbEndereco;
+	}
+
+	public pt.gois.dtServices.business.TipoServicoSBLocal getSbTiposServico() {
+		return sbTiposServico;
+	}
+
+	public void setSbTiposServico(pt.gois.dtServices.business.TipoServicoSBLocal sbTiposServico) {
+		this.sbTiposServico = sbTiposServico;
+	}
+
+	public pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal getSbEntidade() {
+		return sbEntidade;
+	}
+
+	public void setSbEntidade(pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sbEntidade) {
+		this.sbEntidade = sbEntidade;
+	}
+
+	public void setSb(pt.gois.dtServices.business.SolicitanteSBLocal sb) {
+		this.sb = sb;
+	}
+
+>>>>>>> d4a69be626be8bf13a1c8fd7cdacdf008a6450a6
 }

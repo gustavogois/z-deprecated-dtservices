@@ -8,11 +8,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.FileUploadEvent;
@@ -20,6 +17,7 @@ import org.primefaces.event.SelectEvent;
 import org.primefaces.event.map.GeocodeEvent;
 import org.primefaces.event.map.OverlaySelectEvent;
 import org.primefaces.event.map.PointSelectEvent;
+import org.primefaces.event.map.StateChangeEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -41,7 +39,6 @@ import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoDeEstado;
-import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
@@ -75,6 +72,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	MapModel geoModel;
 
 	String centerGeoMap = "39.1708764,-8.629546,8";
+	
+	int zoomLevel = 13;
 
 	String descricao;
 	
@@ -148,8 +147,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		boolean novo = false;
 		if (processoExterno.getId() != null) {
 			sb.save(processoExterno);
+			addMessage("default_msg_saved");
 		} else {
 			sb.create(processoExterno);
+			addMessage("default_msg_created");
 			novo = true;
 		}
 		
@@ -194,7 +195,8 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				endereco.setCodigoPostal(imovel.getCodigoPostal());
 				
 				idEstadoAtual = processoExterno.getTipoDeEstado().getId();
-
+				
+				centerGeoMap = imovel.getLatitude() + "," + imovel.getLongitude();
 				
 			} else {
 				processoExterno = new ProcessoExterno();
@@ -235,6 +237,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		Imovel imovel = processoExterno.getImovel();
 		imovel.setLatitude(latlng.getLat());
 		imovel.setLongitude(latlng.getLng());
+		
+		geoModel.getMarkers().clear();
+		geoModel.addOverlay(new Marker(latlng));
+		centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 	}
 
 	public void onGeocode(GeocodeEvent event) {
@@ -244,9 +250,11 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			LatLng latlng = results.get(0).getLatLng();
 			centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 
+			geoModel.getMarkers().clear();
 			for (int i = 0; i < results.size(); i++) {
 				GeocodeResult result = results.get(i);
 				geoModel.addOverlay(new Marker(result.getLatLng(), result.getAddress()));
+				centerGeoMap = latlng.getLat() + "," + latlng.getLng();
 			}
 			if (results.size() == 1) {
 				processoExterno.getImovel().setLatitude(latlng.getLat());
@@ -261,6 +269,12 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 		processoExterno.getImovel().setLatitude(marker.getLatlng().getLat());
 		processoExterno.getImovel().setLongitude(marker.getLatlng().getLng());
 	}
+	
+	public void onStateChange(StateChangeEvent event){
+		setZoomLevel( event.getZoomLevel() + 1 );
+		LatLng center = event.getCenter();
+		setCenterGeoMap( center.getLat() + "," + center.getLng() );
+	}
 
 	public EnderecoVW getEndereco() {
 		return endereco;
@@ -268,21 +282,6 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	public void setEndereco(EnderecoVW endereco) {
 		this.endereco = endereco;
-	}
-
-	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-	}
-
-	public void validateEndereco(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-
-	}
-
-	public void validateCrp(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-
-	}
-
-	public void validateInquilino(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-
 	}
 
 	public void setSb(ProcessoExternoSBLocal sb) {
@@ -351,6 +350,14 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	public void setSelectedImage(Imagem selectedImage) {
 		this.selectedImage = selectedImage;
+	}
+
+	public int getZoomLevel() {
+		return zoomLevel;
+	}
+
+	public void setZoomLevel(int zoomLevel) {
+		this.zoomLevel = zoomLevel;
 	}
 	
 }
