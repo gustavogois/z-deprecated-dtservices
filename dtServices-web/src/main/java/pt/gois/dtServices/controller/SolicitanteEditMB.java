@@ -45,29 +45,6 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	PaginatedDataModel<TipoServicoSolicitante> tipoServicoSolicitantesPDM;
 	
-	DualListModel<EntidadeDeFacturacao> entidades;
-
-	public DualListModel<EntidadeDeFacturacao> getEntidades() {
-		
-		ArrayList<EntidadeDeFacturacao> entidadesNaoAssociadas = new ArrayList<EntidadeDeFacturacao>();
-		ArrayList<EntidadeDeFacturacao> entidadesAssociadas = new ArrayList<EntidadeDeFacturacao>();
-		List<EntidadeDeFacturacao> todasEntidades = sbEntidade.findAll();
-		for (EntidadeDeFacturacao entidade : todasEntidades) {
-			if(entidade.getSolicitante().getId().equals(solicitante.getId())) {
-				entidadesAssociadas.add(entidade);
-			} else {
-				entidadesNaoAssociadas.add(entidade);
-			}
-		}
-		
-		List<EntidadeDeFacturacao> entidadesSource = entidadesNaoAssociadas;
-        List<EntidadeDeFacturacao> entidadesTarget = entidadesAssociadas;
-         
-        entidades = new DualListModel<EntidadeDeFacturacao>(entidadesSource, entidadesTarget);
-        
-        return entidades;
-	}
-	
 	public List<TipoServico> getTiposDeServico() throws Exception {
 
 		List<TipoServico> tipoDeServicoNotYetSelected = sbTiposServico.findAll();
@@ -147,9 +124,6 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public String save() {
 		Solicitante solicitante = getSolicitante();
-		
-		solicitante.setEntidadeDeFacturacao(entidades.getTarget());
-		
 		salvaSolicitante(solicitante);
 		return "solicitanteList";
 	}
@@ -174,6 +148,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 				solicitante = sb.findById(getId());
 			} else {
 				solicitante = new Solicitante();
+				solicitante.setEntidadeDeFacturacao(new ArrayList<EntidadeDeFacturacao>());
 			}
 		}
 		return solicitante;
@@ -239,10 +214,6 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
 		this.tipoServicoSolicitante = tipoServicoSolicitante;
-	}
-
-	public void setEntidades(DualListModel<EntidadeDeFacturacao> entidades) {
-		this.entidades = entidades;
 	}
 
 }
