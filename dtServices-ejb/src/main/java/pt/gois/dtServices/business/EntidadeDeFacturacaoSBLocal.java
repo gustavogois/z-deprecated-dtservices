@@ -6,4 +6,5 @@ import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 
 @Local
 public interface EntidadeDeFacturacaoSBLocal extends GeneralSBLocal<EntidadeDeFacturacao>{
+	public Integer salvar(EntidadeDeFacturacao entidade, Integer idSolicitante);
 }

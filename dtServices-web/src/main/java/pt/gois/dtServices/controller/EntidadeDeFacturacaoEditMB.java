@@ -28,6 +28,10 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 	
 	EntidadeDeFacturacao entidade;
 	
+	Integer idSolicitante;
+	
+	
+
 	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
 		String name = (String) value;
 
@@ -53,13 +57,13 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 	}
 	
 	public String save(){
+		
+		// Implementar o save, levando para o EJB a lógica de o ligar ao pai, verificar id para save ou create, etc.
+		
 		EntidadeDeFacturacao entidade = getEntidade();
-		if( entidade.getId() != null ){
-			sb.save( entidade );
-		}else{
-			sb.create( entidade );
-		}
-		return "entidadeDeFacturacaoList";
+		idSolicitante = sb.salvar(entidade, idSolicitante);
+		
+		return "/pages/solicitante/solicitanteEdit?faces-redirect=true&id=" + idSolicitante;
 	}
 	
 	public List<Solicitante> getSolicitantes() {
@@ -94,6 +98,13 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 
 	public void setSBLocalb(pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal sb) {
 		this.sb = sb;
+	}
+	public Integer getIdSolicitante() {
+		return idSolicitante;
+	}
+
+	public void setIdSolicitante(Integer idSolicitante) {
+		this.idSolicitante = idSolicitante;
 	}
 
 }

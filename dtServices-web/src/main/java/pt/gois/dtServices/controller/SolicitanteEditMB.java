@@ -45,6 +45,16 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	PaginatedDataModel<TipoServicoSolicitante> tipoServicoSolicitantesPDM;
 	
+	
+	
+	public PaginatedDataModel<EntidadeDeFacturacao> getEntidadesBySolicitante() throws Exception {
+		
+		SearchPageCtrl<EntidadeDeFacturacao> searchPageCtrl = new SearchPageCtrl<EntidadeDeFacturacao>();
+		searchPageCtrl.getFilters().put("obj.solicitante.id", getId());
+
+		return new PaginatedDataModel<EntidadeDeFacturacao>(searchPageCtrl, sbEntidade);
+	}
+	
 	public List<TipoServico> getTiposDeServico() throws Exception {
 
 		List<TipoServico> tipoDeServicoNotYetSelected = sbTiposServico.findAll();

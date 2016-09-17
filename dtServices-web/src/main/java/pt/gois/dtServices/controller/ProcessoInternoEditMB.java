@@ -160,7 +160,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		}
 
 		
-		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + processoExterno.getId();
+		return "/pages/solicitante/solicitanteEdit?faces-redirect=true&id=" + processoExterno.getId();
 	}
 	
 	public List<Historico> getHistorico() {
