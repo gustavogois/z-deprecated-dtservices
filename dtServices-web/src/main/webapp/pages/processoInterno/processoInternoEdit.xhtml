@@ -35,8 +35,14 @@
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
 						<p:outputLabel value="#{processoInternoEditMB.processoInterno.id}" />
-						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
-						<p:outputLabel value="#{processoInternoEditMB.estadoAtual}" />
+						<p:outputLabel value="#{bundle.default_id_interno}" />
+						<p:outputLabel value="#{processoInternoEditMB.processoInterno.idProcCliente}" />
+						<p:outputLabel value="#{bundle.processo_interno_data_criacao}" />
+						<p:calendar id="dtCriacao"
+							value="#{processoInternoEditMB.estadoProcesso.dtInicio}"
+							pages="1" mask="true" maxlength="10" pattern="dd/MM/yyyy"
+							showButtonPanel="true" navigator="true" required="true">
+						</p:calendar>
 						<p:outputLabel value="#{bundle.processo_interno_field_com_chaves}" />
 						<p:selectBooleanButton
 							value="#{processoInternoEditMB.processoInterno.comChaves}"

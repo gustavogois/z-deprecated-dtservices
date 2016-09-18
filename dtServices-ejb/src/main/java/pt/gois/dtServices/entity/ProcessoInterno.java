@@ -27,7 +27,6 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private boolean comChaves;
 	private String observacoes;
 	private EntidadeDeFacturacao entidadeDeFacturacao;
-	private TipoDeEstado tipoDeEstado;
 	private ProcessoExterno processoExterno;
 	private List<Servico> servicos;
 	private String fatura;
@@ -80,19 +79,6 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
 		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
-
-
-	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne
-	@JoinColumn(name="estado_atual_Id")
-	public TipoDeEstado getTipoDeEstado() {
-		return this.tipoDeEstado;
-	}
-
-	public void setTipoDeEstado(TipoDeEstado tipoDeEstado) {
-		this.tipoDeEstado = tipoDeEstado;
-	}
-
 
 	//bi-directional many-to-one association to Processoexterno
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -190,5 +176,14 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	public void setEstadosProcesso(List<EstadosProcesso> estadosProcesso) {
 		this.estadosProcesso = estadosProcesso;
 	}
-	
+
+	public EstadosProcesso retornaEstadoAtual() {
+		
+		List<EstadosProcesso> estadosProcesso = this.getEstadosProcesso();
+		if(estadosProcesso != null && estadosProcesso.size() > 0) {
+			return estadosProcesso.get(estadosProcesso.size()-1);
+		}
+		return null;
+	}
+
 }

@@ -1,7 +1,6 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -15,8 +14,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 
 
 /**
@@ -61,30 +58,9 @@ public class TipoDeEstado implements Serializable {
 		this.nome = nome;
 	}
 
-	//bi-directional many-to-one association to ProcessoInterno
-	@OneToMany(mappedBy="tipoDeEstado")
-	public List<ProcessoInterno> getProcessosInterno() {
-		return this.processosInterno;
-	}
-
 	public void setProcessosInterno(List<ProcessoInterno> processosInterno) {
 		this.processosInterno = processosInterno;
 	}
-
-	public ProcessoInterno addProcessoInterno(ProcessoInterno processoInterno) {
-		getProcessosInterno().add(processoInterno);
-		processoInterno.setTipoDeEstado(this);
-
-		return processoInterno;
-	}
-
-	public ProcessoInterno removeProcessoInterno(ProcessoInterno processoInterno) {
-		getProcessosInterno().remove(processoInterno);
-		processoInterno.setTipoDeEstado(null);
-
-		return processoInterno;
-	}
-
 
 	public void setProcessosExterno(List<ProcessoExterno> processosExterno) {
 		this.processosExterno = processosExterno;
