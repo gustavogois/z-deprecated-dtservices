@@ -84,18 +84,6 @@
 							counterTemplate="{0} caracteres restantes" autoResize="false" />
 						<h:outputLabel />
 						<h:outputText id="display" />
-						<p:outputLabel value="#{bundle.default_field_beginDt}" />
-						<p:calendar id="dtInicio"
-							value="#{processoExternoEditMB.processoExterno.dtInicio}"
-							pages="3" mask="true" maxlength="10" pattern="dd/MM/yyyy"
-							showButtonPanel="true" navigator="true" required="true">
-						</p:calendar>
-						<p:outputLabel value="#{bundle.default_field_endDt}" />
-						<p:calendar id="dtFim"
-							value="#{processoExternoEditMB.processoExterno.dtFim}" pages="3"
-							mask="true" maxlength="10" pattern="dd/MM/yyyy"
-							showButtonPanel="true" navigator="true">
-						</p:calendar>
 					</h:panelGrid>
 					<ui:include src="imovel.xhtml" />
 				</p:tab>

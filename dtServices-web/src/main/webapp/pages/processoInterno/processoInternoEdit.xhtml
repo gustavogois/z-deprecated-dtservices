@@ -48,6 +48,19 @@
 								var="entidade" itemValue="#{entidade.id}"
 								itemLabel="#{entidade.nome}" />
 						</p:selectOneMenu>
+						<p:outputLabel value="#{bundle.default_field_beginDt}" />
+						<p:calendar id="dtInicio"
+							value="#{processoInternoEditMB.processoInterno.dtInicio}"
+							pages="3" mask="true" maxlength="10" pattern="dd/MM/yyyy"
+							showButtonPanel="true" navigator="true" required="true">
+						</p:calendar>
+						<p:outputLabel value="#{bundle.default_field_endDt}" />
+						<p:calendar id="dtFim"
+							value="#{processoInternoEditMB.processoInterno.dtFim}" pages="3"
+							mask="true" maxlength="10" pattern="dd/MM/yyyy"
+							showButtonPanel="true" navigator="true">
+						</p:calendar>
+
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
 						<p:inputTextarea
 							value="#{processoInternoEditMB.processoInterno.observacoes}"
@@ -58,31 +71,35 @@
 					</h:panelGrid>
 				</p:tab>
 				<p:tab title="#{bundle.tab_estado_historico}"
-					disabled="#{processoInternoEditMB.processoInterno.id == null}" id="stateTab">
+					disabled="#{processoInternoEditMB.processoInterno.id == null}"
+					id="stateTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
-						<p:outputLabel value="#{processoInternoEditMB.processoInterno.tipoDeEstado.nome}" />
+						<p:outputLabel
+							value="#{processoInternoEditMB.processoInterno.tipoDeEstado.nome}" />
 
 						<p:outputLabel value="#{bundle.default_label_novo_estado}" />
-						<p:selectOneMenu value="#{processoInternoEditMB.processoInterno.tipoDeEstado.id}"
+						<p:selectOneMenu
+							value="#{processoInternoEditMB.processoInterno.tipoDeEstado.id}"
 							style="width:125px" required="true">
 							<f:selectItems value="#{processoInternoEditMB.novosEstados}"
 								var="newState" itemValue="#{newState.id}"
 								itemLabel="#{newState.nome}" />
 						</p:selectOneMenu>
 					</h:panelGrid>
-					<p:dataTable id="historicoList" value="#{processoInternoEditMB.historico}"
-						var="historico" emptyMessage="#{bundle.default_msg_notFound}"
-						paginator="true" rows="20" lazy="true"
+					<p:dataTable id="historicoList"
+						value="#{processoInternoEditMB.historico}" var="historico"
+						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+						rows="20" lazy="true"
 						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
 						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 						rowsPerPageTemplate="20, 50, 10">
 
 						<p:column headerText="#{bundle.default_label_data}">
-							<h:outputText value="#{historico.data}" >
+							<h:outputText value="#{historico.data}">
 								<f:convertDateTime pattern="dd-MM-yyyy hh:mm" />
 							</h:outputText>
-							
+
 						</p:column>
 
 						<p:column headerText="#{bundle.default_field_description}">
