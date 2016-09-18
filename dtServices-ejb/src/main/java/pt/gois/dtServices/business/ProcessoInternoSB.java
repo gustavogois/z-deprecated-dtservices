@@ -10,4 +10,5 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
 	}
+
 }

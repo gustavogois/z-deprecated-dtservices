@@ -36,11 +36,10 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private String idProcCliente;
 	private Date previsaoFim;
 	private Date previsaoInicio;
-	private List<EstadosProcesso> estadosprocessos;
+	private List<EstadosProcesso> estadosProcesso;
 
 	public ProcessoInterno() {
 	}
-
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -184,12 +183,12 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	}
 	//bi-directional many-to-one association to Estadosprocesso
 	@OneToMany(mappedBy="processoInterno")
-	public List<EstadosProcesso> getEstadosprocessos() {
-		return this.estadosprocessos;
+	public List<EstadosProcesso> getEstadosProcesso() {
+		return this.estadosProcesso;
 	}
 
-	public void setEstadosprocessos(List<EstadosProcesso> estadosprocessos) {
-		this.estadosprocessos = estadosprocessos;
+	public void setEstadosProcesso(List<EstadosProcesso> estadosProcesso) {
+		this.estadosProcesso = estadosProcesso;
 	}
-
+	
 }

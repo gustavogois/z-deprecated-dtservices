@@ -35,28 +35,22 @@
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
 						<p:outputLabel value="#{processoInternoEditMB.processoInterno.id}" />
+						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
+						<p:outputLabel value="#{processoInternoEditMB.estadoAtual}" />
 						<p:outputLabel value="#{bundle.processo_interno_field_com_chaves}" />
 						<p:selectBooleanButton
 							value="#{processoInternoEditMB.processoInterno.comChaves}"
 							onLabel="#{bundle.default_label_yes}"
 							offLabel="#{bundle.default_label_no}" style="width:60px" />
-						<p:outputLabel value="#{bundle.processo_interno_field_entidade}" />
-						<p:selectOneMenu
-							value="#{processoInternoEditMB.processoInterno.entidadeDeFacturacao.id}"
-							style="width:300px" required="true">
-							<f:selectItems value="#{processoInternoEditMB.entidades}"
-								var="entidade" itemValue="#{entidade.id}"
-								itemLabel="#{entidade.nome}" />
-						</p:selectOneMenu>
 						<p:outputLabel value="#{bundle.default_field_beginDt}" />
 						<p:calendar id="dtInicio"
-							value="#{processoInternoEditMB.processoInterno.dtInicio}"
+							value="#{processoInternoEditMB.processoInterno.previsaoInicio}"
 							pages="3" mask="true" maxlength="10" pattern="dd/MM/yyyy"
 							showButtonPanel="true" navigator="true" required="true">
 						</p:calendar>
 						<p:outputLabel value="#{bundle.default_field_endDt}" />
 						<p:calendar id="dtFim"
-							value="#{processoInternoEditMB.processoInterno.dtFim}" pages="3"
+							value="#{processoInternoEditMB.processoInterno.previsaoFim}" pages="3"
 							mask="true" maxlength="10" pattern="dd/MM/yyyy"
 							showButtonPanel="true" navigator="true">
 						</p:calendar>

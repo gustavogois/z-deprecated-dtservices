@@ -20,6 +20,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
+import pt.gois.dtServices.entity.EstadosProcesso;
 import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
@@ -66,6 +67,16 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	Integer idEstadoAtual;
 	
 
+	public String getEstadoAtual() {
+		
+		List<EstadosProcesso> estadosProcesso = getProcessoInterno().getEstadosProcesso();
+		if(estadosProcesso != null && estadosProcesso.size() > 0) {
+			EstadosProcesso estadoProcesso = estadosProcesso.get(estadosProcesso.size()-1);
+			return estadoProcesso.getTiposDeEstado().getNome();
+		}
+		return "Em criação";
+	}
+	
 	public List<TipoDeEstado> getNovosEstados() {
 		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
 		if(getProcessoInterno().getTipoDeEstado().getId() != null) {
