@@ -20,7 +20,8 @@
 			<div id="rightbox" class="fixright">
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="true" value="#{bundle.default_action_save}"
-						actionListener="#{solicitanteEditMB.save}" icon="ui-icon-disk" update="solicitanteForm"/>
+						actionListener="#{solicitanteEditMB.save}" icon="ui-icon-disk"
+						update="solicitanteForm" />
 					<p:commandButton ajax="false"
 						value="#{bundle.default_action_cancel}" immediate="true"
 						action="solicitanteList" />
@@ -28,94 +29,110 @@
 			</div>
 			<p:tabView dynamic="true" cache="true" prependId="false">
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
-					<h:panelGrid columns="2">
-						<p:outputLabel value="#{bundle.default_field_ID}" />
-						<p:outputLabel value="#{solicitanteEditMB.solicitante.id}" />
-						<p:outputLabel value="#{bundle.default_field_name}" />
-						<p:inputText size="30" label="#{bundle.default_field_nome}"
-							value="#{solicitanteEditMB.solicitante.nome}"
-							validator="#{solicitanteEditMB.validateName}" required="true"
-							validatorMessage="#{bundle.solicitante_msg_invalidName}">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.solicitante_field_nif}" />
-						<p:inputText size="30" label="#{bundle.solicitante_field_nif}"
-							value="#{solicitanteEditMB.solicitante.nif}"
-							validator="#{solicitanteEditMB.validateNif}" required="true"
-							validatorMessage="#{bundle.solicitante_msg_invalidNif}">
-						</p:inputText>
-						<p:outputLabel value="#{bundle.default_field_telefone}" />
-						<p:inputText size="30" label="#{bundle.default_field_telefone}"
-							value="#{solicitanteEditMB.solicitante.telefone}"
-							validator="#{solicitanteEditMB.validateTelefone}" required="true"
-							validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
-						</p:inputText>
+					<p:fieldset legend="#{bundle.default_dados_basicos}"
+						style="margin-bottom:20px">
+						<h:panelGrid columns="2">
+							<p:outputLabel value="#{bundle.default_field_ID}" />
+							<p:outputLabel value="#{solicitanteEditMB.solicitante.id}" />
+							<p:outputLabel value="#{bundle.default_sigla}" />
+							<p:inputText size="5" label="#{bundle.default_sigla}"
+								value="#{solicitanteEditMB.solicitante.sigla}"
+								validator="#{solicitanteEditMB.validateName}" required="true"
+								validatorMessage="#{bundle.solicitante_msg_invalidName}">
+							</p:inputText>
+							<p:outputLabel value="#{bundle.default_field_name}" />
+							<p:inputText size="30" label="#{bundle.default_field_nome}"
+								value="#{solicitanteEditMB.solicitante.nome}"
+								validator="#{solicitanteEditMB.validateName}" required="true"
+								validatorMessage="#{bundle.solicitante_msg_invalidName}">
+							</p:inputText>
+							<p:outputLabel value="#{bundle.solicitante_field_nif}" />
+							<p:inputText size="30" label="#{bundle.solicitante_field_nif}"
+								value="#{solicitanteEditMB.solicitante.nif}"
+								validator="#{solicitanteEditMB.validateNif}" required="true"
+								validatorMessage="#{bundle.solicitante_msg_invalidNif}">
+							</p:inputText>
+							<p:outputLabel value="#{bundle.default_field_telefone}" />
+							<p:inputText size="30" label="#{bundle.default_field_telefone}"
+								value="#{solicitanteEditMB.solicitante.telefone}"
+								validator="#{solicitanteEditMB.validateTelefone}"
+								required="true"
+								validatorMessage="#{bundle.solicitante_msg_invalidTelefone}">
+							</p:inputText>
+						</h:panelGrid>
+					</p:fieldset>
 
-						<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
-						<p:inputText id="ruaPorta" size="60"
-							label="#{bundle.endereco_field_ruaPorta}"
-							value="#{solicitanteEditMB.solicitante.ruaPorta}"
-							required="true"
-							validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
-						</p:inputText>
+					<p:fieldset legend="#{bundle.default_endereco}"
+						style="margin-bottom:20px">
 
-						<p:outputLabel value="#{bundle.endereco_field_complemento}" />
-						<p:inputText id="complemento" size="60"
-							label="#{bundle.endereco_field_complemento}"
-							value="#{solicitanteEditMB.solicitante.complemento}"
-							required="true">
-						</p:inputText>
+						<p:panelGrid columns="2">
 
-						<p:outputLabel value="#{bundle.endereco_field_cp}" />
-						<p:autoComplete id="cp"
-							value="#{solicitanteEditMB.solicitante.codigoPostal}"
-							completeMethod="#{enderecoMB.search}" var="end"
-							converter="enderecoConverter" itemLabel="#{end}"
-							itemValue="#{end.id}" forceSelection="true" required="true">
-							<p:ajax event="itemSelect"
-								listener="#{solicitanteEditMB.onEnderecoSelect}"
-								update="ruaPorta,complemento,cp,concelho,distrito" />
-							<p:column style="width:10%">
-								<h:outputText value="#{end.codigoPostal}" />
-							</p:column>
+							<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
+							<p:inputText id="ruaPorta" size="60"
+								label="#{bundle.endereco_field_ruaPorta}"
+								value="#{solicitanteEditMB.solicitante.ruaPorta}"
+								required="true"
+								validatorMessage="#{bundle.imovel_msg_invalidEndereco}">
+							</p:inputText>
 
-							<p:column>
-								<h:outputText value="#{end.ruaPorta}" />
-							</p:column>
+							<p:outputLabel value="#{bundle.endereco_field_complemento}" />
+							<p:inputText id="complemento" size="60"
+								label="#{bundle.endereco_field_complemento}"
+								value="#{solicitanteEditMB.solicitante.complemento}"
+								required="true">
+							</p:inputText>
 
-							<p:column>
-								<h:outputText value="#{end.complemento}" />
-							</p:column>
+							<p:outputLabel value="#{bundle.endereco_field_cp}" />
+							<p:autoComplete id="cp"
+								value="#{solicitanteEditMB.solicitante.codigoPostal}"
+								completeMethod="#{enderecoMB.search}" var="end"
+								converter="enderecoConverter" itemLabel="#{end}"
+								itemValue="#{end.id}" forceSelection="true" required="true">
+								<p:ajax event="itemSelect"
+									listener="#{solicitanteEditMB.onEnderecoSelect}"
+									update="ruaPorta,complemento,cp,concelho,distrito" />
+								<p:column style="width:10%">
+									<h:outputText value="#{end.codigoPostal}" />
+								</p:column>
 
-							<p:column>
-								<h:outputText value="#{end.concelho.nome}" />
-							</p:column>
+								<p:column>
+									<h:outputText value="#{end.ruaPorta}" />
+								</p:column>
 
-							<p:column>
-								<h:outputText value="#{end.distrito.nome}" />
-							</p:column>
-						</p:autoComplete>
+								<p:column>
+									<h:outputText value="#{end.complemento}" />
+								</p:column>
 
-						<p:outputLabel value="#{bundle.endereco_field_concelho}" />
-						<p:selectOneMenu id="concelho"
-							value="#{solicitanteEditMB.solicitante.concelho.id}"
-							style="width:125px" required="true"
-							label="#{bundle.endereco_field_concelho}">
-							<f:selectItems
-								value="#{enderecoMB.getConcelhos(solicitanteEditMB.solicitante.distrito)}"
-								var="concelho" itemValue="#{concelho.id}"
-								itemLabel="#{concelho.nome}" />
-						</p:selectOneMenu>
+								<p:column>
+									<h:outputText value="#{end.concelho.nome}" />
+								</p:column>
 
-						<p:outputLabel value="#{bundle.endereco_field_distrito}" />
-						<p:selectOneMenu id="distrito"
-							value="#{solicitanteEditMB.solicitante.distrito.id}"
-							style="width:125px" required="true"
-							label="#{bundle.endereco_field_distrito}">
-							<f:selectItems value="#{enderecoMB.distritos}" var="distrito"
-								itemValue="#{distrito.id}" itemLabel="#{distrito.nome}" />
-						</p:selectOneMenu>
+								<p:column>
+									<h:outputText value="#{end.distrito.nome}" />
+								</p:column>
+							</p:autoComplete>
 
-					</h:panelGrid>
+							<p:outputLabel value="#{bundle.endereco_field_concelho}" />
+							<p:selectOneMenu id="concelho"
+								value="#{solicitanteEditMB.solicitante.concelho.id}"
+								style="width:125px" required="true"
+								label="#{bundle.endereco_field_concelho}">
+								<f:selectItems
+									value="#{enderecoMB.getConcelhos(solicitanteEditMB.solicitante.distrito)}"
+									var="concelho" itemValue="#{concelho.id}"
+									itemLabel="#{concelho.nome}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{bundle.endereco_field_distrito}" />
+							<p:selectOneMenu id="distrito"
+								value="#{solicitanteEditMB.solicitante.distrito.id}"
+								style="width:125px" required="true"
+								label="#{bundle.endereco_field_distrito}">
+								<f:selectItems value="#{enderecoMB.distritos}" var="distrito"
+									itemValue="#{distrito.id}" itemLabel="#{distrito.nome}" />
+							</p:selectOneMenu>
+						</p:panelGrid>
+					</p:fieldset>
 				</p:tab>
 
 				<p:tab title="#{bundle.tab_entidade_de_facturacao}"
@@ -128,13 +145,12 @@
 							outcome="/pages/entidadeDeFacturacao/entidadeDeFacturacaoEdit">
 							<f:param name="idSolicitante"
 								value="#{solicitanteEditMB.solicitante.id}" />
-								
+
 						</p:button>
 
 					</h:panelGrid>
 					<p:dataTable id="entidadeSolicitanteList"
-						value="#{solicitanteEditMB.entidadesBySolicitante}"
-						var="entidade"
+						value="#{solicitanteEditMB.entidadesBySolicitante}" var="entidade"
 						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
 						rows="20" lazy="true"
 						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
