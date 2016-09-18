@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import org.primefaces.event.SelectEvent;
-import org.primefaces.model.DualListModel;
 
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EnderecoVW;
@@ -139,14 +138,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	public String save() {
 		Solicitante solicitante = getSolicitante();
-<<<<<<< HEAD
-=======
 		
-		if( entidades != null ){
-			solicitante.setEntidadeDeFacturacao(entidades.getTarget());
-		}
-		
->>>>>>> d4a69be626be8bf13a1c8fd7cdacdf008a6450a6
 		salvaSolicitante(solicitante);
 		return "solicitanteList";
 	}
@@ -254,12 +246,6 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		this.tipoServicoSolicitante = tipoServicoSolicitante;
 	}
 
-<<<<<<< HEAD
-=======
-	public void setEntidades(DualListModel<EntidadeDeFacturacao> entidades) {
-		this.entidades = entidades;
-	}
-
 	public pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal getSbTiposServicoSolicitante() {
 		return sbTiposServicoSolicitante;
 	}
@@ -297,5 +283,4 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 		this.sb = sb;
 	}
 
->>>>>>> d4a69be626be8bf13a1c8fd7cdacdf008a6450a6
 }
