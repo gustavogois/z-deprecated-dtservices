@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -35,6 +36,7 @@ public class Servico extends GeneralEntity implements Serializable {
 	private TipoDeEstado tipoDeEstado;
 	private ProcessoInterno processoInterno;
 	private TipoServicoSolicitante tipoServicoSolicitante;
+	private List<EstadosServico> estadosServicos;
 
 	public Servico() {
 	}
@@ -142,6 +144,15 @@ public class Servico extends GeneralEntity implements Serializable {
 
 	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
 		this.tipoServicoSolicitante = tipoServicoSolicitante;
+	}
+	//bi-directional many-to-one association to Estadosservico
+	@OneToMany(mappedBy="servico")
+	public List<EstadosServico> getEstadosservicos() {
+		return this.estadosServicos;
+	}
+
+	public void setEstadosservicos(List<EstadosServico> estadosServicos) {
+		this.estadosServicos = estadosServicos;
 	}
 
 }

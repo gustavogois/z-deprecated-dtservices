@@ -1,6 +1,7 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,7 +13,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * The persistent class for the processointerno database table.
@@ -31,7 +33,10 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private String fatura;
 	private String numeroChave;
 	private String nomeSolicitante;
-
+	private String idProcCliente;
+	private Date previsaoFim;
+	private Date previsaoInicio;
+	private List<EstadosProcesso> estadosprocessos;
 
 	public ProcessoInterno() {
 	}
@@ -150,6 +155,41 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 
 	public void setNomeSolicitante(String nomeSolicitante) {
 		this.nomeSolicitante = nomeSolicitante;
+	}
+	public String getIdProcCliente() {
+		return idProcCliente;
+	}
+
+
+	public void setIdProcCliente(String idProcCliente) {
+		this.idProcCliente = idProcCliente;
+	}
+	@Temporal(TemporalType.DATE)
+	public Date getPrevisaoFim() {
+		return this.previsaoFim;
+	}
+
+	public void setPrevisaoFim(Date previsaoFim) {
+		this.previsaoFim = previsaoFim;
+	}
+
+
+	@Temporal(TemporalType.DATE)
+	public Date getPrevisaoInicio() {
+		return this.previsaoInicio;
+	}
+
+	public void setPrevisaoInicio(Date previsaoInicio) {
+		this.previsaoInicio = previsaoInicio;
+	}
+	//bi-directional many-to-one association to Estadosprocesso
+	@OneToMany(mappedBy="processoInterno")
+	public List<EstadosProcesso> getEstadosprocessos() {
+		return this.estadosprocessos;
+	}
+
+	public void setEstadosprocessos(List<EstadosProcesso> estadosprocessos) {
+		this.estadosprocessos = estadosprocessos;
 	}
 
 }

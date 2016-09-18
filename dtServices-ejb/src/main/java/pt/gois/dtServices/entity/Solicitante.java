@@ -26,6 +26,7 @@ public class Solicitante extends Endereco implements Serializable {
 	private List<ProcessoExterno> processoExterno;
 	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 	private List<EntidadeDeFacturacao> entidadeDeFacturacao;
+	private String sigla;
 
 	public Solicitante() {
 	}
@@ -126,6 +127,14 @@ public class Solicitante extends Endereco implements Serializable {
 
 	public void setEntidadeDeFacturacao(List<EntidadeDeFacturacao> entidadeDeFacturacao) {
 		this.entidadeDeFacturacao = entidadeDeFacturacao;
+	}
+	public String getSigla() {
+		return sigla;
+	}
+
+
+	public void setSigla(String sigla) {
+		this.sigla = sigla;
 	}
 
 }

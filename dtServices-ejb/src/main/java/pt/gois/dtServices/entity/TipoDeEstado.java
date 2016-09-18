@@ -86,30 +86,9 @@ public class TipoDeEstado implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processocliente
-	@OneToMany(mappedBy="tipoDeEstado")
-	public List<ProcessoExterno> getProcessosExterno() {
-		return this.processosExterno;
-	}
-
 	public void setProcessosExterno(List<ProcessoExterno> processosExterno) {
 		this.processosExterno = processosExterno;
 	}
-
-	public ProcessoExterno addProcessosExterno(ProcessoExterno processosExterno) {
-		getProcessosExterno().add(processosExterno);
-		processosExterno.setTipoDeEstado(this);
-
-		return processosExterno;
-	}
-
-	public ProcessoExterno removeProcessosExterno(ProcessoExterno processosExterno) {
-		getProcessosExterno().remove(processosExterno);
-		processosExterno.setTipoDeEstado(null);
-
-		return processosExterno;
-	}
-
 
 	//bi-directional many-to-one association to Servico
 	@OneToMany(mappedBy="tipoDeEstado")

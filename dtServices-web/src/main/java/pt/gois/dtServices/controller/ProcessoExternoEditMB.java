@@ -81,10 +81,10 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 
 	public List<TipoDeEstado> getNovosEstados() {
 		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
-		if(getProcessoExterno().getTipoDeEstado().getId() != null) {
-			novosEstados.add(sbTipoDeEstado.findById(getProcessoExterno().getTipoDeEstado().getId()));
-		}
-		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_EXTERNO, getProcessoExterno().getTipoDeEstado().getId()));
+//		if(getProcessoExterno().getTipoDeEstado().getId() != null) {
+//			novosEstados.add(sbTipoDeEstado.findById(getProcessoExterno().getTipoDeEstado().getId()));
+//		}
+//		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_EXTERNO, getProcessoExterno().getTipoDeEstado().getId()));
 		return novosEstados;
 	}
 	
@@ -154,22 +154,22 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			novo = true;
 		}
 		
-		if(!idEstadoAtual.equals(getProcessoExterno().getTipoDeEstado().getId())) {
+//		if(!idEstadoAtual.equals(getProcessoExterno().getTipoDeEstado().getId())) {
 			
 			processoExterno = sb.findById(getProcessoExterno().getId());
 			Historico historico = new Historico();
 			historico.setIdObjeto(processoExterno.getId());
 			historico.setTipoObjeto(TipoDeEstadoSBLocal.PROCESSO_EXTERNO);
 			historico.setData(new Date());
-			String descricao;
+			String descricao = "";
 			if(novo) {
 				descricao = "Processo Externo criado";
 			} else {
-				descricao = "Estado do Processo Externo alterado para: " + processoExterno.getTipoDeEstado().getNome();
+//				descricao = "Estado do Processo Externo alterado para: " + processoExterno.getTipoDeEstado().getNome();
 			}
 			historico.setDescricao(descricao);
 			sbHistorico.create(historico);
-		}
+//		}
 
 		
 		return "processoExternoList";
@@ -194,7 +194,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				}
 				endereco.setCodigoPostal(imovel.getCodigoPostal());
 				
-				idEstadoAtual = processoExterno.getTipoDeEstado().getId();
+//				idEstadoAtual = processoExterno.getTipoDeEstado().getId();
 				
 				centerGeoMap = imovel.getLatitude() + "," + imovel.getLongitude();
 				
@@ -207,7 +207,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				processoExterno.setImovel(imovel);
 				imovel.setProcessoExterno(processoExterno);
 				
-				processoExterno.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PE_CRIADO));
+//				processoExterno.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PE_CRIADO));
 				idEstadoAtual = TipoDeEstadoSBLocal.PE_CRIADO;
 				
 			}

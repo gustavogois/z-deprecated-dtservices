@@ -28,10 +28,7 @@ import javax.persistence.TemporalType;
 public class ProcessoExterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String descricao;
-	private Date dtFim;
-	private Date dtInicio;
 	private Imovel imovel;
-	private TipoDeEstado tipoDeEstado;
 	private Solicitante solicitante;
 	private List<ProcessoInterno> processosInterno;
 
@@ -59,26 +56,6 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 	}
 
 
-	@Temporal(TemporalType.DATE)
-	public Date getDtFim() {
-		return this.dtFim;
-	}
-
-	public void setDtFim(Date dtFim) {
-		this.dtFim = dtFim;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtInicio() {
-		return this.dtInicio;
-	}
-
-	public void setDtInicio(Date dtInicio) {
-		this.dtInicio = dtInicio;
-	}
-
-
 	//bi-directional one-to-one association to Imovel
 	@OneToOne(mappedBy="processoExterno", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
 	public Imovel getImovel() {
@@ -87,17 +64,6 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 
 	public void setImovel(Imovel imovel) {
 		this.imovel = imovel;
-	}
-
-
-	@ManyToOne
-	@JoinColumn(name="estado_atual_Id")
-	public TipoDeEstado getTipoDeEstado() {
-		return this.tipoDeEstado;
-	}
-
-	public void setTipoDeEstado(TipoDeEstado tipoDeEstado) {
-		this.tipoDeEstado = tipoDeEstado;
 	}
 
 
