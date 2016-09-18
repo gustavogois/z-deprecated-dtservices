@@ -20,34 +20,34 @@
 				PF('gmapDlg').show();
 			}
 
-			PrimeFaces.widget.GMap.prototype.removeMarkers=function(){
-			    var a=this;
-			    for(var c=0;this.cfg.markers.length > c ;c++){
-			        var b=this.cfg.markers[c];
-			        b.setMap(null);
-			    }
+			PrimeFaces.widget.GMap.prototype.removeMarkers = function() {
+				var a = this;
+				for (var c = 0; this.cfg.markers.length > c; c++) {
+					var b = this.cfg.markers[c];
+					b.setMap(null);
+				}
 			};
 
 			function geocodeReverse() {
-		        var lat = document.getElementById('lat').value,
-		            lng = document.getElementById('lng').value;
-		 
-		        PF('geoGmapShow').reverseGeocode(lat, lng);
+				var lat = document.getElementById('lat').value, lng = document
+						.getElementById('lng').value;
 
-		        PF('gmapShowDlg').show();
-		    }
+				PF('geoGmapShow').reverseGeocode(lat, lng);
+
+				PF('gmapShowDlg').show();
+			}
 
 			var currentMarker;
 
 			function handlePointClick(event) {
 				PF('geoGmap').removeMarkers();
 				currentMarker = new google.maps.Marker({
-	                position:new google.maps.LatLng(event.latLng.lat(), event.latLng.lng())
-	            });
+					position : new google.maps.LatLng(event.latLng.lat(),
+							event.latLng.lng())
+				});
 
-	            PF('geoGmap').addOverlay(currentMarker);
+				PF('geoGmap').addOverlay(currentMarker);
 			}
-
 		</script>
 
 		<f:metadata>
@@ -57,7 +57,8 @@
 			<div id="rightbox" class="fixright">
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="true" value="#{bundle.default_action_save}"
-						actionListener="#{processoExternoEditMB.save}" update="processoExternoForm" icon="ui-icon-disk" />
+						actionListener="#{processoExternoEditMB.save}"
+						update="processoExternoForm" icon="ui-icon-disk" />
 					<p:commandButton ajax="false"
 						value="#{bundle.default_action_cancel}" immediate="true"
 						action="processoExternoList" />
@@ -87,46 +88,10 @@
 					</h:panelGrid>
 					<ui:include src="imovel.xhtml" />
 				</p:tab>
-				<p:tab title="#{bundle.tab_imagem}" disabled="#{processoExternoEditMB.processoExterno.id == null}" id="imageTab">
-					<ui:include src="imagem.xhtml" />
-				</p:tab>
-
-				<p:tab title="#{bundle.tab_estado_historico}"
+				<p:tab title="#{bundle.tab_imagem}"
 					disabled="#{processoExternoEditMB.processoExterno.id == null}"
-					id="stateTab">
-					<h:panelGrid columns="2">
-						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
-						<p:outputLabel
-							value="#{processoExternoEditMB.processoExterno.tipoDeEstado.nome}" />
-
-						<p:outputLabel value="#{bundle.default_label_novo_estado}" />
-						<p:selectOneMenu
-							value="#{processoExternoEditMB.processoExterno.tipoDeEstado.id}"
-							style="width:125px" required="true">
-							<f:selectItems value="#{processoExternoEditMB.novosEstados}"
-								var="newState" itemValue="#{newState.id}"
-								itemLabel="#{newState.nome}" />
-						</p:selectOneMenu>
-					</h:panelGrid>
-					<p:dataTable id="historicoList"
-						value="#{processoExternoEditMB.historico}" var="historico"
-						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
-						rows="20" lazy="true"
-						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
-						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="20, 50, 10">
-
-						<p:column headerText="#{bundle.default_label_data}">
-							<h:outputText value="#{historico.data}">
-								<f:convertDateTime pattern="dd-MM-yyyy hh:mm" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="#{bundle.default_field_description}">
-							<h:outputText value="#{historico.descricao}" />
-						</p:column>
-
-					</p:dataTable>
+					id="imageTab">
+					<ui:include src="imagem.xhtml" />
 				</p:tab>
 
 				<p:tab title="#{bundle.tab_processos_internos}"
@@ -191,6 +156,31 @@
 						</p:column>
 					</p:dataTable>
 				</p:tab>
+
+				<p:tab title="#{bundle.tab_historico}"
+					disabled="#{processoExternoEditMB.processoExterno.id == null}"
+					id="stateTab">
+					<p:dataTable id="historicoList"
+						value="#{processoExternoEditMB.historico}" var="historico"
+						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+						rows="20" lazy="true"
+						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+						rowsPerPageTemplate="20, 50, 10">
+
+						<p:column headerText="#{bundle.default_label_data}">
+							<h:outputText value="#{historico.data}">
+								<f:convertDateTime pattern="dd-MM-yyyy hh:mm" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="#{bundle.default_field_description}">
+							<h:outputText value="#{historico.descricao}" />
+						</p:column>
+
+					</p:dataTable>
+				</p:tab>
+
 
 			</p:tabView>
 		</h:form>
