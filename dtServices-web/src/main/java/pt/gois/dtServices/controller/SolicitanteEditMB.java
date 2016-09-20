@@ -144,6 +144,9 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	}
 
 	private void salvaSolicitante(Solicitante solicitante) {
+		
+		solicitante = getSolicitante();
+		
 		if (solicitante.getId() != null) {
 			sb.save(solicitante);
 			addMessage("default_msg_saved");
@@ -166,6 +169,7 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 			} else {
 				solicitante = new Solicitante();
 				solicitante.setEntidadeDeFacturacao(new ArrayList<EntidadeDeFacturacao>());
+				solicitante.setChaveSolicitanteProcesso(new Integer(0));
 			}
 		}
 		return solicitante;

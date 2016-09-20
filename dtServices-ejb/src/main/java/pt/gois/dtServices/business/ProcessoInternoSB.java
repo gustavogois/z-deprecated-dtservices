@@ -1,12 +1,16 @@
 package pt.gois.dtServices.business;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
-import pt.gois.dtServices.entity.KeySolicitanteProcInt;
 import pt.gois.dtServices.entity.ProcessoInterno;
+import pt.gois.dtServices.entity.Solicitante;
 
 @Stateless
 public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements ProcessoInternoSBLocal{
+	
+	@EJB
+	SolicitanteSBLocal sbSolicitante;
 
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
@@ -19,6 +23,7 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 //		processoInterno.setProcessoExterno(processoExterno);
 		
 		processoInterno.setIdProcCliente(geraIdProcCliente(processoInterno));
+		
 		if( processoInterno.getId() != null ){
 			
 			save( processoInterno );
@@ -31,7 +36,9 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 
 	private String geraIdProcCliente(ProcessoInterno processoInterno) {
-//		getEM().find(KeySolicitanteProcInt, primaryKey)
-		return "";
+		Solicitante solicitante = sbSolicitante.
+			findById(processoInterno.getProcessoExterno().getSolicitante().getId());
+		solicitante.setChaveSolicitanteProcesso(solicitante.getChaveSolicitanteProcesso()+1);
+		return solicitante.getSigla() + solicitante.getChaveSolicitanteProcesso();
 	}
 }

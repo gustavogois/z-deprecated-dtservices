@@ -27,6 +27,8 @@ public class Solicitante extends Endereco implements Serializable {
 	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 	private List<EntidadeDeFacturacao> entidadeDeFacturacao;
 	private String sigla;
+	private Integer chaveSolicitanteProcesso;
+	
 
 	public Solicitante() {
 	}
@@ -135,6 +137,14 @@ public class Solicitante extends Endereco implements Serializable {
 
 	public void setSigla(String sigla) {
 		this.sigla = sigla;
+	}
+	public Integer getChaveSolicitanteProcesso() {
+		return chaveSolicitanteProcesso;
+	}
+
+
+	public void setChaveSolicitanteProcesso(Integer chaveSolicitanteProcesso) {
+		this.chaveSolicitanteProcesso = chaveSolicitanteProcesso;
 	}
 
 }
