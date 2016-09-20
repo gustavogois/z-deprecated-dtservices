@@ -14,7 +14,11 @@ public class KeySolicitanteProcIntSB extends GeneralSB<KeySolicitanteProcInt> im
 
 	@Override
 	public void nextId(ProcessoInterno processoInterno) {
-//		getEM().createQuery(qlString)
+		String queryStr = "select max(key.id) from KeySolicitanteProcInt key " +
+							"where key.processoInterno.id = :idProcessoInterno " +
+							""
+		getEM().createQuery();
+		.setParameter("myOrg", myOrg).getSingleResult();
 		
 	}
 
