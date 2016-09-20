@@ -3,6 +3,7 @@ package pt.gois.dtServices.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Cascade;
 
 /**
  * The persistent class for the solicitante database table.
@@ -122,6 +124,7 @@ public class Solicitante extends Endereco implements Serializable {
 	}
 	
 	@OneToMany(mappedBy="solicitante")
+	@Cascade({org.hibernate.annotations.CascadeType.ALL})
 	public List<EntidadeDeFacturacao> getEntidadeDeFacturacao() {
 		return entidadeDeFacturacao;
 	}

@@ -37,6 +37,10 @@
 						<p:outputLabel value="#{processoInternoEditMB.processoInterno.id}" />
 						<p:outputLabel value="#{bundle.default_id_interno}" />
 						<p:outputLabel value="#{processoInternoEditMB.processoInterno.idProcCliente}" />
+						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}" />
+						<p:inputText size="60" label="#{bundle.processo_interno_nome_solicitante}"
+								value="#{processoInternoEditMB.processoInterno.nomeSolicitante}"
+								required="true"/>
 						<p:outputLabel value="#{bundle.processo_interno_data_criacao}" />
 						<p:calendar id="dtCriacao"
 							value="#{processoInternoEditMB.estadoProcesso.dtInicio}"

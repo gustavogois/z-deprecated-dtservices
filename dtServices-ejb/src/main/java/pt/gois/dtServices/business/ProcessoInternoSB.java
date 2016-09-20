@@ -3,6 +3,7 @@ package pt.gois.dtServices.business;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Solicitante;
 
@@ -19,8 +20,8 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	@Override
 	public void salvar(ProcessoInterno processoInterno) {
 		
-//		ProcessoExterno processoExterno = getEM().find(ProcessoExterno.class, processoInterno.getProcessoExterno().getId());
-//		processoInterno.setProcessoExterno(processoExterno);
+		ProcessoExterno processoExterno = getEM().find(ProcessoExterno.class, processoInterno.getProcessoExterno().getId());
+		processoInterno.setProcessoExterno(processoExterno);
 		
 		processoInterno.setIdProcCliente(geraIdProcCliente(processoInterno));
 		

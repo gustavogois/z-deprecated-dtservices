@@ -67,7 +67,7 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 	}
 
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
