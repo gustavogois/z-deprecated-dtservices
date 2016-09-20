@@ -155,7 +155,7 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 		this.previsaoInicio = previsaoInicio;
 	}
 	//bi-directional many-to-one association to Estadosprocesso
-	@OneToMany(mappedBy="processoInterno")
+	@OneToMany(mappedBy="processoInterno", fetch=FetchType.EAGER)
 	public List<EstadosProcesso> getEstadosProcesso() {
 		return this.estadosProcesso;
 	}
