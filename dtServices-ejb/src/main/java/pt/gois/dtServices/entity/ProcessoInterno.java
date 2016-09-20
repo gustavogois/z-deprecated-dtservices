@@ -26,7 +26,6 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private boolean comChaves;
 	private String observacoes;
-	private EntidadeDeFacturacao entidadeDeFacturacao;
 	private ProcessoExterno processoExterno;
 	private List<Servico> servicos;
 	private String fatura;
@@ -66,18 +65,6 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
-	}
-
-
-	//bi-directional many-to-one association to Entidadedefacturacao
-	@ManyToOne
-	@JoinColumn(name="entidaDeFacturacaoId")
-	public EntidadeDeFacturacao getEntidadeDeFacturacao() {
-		return this.entidadeDeFacturacao;
-	}
-
-	public void setEntidadeDeFacturacao(EntidadeDeFacturacao entidadeDeFacturacao) {
-		this.entidadeDeFacturacao = entidadeDeFacturacao;
 	}
 
 	//bi-directional many-to-one association to Processoexterno

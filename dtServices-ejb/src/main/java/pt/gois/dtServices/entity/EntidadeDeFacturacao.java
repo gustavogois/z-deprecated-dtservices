@@ -24,7 +24,6 @@ public class EntidadeDeFacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
-	private List<ProcessoInterno> processosInternos;
 	private String nif;
 	private Solicitante solicitante;
 	
@@ -51,31 +50,6 @@ public class EntidadeDeFacturacao implements Serializable {
 		this.nome = nome;
 	}
 
-
-	//bi-directional many-to-one association to ProcessoInterno
-	@OneToMany(mappedBy="entidadeDeFacturacao")
-	public List<ProcessoInterno> getProcessosInternos() {
-		return this.processosInternos;
-	}
-
-	public void setProcessosInternos(List<ProcessoInterno> processosInternos) {
-		this.processosInternos = processosInternos;
-	}
-
-	public ProcessoInterno addProcesso(ProcessoInterno processo) {
-		getProcessosInternos().add(processo);
-		processo.setEntidadeDeFacturacao(this);
-
-		return processo;
-	}
-
-	public ProcessoInterno removeProcessoInterno(ProcessoInterno processoInterno) {
-		getProcessosInternos().remove(processoInterno);
-		processoInterno.setEntidadeDeFacturacao(null);
-
-		return processoInterno;
-	}
-	
 	public String getNif() {
 		return nif;
 	}

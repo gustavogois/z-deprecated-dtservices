@@ -122,7 +122,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	public String create() {
 		processoInterno = new ProcessoInterno();
-		processoInterno.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 		sb.create(processoInterno);
 		return "processoInternoEdit";
 	}
@@ -178,7 +177,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				estadoProcesso = processoInterno.retornaEstadoAtual();
 			}else{
 				processoInterno = new ProcessoInterno();
-				processoInterno.setEntidadeDeFacturacao(new EntidadeDeFacturacao());
 				processoInterno.setProcessoExterno( new ProcessoExterno() );
 				processoInterno.getProcessoExterno().setId(getIdProcessoExterno());
 				processoInterno.setEstadosProcesso(new ArrayList<EstadosProcesso>());
