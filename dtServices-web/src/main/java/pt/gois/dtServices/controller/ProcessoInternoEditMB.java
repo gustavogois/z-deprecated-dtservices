@@ -135,7 +135,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		
 		sb.salvar(processoInterno);
 		
-		return "/pages/solicitante/solicitanteEdit?faces-redirect=true&id=" + idProjetoExterno;
+		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProjetoExterno;
 	}
 
 	private void verificaMudancaDeEstado(ProcessoInterno processoInterno) {
@@ -146,16 +146,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			estadoProcesso.setTiposDeEstado(tipo);
 			processoInterno.getEstadosProcesso().add(estadoProcesso);
 		}
-	}
-//		} else {
-//			if(houveMudancaDeEstado()) {
-//				// Cria o novo estado
-//			}
-
-//	}
-
-	private boolean houveMudancaDeEstado() {
-		return !estadoProcesso.getTiposDeEstado().getId().equals(getProcessoInterno().retornaEstadoAtual().getId());
 	}
 	
 	public List<Historico> getHistorico() {
