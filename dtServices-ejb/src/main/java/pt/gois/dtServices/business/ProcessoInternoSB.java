@@ -36,6 +36,8 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		} else {
 			
 			estado.setTiposDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO));
+			estado.setProcessoInterno(processoInterno);
+			
 			processoInterno.addEstadosProcesso(estado);
 			
 			create( processoInterno );
