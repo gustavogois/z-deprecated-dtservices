@@ -789,7 +789,7 @@
     <column id="COL234" populated="true" UUID="7f413a3a-5f91-48f8-8167-decf452ff138" autoIncrement="false" autoIncrementSequenceName="estadosProcesso_dtFim_seq" defaultValue="" name="dtFim" nullable="1" physicalName="dtFim" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
-    <column id="COL235" populated="true" UUID="8797bea8-41b0-4e8e-9881-ce7238017313" autoIncrement="false" autoIncrementSequenceName="estadosProcesso_observacoes_seq" defaultValue="" name="observacoes" nullable="0" physicalName="observacoes" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL235" populated="true" UUID="8797bea8-41b0-4e8e-9881-ce7238017313" autoIncrement="false" autoIncrementSequenceName="estadosProcesso_observacoes_seq" defaultValue="" name="observacoes" nullable="1" physicalName="observacoes" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>
@@ -821,7 +821,7 @@
     <column id="COL243" populated="true" UUID="5ea4d2fc-3401-4d98-acb2-aeefd492ac74" autoIncrement="false" autoIncrementSequenceName="estadosServico_dtFim_seq" defaultValue="" name="dtFim" nullable="1" physicalName="dtFim" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="91" userDefinedTypeUUID="ee349be3-6af2-46e1-b305-975f5354b009" >
      <remarks></remarks>
     </column>
-    <column id="COL244" populated="true" UUID="1060ca1a-f7d6-4653-81dd-0acfde3831e6" autoIncrement="false" autoIncrementSequenceName="estadosServico_observacoes_seq" defaultValue="" name="observacoes" nullable="0" physicalName="observacoes" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
+    <column id="COL244" populated="true" UUID="1060ca1a-f7d6-4653-81dd-0acfde3831e6" autoIncrement="false" autoIncrementSequenceName="estadosServico_observacoes_seq" defaultValue="" name="observacoes" nullable="1" physicalName="observacoes" precision="300" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
     </folder>

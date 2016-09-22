@@ -13,6 +13,7 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
+import pt.gois.dtServices.business.EstadoProcessoSBLocal;
 import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.ServicoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
@@ -43,9 +44,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	private EntidadeDeFacturacaoSBLocal sbEntidade;
 
 	@EJB
-	private TipoDeEstadoSBLocal sbTipoDeEstado;
-	
-	@EJB
 	private TipoServicoSBLocal sbTipoServico;
 	
 	@EJB
@@ -65,19 +63,28 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	EstadosProcesso estadoProcesso;
 	
+	public String getNomeEstadoAtual() {
+		processoInterno = getProcessoInterno();
+		if(processoInterno.getId() != null) {
+			return processoInterno.retornaNomeEstadoAtual();
+		} else {
+			return "";
+		}
+	}
+	
 	public List<TipoDeEstado> getNovosEstados() {
 		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
 		if(getProcessoInterno().retornaEstadoAtual().getId() != null) {
-			novosEstados.add(sbTipoDeEstado.findById(getProcessoInterno().retornaEstadoAtual().getId()));
+			novosEstados.add(sbTipoEstado.findById(getProcessoInterno().retornaEstadoAtual().getId()));
 		}
-		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_INTERNO, 
+		novosEstados.addAll(sbTipoEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_INTERNO, 
 				getProcessoInterno().retornaEstadoAtual().getId()));
 		return novosEstados;
 	}
 
 	public List<TipoDeEstado> getEstadosServico() throws Exception {
 
-		List<TipoDeEstado> estados = sbTipoDeEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);
+		List<TipoDeEstado> estados = sbTipoEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);
 		
 		return estados;
 	}
@@ -133,7 +140,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		
 		verificaMudancaDeEstado(processoInterno);
 		
-		sb.salvar(processoInterno);
+		sb.salvar(processoInterno, estadoProcesso);
 		
 		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProjetoExterno;
 	}
@@ -224,14 +231,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	public void setSbProcessoExterno(pt.gois.dtServices.business.ProcessoExternoSBLocal sbProcessoExterno) {
 		this.sbProcessoExterno = sbProcessoExterno;
-	}
-
-	public TipoDeEstadoSBLocal getSbTipoDeEstado() {
-		return sbTipoDeEstado;
-	}
-
-	public void setSbTipoDeEstado(TipoDeEstadoSBLocal sbTipoDeEstado) {
-		this.sbTipoDeEstado = sbTipoDeEstado;
 	}
 
 	public TipoServicoSBLocal getSbTipoServico() {

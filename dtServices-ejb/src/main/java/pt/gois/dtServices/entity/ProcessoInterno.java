@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -15,6 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
 
 /**
  * The persistent class for the processointerno database table.
@@ -45,6 +47,24 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 		return this.id;
 	}
 
+	public EstadosProcesso retornaEstadoAtual() {
+		List<EstadosProcesso> estadosProcessoList = this.getEstadosProcesso();
+		if(estadosProcessoList != null && estadosProcessoList.size() > 0) {
+			return estadosProcessoList.get(estadosProcessoList.size() - 1);
+		} else {
+			return null;
+		}
+	}
+	
+	public String retornaNomeEstadoAtual() {
+		EstadosProcesso estadoAtual = this.retornaEstadoAtual();
+		if(estadoAtual != null) {
+			return estadoAtual.getTiposDeEstado().getNome();
+		} else {
+			return "";
+		}
+	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
@@ -102,6 +122,19 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 
 		return servico;
 	}
+	public EstadosProcesso addEstadosProcesso(EstadosProcesso estado) {
+		getEstadosProcesso().add(estado);
+		estado.setProcessoInterno(this);
+
+		return estado;
+	}
+
+	public EstadosProcesso removeEstadosProcesso(EstadosProcesso estado) {
+		getEstadosProcesso().remove(estado);
+		estado.setProcessoInterno(null);
+
+		return estado;
+	}
 	public String getFatura() {
 		return fatura;
 	}
@@ -155,22 +188,13 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 		this.previsaoInicio = previsaoInicio;
 	}
 	//bi-directional many-to-one association to Estadosprocesso
-	@OneToMany(mappedBy="processoInterno", fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="processoInterno", cascade = CascadeType.ALL)
 	public List<EstadosProcesso> getEstadosProcesso() {
 		return this.estadosProcesso;
 	}
 
 	public void setEstadosProcesso(List<EstadosProcesso> estadosProcesso) {
 		this.estadosProcesso = estadosProcesso;
-	}
-
-	public EstadosProcesso retornaEstadoAtual() {
-		
-		List<EstadosProcesso> estadosProcesso = this.getEstadosProcesso();
-		if(estadosProcesso != null && estadosProcesso.size() > 0) {
-			return estadosProcesso.get(estadosProcesso.size()-1);
-		}
-		return null;
 	}
 
 }

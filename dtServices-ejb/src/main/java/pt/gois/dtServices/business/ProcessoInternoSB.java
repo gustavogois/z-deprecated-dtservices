@@ -3,6 +3,7 @@ package pt.gois.dtServices.business;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import pt.gois.dtServices.entity.EstadosProcesso;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Solicitante;
@@ -13,12 +14,15 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	@EJB
 	SolicitanteSBLocal sbSolicitante;
 
+	@EJB
+	TipoDeEstadoSBLocal sbTipoDeEstado;
+	
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
 	}
 
 	@Override
-	public void salvar(ProcessoInterno processoInterno) {
+	public void salvar(ProcessoInterno processoInterno, EstadosProcesso estado) {
 		
 		ProcessoExterno processoExterno = getEM().find(ProcessoExterno.class, processoInterno.getProcessoExterno().getId());
 		processoInterno.setProcessoExterno(processoExterno);
@@ -30,6 +34,9 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 			save( processoInterno );
 			
 		} else {
+			
+			estado.setTiposDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO));
+			processoInterno.addEstadosProcesso(estado);
 			
 			create( processoInterno );
 		}
