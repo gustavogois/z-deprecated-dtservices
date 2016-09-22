@@ -156,32 +156,6 @@
 						</p:column>
 					</p:dataTable>
 				</p:tab>
-
-				<p:tab title="#{bundle.tab_historico}"
-					disabled="#{processoExternoEditMB.processoExterno.id == null}"
-					id="stateTab">
-					<p:dataTable id="historicoList"
-						value="#{processoExternoEditMB.historico}" var="historico"
-						emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
-						rows="20" lazy="true"
-						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
-						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-						rowsPerPageTemplate="20, 50, 10">
-
-						<p:column headerText="#{bundle.default_label_data}">
-							<h:outputText value="#{historico.data}">
-								<f:convertDateTime pattern="dd-MM-yyyy hh:mm" />
-							</h:outputText>
-						</p:column>
-
-						<p:column headerText="#{bundle.default_field_description}">
-							<h:outputText value="#{historico.descricao}" />
-						</p:column>
-
-					</p:dataTable>
-				</p:tab>
-
-
 			</p:tabView>
 		</h:form>
 	</ui:define>
