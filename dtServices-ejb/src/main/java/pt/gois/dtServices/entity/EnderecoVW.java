@@ -12,7 +12,7 @@ import javax.persistence.Table;
  * 
  */
 @Entity
-@Table(name = "AddressVW")
+@Table(name = "dt_services_cp.AddressVW")
 @NamedQuery(name = "AddressVW.findAll", query = "SELECT l FROM EnderecoVW l")
 public class EnderecoVW extends Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;

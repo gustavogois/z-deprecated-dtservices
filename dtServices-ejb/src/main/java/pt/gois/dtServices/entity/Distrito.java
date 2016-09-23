@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 
 /**
@@ -17,6 +18,7 @@ import javax.persistence.OneToMany;
  * 
  */
 @Entity
+@Table(name = "dt_services_cp.Distrito")
 @NamedQuery(name="Distrito.findAll", query="SELECT d FROM Distrito d order by d.nome")
 public class Distrito implements Serializable {
 	private static final long serialVersionUID = 1L;

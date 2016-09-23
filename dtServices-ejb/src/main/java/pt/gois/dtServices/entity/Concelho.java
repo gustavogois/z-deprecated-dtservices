@@ -17,7 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ConcelhoVW")
+@Table(name = "dt_services_cp.ConcelhoVW")
 @NamedQueries({ @NamedQuery(name = "Concelho.findAll", query = "SELECT c FROM Concelho c order by c.nome"),
 		@NamedQuery(name = "Concelho.findByDistrito", query = "SELECT c FROM Concelho c where c.distrito.id = :distritoId order by c.nome") })
 public class Concelho implements Serializable {
