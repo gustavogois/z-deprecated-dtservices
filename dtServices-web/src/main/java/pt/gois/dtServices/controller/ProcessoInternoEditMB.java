@@ -13,7 +13,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
-import pt.gois.dtServices.business.EstadoProcessoSBLocal;
 import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.ServicoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
@@ -22,7 +21,6 @@ import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.entity.EstadosProcesso;
 import pt.gois.dtServices.entity.Historico;
-import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TipoDeEstado;
@@ -140,7 +138,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		
 		verificaMudancaDeEstado(processoInterno);
 		
-		sb.salvar(processoInterno, estadoProcesso);
+		sb.save(processoInterno);
 		
 		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProjetoExterno;
 	}
@@ -151,6 +149,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			TipoDeEstado tipo = new TipoDeEstado();
 			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
 			estadoProcesso.setTiposDeEstado(tipo);
+			estadoProcesso.setProcessoInterno(processoInterno);
 			processoInterno.getEstadosProcesso().add(estadoProcesso);
 		}
 	}
@@ -174,9 +173,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				estadoProcesso = processoInterno.retornaEstadoAtual();
 			}else{
 				processoInterno = new ProcessoInterno();
-				processoInterno.setProcessoExterno( new ProcessoExterno() );
-				processoInterno.getProcessoExterno().setId(getIdProcessoExterno());
-				processoInterno.setEstadosProcesso(new ArrayList<EstadosProcesso>());
+				processoInterno.setProcessoExterno( sbProcessoExterno.findById( getIdProcessoExterno() ) );
 				
 				servico = new Servico();
 				servico.setTipoDeEstado(new TipoDeEstado());

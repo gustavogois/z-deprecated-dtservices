@@ -1,6 +1,7 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -190,6 +191,9 @@ public class ProcessoInterno extends GeneralEntity implements Serializable {
 	//bi-directional many-to-one association to Estadosprocesso
 	@OneToMany(mappedBy="processoInterno", cascade = CascadeType.ALL)
 	public List<EstadosProcesso> getEstadosProcesso() {
+		if( this.estadosProcesso == null ){
+			this.estadosProcesso = new ArrayList<EstadosProcesso>();
+		}
 		return this.estadosProcesso;
 	}
 

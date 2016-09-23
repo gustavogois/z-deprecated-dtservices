@@ -20,6 +20,12 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
 	}
+	
+	public ProcessoInterno findById(Object id){
+		ProcessoInterno pi = super.findById(id);
+		pi.getEstadosProcesso().size();
+		return pi;
+	}
 
 	@Override
 	public void salvar(ProcessoInterno processoInterno, EstadosProcesso estado) {

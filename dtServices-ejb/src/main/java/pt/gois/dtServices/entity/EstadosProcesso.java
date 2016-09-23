@@ -81,7 +81,7 @@ public class EstadosProcesso implements Serializable {
 		return this.processoInterno;
 	}
 
-	public void setProcessoInterno(ProcessoInterno processointerno) {
+	public void setProcessoInterno(ProcessoInterno processoInterno) {
 		this.processoInterno = processoInterno;
 	}
 
