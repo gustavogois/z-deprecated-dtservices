@@ -136,24 +136,15 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		ProcessoInterno processoInterno = getProcessoInterno();
 		Integer idProjetoExterno = processoInterno.getProcessoExterno().getId();
 		
-		verificaMudancaDeEstado(processoInterno);
+		// Verificar a lógica para mudança de estado: onde vai ficar?
+		// Os valores são setados temporariamente para a property estado, e já deveriam ser atribuídos 
+		// ao objeto processo interno que será gravado
 		
-		sb.save(processoInterno);
+		sb.salvar(getProcessoInterno());
 		
 		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProjetoExterno;
 	}
 
-	private void verificaMudancaDeEstado(ProcessoInterno processoInterno) {
-		
-		if(processoInterno.getId() == null) {
-			TipoDeEstado tipo = new TipoDeEstado();
-			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
-			estadoProcesso.setTiposDeEstado(tipo);
-			estadoProcesso.setProcessoInterno(processoInterno);
-			processoInterno.getEstadosProcesso().add(estadoProcesso);
-		}
-	}
-	
 	public List<Historico> getHistorico() {
 		
 		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_INTERNO);

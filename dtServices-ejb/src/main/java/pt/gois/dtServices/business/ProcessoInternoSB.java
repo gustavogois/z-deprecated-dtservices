@@ -28,7 +28,7 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 
 	@Override
-	public void salvar(ProcessoInterno processoInterno, EstadosProcesso estado) {
+	public void salvar(ProcessoInterno processoInterno) {
 		
 		ProcessoExterno processoExterno = getEM().find(ProcessoExterno.class, processoInterno.getProcessoExterno().getId());
 		processoInterno.setProcessoExterno(processoExterno);
@@ -41,10 +41,11 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 			
 		} else {
 			
-			estado.setTiposDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO));
-			estado.setProcessoInterno(processoInterno);
+			EstadosProcesso criado = new EstadosProcesso();
+			criado.setTiposDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PI_CRIADO));
+			criado.setProcessoInterno(processoInterno);
 			
-			processoInterno.addEstadosProcesso(estado);
+			processoInterno.addEstadosProcesso(criado);
 			
 			create( processoInterno );
 		}

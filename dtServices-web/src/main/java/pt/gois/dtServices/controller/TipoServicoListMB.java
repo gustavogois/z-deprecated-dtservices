@@ -23,11 +23,11 @@ public class TipoServicoListMB extends GeneralMB implements Serializable {
 	private pt.gois.dtServices.business.TipoServicoSBLocal sb;
 
 	PaginatedDataModel<TipoServico> list;
-
+	
 	public TipoServicoListMB() {
 
 	}
-
+	
 	public PaginatedDataModel<TipoServico> getList() {
 		if (list != null) {
 			return list;
