@@ -1,42 +1,32 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
-
 
 /**
- * The persistent class for the servico database table.
+ * The persistent class for the tbl_servico database table.
  * 
  */
 @Entity
+@Table(name="tbl_servico")
 @NamedQuery(name="Servico.findAll", query="SELECT s FROM Servico s")
-public class Servico extends GeneralEntity implements Serializable {
+public class Servico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date dtCadastro;
 	private Date dtFim;
 	private Date dtInicio;
 	private String observacoes;
+	private Date updateDt;
+	private String updateUser;
 	private double valor;
-	private List<Imagem> imagems;
-	private TipoDeEstado tipoDeEstado;
-	private ProcessoInterno processoInterno;
-	private TipoServicoSolicitante tipoServicoSolicitante;
-	private List<EstadosServico> estadosServicos;
+	private List<EstadoServico> tblEstadoServicos;
+	private List<Imagem> tblImagems;
+	private ProcessoInterno tblProcessoInterno;
+	private TipoServicoSolicitante tblTipoServicoSolicitante;
 
 	public Servico() {
 	}
@@ -92,6 +82,25 @@ public class Servico extends GeneralEntity implements Serializable {
 	}
 
 
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdateDt() {
+		return this.updateDt;
+	}
+
+	public void setUpdateDt(Date updateDt) {
+		this.updateDt = updateDt;
+	}
+
+
+	public String getUpdateUser() {
+		return this.updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+
 	public double getValor() {
 		return this.valor;
 	}
@@ -101,58 +110,72 @@ public class Servico extends GeneralEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to ImagemServico
-	@ManyToMany(mappedBy="servicos")
-	public List<Imagem> getImagems() {
-		return this.imagems;
+	//bi-directional many-to-one association to EstadoServico
+	@OneToMany(mappedBy="tblServico")
+	public List<EstadoServico> getTblEstadoServicos() {
+		return this.tblEstadoServicos;
 	}
 
-	public void setImagems(List<Imagem> imagems) {
-		this.imagems = imagems;
+	public void setTblEstadoServicos(List<EstadoServico> tblEstadoServicos) {
+		this.tblEstadoServicos = tblEstadoServicos;
 	}
 
-	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="estado_atual_Id")
-	public TipoDeEstado getTipoDeEstado() {
-		return this.tipoDeEstado;
+	public EstadoServico addTblEstadoServico(EstadoServico tblEstadoServico) {
+		getTblEstadoServicos().add(tblEstadoServico);
+		tblEstadoServico.setTblServico(this);
+
+		return tblEstadoServico;
 	}
 
-	public void setTipoDeEstado(TipoDeEstado tipoDeEstado) {
-		this.tipoDeEstado = tipoDeEstado;
+	public EstadoServico removeTblEstadoServico(EstadoServico tblEstadoServico) {
+		getTblEstadoServicos().remove(tblEstadoServico);
+		tblEstadoServico.setTblServico(null);
+
+		return tblEstadoServico;
+	}
+
+
+	//bi-directional many-to-many association to Imagem
+	@ManyToMany
+	@JoinTable(
+		name="tbl_imagem_servico"
+		, joinColumns={
+			@JoinColumn(name="servicoId")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="imagemId")
+			}
+		)
+	public List<Imagem> getTblImagems() {
+		return this.tblImagems;
+	}
+
+	public void setTblImagems(List<Imagem> tblImagems) {
+		this.tblImagems = tblImagems;
 	}
 
 
 	//bi-directional many-to-one association to ProcessoInterno
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="processoId")
-	public ProcessoInterno getProcessoInterno() {
-		return this.processoInterno;
+	public ProcessoInterno getTblProcessoInterno() {
+		return this.tblProcessoInterno;
 	}
 
-	public void setProcessoInterno(ProcessoInterno processoInterno) {
-		this.processoInterno = processoInterno;
+	public void setTblProcessoInterno(ProcessoInterno tblProcessoInterno) {
+		this.tblProcessoInterno = tblProcessoInterno;
 	}
 
 
 	//bi-directional many-to-one association to TipoServicoSolicitante
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoServico_SolicitanteId")
-	public TipoServicoSolicitante getTipoServicoSolicitante() {
-		return this.tipoServicoSolicitante;
+	public TipoServicoSolicitante getTblTipoServicoSolicitante() {
+		return this.tblTipoServicoSolicitante;
 	}
 
-	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
-		this.tipoServicoSolicitante = tipoServicoSolicitante;
-	}
-	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico")
-	public List<EstadosServico> getEstadosservicos() {
-		return this.estadosServicos;
-	}
-
-	public void setEstadosservicos(List<EstadosServico> estadosServicos) {
-		this.estadosServicos = estadosServicos;
+	public void setTblTipoServicoSolicitante(TipoServicoSolicitante tblTipoServicoSolicitante) {
+		this.tblTipoServicoSolicitante = tblTipoServicoSolicitante;
 	}
 
 }
