@@ -3,6 +3,7 @@ package pt.gois.dtServices.business;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
+import pt.gois.dtServices.entity.EstadosProcesso;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Solicitante;
@@ -15,6 +16,9 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 
 	@EJB
 	TipoDeEstadoSBLocal sbTipoDeEstado;
+	
+	@EJB
+	EstadoProcessoSBLocal sbEstadoProcesso;
 	
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
@@ -50,5 +54,15 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 			findById(processoInterno.getProcessoExterno().getSolicitante().getId());
 		solicitante.setChaveSolicitanteProcesso(solicitante.getChaveSolicitanteProcesso()+1);
 		return solicitante.getSigla() + solicitante.getChaveSolicitanteProcesso();
+	}
+	
+	public String retornaNomeEstadoAtual(Integer idProcesso) {
+		ProcessoInterno processoInterno = this.findById(idProcesso);
+		EstadosProcesso estadoAtual = processoInterno.retornaEstadoAtual();
+		if(estadoAtual != null) {
+			return sbEstadoProcesso.retornaNomeEstado(estadoAtual.getId());
+		} else {
+			return "";
+		}
 	}
 }

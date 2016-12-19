@@ -1,27 +1,30 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
- * The persistent class for the tbl_tipo_servico database table.
+ * The persistent class for the tipoServico database table.
  * 
  */
 @Entity
-@Table(name="tbl_tipo_servico")
 @NamedQuery(name="TipoServico.findAll", query="SELECT t FROM TipoServico t")
 public class TipoServico implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String descricao;
 	private String nome;
-	private Date updateDt;
-	private String updateUser;
 	private double valor;
-	private List<TipoServicoSolicitante> tblTipoServicoSolicitantes;
+	private List<TipoServicoSolicitante> tipoServicoSolicitantes;
 
 	public TipoServico() {
 	}
@@ -56,25 +59,6 @@ public class TipoServico implements Serializable {
 	}
 
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getUpdateDt() {
-		return this.updateDt;
-	}
-
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
-
-
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-
 	public double getValor() {
 		return this.valor;
 	}
@@ -85,27 +69,52 @@ public class TipoServico implements Serializable {
 
 
 	//bi-directional many-to-one association to TipoServicoSolicitante
-	@OneToMany(mappedBy="tblTipoServico")
-	public List<TipoServicoSolicitante> getTblTipoServicoSolicitantes() {
-		return this.tblTipoServicoSolicitantes;
+	@OneToMany(mappedBy="tipoServico")
+	public List<TipoServicoSolicitante> getTipoServicoSolicitantes() {
+		return this.tipoServicoSolicitantes;
 	}
 
-	public void setTblTipoServicoSolicitantes(List<TipoServicoSolicitante> tblTipoServicoSolicitantes) {
-		this.tblTipoServicoSolicitantes = tblTipoServicoSolicitantes;
+	public void setTipoServicoSolicitantes(List<TipoServicoSolicitante> tipoServicoSolicitantes) {
+		this.tipoServicoSolicitantes = tipoServicoSolicitantes;
 	}
 
-	public TipoServicoSolicitante addTblTipoServicoSolicitante(TipoServicoSolicitante tblTipoServicoSolicitante) {
-		getTblTipoServicoSolicitantes().add(tblTipoServicoSolicitante);
-		tblTipoServicoSolicitante.setTblTipoServico(this);
+	public TipoServicoSolicitante addTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		getTipoServicoSolicitantes().add(tipoServicoSolicitante);
+		tipoServicoSolicitante.setTipoServico(this);
 
-		return tblTipoServicoSolicitante;
+		return tipoServicoSolicitante;
 	}
 
-	public TipoServicoSolicitante removeTblTipoServicoSolicitante(TipoServicoSolicitante tblTipoServicoSolicitante) {
-		getTblTipoServicoSolicitantes().remove(tblTipoServicoSolicitante);
-		tblTipoServicoSolicitante.setTblTipoServico(null);
+	public TipoServicoSolicitante removeTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		getTipoServicoSolicitantes().remove(tipoServicoSolicitante);
+		tipoServicoSolicitante.setTipoServico(null);
 
-		return tblTipoServicoSolicitante;
+		return tipoServicoSolicitante;
+	}
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TipoServico other = (TipoServico) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
 	}
 
 }

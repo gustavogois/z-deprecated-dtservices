@@ -1,83 +1,45 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the tbl_users database table.
- * 
- */
 @Entity
-@Table(name="tbl_users")
-@NamedQuery(name="User.findAll", query="SELECT u FROM User u")
-public class User implements Serializable {
-	private static final long serialVersionUID = 1L;
-	private Integer id;
-	private String createDt;
-	private Date expiryDate;
-	private byte locked;
-	private String name;
-	private String password;
-	private String phone;
-	private Date updateDt;
-	private String updateUser;
-	private String username;
-	private TipoDeUser tblTipoDeUser;
+@Table(name = "users", schema = "dt_services")
+public class User extends GeneralEntity implements Serializable {
+	static final long serialVersionUID = 1L;
+
+	Integer id;
+	TipoDeUser tipoDeUser;
+	String username;
+	String password;
+	String name;
+	String phone;
+	boolean locked;
+	Date expiryDate;
+	Date createDt;
 
 	public User() {
 	}
-
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return this.id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-
-	public String getCreateDt() {
-		return this.createDt;
-	}
-
-	public void setCreateDt(String createDt) {
-		this.createDt = createDt;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getExpiryDate() {
-		return this.expiryDate;
-	}
-
-	public void setExpiryDate(Date expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-
-
-	public byte getLocked() {
-		return this.locked;
-	}
-
-	public void setLocked(byte locked) {
-		this.locked = locked;
-	}
-
-
-	public String getName() {
-		return this.name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-
+	
+	@Column(name = "password", nullable = false)
 	public String getPassword() {
 		return this.password;
 	}
@@ -86,53 +48,66 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-
-	public String getPhone() {
-		return this.phone;
+	@ManyToOne
+	@JoinColumn(name = "tipoDeUserId", nullable = false)
+	public TipoDeUser getTipoDeUser() {
+		return this.tipoDeUser;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setTipoDeUser(TipoDeUser tipoDeUser) {
+		this.tipoDeUser = tipoDeUser;
 	}
 
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getUpdateDt() {
-		return this.updateDt;
-	}
-
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
-
-
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-
+	@Column(name = "username", nullable = false)
 	public String getUsername() {
-		return this.username;
+		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
-
-	//bi-directional many-to-one association to TipoDeUser
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="tipoDeUserId")
-	public TipoDeUser getTblTipoDeUser() {
-		return this.tblTipoDeUser;
+	@Column(name = "name", nullable = false)
+	public String getName() {
+		return name;
 	}
 
-	public void setTblTipoDeUser(TipoDeUser tblTipoDeUser) {
-		this.tblTipoDeUser = tblTipoDeUser;
+	public void setName(String name) {
+		this.name = name;
 	}
 
+	@Column(name = "phone", nullable = false)
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	@Column(name = "expiryDate", nullable = false)
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	public Date getCreateDt() {
+		return createDt;
+	}
+
+	public void setCreateDt(Date createDt) {
+		this.createDt = createDt;
+	}
+
+	@Column(name = "locked", nullable = false)
+	public boolean isLocked() {
+		return locked;
+	}
+
+	public void setLocked(boolean locked) {
+		this.locked = locked;
+	}
 }

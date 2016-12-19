@@ -1,29 +1,38 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 /**
- * The persistent class for the tbl_processoexterno database table.
+ * The persistent class for the processoexterno database table.
  * 
  */
 @Entity
-@Table(name="tbl_processoexterno")
-@NamedQuery(name="Processoexterno.findAll", query="SELECT p FROM Processoexterno p")
-public class Processoexterno implements Serializable {
+@NamedQuery(name="ProcessoExterno.findAll", query="SELECT p FROM ProcessoExterno p")
+public class ProcessoExterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
 	private String descricao;
-	private Date updateDt;
-	private String updateUser;
-	private Imovel tblImovel;
-	private List<ProcessoInterno> tblProcessoInternos;
-	private Solicitante tblSolicitante;
+	private Imovel imovel;
+	private Solicitante solicitante;
+	private List<ProcessoInterno> processosInterno;
 
-	public Processoexterno() {
+	public ProcessoExterno() {
 	}
 
 
@@ -47,70 +56,49 @@ public class Processoexterno implements Serializable {
 	}
 
 
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getUpdateDt() {
-		return this.updateDt;
-	}
-
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
-
-
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="tblProcessoexterno", fetch=FetchType.LAZY)
-	public Imovel getTblImovel() {
-		return this.tblImovel;
+	@OneToOne(mappedBy="processoExterno", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	public Imovel getImovel() {
+		return this.imovel;
 	}
 
-	public void setTblImovel(Imovel tblImovel) {
-		this.tblImovel = tblImovel;
-	}
-
-
-	//bi-directional many-to-one association to ProcessoInterno
-	@OneToMany(mappedBy="tblProcessoexterno")
-	public List<ProcessoInterno> getTblProcessoInternos() {
-		return this.tblProcessoInternos;
-	}
-
-	public void setTblProcessoInternos(List<ProcessoInterno> tblProcessoInternos) {
-		this.tblProcessoInternos = tblProcessoInternos;
-	}
-
-	public ProcessoInterno addTblProcessoInterno(ProcessoInterno tblProcessoInterno) {
-		getTblProcessoInternos().add(tblProcessoInterno);
-		tblProcessoInterno.setTblProcessoexterno(this);
-
-		return tblProcessoInterno;
-	}
-
-	public ProcessoInterno removeTblProcessoInterno(ProcessoInterno tblProcessoInterno) {
-		getTblProcessoInternos().remove(tblProcessoInterno);
-		tblProcessoInterno.setTblProcessoexterno(null);
-
-		return tblProcessoInterno;
+	public void setImovel(Imovel imovel) {
+		this.imovel = imovel;
 	}
 
 
-	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
-	public Solicitante getTblSolicitante() {
-		return this.tblSolicitante;
+	public Solicitante getSolicitante() {
+		return this.solicitante;
 	}
 
-	public void setTblSolicitante(Solicitante tblSolicitante) {
-		this.tblSolicitante = tblSolicitante;
+	public void setSolicitante(Solicitante solicitante) {
+		this.solicitante = solicitante;
+	}
+
+
+	@OneToMany(mappedBy="processoExterno")
+	public List<ProcessoInterno> getProcessosInterno() {
+		return this.processosInterno;
+	}
+
+	public void setProcessosInterno(List<ProcessoInterno> processosInterno) {
+		this.processosInterno = processosInterno;
+	}
+
+	public ProcessoInterno addProcessointerno(ProcessoInterno processoInterno) {
+		getProcessosInterno().add(processoInterno);
+		processoInterno.setProcessoExterno(this);
+
+		return processoInterno;
+	}
+
+	public ProcessoInterno removeProcessoInterno(ProcessoInterno processoInterno) {
+		getProcessosInterno().remove(processoInterno);
+		processoInterno.setProcessoExterno(null);
+
+		return processoInterno;
 	}
 
 }

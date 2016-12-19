@@ -6,22 +6,21 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the tbl_estado_servico database table.
+ * The persistent class for the estadosservico database table.
  * 
  */
 @Entity
-@Table(name="tbl_estado_servico")
-@NamedQuery(name="EstadoServico.findAll", query="SELECT e FROM EstadoServico e")
-public class EstadoServico implements Serializable {
+@NamedQuery(name="EstadosServico.findAll", query="SELECT e FROM EstadosServico e")
+public class EstadosServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date dtFim;
 	private Date dtInicio;
 	private String observacoes;
-	private Servico tblServico;
-	private TipoDeEstadoSRV tblTipoDeEstadosrv;
+	private Servico servico;
+	private TipoDeEstado tiposDeEstado;
 
-	public EstadoServico() {
+	public EstadosServico() {
 	}
 
 
@@ -66,26 +65,26 @@ public class EstadoServico implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="servicoId")
-	public Servico getTblServico() {
-		return this.tblServico;
+	public Servico getServico() {
+		return this.servico;
 	}
 
-	public void setTblServico(Servico tblServico) {
-		this.tblServico = tblServico;
+	public void setServico(Servico servico) {
+		this.servico = servico;
 	}
 
 
-	//bi-directional many-to-one association to TipoDeEstadoSRV
-	@ManyToOne(fetch=FetchType.LAZY)
+	//bi-directional many-to-one association to TipoDeEstado
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoId")
-	public TipoDeEstadoSRV getTblTipoDeEstadosrv() {
-		return this.tblTipoDeEstadosrv;
+	public TipoDeEstado getTipoDeEstado() {
+		return this.tiposDeEstado;
 	}
 
-	public void setTblTipoDeEstadosrv(TipoDeEstadoSRV tblTipoDeEstadosrv) {
-		this.tblTipoDeEstadosrv = tblTipoDeEstadosrv;
+	public void setTipoDeEstado(TipoDeEstado tiposDeEstado) {
+		this.tiposDeEstado = tiposDeEstado;
 	}
 
 }

@@ -1,26 +1,32 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 
 /**
- * The persistent class for the tbl_entidade_de_facturacao database table.
+ * The persistent class for the entidadedefacturacao database table.
  * 
  */
 @Entity
-@Table(name="tbl_entidade_de_facturacao")
 @NamedQuery(name="EntidadeDeFacturacao.findAll", query="SELECT e FROM EntidadeDeFacturacao e")
 public class EntidadeDeFacturacao implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private String nif;
 	private String nome;
-	private Date updateDt;
-	private String updateUser;
-	private Solicitante tblSolicitante;
-
+	private String nif;
+	private Solicitante solicitante;
+	
 	public EntidadeDeFacturacao() {
 	}
 
@@ -36,15 +42,6 @@ public class EntidadeDeFacturacao implements Serializable {
 	}
 
 
-	public String getNif() {
-		return this.nif;
-	}
-
-	public void setNif(String nif) {
-		this.nif = nif;
-	}
-
-
 	public String getNome() {
 		return this.nome;
 	}
@@ -53,35 +50,24 @@ public class EntidadeDeFacturacao implements Serializable {
 		this.nome = nome;
 	}
 
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getUpdateDt() {
-		return this.updateDt;
-	}
-
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
+	public String getNif() {
+		return nif;
 	}
 
 
-	public String getUpdateUser() {
-		return this.updateUser;
+	public void setNif(String nif) {
+		this.nif = nif;
 	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-
-	//bi-directional many-to-one association to Solicitante
-	@ManyToOne(fetch=FetchType.LAZY)
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="solicitanteId")
-	public Solicitante getTblSolicitante() {
-		return this.tblSolicitante;
+	public Solicitante getSolicitante() {
+		return solicitante;
 	}
 
-	public void setTblSolicitante(Solicitante tblSolicitante) {
-		this.tblSolicitante = tblSolicitante;
+
+	public void setSolicitante(Solicitante solicitante) {
+		this.solicitante = solicitante;
 	}
 
 }

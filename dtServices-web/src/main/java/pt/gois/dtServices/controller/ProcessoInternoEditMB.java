@@ -64,7 +64,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	public String getNomeEstadoAtual() {
 		processoInterno = getProcessoInterno();
 		if(processoInterno.getId() != null) {
-			return processoInterno.retornaNomeEstadoAtual();
+			return sb.retornaNomeEstadoAtual(processoInterno.getId());
 		} else {
 			return "";
 		}

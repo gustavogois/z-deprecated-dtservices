@@ -6,19 +6,23 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the tbl_historico database table.
+ * The persistent class for the historico database table.
  * 
  */
 @Entity
-@Table(name="tbl_historico")
-@NamedQuery(name="Historico.findAll", query="SELECT h FROM Historico h")
+@NamedQueries({
+@NamedQuery(name="Historico.findAll", query="SELECT h FROM Historico h"),
+@NamedQuery(name="Historico.findByObjectAndType", query="SELECT h FROM Historico h where h.idObjeto=:pObjectId and h.tipoObjeto=:pType")
+})
 public class Historico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date data;
 	private String descricao;
-	private int idObjeto;
-	private int tipoObjeto;
+	private Integer idObjeto;
+	private Integer tipoObjeto;
+
+
 
 	public Historico() {
 	}
@@ -35,7 +39,7 @@ public class Historico implements Serializable {
 	}
 
 
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	public Date getData() {
 		return this.data;
 	}
@@ -54,20 +58,19 @@ public class Historico implements Serializable {
 	}
 
 
-	public int getIdObjeto() {
+	public Integer getIdObjeto() {
 		return this.idObjeto;
 	}
 
-	public void setIdObjeto(int idObjeto) {
+	public void setIdObjeto(Integer idObjeto) {
 		this.idObjeto = idObjeto;
 	}
-
-
-	public int getTipoObjeto() {
-		return this.tipoObjeto;
+	public Integer getTipoObjeto() {
+		return tipoObjeto;
 	}
 
-	public void setTipoObjeto(int tipoObjeto) {
+
+	public void setTipoObjeto(Integer tipoObjeto) {
 		this.tipoObjeto = tipoObjeto;
 	}
 

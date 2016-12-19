@@ -1,38 +1,46 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 /**
- * The persistent class for the tbl_processo_interno database table.
+ * The persistent class for the processointerno database table.
  * 
  */
 @Entity
-@Table(name="tbl_processo_interno")
 @NamedQuery(name="ProcessoInterno.findAll", query="SELECT p FROM ProcessoInterno p")
-public class ProcessoInterno implements Serializable {
+public class ProcessoInterno extends GeneralEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
-	private byte comChaves;
-	private String fatura;
-	private String idProcCliente;
-	private String nomeSolicitante;
-	private String numeroChave;
+	private boolean comChaves;
 	private String observacoes;
+	private ProcessoExterno processoExterno;
+	private List<Servico> servicos;
+	private String fatura;
+	private String numeroChave;
+	private String nomeSolicitante;
+	private String idProcCliente;
 	private Date previsaoFim;
 	private Date previsaoInicio;
-	private Date updateDt;
-	private String updateUser;
-	private List<EstadoProcesso> tblEstadoProcessos;
-	private Processoexterno tblProcessoexterno;
-	private List<Servico> tblServicos;
+	private List<EstadosProcesso> estadosProcesso;
 
 	public ProcessoInterno() {
 	}
-
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,53 +48,26 @@ public class ProcessoInterno implements Serializable {
 		return this.id;
 	}
 
+	public EstadosProcesso retornaEstadoAtual() {
+		List<EstadosProcesso> estadosProcessoList = this.getEstadosProcesso();
+		if(estadosProcessoList != null && estadosProcessoList.size() > 0) {
+			return estadosProcessoList.get(estadosProcessoList.size() - 1);
+		} else {
+			return null;
+		}
+	}
+	
 	public void setId(Integer id) {
 		this.id = id;
 	}
 
 
-	public byte getComChaves() {
+	public boolean getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(byte comChaves) {
+	public void setComChaves(boolean comChaves) {
 		this.comChaves = comChaves;
-	}
-
-
-	public String getFatura() {
-		return this.fatura;
-	}
-
-	public void setFatura(String fatura) {
-		this.fatura = fatura;
-	}
-
-
-	public String getIdProcCliente() {
-		return this.idProcCliente;
-	}
-
-	public void setIdProcCliente(String idProcCliente) {
-		this.idProcCliente = idProcCliente;
-	}
-
-
-	public String getNomeSolicitante() {
-		return this.nomeSolicitante;
-	}
-
-	public void setNomeSolicitante(String nomeSolicitante) {
-		this.nomeSolicitante = nomeSolicitante;
-	}
-
-
-	public String getNumeroChave() {
-		return this.numeroChave;
-	}
-
-	public void setNumeroChave(String numeroChave) {
-		this.numeroChave = numeroChave;
 	}
 
 
@@ -98,7 +79,88 @@ public class ProcessoInterno implements Serializable {
 		this.observacoes = observacoes;
 	}
 
+	//bi-directional many-to-one association to Processoexterno
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="processoExternoId")
+	public ProcessoExterno getProcessoExterno() {
+		return this.processoExterno;
+	}
 
+	public void setProcessoExterno(ProcessoExterno processoExterno) {
+		this.processoExterno = processoExterno;
+	}
+
+
+	//bi-directional many-to-one association to Servico
+	@OneToMany(mappedBy="processoInterno")
+	public List<Servico> getServicos() {
+		return this.servicos;
+	}
+
+	public void setServicos(List<Servico> servicos) {
+		this.servicos = servicos;
+	}
+
+	public Servico addServico(Servico servico) {
+		getServicos().add(servico);
+		servico.setProcessoInterno(this);
+
+		return servico;
+	}
+
+	public Servico removeServico(Servico servico) {
+		getServicos().remove(servico);
+		servico.setProcessoInterno(null);
+
+		return servico;
+	}
+	public EstadosProcesso addEstadosProcesso(EstadosProcesso estado) {
+		getEstadosProcesso().add(estado);
+		estado.setProcessoInterno(this);
+
+		return estado;
+	}
+
+	public EstadosProcesso removeEstadosProcesso(EstadosProcesso estado) {
+		getEstadosProcesso().remove(estado);
+		estado.setProcessoInterno(null);
+
+		return estado;
+	}
+	public String getFatura() {
+		return fatura;
+	}
+
+
+	public void setFatura(String fatura) {
+		this.fatura = fatura;
+	}
+
+
+	public String getNumeroChave() {
+		return numeroChave;
+	}
+
+
+	public void setNumeroChave(String numeroChave) {
+		this.numeroChave = numeroChave;
+	}
+	public String getNomeSolicitante() {
+		return nomeSolicitante;
+	}
+
+
+	public void setNomeSolicitante(String nomeSolicitante) {
+		this.nomeSolicitante = nomeSolicitante;
+	}
+	public String getIdProcCliente() {
+		return idProcCliente;
+	}
+
+
+	public void setIdProcCliente(String idProcCliente) {
+		this.idProcCliente = idProcCliente;
+	}
 	@Temporal(TemporalType.DATE)
 	public Date getPrevisaoFim() {
 		return this.previsaoFim;
@@ -117,86 +179,17 @@ public class ProcessoInterno implements Serializable {
 	public void setPrevisaoInicio(Date previsaoInicio) {
 		this.previsaoInicio = previsaoInicio;
 	}
-
-
-	@Temporal(TemporalType.TIMESTAMP)
-	public Date getUpdateDt() {
-		return this.updateDt;
+	//bi-directional many-to-one association to Estadosprocesso
+	@OneToMany(mappedBy="processoInterno", cascade = CascadeType.ALL)
+	public List<EstadosProcesso> getEstadosProcesso() {
+		if( this.estadosProcesso == null ){
+			this.estadosProcesso = new ArrayList<EstadosProcesso>();
+		}
+		return this.estadosProcesso;
 	}
 
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
-
-
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
-
-	//bi-directional many-to-one association to EstadoProcesso
-	@OneToMany(mappedBy="tblProcessoInterno")
-	public List<EstadoProcesso> getTblEstadoProcessos() {
-		return this.tblEstadoProcessos;
-	}
-
-	public void setTblEstadoProcessos(List<EstadoProcesso> tblEstadoProcessos) {
-		this.tblEstadoProcessos = tblEstadoProcessos;
-	}
-
-	public EstadoProcesso addTblEstadoProcesso(EstadoProcesso tblEstadoProcesso) {
-		getTblEstadoProcessos().add(tblEstadoProcesso);
-		tblEstadoProcesso.setTblProcessoInterno(this);
-
-		return tblEstadoProcesso;
-	}
-
-	public EstadoProcesso removeTblEstadoProcesso(EstadoProcesso tblEstadoProcesso) {
-		getTblEstadoProcessos().remove(tblEstadoProcesso);
-		tblEstadoProcesso.setTblProcessoInterno(null);
-
-		return tblEstadoProcesso;
-	}
-
-
-	//bi-directional many-to-one association to Processoexterno
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="processoExternoId")
-	public Processoexterno getTblProcessoexterno() {
-		return this.tblProcessoexterno;
-	}
-
-	public void setTblProcessoexterno(Processoexterno tblProcessoexterno) {
-		this.tblProcessoexterno = tblProcessoexterno;
-	}
-
-
-	//bi-directional many-to-one association to Servico
-	@OneToMany(mappedBy="tblProcessoInterno")
-	public List<Servico> getTblServicos() {
-		return this.tblServicos;
-	}
-
-	public void setTblServicos(List<Servico> tblServicos) {
-		this.tblServicos = tblServicos;
-	}
-
-	public Servico addTblServico(Servico tblServico) {
-		getTblServicos().add(tblServico);
-		tblServico.setTblProcessoInterno(this);
-
-		return tblServico;
-	}
-
-	public Servico removeTblServico(Servico tblServico) {
-		getTblServicos().remove(tblServico);
-		tblServico.setTblProcessoInterno(null);
-
-		return tblServico;
+	public void setEstadosProcesso(List<EstadosProcesso> estadosProcesso) {
+		this.estadosProcesso = estadosProcesso;
 	}
 
 }

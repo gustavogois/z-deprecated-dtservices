@@ -33,6 +33,7 @@
         <welcome-file>index.html</welcome-file>
     </welcome-file-list>
     
+    	  
     	<security-constraint>
         <web-resource-collection>
             <web-resource-name>Only admins</web-resource-name>
@@ -42,8 +43,10 @@
             <role-name>USER</role-name>
         </auth-constraint>
     </security-constraint>
+    
  
     <!-- Validation By Form -->
+      
     <login-config>
         <auth-method>FORM</auth-method>
         <form-login-config>
@@ -52,7 +55,9 @@
         </form-login-config>
     </login-config>
  
+ 
     <!-- Allowed Roles -->
+      
     <security-role>
         <role-name>USER</role-name>
     </security-role>
