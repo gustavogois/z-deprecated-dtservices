@@ -1,9 +1,11 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -146,13 +148,26 @@ public class Servico extends GeneralEntity implements Serializable {
 		this.tipoServicoSolicitante = tipoServicoSolicitante;
 	}
 	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico")
-	public List<EstadosServico> getEstadosservicos() {
+	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL)
+	public List<EstadosServico> getEstadosServicos() {
+		if( this.estadosServicos == null ){
+			this.estadosServicos = new ArrayList<EstadosServico>();
+		}
 		return this.estadosServicos;
 	}
 
-	public void setEstadosservicos(List<EstadosServico> estadosServicos) {
+	public void setEstadosServicos(List<EstadosServico> estadosServicos) {
 		this.estadosServicos = estadosServicos;
 	}
+	
+	public EstadosServico retornaEstadoAtual() {
+		List<EstadosServico> estadosServicoList = this.getEstadosServicos();
+		if(estadosServicoList != null && estadosServicoList.size() > 0) {
+			return estadosServicoList.get(estadosServicoList.size() - 1);
+		} else {
+			return null;
+		}
+	}
+
 
 }

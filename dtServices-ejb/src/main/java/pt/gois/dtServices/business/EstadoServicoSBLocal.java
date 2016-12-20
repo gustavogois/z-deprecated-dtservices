@@ -6,4 +6,7 @@ import pt.gois.dtServices.entity.EstadosServico;
 
 @Local
 public interface EstadoServicoSBLocal extends GeneralSBLocal<EstadosServico>{
+	
+	public String retornaNomeEstado(Integer idEstado);
+
 }

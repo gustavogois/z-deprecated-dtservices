@@ -2,7 +2,6 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -15,6 +14,7 @@ import javax.faces.validator.ValidatorException;
 
 import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
+import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
@@ -40,11 +40,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
 	
 	@EJB
-	HistoricoSBLocal sbHistorico;
+	private HistoricoSBLocal sbHistorico;
+
 	
 	Servico servico;
 	Integer idProcessoInterno;
-	Integer idEstadoAtual;
+	
+	EstadosServico estadoServico;
 	
 	boolean existeTipoServicoSolicitante=true;
 	
@@ -116,37 +118,24 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	public String save(){
 		Servico servico = getServico();
-		servico.setProcessoInterno(sbProcessoInterno.findById(idProcessoInterno));
-		boolean novo = false;
-		if( servico.getId() != null ){
-			sb.save( servico );
-		}else{
-			novo = true;
-			sb.create( servico );
-		}
+		// servico.setProcessoInterno(sbProcessoInterno.findById(idProcessoInterno));
 		
-		if(!idEstadoAtual.equals(servico.getTipoDeEstado().getId()) || novo) {
-			
-			servico = sb.findById(servico.getId());
-			Historico historico = new Historico();
-			historico.setIdObjeto(servico.getId());
-			historico.setTipoObjeto(TipoDeEstadoSBLocal.SERVICOS);
-			historico.setData(new Date());
-			String descricao;
-			if(novo) {
-				descricao = "Serviço criado";
-			} else {
-				descricao = "Estado do serviço alterado para: " + servico.getTipoDeEstado().getNome();
-			}
-			historico.setDescricao(descricao);
-			sbHistorico.create(historico);
-		}
+		verificaMudancaDeEstado(servico);
+		
+		sb.salvar( servico, idProcessoInterno );
 		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
 	
-	public List<Historico> getHistorico() {
-		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.SERVICOS);
+	private void verificaMudancaDeEstado(Servico servico) {
+		
+		if(servico.getId() == null) {
+			TipoDeEstado tipo = new TipoDeEstado();
+			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
+			estadoServico.setTipoDeEstado(tipo);
+			estadoServico.setServico(servico);
+			servico.getEstadosServicos().add(estadoServico);
+		}
 	}
 
 	
@@ -159,19 +148,27 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			Integer id = getId();
 			if( id != null ){
 				servico = sb.findById( getId() );
-				idEstadoAtual = servico.getTipoDeEstado().getId();
+				estadoServico = servico.retornaEstadoAtual();
 			}else{
 				servico = new Servico();
 				servico.setProcessoInterno(new ProcessoInterno());
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
 				servico.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.SRV_CRIADO));
-				idEstadoAtual = TipoDeEstadoSBLocal.SRV_CRIADO;
+				estadoServico = new EstadosServico();
 				
 			}
 		}
 		return servico;
 	}
 	
+	public EstadosServico getEstadoServico() {
+		return estadoServico;
+	}
+
+	public void setEstadoServico(EstadosServico estadoServico) {
+		this.estadoServico = estadoServico;
+	}
+
 	public void setServico(Servico Servico) {
 		this.servico = Servico;
 	}
@@ -202,4 +199,18 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public void setExisteTipoServicoSolicitante(boolean existeTipoServicoSolicitante) {
 		this.existeTipoServicoSolicitante = existeTipoServicoSolicitante;
 	}
+	
+	public List<Historico> getHistorico() {
+		
+		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_INTERNO);
+	}
+	public String getNomeEstadoAtual() {
+		servico = getServico();
+		if(servico.getId() != null) {
+			return sb.retornaNomeEstadoAtual(servico.getId());
+		} else {
+			return "";
+		}
+	}
+
 }

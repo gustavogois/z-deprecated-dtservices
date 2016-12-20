@@ -6,5 +6,6 @@ import pt.gois.dtServices.entity.Servico;
 
 @Local
 public interface ServicoSBLocal extends GeneralSBLocal<Servico>{
-	
+	public void salvar(Servico servico, Integer idProcessoInterno);
+	public String retornaNomeEstadoAtual(Integer idServico);
 }
