@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,12 +24,15 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name="ProcessoExterno.findAll", query="SELECT p FROM ProcessoExterno p")
-public class ProcessoExterno extends GeneralEntity implements Serializable {
+public class ProcessoExterno implements Serializable {
 	private static final long serialVersionUID = 1L;
+	private Integer id;
 	private String descricao;
+	private Date updateDt;
+	private String updateUser;
 	private Imovel imovel;
 	private Solicitante solicitante;
-	private List<ProcessoInterno> processosInterno;
+	private List<ProcessoInterno> processointernos;
 
 	public ProcessoExterno() {
 	}
@@ -56,8 +58,27 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 	}
 
 
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdateDt() {
+		return this.updateDt;
+	}
+
+	public void setUpdateDt(Date updateDt) {
+		this.updateDt = updateDt;
+	}
+
+
+	public String getUpdateUser() {
+		return this.updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
+
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processoExterno", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+	@OneToOne(mappedBy="processoExterno", fetch=FetchType.LAZY)
 	public Imovel getImovel() {
 		return this.imovel;
 	}
@@ -67,7 +88,8 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 	}
 
 
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to Solicitante
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
@@ -78,27 +100,28 @@ public class ProcessoExterno extends GeneralEntity implements Serializable {
 	}
 
 
+	//bi-directional many-to-one association to ProcessoInterno
 	@OneToMany(mappedBy="processoExterno")
-	public List<ProcessoInterno> getProcessosInterno() {
-		return this.processosInterno;
+	public List<ProcessoInterno> getProcessointernos() {
+		return this.processointernos;
 	}
 
-	public void setProcessosInterno(List<ProcessoInterno> processosInterno) {
-		this.processosInterno = processosInterno;
+	public void setProcessointernos(List<ProcessoInterno> processointernos) {
+		this.processointernos = processointernos;
 	}
 
-	public ProcessoInterno addProcessointerno(ProcessoInterno processoInterno) {
-		getProcessosInterno().add(processoInterno);
-		processoInterno.setProcessoExterno(this);
+	public ProcessoInterno addProcessointerno(ProcessoInterno processointerno) {
+		getProcessointernos().add(processointerno);
+		processointerno.setProcessoExterno(this);
 
-		return processoInterno;
+		return processointerno;
 	}
 
-	public ProcessoInterno removeProcessoInterno(ProcessoInterno processoInterno) {
-		getProcessosInterno().remove(processoInterno);
-		processoInterno.setProcessoExterno(null);
+	public ProcessoInterno removeProcessointerno(ProcessoInterno processointerno) {
+		getProcessointernos().remove(processointerno);
+		processointerno.setProcessoExterno(null);
 
-		return processoInterno;
+		return processointerno;
 	}
 
 }

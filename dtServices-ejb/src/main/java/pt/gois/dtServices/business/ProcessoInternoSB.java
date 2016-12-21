@@ -1,5 +1,7 @@
 package pt.gois.dtServices.business;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -58,11 +60,20 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	
 	public String retornaNomeEstadoAtual(Integer idProcesso) {
 		ProcessoInterno processoInterno = this.findById(idProcesso);
-		EstadosProcesso estadoAtual = processoInterno.retornaEstadoAtual();
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processoInterno);
 		if(estadoAtual != null) {
 			return sbEstadoProcesso.retornaNomeEstado(estadoAtual.getId());
 		} else {
 			return "";
+		}
+	}
+	
+	public EstadosProcesso retornaEstadoAtual(ProcessoInterno processoInterno) {
+		List<EstadosProcesso> estadosProcessoList = processoInterno.getEstadosProcesso();
+		if(estadosProcessoList != null && estadosProcessoList.size() > 0) {
+			return estadosProcessoList.get(estadosProcessoList.size() - 1);
+		} else {
+			return null;
 		}
 	}
 }

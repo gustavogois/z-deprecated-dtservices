@@ -1,5 +1,7 @@
 package pt.gois.dtServices.business;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -42,6 +44,15 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			return sbEstadoServico.retornaNomeEstado(estadoAtual.getId());
 		} else {
 			return "";
+		}
+	}
+	
+	public EstadosServico retornaEstadoAtual(Servico servico) {
+		List<EstadosServico> estadosServicoList = servico.getEstadosServicos();
+		if(estadosServicoList != null && estadosServicoList.size() > 0) {
+			return estadosServicoList.get(estadosServicoList.size() - 1);
+		} else {
+			return null;
 		}
 	}
 }

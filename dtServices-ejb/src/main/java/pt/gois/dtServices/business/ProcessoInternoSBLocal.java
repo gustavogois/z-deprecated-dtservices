@@ -9,4 +9,5 @@ import pt.gois.dtServices.entity.ProcessoInterno;
 public interface ProcessoInternoSBLocal extends GeneralSBLocal<ProcessoInterno>{
 	public void salvar(ProcessoInterno processoInterno);
 	public String retornaNomeEstadoAtual(Integer idProcesso);
+	public EstadosProcesso retornaEstadoAtual(ProcessoInterno processoInterno);
 }

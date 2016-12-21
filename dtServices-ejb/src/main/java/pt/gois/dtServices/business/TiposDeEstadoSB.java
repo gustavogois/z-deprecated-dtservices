@@ -6,24 +6,24 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
 
-import pt.gois.dtServices.entity.TipoDeEstado;
+import pt.gois.dtServices.entity.TiposDeEstado;
 
 @Stateless
-public class TiposDeEstadoSB extends GeneralSB<TipoDeEstado> implements TipoDeEstadoSBLocal {
+public class TiposDeEstadoSB extends GeneralSB<TiposDeEstado> implements TipoDeEstadoSBLocal {
 
 	public TiposDeEstadoSB() {
-		super(TipoDeEstado.class);
+		super(TiposDeEstado.class);
 	}
 
-	public List<TipoDeEstado> findByGroup(Integer group) {
-		TypedQuery<TipoDeEstado> query = getEM().createNamedQuery("TiposDeEstado.findTipoDeEstadoByGroup", TipoDeEstado.class);
+	public List<TiposDeEstado> findByGroup(Integer group) {
+		TypedQuery<TiposDeEstado> query = getEM().createNamedQuery("TiposDeEstado.findTiposDeEstadoByGroup", TiposDeEstado.class);
 		query.setParameter("pGrupoId", group);
 		return query.getResultList();
 	}
 
-	public List<TipoDeEstado> findNextStates(Integer idGroup, Integer idActualState) {
+	public List<TiposDeEstado> findNextStates(Integer idGroup, Integer idActualState) {
 
-		ArrayList<TipoDeEstado> nextStates = new ArrayList<TipoDeEstado>();
+		ArrayList<TiposDeEstado> nextStates = new ArrayList<TiposDeEstado>();
 
 		if (idGroup.equals(SERVICOS)) {
 

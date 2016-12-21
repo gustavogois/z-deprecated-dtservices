@@ -1,23 +1,9 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 
 /**
@@ -26,18 +12,18 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @NamedQuery(name="Servico.findAll", query="SELECT s FROM Servico s")
-public class Servico extends GeneralEntity implements Serializable {
+public class Servico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date dtCadastro;
 	private Date dtFim;
 	private Date dtInicio;
 	private String observacoes;
-	private double valor;
-	private List<Imagem> imagems;
-	private TipoDeEstado tipoDeEstado;
 	private ProcessoInterno processoInterno;
 	private TipoServicoSolicitante tipoServicoSolicitante;
+	private Date updateDt;
+	private String updateUser;
+	private double valor;
 	private List<EstadosServico> estadosServicos;
 
 	public Servico() {
@@ -93,6 +79,43 @@ public class Servico extends GeneralEntity implements Serializable {
 		this.observacoes = observacoes;
 	}
 
+	@ManyToOne
+	public ProcessoInterno getProcessoInterno() {
+		return this.processoInterno;
+	}
+
+	public void setProcessoInterno(ProcessoInterno processoInterno) {
+		this.processoInterno = processoInterno;
+	}
+
+	@ManyToOne
+	public TipoServicoSolicitante getTipoServicoSolicitante() {
+		return this.tipoServicoSolicitante;
+	}
+
+	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
+		this.tipoServicoSolicitante = tipoServicoSolicitante;
+	}
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdateDt() {
+		return this.updateDt;
+	}
+
+	public void setUpdateDt(Date updateDt) {
+		this.updateDt = updateDt;
+	}
+
+
+	public String getUpdateUser() {
+		return this.updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
+	}
+
 
 	public double getValor() {
 		return this.valor;
@@ -103,61 +126,28 @@ public class Servico extends GeneralEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to ImagemServico
-	@ManyToMany(mappedBy="servicos")
-	public List<Imagem> getImagems() {
-		return this.imagems;
-	}
-
-	public void setImagems(List<Imagem> imagems) {
-		this.imagems = imagems;
-	}
-
-	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="estado_atual_Id")
-	public TipoDeEstado getTipoDeEstado() {
-		return this.tipoDeEstado;
-	}
-
-	public void setTipoDeEstado(TipoDeEstado tipoDeEstado) {
-		this.tipoDeEstado = tipoDeEstado;
-	}
-
-
-	//bi-directional many-to-one association to ProcessoInterno
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="processoId")
-	public ProcessoInterno getProcessoInterno() {
-		return this.processoInterno;
-	}
-
-	public void setProcessoInterno(ProcessoInterno processoInterno) {
-		this.processoInterno = processoInterno;
-	}
-
-
-	//bi-directional many-to-one association to TipoServicoSolicitante
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="tipoServico_SolicitanteId")
-	public TipoServicoSolicitante getTipoServicoSolicitante() {
-		return this.tipoServicoSolicitante;
-	}
-
-	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
-		this.tipoServicoSolicitante = tipoServicoSolicitante;
-	}
 	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="servico")
 	public List<EstadosServico> getEstadosServicos() {
-		if( this.estadosServicos == null ){
-			this.estadosServicos = new ArrayList<EstadosServico>();
-		}
 		return this.estadosServicos;
 	}
 
-	public void setEstadosServicos(List<EstadosServico> estadosServicos) {
-		this.estadosServicos = estadosServicos;
+	public void setEstadosServicos(List<EstadosServico> estadosservicos) {
+		this.estadosServicos = estadosservicos;
+	}
+
+	public EstadosServico addEstadosservico(EstadosServico estadosservico) {
+		getEstadosServicos().add(estadosservico);
+		estadosservico.setServico(this);
+
+		return estadosservico;
+	}
+
+	public EstadosServico removeEstadosservico(EstadosServico estadosservico) {
+		getEstadosServicos().remove(estadosservico);
+		estadosservico.setServico(null);
+
+		return estadosservico;
 	}
 	
 	public EstadosServico retornaEstadoAtual() {

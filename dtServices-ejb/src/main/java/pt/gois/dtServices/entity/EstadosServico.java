@@ -2,6 +2,7 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
+
 import java.util.Date;
 
 
@@ -18,7 +19,7 @@ public class EstadosServico implements Serializable {
 	private Date dtInicio;
 	private String observacoes;
 	private Servico servico;
-	private TipoDeEstado tiposDeEstado;
+	private TiposDeEstado tiposDeEstado;
 
 	public EstadosServico() {
 	}
@@ -65,7 +66,7 @@ public class EstadosServico implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@ManyToOne(fetch=FetchType.EAGER)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="servicoId")
 	public Servico getServico() {
 		return this.servico;
@@ -76,14 +77,14 @@ public class EstadosServico implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to TipoDeEstado
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to TiposDeEstado
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoId")
-	public TipoDeEstado getTipoDeEstado() {
+	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
 	}
 
-	public void setTipoDeEstado(TipoDeEstado tiposDeEstado) {
+	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
 	}
 

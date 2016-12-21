@@ -1,18 +1,9 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import javax.persistence.*;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.Date;
 
 
 /**
@@ -28,7 +19,7 @@ public class EstadosProcesso implements Serializable {
 	private Date dtInicio;
 	private String observacoes;
 	private ProcessoInterno processoInterno;
-	private TipoDeEstado tiposDeEstado;
+	private TiposDeEstado tiposDeEstado;
 
 	public EstadosProcesso() {
 	}
@@ -74,8 +65,8 @@ public class EstadosProcesso implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to Processointerno
-	@ManyToOne(fetch=FetchType.EAGER)
+	//bi-directional many-to-one association to ProcessoInterno
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="processoId")
 	public ProcessoInterno getProcessoInterno() {
 		return this.processoInterno;
@@ -89,11 +80,11 @@ public class EstadosProcesso implements Serializable {
 	//bi-directional many-to-one association to TiposDeEstado
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="tipoId")
-	public TipoDeEstado getTiposDeEstado() {
+	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;
 	}
 
-	public void setTiposDeEstado(TipoDeEstado tiposDeEstado) {
+	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
 	}
 

@@ -38,7 +38,7 @@ import pt.gois.dtServices.entity.Imagem;
 import pt.gois.dtServices.entity.Imovel;
 import pt.gois.dtServices.entity.ProcessoExterno;
 import pt.gois.dtServices.entity.Solicitante;
-import pt.gois.dtServices.entity.TipoDeEstado;
+import pt.gois.dtServices.entity.TiposDeEstado;
 
 @ManagedBean
 @ViewScoped
@@ -58,7 +58,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	private pt.gois.dtServices.business.ImagemSBLocal sbImagem;
 
 	@EJB
-	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
+	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTiposDeEstado;
 	
 	@EJB
 	private pt.gois.dtServices.business.HistoricoSBLocal sbHistorico;
@@ -79,12 +79,12 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	
 	Imagem selectedImage;
 
-	public List<TipoDeEstado> getNovosEstados() {
-		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
-//		if(getProcessoExterno().getTipoDeEstado().getId() != null) {
-//			novosEstados.add(sbTipoDeEstado.findById(getProcessoExterno().getTipoDeEstado().getId()));
+	public List<TiposDeEstado> getNovosEstados() {
+		ArrayList<TiposDeEstado> novosEstados = new ArrayList<TiposDeEstado>();
+//		if(getProcessoExterno().getTiposDeEstado().getId() != null) {
+//			novosEstados.add(sbTiposDeEstado.findById(getProcessoExterno().getTiposDeEstado().getId()));
 //		}
-//		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_EXTERNO, getProcessoExterno().getTipoDeEstado().getId()));
+//		novosEstados.addAll(sbTiposDeEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_EXTERNO, getProcessoExterno().getTiposDeEstado().getId()));
 		return novosEstados;
 	}
 	
@@ -154,7 +154,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			novo = true;
 		}
 		
-//		if(!idEstadoAtual.equals(getProcessoExterno().getTipoDeEstado().getId())) {
+//		if(!idEstadoAtual.equals(getProcessoExterno().getTiposDeEstado().getId())) {
 			
 			processoExterno = sb.findById(getProcessoExterno().getId());
 			Historico historico = new Historico();
@@ -165,7 +165,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 			if(novo) {
 				descricao = "Processo Externo criado";
 			} else {
-//				descricao = "Estado do Processo Externo alterado para: " + processoExterno.getTipoDeEstado().getNome();
+//				descricao = "Estado do Processo Externo alterado para: " + processoExterno.getTiposDeEstado().getNome();
 			}
 			historico.setDescricao(descricao);
 			sbHistorico.create(historico);
@@ -194,7 +194,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				}
 				endereco.setCodigoPostal(imovel.getCodigoPostal());
 				
-//				idEstadoAtual = processoExterno.getTipoDeEstado().getId();
+//				idEstadoAtual = processoExterno.getTiposDeEstado().getId();
 				
 				centerGeoMap = imovel.getLatitude() + "," + imovel.getLongitude();
 				
@@ -207,7 +207,7 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 				processoExterno.setImovel(imovel);
 				imovel.setProcessoExterno(processoExterno);
 				
-//				processoExterno.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.PE_CRIADO));
+//				processoExterno.setTiposDeEstado(sbTiposDeEstado.findById(TipoDeEstadoSBLocal.PE_CRIADO));
 				idEstadoAtual = TipoDeEstadoSBLocal.PE_CRIADO;
 				
 			}

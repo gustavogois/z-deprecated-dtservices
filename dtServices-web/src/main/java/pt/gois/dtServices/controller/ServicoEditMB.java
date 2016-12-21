@@ -18,8 +18,8 @@ import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
-import pt.gois.dtServices.entity.TipoDeEstado;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
+import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -37,7 +37,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTipoServicoSolicitante;
 	
 	@EJB
-	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTipoDeEstado;
+	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTiposDeEstado;
 	
 	@EJB
 	private HistoricoSBLocal sbHistorico;
@@ -54,12 +54,12 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		return sbProcessoInterno.findAll();
 	}
 	
-	public List<TipoDeEstado> getNovosEstados() {
-		ArrayList<TipoDeEstado> novosEstados = new ArrayList<TipoDeEstado>();
-		if(getServico().getTipoDeEstado().getId() != null) {
-			novosEstados.add(sbTipoDeEstado.findById(getServico().getTipoDeEstado().getId()));
-		}
-		novosEstados.addAll(sbTipoDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTipoDeEstado().getId()));
+	public List<TiposDeEstado> getNovosEstados() {
+		ArrayList<TiposDeEstado> novosEstados = new ArrayList<TiposDeEstado>();
+//		if(getServico().getTiposDeEstado().getId() != null) {
+//			novosEstados.add(sbTiposDeEstado.findById(getServico().getTiposDeEstado().getId()));
+//		}
+//		novosEstados.addAll(sbTiposDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTiposDeEstado().getId()));
 		return novosEstados;
 	}
 	
@@ -130,9 +130,9 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	private void verificaMudancaDeEstado(Servico servico) {
 		
 		if(servico.getId() == null) {
-			TipoDeEstado tipo = new TipoDeEstado();
+			TiposDeEstado tipo = new TiposDeEstado();
 			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
-			estadoServico.setTipoDeEstado(tipo);
+			estadoServico.setTiposDeEstado(tipo);
 			estadoServico.setServico(servico);
 			servico.getEstadosServicos().add(estadoServico);
 		}
@@ -153,7 +153,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 				servico = new Servico();
 				servico.setProcessoInterno(new ProcessoInterno());
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
-				servico.setTipoDeEstado(sbTipoDeEstado.findById(TipoDeEstadoSBLocal.SRV_CRIADO));
+				servico.setEstadosServicos(new ArrayList<EstadosServico>());
 				estadoServico = new EstadosServico();
 				
 			}
