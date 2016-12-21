@@ -183,6 +183,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				
 				tipoServico = new TipoServico();
 				
+				processoInterno.setEstadosProcesso(new ArrayList<EstadosProcesso>());
 				estadoProcesso = new EstadosProcesso();
 				
 			}
