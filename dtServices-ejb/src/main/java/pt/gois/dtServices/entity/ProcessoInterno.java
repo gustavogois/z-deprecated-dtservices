@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class ProcessoInterno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private byte comChaves;
+	private boolean comChaves;
 	private String fatura;
 	private String idProcCliente;
 	private String nomeSolicitante;
@@ -54,11 +54,11 @@ public class ProcessoInterno implements Serializable {
 	}
 
 
-	public byte getComChaves() {
+	public boolean getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(byte comChaves) {
+	public void setComChaves(boolean comChaves) {
 		this.comChaves = comChaves;
 	}
 
