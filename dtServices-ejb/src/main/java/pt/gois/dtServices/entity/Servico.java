@@ -80,6 +80,7 @@ public class Servico implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name="processoId")
 	public ProcessoInterno getProcessoInterno() {
 		return this.processoInterno;
 	}
@@ -89,6 +90,7 @@ public class Servico implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name="tipoServico_SolicitanteId")
 	public TipoServicoSolicitante getTipoServicoSolicitante() {
 		return this.tipoServicoSolicitante;
 	}

@@ -28,9 +28,6 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			
 		} else {
 			
-			ProcessoInterno processoInterno = getEM().find(ProcessoInterno.class, idProcessoInterno);
-			servico.setProcessoInterno(processoInterno);
-			
 			create( servico );
 		}
 		

@@ -95,7 +95,7 @@
     <column id="COL30" populated="true" UUID="7d0675ba-9f73-4684-afb0-4d3aee8a425d" autoIncrement="false" autoIncrementSequenceName="processoInterno_nomeSolicitante_seq" defaultValue="" name="nomeSolicitante" nullable="0" physicalName="nomeSolicitante" precision="60" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
      <remarks></remarks>
     </column>
-    <column id="COL31" populated="true" UUID="539eee15-076b-4c93-bd30-d8c5073fa862" autoIncrement="false" autoIncrementSequenceName="processoInterno_updateDt_seq" defaultValue="" name="updateDt" nullable="0" physicalName="updateDt" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
+    <column id="COL31" populated="true" UUID="539eee15-076b-4c93-bd30-d8c5073fa862" autoIncrement="false" autoIncrementSequenceName="processoInterno_updateDt_seq" defaultValue="" name="updateDt" nullable="1" physicalName="updateDt" precision="0" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="93" userDefinedTypeUUID="6497d8de-0e00-40d6-a42e-e2adca83be64" >
      <remarks></remarks>
     </column>
     <column id="COL32" populated="true" UUID="19efae05-a64d-4b09-8994-e1358c9acbd3" autoIncrement="false" autoIncrementSequenceName="processoInterno_updateUser_seq" defaultValue="" name="updateUser" nullable="1" physicalName="updateUser" precision="20" referenceCount="1" scale="0" sourceDataTypeName="UserDefinedSQLType" type="12" userDefinedTypeUUID="831ac2d4-0e65-47ec-a0b7-62b7f6b8760a" >
