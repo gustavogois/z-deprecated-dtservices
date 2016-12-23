@@ -10,15 +10,52 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle"
-		value="#{bundle.menu_cadastro_tipoServico}" />
+	<ui:param name="pageTitle" value="#{bundle.menu_cadastro_tipoServico}" />
 
 	<ui:define name="body">
-		<h:form id="tipoServicoForm" prependId="false">
-			
-			<ui:include src="tipoServicoTableList.xhtml">
-				<ui:param name="list" value="#{tipoServicoListMB.list}" />
-			</ui:include>
+		<h:form id="tipoServicoForm">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+
+			<h:panelGrid columns="2">
+				<p:commandButton ajax="true" value="#{bundle.default_action_add}"
+					icon="ui-icon-document"
+					action="/pages/tipoServicos/tipoServicoEdit" />
+
+				<h:panelGrid columns="3" style="float: right">
+					<!-- Inserir os campos de pesquisa aqui !!! -->
+				</h:panelGrid>
+			</h:panelGrid>
+			<p:dataTable id="tipoServicoListId" value="#{tipoServicoListMB.list}"
+				var="tipoServico" emptyMessage="#{bundle.default_msg_notFound}"
+				paginator="true" rows="20" lazy="true"
+				currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
+				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="20, 50, 10">
+
+				<p:column headerText="#{bundle.default_field_ID}"
+					styleClass="column_id">
+					<h:outputText value="#{tipoServico.id}" />
+				</p:column>
+				<p:column headerText="#{bundle.default_field_name}">
+					<h:outputText value="#{tipoServico.nome}" />
+				</p:column>
+				<p:column headerText="#{bundle.default_field_valor}">
+					<h:outputText value="#{tipoServico.valor}" />
+				</p:column>
+				<p:column headerText="#{bundle.default_label_action}"
+					styleClass="column_action">
+					<p:button value="#{bundle.default_action_edit}"
+						icon="ui-icon-pencil" styleClass="action_edit"
+						outcome="/pages/tipoServicos/tipoServicoEdit">
+						<f:param name="id" value="#{tipoServico.id}" />
+					</p:button>
+					<p:commandButton value="#{bundle.default_action_del}xxxxx"
+						icon="ui-icon-trash" styleClass="action_del"
+						actionListener="#{tipoServicoEditMB.delete(tipoServico)}"
+						process="@all" update="tipoServicoListId" >
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
 		</h:form>
 	</ui:define>
 </ui:composition>

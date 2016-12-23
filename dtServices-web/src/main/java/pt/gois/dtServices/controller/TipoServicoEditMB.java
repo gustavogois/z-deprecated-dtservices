@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -63,8 +64,16 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 		return "tipoServicoList";
 	}
 	
-	public void delete( TipoServico tipoServico ){
-		sb.delete(tipoServico);
+	public void delete(TipoServico tipoServico){
+		try {
+			sb.delete(tipoServico);
+		} catch(EJBException e) {
+			Exception ne = (Exception) e.getCause();
+			//if(ne.getClass().getName().equals("ConstraintViolationException")){
+			System.out.println("XXXXXXXXXXXXXXXXXXXXXX" + ne.getClass().getName());
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "System Error"));
+		    //}
+		}
 	}
 	
 	public TipoServico getTipoServico() {

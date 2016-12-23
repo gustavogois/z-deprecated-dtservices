@@ -70,9 +70,9 @@ public class EntidadeDeFacturacaoEditMB extends GeneralMB implements Serializabl
 		return sbSolicitante.findAll();
 	}
 
-	
-	public void delete( EntidadeDeFacturacao entidade ){
+	public String delete( EntidadeDeFacturacao entidade ){
 		sb.delete(entidade);
+		return "/pages/solicitante/solicitanteEdit?faces-redirect=true&id=" + idSolicitante;
 	}
 	
 	public EntidadeDeFacturacao getEntidade() {

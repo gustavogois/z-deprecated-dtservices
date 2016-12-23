@@ -7,5 +7,7 @@ import pt.gois.dtServices.entity.TipoServico;
 @Local
 public interface TipoServicoSBLocal extends GeneralSBLocal<TipoServico>{
 	
+	public void delete(TipoServico tipoServico) ; 
+	
 	
 }
