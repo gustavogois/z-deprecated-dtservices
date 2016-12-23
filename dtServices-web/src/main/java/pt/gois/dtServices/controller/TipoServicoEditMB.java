@@ -12,6 +12,8 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
+import pt.gois.dtServices.business.TipoServicoSB;
+import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.entity.TipoServico;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
@@ -68,11 +70,13 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 		try {
 			sb.delete(tipoServico);
 		} catch(EJBException e) {
-			Exception ne = (Exception) e.getCause();
-			//if(ne.getClass().getName().equals("ConstraintViolationException")){
-			System.out.println("XXXXXXXXXXXXXXXXXXXXXX" + ne.getClass().getName());
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Fatal!", "System Error"));
-		    //}
+			if(sb.isCauseException(TipoServicoSB.CONSTRAINT_VIOLATION_EXCEPTION, e)) {
+				String mensagem = "Não é possível excluir este Tipo de Serviço. Existem Solicitantes associados.";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, "System Error"));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, TipoServicoSBLocal.MSG_FATAL_ERRO, 
+						"Erro desconhecido na exclusão do Tipo de Serviço"));
+			}
 		}
 	}
 	

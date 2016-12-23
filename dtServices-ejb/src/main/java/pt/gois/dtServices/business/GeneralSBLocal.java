@@ -2,14 +2,20 @@ package pt.gois.dtServices.business;
 
 import java.util.List;
 
+import javax.ejb.EJBException;
 import javax.ejb.Local;
 
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @Local
 public interface GeneralSBLocal<T> {
+	
+	public static final String MSG_FATAL_ERRO = "Erro desconhecido. Favor contactar o administrador do sistema.";
+	public static final String CONSTRAINT_VIOLATION_EXCEPTION = "org.hibernate.exception.ConstraintViolationException";
 
-    void create(Object t);
+	public boolean isCauseException(String nomeClasseException, EJBException e);
+	
+	void create(Object t);
 
     void save(Object t);
 

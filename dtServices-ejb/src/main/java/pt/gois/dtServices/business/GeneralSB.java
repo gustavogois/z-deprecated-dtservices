@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -26,6 +27,16 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 		this.entityClass = entityClass;
 	}
 
+	public boolean isCauseException(String nomeClasseException, EJBException e) {
+		Throwable cause = e.getCause();
+		while(cause != null) {
+			if(cause.getClass().getName().equals(nomeClasseException)) {
+				return true;
+			}
+			cause = cause.getCause();
+		}
+		return false;
+	}
 	protected EntityManager getEM() {
 		return em;
 	}
