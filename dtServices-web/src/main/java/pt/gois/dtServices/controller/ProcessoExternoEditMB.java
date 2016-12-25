@@ -8,8 +8,11 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import org.apache.commons.lang3.StringUtils;
 import org.primefaces.event.FileUploadEvent;
@@ -30,6 +33,8 @@ import org.primefaces.model.map.Marker;
 import pt.gois.dtServices.business.ProcessoExternoSBLocal;
 import pt.gois.dtServices.business.SolicitanteSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
+import pt.gois.dtServices.business.TipoServicoSB;
+import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.entity.Concelho;
 import pt.gois.dtServices.entity.Distrito;
 import pt.gois.dtServices.entity.EnderecoVW;
@@ -220,7 +225,17 @@ public class ProcessoExternoEditMB extends GeneralMB implements Serializable {
 	}
 
 	public void delete(ProcessoExterno processoExterno) {
-		sb.delete(processoExterno);
+		try {
+			sb.delete(processoExterno);
+		} catch(EJBException e) {
+			if(sb.isCauseException(TipoServicoSB.CONSTRAINT_VIOLATION_EXCEPTION, e)) {
+				String mensagem = "Não é possível excluir este Processo Externo. Existem Processos Internos associados.";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, "System Error"));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, ProcessoExternoSBLocal.MSG_FATAL_ERRO, 
+						"Erro desconhecido na exclusão do Solicitante"));
+			}
+		}
 	}
 	
 	public void deleteImage(Imagem imagem){

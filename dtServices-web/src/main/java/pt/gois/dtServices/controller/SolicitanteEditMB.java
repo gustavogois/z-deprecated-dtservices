@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -14,6 +15,8 @@ import javax.faces.validator.ValidatorException;
 
 import org.primefaces.event.SelectEvent;
 
+import pt.gois.dtServices.business.TipoServicoSB;
+import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EnderecoVW;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
@@ -157,7 +160,17 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	}
 
 	public String delete(Solicitante solicitante) {
-		sb.delete(solicitante);
+		try {
+			sb.delete(solicitante);
+		} catch(EJBException e) {
+			if(sb.isCauseException(TipoServicoSB.CONSTRAINT_VIOLATION_EXCEPTION, e)) {
+				String mensagem = "Não é possível excluir este Solicitante. Existem Processos Internos associados.";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, "System Error"));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, TipoServicoSBLocal.MSG_FATAL_ERRO, 
+						"Erro desconhecido na exclusão do Solicitante"));
+			}
+		}
 		return "solicitanteList";
 	}
 

@@ -3,6 +3,7 @@ package pt.gois.dtServices.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -120,7 +121,7 @@ public class Solicitante extends Endereco implements Serializable {
 		return tipoServicoSolicitante;
 	}
 	
-	@OneToMany(mappedBy="solicitante")
+	@OneToMany(mappedBy="solicitante", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<EntidadeDeFacturacao> getEntidadeDeFacturacao() {
 		return entidadeDeFacturacao;
 	}

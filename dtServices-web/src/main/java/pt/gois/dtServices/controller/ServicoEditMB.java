@@ -2,6 +2,7 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -47,6 +48,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	Integer idProcessoInterno;
 	
 	EstadosServico estadoServico;
+	String nomeEstadoAtual;
 	
 	boolean existeTipoServicoSolicitante=true;
 	
@@ -134,6 +136,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
 			estadoServico.setTiposDeEstado(tipo);
 			estadoServico.setServico(servico);
+			estadoServico.setDtInicio(new Date());
 			servico.getEstadosServicos().add(estadoServico);
 		}
 	}
@@ -148,14 +151,12 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			Integer id = getId();
 			if( id != null ){
 				servico = sb.findById( getId() );
-				estadoServico = servico.retornaEstadoAtual();
 			}else{
 				servico = new Servico();
 				servico.setProcessoInterno(sbProcessoInterno.findById( idProcessoInterno ) );
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
 				servico.setEstadosServicos(new ArrayList<EstadosServico>());
 				estadoServico = new EstadosServico();
-				
 			}
 		}
 		return servico;
@@ -205,12 +206,15 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_INTERNO);
 	}
 	public String getNomeEstadoAtual() {
-		servico = getServico();
-		if(servico.getId() != null) {
-			return sb.retornaNomeEstadoAtual(servico.getId());
-		} else {
-			return "";
+		if(nomeEstadoAtual == null || nomeEstadoAtual == "") {
+			servico = getServico();
+			if(servico.getId() != null) {
+				nomeEstadoAtual = sb.retornaNomeEstadoAtual(servico.getId());
+			} else {
+				nomeEstadoAtual = "Em criação";
+			}
 		}
+		return nomeEstadoAtual;
 	}
 
 }

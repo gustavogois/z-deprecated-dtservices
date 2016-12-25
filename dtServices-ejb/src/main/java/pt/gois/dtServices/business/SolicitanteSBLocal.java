@@ -6,4 +6,5 @@ import pt.gois.dtServices.entity.Solicitante;;
 
 @Local
 public interface SolicitanteSBLocal extends GeneralSBLocal<Solicitante>{
+	
 }

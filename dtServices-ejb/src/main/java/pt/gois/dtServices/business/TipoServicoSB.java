@@ -12,13 +12,4 @@ public class TipoServicoSB extends GeneralSB<TipoServico> implements TipoServico
 		super(TipoServico.class);
 	}
 
-	@Override
-	public void delete(TipoServico tipoServico) {
-		try {
-			super.delete(tipoServico);
-		} catch (Exception e) {
-			throw (EJBException) new EJBException(e).initCause(e);
-		}
-		
-	}
 }

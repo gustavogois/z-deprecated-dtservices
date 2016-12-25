@@ -14,6 +14,8 @@
 
 	<ui:define name="body">
 		<h:form id="solicitanteForm" prependId="false">
+			<p:growl id="growl" showDetail="true" sticky="true" />
+		
 			<ui:include src="solicitanteTableList.xhtml">
 				<ui:param name="list" value="#{solicitanteListMB.list}" />
 			</ui:include>

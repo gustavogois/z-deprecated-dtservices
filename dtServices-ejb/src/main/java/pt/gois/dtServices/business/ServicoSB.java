@@ -4,9 +4,10 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import pt.gois.dtServices.entity.EstadosServico;
-import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 
 @Stateless
@@ -17,6 +18,35 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	
 	public ServicoSB() {
 		super(Servico.class);
+	}
+
+	public Servico getServicoComEstados(Integer idServico) {
+		Servico servico = null;
+		String sql = 
+				"select servico " +
+				"from Servico servico " +
+				"inner join fetch servico.estadosServicos " +
+				"where servico.id = :idServico";
+		TypedQuery<Servico> query = getEM().createQuery(sql, Servico.class);
+		query.setParameter("idServico", idServico);
+		try { 
+			servico = query.getSingleResult();
+		} catch(NoResultException e) {}
+		return servico;
+	}
+	
+	public List<EstadosServico> getEstadosServicos(Integer idServico) {
+		Servico servico = getServicoComEstados(idServico);
+		return servico != null ? servico.getEstadosServicos() : null;
+	}
+	
+	public EstadosServico retornaEstadoAtual(Integer idServico) {
+		List<EstadosServico> estadosServicoList = getEstadosServicos(idServico);
+		if(estadosServicoList != null && estadosServicoList.size() > 0) {
+			return estadosServicoList.get(estadosServicoList.size() - 1);
+		} else {
+			return null;
+		}
 	}
 
 	@Override
@@ -35,8 +65,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 
 	@Override
 	public String retornaNomeEstadoAtual(Integer idServico) {
-		Servico servico = this.findById(idServico);
-		EstadosServico estadoAtual = servico.retornaEstadoAtual();
+		EstadosServico estadoAtual = retornaEstadoAtual(idServico);
 		if(estadoAtual != null) {
 			return sbEstadoServico.retornaNomeEstado(estadoAtual.getId());
 		} else {
@@ -44,12 +73,4 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 		}
 	}
 	
-	public EstadosServico retornaEstadoAtual(Servico servico) {
-		List<EstadosServico> estadosServicoList = servico.getEstadosServicos();
-		if(estadosServicoList != null && estadosServicoList.size() > 0) {
-			return estadosServicoList.get(estadosServicoList.size() - 1);
-		} else {
-			return null;
-		}
-	}
 }

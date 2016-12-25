@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -78,7 +79,7 @@ public class ProcessoExterno implements Serializable {
 
 
 	//bi-directional one-to-one association to Imovel
-	@OneToOne(mappedBy="processoExterno", fetch=FetchType.LAZY)
+	@OneToOne(mappedBy="processoExterno", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	public Imovel getImovel() {
 		return this.imovel;
 	}

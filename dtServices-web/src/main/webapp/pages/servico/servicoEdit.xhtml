@@ -72,10 +72,10 @@
 					disabled="#{servicoEditMB.servico.id == null}" id="stateTab">
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
-						<p:outputLabel value="#{servicoEditMB.servico.tipoDeEstado.nome}" />
+						<p:outputLabel value="#{servicoEditMB.estadoServico.tiposDeEstado.nome}" />
 
 						<p:outputLabel value="#{bundle.default_label_novo_estado}" />
-						<p:selectOneMenu value="#{servicoEditMB.servico.tipoDeEstado.id}"
+						<p:selectOneMenu value="#{servicoEditMB.estadoServico.tiposDeEstado.id}"
 							style="width:125px" required="true">
 							<f:selectItems value="#{servicoEditMB.novosEstados}"
 								var="newState" itemValue="#{newState.id}"

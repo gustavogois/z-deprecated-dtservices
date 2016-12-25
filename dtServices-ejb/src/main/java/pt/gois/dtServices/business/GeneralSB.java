@@ -60,8 +60,13 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 	}
 
 	public void delete(Object entity) {
-		getEM().remove(getEM().merge(entity));
-		getSbLog().writeLog( entity.getClass().getName() + " %s removida", new Object[] { entity });
+		try {
+			getEM().remove(getEM().merge(entity));
+			getSbLog().writeLog( entity.getClass().getName() + " %s removida", new Object[] { entity });
+		} catch (Exception e) {
+			throw (EJBException) new EJBException(e).initCause(e);
+		}
+
 	}
 
 	public T findById(Object id) {

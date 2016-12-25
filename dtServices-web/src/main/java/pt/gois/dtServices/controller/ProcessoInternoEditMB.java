@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
@@ -16,6 +17,7 @@ import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
 import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.ServicoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
+import pt.gois.dtServices.business.TipoServicoSB;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.EntidadeDeFacturacao;
@@ -164,8 +166,17 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	
 	public void delete( ProcessoInterno processo ){
-		sb.delete(processo);
-		
+		try {
+			sb.delete(processo);
+		} catch(EJBException e) {
+			if(sb.isCauseException(TipoServicoSB.CONSTRAINT_VIOLATION_EXCEPTION, e)) {
+				String mensagem = "Não é possível excluir este Processo Interno. Existem Serviços associados.";
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, mensagem, "System Error"));
+			} else {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, TipoServicoSBLocal.MSG_FATAL_ERRO, 
+						"Erro desconhecido na exclusão do Solicitante"));
+			}
+		}
 	}
 	
 	public ProcessoInterno getProcessoInterno() {

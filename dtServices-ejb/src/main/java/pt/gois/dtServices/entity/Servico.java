@@ -129,7 +129,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico")
+	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<EstadosServico> getEstadosServicos() {
 		return this.estadosServicos;
 	}
@@ -152,14 +152,6 @@ public class Servico implements Serializable {
 		return estadosservico;
 	}
 	
-	public EstadosServico retornaEstadoAtual() {
-		List<EstadosServico> estadosServicoList = this.getEstadosServicos();
-		if(estadosServicoList != null && estadosServicoList.size() > 0) {
-			return estadosServicoList.get(estadosServicoList.size() - 1);
-		} else {
-			return null;
-		}
-	}
 
 
 }
