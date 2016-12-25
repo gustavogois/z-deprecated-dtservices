@@ -133,7 +133,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		
 		if(servico.getId() == null) {
 			TiposDeEstado tipo = new TiposDeEstado();
-			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
+			tipo.setId(TipoDeEstadoSBLocal.SRV_CRIADO);
 			estadoServico.setTiposDeEstado(tipo);
 			estadoServico.setServico(servico);
 			estadoServico.setDtInicio(new Date());
@@ -220,4 +220,8 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		return sb.retornaNomeEstadoAtual(idServico);
 	}
 
+	public boolean canStart(Servico servico) {
+		EstadosServico estadoAtual = sb.retornaEstadoAtual(servico.getId());
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_CRIADO) ? true : false;
+	}
 }

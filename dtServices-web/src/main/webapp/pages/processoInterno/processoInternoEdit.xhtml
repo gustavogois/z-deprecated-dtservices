@@ -137,10 +137,10 @@
 							</p:commandButton>
 							<p:button value="Iniciar Serviço"
 								icon="ui-icon-pencil" 
-								outcome="/pages/servico/servicoEdit" rendered="true">
+								outcome="/pages/servico/servicoEdit" rendered="#{servicoEditMB.canStart(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idProcessoInterno"
-									value="#{processoInternoEditMB.processoInterno.id}" />
+								<f:param name="idProcessoInterno" value="#{processoInternoEditMB.processoInterno.id}" /> 
+								<f:param name="action" value="CREATE" />
 							</p:button>
 						</p:column>
 					</p:dataTable>
