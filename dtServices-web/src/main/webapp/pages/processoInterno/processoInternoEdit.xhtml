@@ -112,6 +112,11 @@
 								value="#{servico.tipoServicoSolicitante.tipoServico.nome}" />
 						</p:column>
 
+						<p:column headerText="Estado">
+							<h:outputText
+								value="#{servicoEditMB.getNomeEstadoAtualById(servico.id)}" />
+						</p:column>
+						
 						<p:column headerText="#{bundle.default_field_valor}">
 							<h:outputText value="#{servico.valor}" />
 						</p:column>
@@ -130,6 +135,13 @@
 								action="#{servicoEditMB.delete(servico)}" update="servicoList"
 								ajax="true">
 							</p:commandButton>
+							<p:button value="Iniciar Serviço"
+								icon="ui-icon-pencil" 
+								outcome="/pages/servico/servicoEdit" rendered="true">
+								<f:param name="id" value="#{servico.id}" />
+								<f:param name="idProcessoInterno"
+									value="#{processoInternoEditMB.processoInterno.id}" />
+							</p:button>
 						</p:column>
 					</p:dataTable>
 				</p:tab>

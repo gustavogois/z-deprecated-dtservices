@@ -216,5 +216,8 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		}
 		return nomeEstadoAtual;
 	}
+	public String getNomeEstadoAtualById(Integer idServico) {
+		return sb.retornaNomeEstadoAtual(idServico);
+	}
 
 }
