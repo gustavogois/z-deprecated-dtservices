@@ -16,11 +16,9 @@ import javax.faces.validator.ValidatorException;
 import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.EstadosServico;
-import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
-import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -49,20 +47,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	EstadosServico estadoServico;
 	String nomeEstadoAtual;
+	String acao;
+	Date data;
 	
 	boolean existeTipoServicoSolicitante=true;
 	
 	public List<ProcessoInterno> getProcessosInterno() {
 		return sbProcessoInterno.findAll();
-	}
-	
-	public List<TiposDeEstado> getNovosEstados() {
-		ArrayList<TiposDeEstado> novosEstados = new ArrayList<TiposDeEstado>();
-//		if(getServico().getTiposDeEstado().getId() != null) {
-//			novosEstados.add(sbTiposDeEstado.findById(getServico().getTiposDeEstado().getId()));
-//		}
-//		novosEstados.addAll(sbTiposDeEstado.findNextStates(TipoDeEstadoSBLocal.SERVICOS, getServico().getTiposDeEstado().getId()));
-		return novosEstados;
 	}
 	
 	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
@@ -119,28 +110,42 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	public String save(){
-		Servico servico = getServico();
-		idProcessoInterno = servico.getProcessoInterno().getId();
+		servico = getServico();
 		
-		verificaMudancaDeEstado(servico);
-		
-		sb.salvar( servico, idProcessoInterno );
+		if(isStarting()) {
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO, data);
+		} else if(isSuspending()) {
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_SUSPENSO, data);
+		} else if(isFinalizing()) {
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_FINALIZADO, data);
+		} else if(!isEditing()){
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_CRIADO, data);
+		} else {
+			sb.save(servico);
+		}
 		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
 	
-	private void verificaMudancaDeEstado(Servico servico) {
-		
-		if(servico.getId() == null) {
-			TiposDeEstado tipo = new TiposDeEstado();
-			tipo.setId(TipoDeEstadoSBLocal.SRV_CRIADO);
-			estadoServico.setTiposDeEstado(tipo);
-			estadoServico.setServico(servico);
-			estadoServico.setDtInicio(new Date());
-			servico.getEstadosServicos().add(estadoServico);
-		}
-	}
+	public boolean isCreating() {
+		return (acao == null || acao == "");
+	} 
 
+	public boolean isStarting() {
+		return (acao != null && acao.equals("START"));
+	} 
+	
+	public boolean isSuspending() {
+		return (acao != null && acao.equals("SUSPEND"));
+	}
+	
+	public boolean isFinalizing() {
+		return (acao != null && acao.equals("END"));
+	}
+	
+	public boolean isEditing() {
+		return (acao != null && acao.equals("EDIT"));
+	}
 	
 	public void delete( Servico Servico ){
 		sb.delete(Servico);
@@ -156,13 +161,16 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 				servico.setProcessoInterno(sbProcessoInterno.findById( idProcessoInterno ) );
 				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
 				servico.setEstadosServicos(new ArrayList<EstadosServico>());
-				estadoServico = new EstadosServico();
+				data = new Date();
 			}
 		}
 		return servico;
 	}
 	
 	public EstadosServico getEstadoServico() {
+		if(estadoServico == null) {
+			estadoServico = new EstadosServico();
+		}
 		return estadoServico;
 	}
 
@@ -201,27 +209,47 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		this.existeTipoServicoSolicitante = existeTipoServicoSolicitante;
 	}
 	
-	public List<Historico> getHistorico() {
-		
-		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_INTERNO);
+	public String getNomeEstadoAtual(Servico servico) {
+		return sb.retornaNomeEstadoAtual(servico);
 	}
+
 	public String getNomeEstadoAtual() {
 		if(nomeEstadoAtual == null || nomeEstadoAtual == "") {
 			servico = getServico();
 			if(servico.getId() != null) {
-				nomeEstadoAtual = sb.retornaNomeEstadoAtual(servico.getId());
+				nomeEstadoAtual = sb.retornaNomeEstadoAtual(servico);
 			} else {
 				nomeEstadoAtual = "Em criação";
 			}
 		}
 		return nomeEstadoAtual;
 	}
-	public String getNomeEstadoAtualById(Integer idServico) {
-		return sb.retornaNomeEstadoAtual(idServico);
+	
+	public boolean canStart(Servico servico) {
+		return sb.canStart(servico);
+	}
+	
+	public boolean canSuspend(Servico servico) {
+		return sb.canSuspend(servico);
+	}
+	
+	public boolean canFinalize(Servico servico) {
+		return sb.canFinalize(servico);
+	}
+	
+	public String getAcao() {
+		return acao;
 	}
 
-	public boolean canStart(Servico servico) {
-		EstadosServico estadoAtual = sb.retornaEstadoAtual(servico.getId());
-		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_CRIADO) ? true : false;
+	public void setAcao(String acao) {
+		this.acao = acao;
 	}
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
 }

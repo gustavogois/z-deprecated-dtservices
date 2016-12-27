@@ -1,14 +1,14 @@
 package pt.gois.dtServices.business;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 
 import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.TiposDeEstado;
 
 @Stateless
 public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
@@ -16,41 +16,28 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	@EJB
 	EstadoServicoSBLocal sbEstadoServico;
 	
+	@EJB
+	TipoServicoSolicitanteSBLocal sbTSS;
+	
 	public ServicoSB() {
 		super(Servico.class);
 	}
 
-	public Servico getServicoComEstados(Integer idServico) {
-		Servico servico = null;
-		String sql = 
-				"select servico " +
-				"from Servico servico " +
-				"inner join fetch servico.estadosServicos " +
-				"where servico.id = :idServico";
-		TypedQuery<Servico> query = getEM().createQuery(sql, Servico.class);
-		query.setParameter("idServico", idServico);
-		try { 
-			servico = query.getSingleResult();
-		} catch(NoResultException e) {}
-		return servico;
-	}
-	
-	public List<EstadosServico> getEstadosServicos(Integer idServico) {
-		Servico servico = getServicoComEstados(idServico);
-		return servico != null ? servico.getEstadosServicos() : null;
-	}
-	
-	public EstadosServico retornaEstadoAtual(Integer idServico) {
-		List<EstadosServico> estadosServicoList = getEstadosServicos(idServico);
-		if(estadosServicoList != null && estadosServicoList.size() > 0) {
-			return estadosServicoList.get(estadosServicoList.size() - 1);
-		} else {
-			return null;
+	public EstadosServico retornaEstadoAtual(Servico servico) {
+		EstadosServico estadoServico = null;
+		if(servico != null) {
+			List<EstadosServico> estadosServicoList = servico.getEstadosServicos();
+			if(estadosServicoList != null && estadosServicoList.size() > 0) {
+				estadoServico = estadosServicoList.get(estadosServicoList.size() - 1);
+			} 
 		}
+		return estadoServico;
 	}
 
 	@Override
-	public void salvar(Servico servico, Integer idProcessoInterno) {
+	public void salvar(Servico servico, Integer tipoEstado, Date data) {
+		
+		criarEstadoServico(servico, tipoEstado, data);
 		
 		if( servico.getId() != null ){
 			
@@ -64,13 +51,50 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	}
 
 	@Override
-	public String retornaNomeEstadoAtual(Integer idServico) {
-		EstadosServico estadoAtual = retornaEstadoAtual(idServico);
+	public String retornaNomeEstadoAtual(Servico servico) {
+		EstadosServico estadoAtual = retornaEstadoAtual(servico);
 		if(estadoAtual != null) {
 			return sbEstadoServico.retornaNomeEstado(estadoAtual.getId());
 		} else {
 			return "";
 		}
+	}
+
+	@Override
+	public boolean canStart(Servico servico) {
+		EstadosServico estadoAtual = retornaEstadoAtual(servico);
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_CRIADO) || 
+				estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_SUSPENSO) ? true : false;
+	}
+
+	@Override
+	public boolean canSuspend(Servico servico) {
+		EstadosServico estadoAtual = retornaEstadoAtual(servico);
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO) ? true : false;
+	}
+
+	@Override
+	public boolean canFinalize(Servico servico) {
+		EstadosServico estadoAtual = retornaEstadoAtual(servico);
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO) ||
+				estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_SUSPENSO)? true : false;
+	}
+
+	private void criarEstadoServico(Servico servico, Integer tipoEstado, Date data) {
+
+		TiposDeEstado tipo = new TiposDeEstado();
+		tipo.setId(tipoEstado);
+		
+		EstadosServico estadosServico = new EstadosServico();
+		estadosServico.setTiposDeEstado(tipo);
+		
+		EstadosServico estadoAtual = retornaEstadoAtual(servico);
+		if(estadoAtual != null) {
+			estadoAtual.setDtFim(data);
+		}
+		estadosServico.setDtInicio(data);
+		
+		servico.addEstadosservico(estadosServico);
 	}
 	
 }

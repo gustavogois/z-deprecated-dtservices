@@ -89,7 +89,7 @@ public class Servico implements Serializable {
 		this.processoInterno = processoInterno;
 	}
 
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="tipoServico_SolicitanteId")
 	public TipoServicoSolicitante getTipoServicoSolicitante() {
 		return this.tipoServicoSolicitante;
@@ -129,7 +129,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="servico", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<EstadosServico> getEstadosServicos() {
 		return this.estadosServicos;
 	}
