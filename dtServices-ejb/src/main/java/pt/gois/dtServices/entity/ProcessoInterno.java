@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -148,7 +150,7 @@ public class ProcessoInterno implements Serializable {
 
 
 	//bi-directional many-to-one association to EstadosProcesso
-	@OneToMany(mappedBy="processoInterno")
+	@OneToMany(mappedBy="processoInterno", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<EstadosProcesso> getEstadosProcesso() {
 		return this.estadosProcesso;
 	}

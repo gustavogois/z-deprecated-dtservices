@@ -149,12 +149,31 @@
 								<f:param name="id" value="#{processoInterno.id}" />
 								<f:param name="idProcessoExterno"
 									value="#{processoExternoEditMB.processoExterno.id}" />
+								<f:param name="acao" value="EDIT" />
 							</p:button>
 							<p:commandButton value="#{bundle.default_action_del}"
 								icon="ui-icon-trash" styleClass="action_del"
 								action="#{processoInternoEditMB.delete(processoInterno)}"
 								update="processoInternoList" ajax="true">
 							</p:commandButton>
+							<p:button value="Faturar"
+								icon="ui-icon-pencil" 
+								outcome="/pages/processoInterno/processoInternoEdit" 
+									rendered="#{processoInternoEditMB.canFaturar(processoInterno)}">
+								<f:param name="id" value="#{processoInterno.id}" />
+								<f:param name="idProcessoExterno"
+									value="#{processoExternoEditMB.processoExterno.id}" />
+								<f:param name="acao" value="FATURAR" />
+							</p:button>
+							<p:button value="Pagar"
+								icon="ui-icon-pencil" 
+								outcome="/pages/processoInterno/processoInternoEdit" 
+									rendered="#{processoInternoEditMB.canPagar(processoInterno)}">
+								<f:param name="id" value="#{processoInterno.id}" />
+								<f:param name="idProcessoExterno"
+									value="#{processoExternoEditMB.processoExterno.id}" />
+								<f:param name="acao" value="PAGAR" />
+							</p:button>
 						</p:column>
 					</p:dataTable>
 				</p:tab>

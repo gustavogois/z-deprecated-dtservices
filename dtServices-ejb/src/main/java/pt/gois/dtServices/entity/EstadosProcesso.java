@@ -66,7 +66,7 @@ public class EstadosProcesso implements Serializable {
 
 
 	//bi-directional many-to-one association to ProcessoInterno
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="processoId")
 	public ProcessoInterno getProcessoInterno() {
 		return this.processoInterno;
@@ -78,7 +78,7 @@ public class EstadosProcesso implements Serializable {
 
 
 	//bi-directional many-to-one association to TiposDeEstado
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="tipoId")
 	public TiposDeEstado getTiposDeEstado() {
 		return this.tiposDeEstado;

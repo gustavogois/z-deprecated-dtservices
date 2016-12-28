@@ -2,6 +2,7 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -26,8 +27,8 @@ import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
-import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.entity.TipoServico;
+import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -61,13 +62,25 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	TipoServico tipoServico;
 	
 	Integer idProcessoExterno;
-	
 	EstadosProcesso estadoProcesso;
+
+	String nomeEstadoAtual;
+	String acao;
+	Date data;
+
+	
+	public boolean canFaturar(ProcessoInterno processo) {
+		return sb.canFaturar(processo);
+	}
+	
+	public boolean canPagar(ProcessoInterno processo) {
+		return sb.canPagar(processo);
+	}
 	
 	public String getNomeEstadoAtual() {
 		processoInterno = getProcessoInterno();
 		if(processoInterno.getId() != null) {
-			return sb.retornaNomeEstadoAtual(processoInterno.getId());
+			return sb.retornaNomeEstadoAtual(processoInterno);
 		} else {
 			return "";
 		}
@@ -139,24 +152,18 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	public String save(){
 		
 		ProcessoInterno processoInterno = getProcessoInterno();
-		Integer idProjetoExterno = processoInterno.getProcessoExterno().getId();
 		
-		verificaMudancaDeEstado(processoInterno);
-		
-		sb.salvar(getProcessoInterno());
-		
-		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProjetoExterno;
-	}
-
-	private void verificaMudancaDeEstado(ProcessoInterno processoInterno) {
-		
-		if(processoInterno.getId() == null) {
-			TiposDeEstado tipo = new TiposDeEstado();
-			tipo.setId(TipoDeEstadoSBLocal.PI_CRIADO);
-			estadoProcesso.setTiposDeEstado(tipo);
-			estadoProcesso.setProcessoInterno(processoInterno);
-			processoInterno.getEstadosProcesso().add(estadoProcesso);
+		if(isFaturando()) {
+			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data);
+		} else if(isPagando()) {
+			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_PAGO, data);
+		} else if(!isEditing()){
+			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_CRIADO, data); 
+		} else { 
+			sb.save(getProcessoInterno());
 		}
+		
+		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProcessoExterno;
 	}
 
 	public List<Historico> getHistorico() {
@@ -184,7 +191,6 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			Integer id = getId();
 			if( id != null ){
 				processoInterno = sb.findById( getId() );
-				estadoProcesso = sb.retornaEstadoAtual(processoInterno);
 			}else{
 				processoInterno = new ProcessoInterno();
 				processoInterno.setProcessoExterno( sbProcessoExterno.findById( getIdProcessoExterno() ) );
@@ -195,11 +201,27 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				tipoServico = new TipoServico();
 				
 				processoInterno.setEstadosProcesso(new ArrayList<EstadosProcesso>());
-				estadoProcesso = new EstadosProcesso();
+				data = new Date();
 				
 			}
 		}
 		return processoInterno;
+	}
+	
+	public boolean isCreating() {
+		return (acao == null || acao == "");
+	} 
+
+	public boolean isEditing() {
+		return (acao != null && acao.equals("EDIT"));
+	}
+
+	public boolean isFaturando() {
+		return (acao != null && acao.equals("FATURAR"));
+	}
+
+	public boolean isPagando() {
+		return (acao != null && acao.equals("PAGAR"));
 	}
 	
 	public void setProcessoInterno(ProcessoInterno processo) {
@@ -282,10 +304,33 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	public EstadosProcesso getEstadoProcesso() {
+		if(estadoProcesso == null) {
+			estadoProcesso = new EstadosProcesso();
+		}
 		return estadoProcesso;
 	}
 
 	public void setEstadoProcesso(EstadosProcesso estadoProcesso) {
 		this.estadoProcesso = estadoProcesso;
 	}
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+
+	public Date getData() {
+		return data;
+	}
+
+	public void setData(Date data) {
+		this.data = data;
+	}
+
+	public void setNomeEstadoAtual(String nomeEstadoAtual) {
+		this.nomeEstadoAtual = nomeEstadoAtual;
+	}
+
 }

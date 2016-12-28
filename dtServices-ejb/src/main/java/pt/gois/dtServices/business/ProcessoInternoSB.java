@@ -1,14 +1,17 @@
 package pt.gois.dtServices.business;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 import pt.gois.dtServices.entity.EstadosProcesso;
-import pt.gois.dtServices.entity.ProcessoExterno;
+import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.ProcessoInterno;
+import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.Solicitante;
+import pt.gois.dtServices.entity.TiposDeEstado;
 
 @Stateless
 public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements ProcessoInternoSBLocal{
@@ -22,6 +25,9 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	@EJB
 	EstadoProcessoSBLocal sbEstadoProcesso;
 	
+	@EJB
+	ServicoSBLocal sbServico;
+	
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
 	}
@@ -32,11 +38,17 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		return pi;
 	}
 
+	private String geraIdProcCliente(ProcessoInterno processoInterno) {
+		Solicitante solicitante = sbSolicitante.
+			findById(processoInterno.getProcessoExterno().getSolicitante().getId());
+		solicitante.setChaveSolicitanteProcesso(solicitante.getChaveSolicitanteProcesso()+1);
+		return solicitante.getSigla() + solicitante.getChaveSolicitanteProcesso();
+	}
+	
 	@Override
-	public void salvar(ProcessoInterno processoInterno) {
+	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Date data) {
 		
-		ProcessoExterno processoExterno = getEM().find(ProcessoExterno.class, processoInterno.getProcessoExterno().getId());
-		processoInterno.setProcessoExterno(processoExterno);
+		criarEstadoProcesso(processoInterno, tipoEstado, data);
 		
 		if( processoInterno.getId() != null ){
 			
@@ -45,35 +57,157 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		} else {
 			
 			processoInterno.setIdProcCliente(geraIdProcCliente(processoInterno));
-			
 			create( processoInterno );
 		}
-		
-	}
-
-	private String geraIdProcCliente(ProcessoInterno processoInterno) {
-		Solicitante solicitante = sbSolicitante.
-			findById(processoInterno.getProcessoExterno().getSolicitante().getId());
-		solicitante.setChaveSolicitanteProcesso(solicitante.getChaveSolicitanteProcesso()+1);
-		return solicitante.getSigla() + solicitante.getChaveSolicitanteProcesso();
 	}
 	
-	public String retornaNomeEstadoAtual(Integer idProcesso) {
-		ProcessoInterno processoInterno = this.findById(idProcesso);
+	private void criarEstadoProcesso(ProcessoInterno processoInterno, Integer tipoEstado, Date data) {
+
+		TiposDeEstado tipo = new TiposDeEstado();
+		tipo.setId(tipoEstado);
+		
+		EstadosProcesso estadosProcesso = new EstadosProcesso();
+		estadosProcesso.setTiposDeEstado(tipo);
+		
 		EstadosProcesso estadoAtual = retornaEstadoAtual(processoInterno);
+		if(estadoAtual != null) {
+			estadoAtual.setDtFim(data);
+		}
+		estadosProcesso.setDtInicio(data);
+		
+		processoInterno.addEstadosprocesso(estadosProcesso);
+	}
+
+	@Override
+	public String retornaNomeEstadoAtual(ProcessoInterno processo) {
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
 		if(estadoAtual != null) {
 			return sbEstadoProcesso.retornaNomeEstado(estadoAtual.getId());
 		} else {
 			return "";
 		}
 	}
-	
-	public EstadosProcesso retornaEstadoAtual(ProcessoInterno processoInterno) {
-		List<EstadosProcesso> estadosProcessoList = processoInterno.getEstadosProcesso();
-		if(estadosProcessoList != null && estadosProcessoList.size() > 0) {
-			return estadosProcessoList.get(estadosProcessoList.size() - 1);
-		} else {
-			return null;
+
+	@Override
+	public EstadosProcesso retornaEstadoAtual(ProcessoInterno processo) {
+		EstadosProcesso estadoProcesso = null;
+		if(processo != null) {
+			List<EstadosProcesso> estadosProcessoList = processo.getEstadosProcesso();
+			if(estadosProcessoList != null && estadosProcessoList.size() > 0) {
+				estadoProcesso = estadosProcessoList.get(estadosProcessoList.size() - 1);
+			} 
 		}
+		return estadoProcesso;
 	}
+
+	@Override
+	public boolean canStart(ProcessoInterno processo) {
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+		
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_CRIADO)
+				&&
+				existService(processo, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO);
+	}
+
+	private boolean existService(ProcessoInterno processo, Integer tipo) {
+		
+		// Fazer consulta ao banco para já retornar o resultado
+		// Dúvida: neste momento já está no banco?
+		
+		for (Servico servico : processo.getServicos()) {
+			EstadosServico estadoAtual = sbServico.retornaEstadoAtual(servico);
+			if(estadoAtual.getTiposDeEstado().getId().equals(tipo)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canSuspend(ProcessoInterno processo) {
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+		
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO)
+				&&
+				allServicesIn(processo, TipoDeEstadoSBLocal.SRV_SUSPENSO);
+	}
+
+	@Override
+	public boolean canFinalize(ProcessoInterno processo) {
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+		
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO) 
+				&&
+				allServicesIn(processo, TipoDeEstadoSBLocal.SRV_FINALIZADO);
+	}
+	
+	private boolean allServicesIn(ProcessoInterno processo, Integer tipo) {
+		for (Servico servico : processo.getServicos()) {
+			EstadosServico estadoAtual = sbServico.retornaEstadoAtual(servico);
+			if(!estadoAtual.getTiposDeEstado().getId().equals(tipo)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean canFaturar(ProcessoInterno processo) {
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO); 
+	}
+	
+	@Override
+	public boolean canPagar(ProcessoInterno processo) {
+		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO); 
+	}
+
+	@Override
+	public void atualizaEstadoProcesso(ProcessoInterno processo) {
+		if(canStart(processo)) {
+			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_EM_EXECUCAO, getDataInicioExecucao(processo));
+			save(processo);
+			return;
+		} else if(canFinalize(processo)) {
+			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, getDataFimExecucao(processo));
+			save(processo);
+			return;
+		} else if(canSuspend(processo)) {
+			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, new Date());
+			save(processo);
+			return;
+		}
+		
+	}
+	
+	private Date getDataFimExecucao(ProcessoInterno processo) {
+		Date maiorData = new Date(0L);
+		List<Servico> servicos = processo.getServicos();
+		for (Servico servico : servicos) {
+			List<EstadosServico> estadosServicos = servico.getEstadosServicos();
+			for (EstadosServico estadosServico : estadosServicos) {
+				if(estadosServico.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO)) {
+					if(estadosServico.getDtFim().after(maiorData)) {
+						maiorData = estadosServico.getDtFim();
+					}
+				}
+			}
+		}
+		return maiorData;
+	}
+
+	private Date getDataInicioExecucao(ProcessoInterno processo) {
+		List<Servico> servicos = processo.getServicos();
+		for (Servico servico : servicos) {
+			List<EstadosServico> estadosServicos = servico.getEstadosServicos();
+			for (EstadosServico estadosServico : estadosServicos) {
+				if(estadosServico.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO)) {
+					return estadosServico.getDtInicio();
+				}
+			}
+		}
+		return null;
+	}
+
 }

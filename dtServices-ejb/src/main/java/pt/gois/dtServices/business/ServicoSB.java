@@ -19,6 +19,10 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	@EJB
 	TipoServicoSolicitanteSBLocal sbTSS;
 	
+	@EJB
+	ProcessoInternoSBLocal sbPI;
+
+	
 	public ServicoSB() {
 		super(Servico.class);
 	}
@@ -47,6 +51,8 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			
 			create( servico );
 		}
+		
+		sbPI.atualizaEstadoProcesso(servico.getProcessoInterno());
 		
 	}
 
@@ -77,7 +83,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	public boolean canFinalize(Servico servico) {
 		EstadosServico estadoAtual = retornaEstadoAtual(servico);
 		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO) ||
-				estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_SUSPENSO)? true : false;
+				estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_SUSPENSO);
 	}
 
 	private void criarEstadoServico(Servico servico, Integer tipoEstado, Date data) {
