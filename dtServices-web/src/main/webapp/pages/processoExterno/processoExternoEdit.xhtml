@@ -140,6 +140,10 @@
 							<h:outputText
 								value="#{processoInterno.idProcCliente}" />
 						</p:column>
+						<p:column headerText="Estado">
+							<h:outputText
+								value="#{processoInternoEditMB.getNomeEstadoAtual(processoInterno)}" />
+						</p:column>
 
 						<p:column headerText="#{bundle.default_label_action}"
 							styleClass="column_action">

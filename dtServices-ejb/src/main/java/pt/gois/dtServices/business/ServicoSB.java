@@ -52,7 +52,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			create( servico );
 		}
 		
-		sbPI.atualizaEstadoProcesso(servico.getProcessoInterno());
+		sbPI.atualizaEstadoProcesso(sbPI.buscaProcessoComServicos(servico.getProcessoInterno().getId()));
 		
 	}
 

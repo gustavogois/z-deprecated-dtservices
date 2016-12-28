@@ -77,27 +77,22 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return sb.canPagar(processo);
 	}
 	
-	public String getNomeEstadoAtual() {
-		processoInterno = getProcessoInterno();
-		if(processoInterno.getId() != null) {
-			return sb.retornaNomeEstadoAtual(processoInterno);
-		} else {
-			return "";
-		}
-	}
-	
-	public List<TiposDeEstado> getNovosEstados() {
-		ArrayList<TiposDeEstado> novosEstados = new ArrayList<TiposDeEstado>();
-		
-		EstadosProcesso estadoAtual = sb.retornaEstadoAtual(getProcessoInterno());
-		if(estadoAtual.getId() != null) {
-			novosEstados.add(sbTipoEstado.findById(estadoAtual.getId()));
-		}
-		novosEstados.addAll(sbTipoEstado.findNextStates(TipoDeEstadoSBLocal.PROCESSO_INTERNO, 
-				estadoAtual.getId()));
-		return novosEstados;
+	public String getNomeEstadoAtual(ProcessoInterno processo) {
+		return sb.retornaNomeEstadoAtual(processo);
 	}
 
+	public String getNomeEstadoAtual() {
+		if(nomeEstadoAtual == null || nomeEstadoAtual == "") {
+			processoInterno = getProcessoInterno();
+			if(processoInterno.getId() != null) {
+				nomeEstadoAtual = sb.retornaNomeEstadoAtual(processoInterno);
+			} else {
+				nomeEstadoAtual = "Em criação";
+			}
+		}
+		return nomeEstadoAtual;
+	}
+	
 	public List<TiposDeEstado> getEstadosServico() throws Exception {
 
 		List<TiposDeEstado> estados = sbTipoEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);

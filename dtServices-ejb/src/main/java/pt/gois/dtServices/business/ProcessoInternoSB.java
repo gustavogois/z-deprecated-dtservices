@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.NoResultException;
+import javax.persistence.TypedQuery;
 
 import pt.gois.dtServices.entity.EstadosProcesso;
 import pt.gois.dtServices.entity.EstadosServico;
@@ -111,9 +113,6 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 
 	private boolean existService(ProcessoInterno processo, Integer tipo) {
 		
-		// Fazer consulta ao banco para já retornar o resultado
-		// Dúvida: neste momento já está no banco?
-		
 		for (Servico servico : processo.getServicos()) {
 			EstadosServico estadoAtual = sbServico.retornaEstadoAtual(servico);
 			if(estadoAtual.getTiposDeEstado().getId().equals(tipo)) {
@@ -208,6 +207,18 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public ProcessoInterno buscaProcessoComServicos(Integer idProcesso) {
+		ProcessoInterno processo = null;
+		String sql = "select pi from ProcessoInterno pi inner join fetch pi.estadosProcesso where pi.id = :id";
+		TypedQuery<ProcessoInterno> query = getEM().createQuery(sql, ProcessoInterno.class);
+		query.setParameter("id", idProcesso);
+		try {
+			processo = query.getSingleResult();
+		} catch(NoResultException e) {}
+		return processo;
 	}
 
 }

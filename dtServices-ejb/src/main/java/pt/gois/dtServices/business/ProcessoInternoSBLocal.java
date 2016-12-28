@@ -18,4 +18,5 @@ public interface ProcessoInternoSBLocal extends GeneralSBLocal<ProcessoInterno>{
 	public boolean canFaturar(ProcessoInterno processoInterno);
 	public boolean canPagar(ProcessoInterno processo);
 	public void atualizaEstadoProcesso(ProcessoInterno processo);
+	public ProcessoInterno buscaProcessoComServicos(Integer idProcesso);
 }

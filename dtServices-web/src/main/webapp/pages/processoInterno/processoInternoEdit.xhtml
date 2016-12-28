@@ -33,22 +33,24 @@
 			</div>
 			<p:tabView dynamic="true" cache="true">
 
-				<p:tab title="Confirmação" id="confirmTab" 
-					rendered="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
+				<p:tab title="#{bundle.tab_main}" id="mainTab">
+
 					<p:outputLabel
-						value="Confirma o início da execução do Serviço abaixo?"
-						rendered="#{servicoEditMB.isStarting()}" />
-
-				</p:tab>
-
-				<p:tab title="#{bundle.tab_main}" id="mainTab" 
-					rendered="#{processoInternoEditMB.isEditing() or processoInternoEditMB.isCreating()}" >
-
-					<p:outputLabel	value="Confirma o faturamento dos serviços deste processo?"
+						value="Confirma o faturamento dos serviços deste processo?"
 						rendered="#{processoInternoEditMB.isFaturando()}" />
-					<p:outputLabel	value="Confirma o pagamento dos serviços deste processo?"
+
+					<p:outputLabel
+						value="Confirma o pagamento dos serviços deste processo?"
 						rendered="#{processoInternoEditMB.isPagando()}" />
-						
+
+					<p:outputLabel value="Data"
+						rendered="#{!processoInternoEditMB.isCreating() and !processoInternoEditMB.isEditing()}" />
+					<p:calendar id="dataId" value="#{processoInternoEditMB.data}" pages="1"
+						mask="true" maxlength="10" pattern="dd/MM/yyyy"
+						showButtonPanel="true" navigator="true"
+						rendered="#{!processoInternoEditMB.isCreating() and	!processoInternoEditMB.isEditing()}">
+					</p:calendar>
+					
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
 						<p:outputLabel value="#{processoInternoEditMB.processoInterno.id}" />
@@ -57,28 +59,28 @@
 							value="#{processoInternoEditMB.processoInterno.idProcCliente}" />
 						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
 						<p:outputLabel value="#{processoInternoEditMB.nomeEstadoAtual}" />
-						
+
 						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}" />
 						<p:inputText size="60"
 							label="#{bundle.processo_interno_nome_solicitante}"
 							value="#{processoInternoEditMB.processoInterno.nomeSolicitante}"
 							rendered="#{processoInternoEditMB.isEditing() or processoInternoEditMB.isCreating() }" />
-						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}" 
+						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}"
 							rendered="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }" />
-							
+
 						<p:outputLabel value="#{bundle.processo_interno_field_com_chaves}" />
 						<p:selectBooleanButton
 							value="#{processoInternoEditMB.processoInterno.comChaves}"
 							onLabel="#{bundle.default_label_yes}"
-							offLabel="#{bundle.default_label_no}" style="width:60px" 
-							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }"/>
+							offLabel="#{bundle.default_label_no}" style="width:60px"
+							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }" />
 
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
 						<p:inputTextarea
 							value="#{processoInternoEditMB.processoInterno.observacoes}"
 							rows="5" cols="30" counter="display" maxlength="120"
-							counterTemplate="{0} caracteres restantes" autoResize="false" 
-							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }"/>
+							counterTemplate="{0} caracteres restantes" autoResize="false"
+							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }" />
 						<h:outputLabel />
 						<h:outputText id="display" />
 					</h:panelGrid>
@@ -89,7 +91,7 @@
 					<h:panelGrid columns="2">
 
 						<p:button value="#{bundle.default_action_add}"
-							icon="ui-icon-document" outcome="/pages/servico/servicoEdit" 
+							icon="ui-icon-document" outcome="/pages/servico/servicoEdit"
 							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
 							<f:param name="idProcessoInterno"
 								value="#{processoInternoEditMB.processoInterno.id}" />
