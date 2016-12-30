@@ -149,7 +149,8 @@
 							styleClass="column_action">
 							<p:button value="#{bundle.default_action_edit}"
 								icon="ui-icon-pencil" styleClass="action_edit"
-								outcome="/pages/processoInterno/processoInternoEdit">
+								outcome="/pages/processoInterno/processoInternoEdit"
+								rendered="#{processoInternoEditMB.canFaturar(processoInterno)}">
 								<f:param name="id" value="#{processoInterno.id}" />
 								<f:param name="idProcessoExterno"
 									value="#{processoExternoEditMB.processoExterno.id}" />
