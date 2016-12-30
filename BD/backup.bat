@@ -1,0 +1,1 @@
+mysqldump -u root dt_services > backup_dados-%date:~0,2%-%date:~3,2%-%date:~6,10%-%time:~0,2%-%time:~3,2%.sql

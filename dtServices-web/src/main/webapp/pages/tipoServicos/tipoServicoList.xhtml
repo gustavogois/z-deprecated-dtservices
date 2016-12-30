@@ -32,27 +32,28 @@
 				paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="20, 50, 10">
 
-				<p:column headerText="#{bundle.default_field_ID}"
-					styleClass="column_id">
+				<p:column headerText="#{bundle.default_field_ID}" 
+					styleClass="column_id" >
 					<h:outputText value="#{tipoServico.id}" />
 				</p:column>
-				<p:column headerText="#{bundle.default_field_name}">
+				<p:column headerText="#{bundle.default_field_name}" >
 					<h:outputText value="#{tipoServico.nome}" />
 				</p:column>
-				<p:column headerText="#{bundle.default_field_valor}">
+				<p:column headerText="#{bundle.default_field_valor}" >
 					<h:outputText value="#{tipoServico.valor}" />
 				</p:column>
 				<p:column headerText="#{bundle.default_label_action}"
-					styleClass="column_action">
-					<p:button value="#{bundle.default_action_edit}"
+					styleClass="column_action" >
+					<p:button 
 						icon="ui-icon-pencil" styleClass="action_edit"
-						outcome="/pages/tipoServicos/tipoServicoEdit">
+						outcome="/pages/tipoServicos/tipoServicoEdit"
+						title="Editar">
 						<f:param name="id" value="#{tipoServico.id}" />
 					</p:button>
-					<p:commandButton value="#{bundle.default_action_del}"
+					<p:commandButton 
 						icon="ui-icon-trash" styleClass="action_del"
 						actionListener="#{tipoServicoEditMB.delete(tipoServico)}"
-						process="@all" update="tipoServicoListId" >
+						process="@all" update="tipoServicoListId" title="Excluir">
 					</p:commandButton>
 				</p:column>
 			</p:dataTable>

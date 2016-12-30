@@ -39,10 +39,12 @@ SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `dt_services`.`concelho` (
   `DD` VARCHAR(120) NOT NULL,
   `CC` VARCHAR(120) NOT NULL,
-  `nome` VARCHAR(120) NOT NULL,
-  INDEX `concelho_idx` (`CC` ASC))
+  `nome` VARCHAR(120) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `concelho_idx` ON `dt_services`.`concelho` (`CC` ASC);
 
 SHOW WARNINGS;
 
@@ -54,11 +56,15 @@ DROP TABLE IF EXISTS `dt_services`.`distrito` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `dt_services`.`distrito` (
   `DD` VARCHAR(120) NOT NULL,
-  `nome` VARCHAR(120) NOT NULL,
-  UNIQUE INDEX `distrito_idx` (`nome` ASC),
-  INDEX `distrito_idx1` (`DD` ASC))
+  `nome` VARCHAR(120) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `distrito_idx` ON `dt_services`.`distrito` (`nome` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `distrito_idx1` ON `dt_services`.`distrito` (`DD` ASC);
 
 SHOW WARNINGS;
 
@@ -105,7 +111,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`entidadedefacturacao` (
   `updateUser` VARCHAR(20) NULL DEFAULT NULL,
   `nif` VARCHAR(9) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `solicitante_entidadedefacturacao_fk` (`solicitanteId` ASC),
   CONSTRAINT `solicitante_entidadedefacturacao_fk`
     FOREIGN KEY (`solicitanteId`)
     REFERENCES `dt_services`.`solicitante` (`id`)
@@ -115,6 +120,9 @@ ENGINE = InnoDB
 AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8
 COMMENT = 'Entidade responsável pelo faturamento dos serviços.';
+
+SHOW WARNINGS;
+CREATE INDEX `solicitante_entidadedefacturacao_fk` ON `dt_services`.`entidadedefacturacao` (`solicitanteId` ASC);
 
 SHOW WARNINGS;
 
@@ -131,7 +139,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`processoexterno` (
   `updateDt` DATETIME NULL DEFAULT NULL,
   `updateUser` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `solicitante_processocliente_fk` (`solicitanteId` ASC),
   CONSTRAINT `solicitante_processocliente_fk`
     FOREIGN KEY (`solicitanteId`)
     REFERENCES `dt_services`.`solicitante` (`id`)
@@ -140,6 +147,9 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`processoexterno` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `solicitante_processocliente_fk` ON `dt_services`.`processoexterno` (`solicitanteId` ASC);
 
 SHOW WARNINGS;
 
@@ -163,7 +173,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`processointerno` (
   `updateDt` DATETIME NULL DEFAULT NULL,
   `updateUser` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `processoexterno_processointerno_fk` (`processoExternoId` ASC),
   CONSTRAINT `processoexterno_processointerno_fk`
     FOREIGN KEY (`processoExternoId`)
     REFERENCES `dt_services`.`processoexterno` (`id`)
@@ -172,6 +181,9 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`processointerno` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `processoexterno_processointerno_fk` ON `dt_services`.`processointerno` (`processoExternoId` ASC);
 
 SHOW WARNINGS;
 
@@ -202,7 +214,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`tipos_de_estado` (
   `grupo_estadoId` INT(11) NOT NULL,
   `nome` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `grupo_tipos_estado_tipos_de_estado_fk` (`grupo_estadoId` ASC),
   CONSTRAINT `grupo_tipos_estado_tipos_de_estado_fk`
     FOREIGN KEY (`grupo_estadoId`)
     REFERENCES `dt_services`.`grupo_tipos_estado` (`id`)
@@ -211,6 +222,9 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`tipos_de_estado` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 15
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `grupo_tipos_estado_tipos_de_estado_fk` ON `dt_services`.`tipos_de_estado` (`grupo_estadoId` ASC);
 
 SHOW WARNINGS;
 
@@ -228,8 +242,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`estadosprocesso` (
   `dtFim` DATE NULL DEFAULT NULL,
   `observacoes` VARCHAR(300) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tipos_de_estado_estados_fk` (`tipoId` ASC),
-  INDEX `processointerno_estados_fk` (`processoId` ASC),
   CONSTRAINT `processointerno_estados_fk`
     FOREIGN KEY (`processoId`)
     REFERENCES `dt_services`.`processointerno` (`id`)
@@ -243,6 +255,12 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`estadosprocesso` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `tipos_de_estado_estados_fk` ON `dt_services`.`estadosprocesso` (`tipoId` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `processointerno_estados_fk` ON `dt_services`.`estadosprocesso` (`processoId` ASC);
 
 SHOW WARNINGS;
 
@@ -280,8 +298,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`tiposervico_solicitante` (
   `updateDt` DATETIME NULL DEFAULT NULL,
   `updateUser` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tiposervico_tiposervico_solicitante_fk` (`tipoServicoId` ASC),
-  INDEX `solicitante_tiposervico_solicitante_fk` (`solicitanteId` ASC),
   CONSTRAINT `solicitante_tiposervico_solicitante_fk`
     FOREIGN KEY (`solicitanteId`)
     REFERENCES `dt_services`.`solicitante` (`id`)
@@ -295,6 +311,12 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`tiposervico_solicitante` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `tiposervico_tiposervico_solicitante_fk` ON `dt_services`.`tiposervico_solicitante` (`tipoServicoId` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `solicitante_tiposervico_solicitante_fk` ON `dt_services`.`tiposervico_solicitante` (`solicitanteId` ASC);
 
 SHOW WARNINGS;
 
@@ -316,8 +338,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`servico` (
   `updateDt` DATETIME NULL DEFAULT NULL,
   `updateUser` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tiposervico_solicitante_servico_fk` (`tipoServico_SolicitanteId` ASC),
-  INDEX `processo_servico_fk` (`processoId` ASC),
   CONSTRAINT `processo_servico_fk`
     FOREIGN KEY (`processoId`)
     REFERENCES `dt_services`.`processointerno` (`id`)
@@ -331,6 +351,12 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`servico` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 22
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `tiposervico_solicitante_servico_fk` ON `dt_services`.`servico` (`tipoServico_SolicitanteId` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `processo_servico_fk` ON `dt_services`.`servico` (`processoId` ASC);
 
 SHOW WARNINGS;
 
@@ -348,8 +374,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`estadosservico` (
   `dtFim` DATE NULL DEFAULT NULL,
   `observacoes` VARCHAR(300) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  INDEX `tipos_de_estado_estadosservico_fk` (`tipoId` ASC),
-  INDEX `servico_estadosservico_fk` (`servicoId` ASC),
   CONSTRAINT `servico_estadosservico_fk`
     FOREIGN KEY (`servicoId`)
     REFERENCES `dt_services`.`servico` (`id`)
@@ -363,6 +387,12 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`estadosservico` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 29
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `tipos_de_estado_estadosservico_fk` ON `dt_services`.`estadosservico` (`tipoId` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `servico_estadosservico_fk` ON `dt_services`.`estadosservico` (`servicoId` ASC);
 
 SHOW WARNINGS;
 
@@ -449,7 +479,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`imagem_imovel` (
   `imovelId` INT(11) NOT NULL,
   `imagemId` INT(11) NOT NULL,
   PRIMARY KEY (`imovelId`, `imagemId`),
-  INDEX `imagem_imagem_imovel_fk` (`imagemId` ASC),
   CONSTRAINT `imagem_imagem_imovel_fk`
     FOREIGN KEY (`imagemId`)
     REFERENCES `dt_services`.`imagem` (`id`)
@@ -464,6 +493,9 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 SHOW WARNINGS;
+CREATE INDEX `imagem_imagem_imovel_fk` ON `dt_services`.`imagem_imovel` (`imagemId` ASC);
+
+SHOW WARNINGS;
 
 -- -----------------------------------------------------
 -- Table `dt_services`.`imagem_servico`
@@ -475,7 +507,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`imagem_servico` (
   `servicoId` INT(11) NOT NULL,
   `imagemId` INT(11) NOT NULL,
   PRIMARY KEY (`servicoId`, `imagemId`),
-  INDEX `imagem_imagem_servico_fk` (`imagemId` ASC),
   CONSTRAINT `imagem_imagem_servico_fk`
     FOREIGN KEY (`imagemId`)
     REFERENCES `dt_services`.`imagem` (`id`)
@@ -488,6 +519,9 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`imagem_servico` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `imagem_imagem_servico_fk` ON `dt_services`.`imagem_servico` (`imagemId` ASC);
 
 SHOW WARNINGS;
 
@@ -514,11 +548,15 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`localidade` (
   `cliente` VARCHAR(120) NOT NULL,
   `codigoPostal4` VARCHAR(4) NOT NULL,
   `codigoPostal3` VARCHAR(3) NOT NULL,
-  `codigoPostalDesignacao` VARCHAR(120) NOT NULL,
-  INDEX `localidade_idx` (`codigoPostal4` ASC, `codigoPostal3` ASC),
-  INDEX `localidade_idx1` (`Localidade` ASC))
+  `codigoPostalDesignacao` VARCHAR(120) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `localidade_idx` ON `dt_services`.`localidade` (`codigoPostal4` ASC, `codigoPostal3` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `localidade_idx1` ON `dt_services`.`localidade` (`Localidade` ASC);
 
 SHOW WARNINGS;
 
@@ -539,7 +577,7 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`log` (
   `updateUser` INT(11) NULL DEFAULT '0',
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 1189
+AUTO_INCREMENT = 1197
 DEFAULT CHARACTER SET = utf8;
 
 SHOW WARNINGS;
@@ -578,8 +616,6 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`users` (
   `updateDt` DATETIME NULL DEFAULT NULL,
   `updateUser` VARCHAR(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `user_idx` (`username` ASC),
-  INDEX `tipodeuser_users_fk` (`tipoDeUserId` ASC),
   CONSTRAINT `tipodeuser_users_fk`
     FOREIGN KEY (`tipoDeUserId`)
     REFERENCES `dt_services`.`tipodeuser` (`id`)
@@ -588,6 +624,12 @@ CREATE TABLE IF NOT EXISTS `dt_services`.`users` (
 ENGINE = InnoDB
 AUTO_INCREMENT = 2
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `user_idx` ON `dt_services`.`users` (`username` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `tipodeuser_users_fk` ON `dt_services`.`users` (`tipoDeUserId` ASC);
 
 SHOW WARNINGS;
 USE `dt_services_cp` ;
@@ -609,12 +651,18 @@ CREATE TABLE IF NOT EXISTS `dt_services_cp`.`addressvw` (
   `codigoPostal1` VARCHAR(7) CHARACTER SET 'latin1' NULL DEFAULT NULL,
   `completo` LONGTEXT CHARACTER SET 'latin1' NULL DEFAULT NULL,
   `updateDt` DATE NULL DEFAULT NULL,
-  `updateUser` VARCHAR(4) CHARACTER SET 'cp850' NOT NULL DEFAULT '',
-  INDEX `AddressVW_idx` (`id` ASC),
-  FULLTEXT INDEX `addressvw_compx` (`completo` ASC),
-  FULLTEXT INDEX `addressvw_cpx` (`codigoPostal1` ASC))
+  `updateUser` VARCHAR(4) CHARACTER SET 'cp850' NOT NULL DEFAULT '')
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `AddressVW_idx` ON `dt_services_cp`.`addressvw` (`id` ASC);
+
+SHOW WARNINGS;
+CREATE FULLTEXT INDEX `addressvw_compx` ON `dt_services_cp`.`addressvw` (`completo` ASC);
+
+SHOW WARNINGS;
+CREATE FULLTEXT INDEX `addressvw_cpx` ON `dt_services_cp`.`addressvw` (`codigoPostal1` ASC);
 
 SHOW WARNINGS;
 
@@ -627,11 +675,15 @@ SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `dt_services_cp`.`concelho` (
   `DD` VARCHAR(120) NOT NULL,
   `CC` VARCHAR(120) NOT NULL,
-  `nome` VARCHAR(120) NOT NULL,
-  INDEX `concelho_idx` (`CC` ASC),
-  INDEX `concelho_idx1` (`DD` ASC))
+  `nome` VARCHAR(120) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE INDEX `concelho_idx` ON `dt_services_cp`.`concelho` (`CC` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `concelho_idx1` ON `dt_services_cp`.`concelho` (`DD` ASC);
 
 SHOW WARNINGS;
 
@@ -644,10 +696,12 @@ SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `dt_services_cp`.`concelhovw` (
   `dd` VARCHAR(120) CHARACTER SET 'latin1' NOT NULL,
   `cc` VARCHAR(241) CHARACTER SET 'latin1' NULL DEFAULT NULL,
-  `nome` VARCHAR(120) CHARACTER SET 'latin1' NOT NULL,
-  INDEX `concelhoVW_idx` (`cc` ASC))
+  `nome` VARCHAR(120) CHARACTER SET 'latin1' NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
+
+SHOW WARNINGS;
+CREATE INDEX `concelhoVW_idx` ON `dt_services_cp`.`concelhovw` (`cc` ASC);
 
 SHOW WARNINGS;
 
@@ -659,11 +713,15 @@ DROP TABLE IF EXISTS `dt_services_cp`.`distrito` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `dt_services_cp`.`distrito` (
   `DD` VARCHAR(120) NOT NULL,
-  `nome` VARCHAR(120) NOT NULL,
-  UNIQUE INDEX `distrito_idx` (`nome` ASC),
-  INDEX `distrito_idx1` (`DD` ASC))
+  `nome` VARCHAR(120) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `distrito_idx` ON `dt_services_cp`.`distrito` (`nome` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `distrito_idx1` ON `dt_services_cp`.`distrito` (`DD` ASC);
 
 SHOW WARNINGS;
 
@@ -690,11 +748,15 @@ CREATE TABLE IF NOT EXISTS `dt_services_cp`.`localidade` (
   `cliente` VARCHAR(120) NOT NULL,
   `codigoPostal4` VARCHAR(4) NOT NULL,
   `codigoPostal3` VARCHAR(3) NOT NULL,
-  `codigoPostalDesignacao` VARCHAR(120) NOT NULL,
-  INDEX `localidade_idx` (`codigoPostal4` ASC, `codigoPostal3` ASC),
-  INDEX `localidade_idx1` (`Localidade` ASC))
+  `codigoPostalDesignacao` VARCHAR(120) NOT NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE INDEX `localidade_idx` ON `dt_services_cp`.`localidade` (`codigoPostal4` ASC, `codigoPostal3` ASC);
+
+SHOW WARNINGS;
+CREATE INDEX `localidade_idx1` ON `dt_services_cp`.`localidade` (`Localidade` ASC);
 
 SHOW WARNINGS;
 

@@ -1,5 +1,5 @@
 /* Lembrar de executar o comando abaixo para a carga de endereços 
-mysql -u root -p dt_services < BD\cp\codigo_postal.sql
+mysql -u root -p dt_services_cp < BD\cp\codigo_postal.sql
 */
 
 insert into grupo_tipos_estado (id, nome) values (1, "Processo externo");

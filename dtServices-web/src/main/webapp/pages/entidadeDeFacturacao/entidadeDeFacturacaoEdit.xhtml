@@ -11,22 +11,24 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <ui:composition template="/pages/templates/template.xhtml">
-	<ui:param name="pageTitle"
-		value="#{bundle.menu_cadastro_entidadeDeFacturacao}" />
 
 	<ui:define name="body">
 		<f:metadata>
 			<f:viewParam name="id" value="#{entidadeDeFacturacaoEditMB.id}" />
-			<f:viewParam name="idSolicitante" value="#{entidadeDeFacturacaoEditMB.idSolicitante}" />
+			<f:viewParam name="idSolicitante"
+				value="#{entidadeDeFacturacaoEditMB.idSolicitante}" />
 		</f:metadata>
 		<h:form id="entidadeDeFacturacaoNew">
 			<div id="rightbox" class="fixright">
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
 						action="#{entidadeDeFacturacaoEditMB.save}" icon="ui-icon-disk" />
-					<p:commandButton ajax="false"
-						value="#{bundle.default_action_cancel}" immediate="true"
-						action="entidadeDeFacturacaoList" />
+					<p:button value="Cancelar"
+						
+						outcome="/pages/solicitante/solicitanteEdit">
+						<f:param name="id"
+							value="#{entidadeDeFacturacaoEditMB.idSolicitante}" />
+					</p:button>
 				</h:panelGrid>
 			</div>
 			<p:tabView dynamic="true" cache="true" prependId="false">
@@ -51,6 +53,8 @@
 		</h:form>
 
 	</ui:define>
+	<ui:param name="pageTitle"
+		value="Solicitante: #{entidadeDeFacturacaoEditMB.idSolicitante}" />
 
 </ui:composition>
 
