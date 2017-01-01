@@ -163,6 +163,11 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 
 	@Override
+	public boolean canEdit(ProcessoInterno processo) {
+		return true; 
+	}
+	
+	@Override
 	public void atualizaEstadoProcesso(ProcessoInterno processo) {
 		if(canStart(processo)) {
 			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_EM_EXECUCAO, getDataInicioExecucao(processo));
@@ -220,5 +225,6 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		} catch(NoResultException e) {}
 		return processo;
 	}
+
 
 }

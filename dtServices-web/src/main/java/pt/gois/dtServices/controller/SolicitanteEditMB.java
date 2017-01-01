@@ -52,7 +52,11 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 
 	PaginatedDataModel<TipoServicoSolicitante> tipoServicoSolicitantesPDM;
 	
-	
+	public void addAllServices() {
+		Solicitante solicitante = getSolicitante();
+		sbTiposServicoSolicitante.addAllServices(solicitante.getId());
+	}
+
 	
 	public PaginatedDataModel<EntidadeDeFacturacao> getEntidadesBySolicitante() throws Exception {
 		

@@ -12,6 +12,7 @@ public interface ProcessoInternoSBLocal extends GeneralSBLocal<ProcessoInterno>{
 	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Date data);
 	public String retornaNomeEstadoAtual(ProcessoInterno processoInterno);
 	public EstadosProcesso retornaEstadoAtual(ProcessoInterno processoInterno);
+	public boolean canEdit(ProcessoInterno processoInterno);
 	public boolean canStart(ProcessoInterno processoInterno);
 	public boolean canSuspend(ProcessoInterno processoInterno);
 	public boolean canFinalize(ProcessoInterno processoInterno);

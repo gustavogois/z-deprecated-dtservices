@@ -36,11 +36,11 @@
 		<h:outputText value="#{entidadeDeFacturacao.solicitante.nome}" />
 	</p:column>
 	<p:column headerText="#{bundle.default_label_action}" styleClass="column_action">
-		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"
+		<p:button title="#{bundle.default_action_edit}" icon="ui-icon-pencil"
 			styleClass="action_edit" outcome="/pages/entidadeDeFacturacao/entidadeDeFacturacaoEdit">
 			<f:param name="id" value="#{entidadeDeFacturacao.id}" />
 		</p:button>
-		<p:commandButton value="#{bundle.default_action_del}"
+		<p:commandButton title="#{bundle.default_action_del}"
 			icon="ui-icon-trash" styleClass="action_del"
 			action="#{entidadeDeFacturacaoEditMB.delete(entidadeDeFacturacao)}" update="entidadeDeFacturacaoList"
 			ajax="true">

@@ -69,6 +69,10 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	Date data;
 
 	
+	public boolean canEdit(ProcessoInterno processo) {
+		return sb.canEdit(processo);
+	}
+	
 	public boolean canFaturar(ProcessoInterno processo) {
 		return sb.canFaturar(processo);
 	}
