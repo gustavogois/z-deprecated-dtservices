@@ -33,21 +33,25 @@
 		<h:outputText value="#{processoExterno.id}" />
 	</p:column>
 	
+	<p:column headerText="Nome">
+		<h:outputText value="#{processoExterno.imovel.inquilino}" />
+	</p:column>
+	
 	<p:column headerText="#{bundle.processo_externo_field_solicitante}">
-		<h:outputText value="#{processoExterno.solicitante.nome}" />
+		<h:outputText value="#{processoExterno.solicitante.sigla} - #{processoExterno.solicitante.nome}" />
 	</p:column>
 	
 	<p:column headerText="#{bundle.default_label_action}"
 		styleClass="column_action">
-		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"
+		<p:button icon="ui-icon-pencil"
 			styleClass="action_edit"
-			outcome="/pages/processoExterno/processoExternoEdit">
+			outcome="/pages/processoExterno/processoExternoEdit" title="Editar">
 			<f:param name="id" value="#{processoExterno.id}" />
 		</p:button>
-		<p:commandButton value="#{bundle.default_action_del}"
+		<p:commandButton 
 			icon="ui-icon-trash" styleClass="action_del"
 			action="#{processoExternoEditMB.delete(processoExterno)}"
-			update="processoExternoList" ajax="true">
+			update="processoExternoList" ajax="true" title="Excluir">
 		</p:commandButton>
 	</p:column>
 </p:dataTable>

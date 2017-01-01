@@ -23,9 +23,12 @@
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
 						action="#{tipoServicoSolicitanteEditMB.save}" icon="ui-icon-disk" />
-					<p:commandButton ajax="false"
-						value="#{bundle.default_action_cancel}" immediate="true"
-						action="/pages/solicitante/solicitanteEdit" />
+					<p:button value="Cancelar"
+						
+						outcome="/pages/solicitante/solicitanteEdit">
+						<f:param name="id"
+							value="#{tipoServicoSolicitanteEditMB.tipoServicoSolicitante.solicitante.id}" />
+					</p:button>
 				</h:panelGrid>
 			</div>
 			<p:tabView dynamic="true" cache="true" prependId="false">
