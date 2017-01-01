@@ -36,23 +36,16 @@
 			<p:tabView dynamic="true" cache="true">
 
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
+					<h1>
+						<p:outputLabel
+							value="Confirma o faturamento dos serviços deste processo?"
+							rendered="#{processoInternoEditMB.isFaturando()}" />
 
-					<p:outputLabel
-						value="Confirma o faturamento dos serviços deste processo?"
-						rendered="#{processoInternoEditMB.isFaturando()}" />
+						<p:outputLabel
+							value="Confirma o pagamento dos serviços deste processo?"
+							rendered="#{processoInternoEditMB.isPagando()}" />
 
-					<p:outputLabel
-						value="Confirma o pagamento dos serviços deste processo?"
-						rendered="#{processoInternoEditMB.isPagando()}" />
-
-					<p:outputLabel value="Data"
-						rendered="#{!processoInternoEditMB.isCreating() and !processoInternoEditMB.isEditing()}" />
-					<p:calendar id="dataId" value="#{processoInternoEditMB.data}" pages="1"
-						mask="true" maxlength="10" pattern="dd/MM/yyyy"
-						showButtonPanel="true" navigator="true"
-						rendered="#{!processoInternoEditMB.isCreating() and	!processoInternoEditMB.isEditing()}">
-					</p:calendar>
-					
+					</h1>
 					<h:panelGrid columns="2">
 						<p:outputLabel value="#{bundle.default_field_ID}" />
 						<p:outputLabel value="#{processoInternoEditMB.processoInterno.id}" />
@@ -86,6 +79,16 @@
 						<h:outputLabel />
 						<h:outputText id="display" />
 					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel value="Data"
+							rendered="#{!processoInternoEditMB.isCreating() and !processoInternoEditMB.isEditing()}" />
+						<p:calendar id="dataId" value="#{processoInternoEditMB.data}"
+							pages="1" mask="true" maxlength="10" pattern="dd/MM/yyyy"
+							showButtonPanel="true" navigator="true"
+							rendered="#{!processoInternoEditMB.isCreating() and	!processoInternoEditMB.isEditing()}">
+						</p:calendar>
+					</h:panelGrid>
+
 				</p:tab>
 				<p:tab title="#{bundle.tab_servicos}"
 					disabled="#{processoInternoEditMB.processoInterno.id == null}"
@@ -135,7 +138,7 @@
 
 						<p:column headerText="#{bundle.default_label_action}"
 							styleClass="column_action">
-							<p:button value="#{bundle.default_action_edit}"
+							<p:button title="#{bundle.default_action_edit}"
 								icon="ui-icon-pencil" styleClass="action_edit"
 								outcome="/pages/servico/servicoEdit"
 								disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
@@ -144,13 +147,13 @@
 									value="#{processoInternoEditMB.processoInterno.id}" />
 								<f:param name="acao" value="EDIT" />
 							</p:button>
-							<p:commandButton value="#{bundle.default_action_del}"
+							<p:commandButton title="#{bundle.default_action_del}"
 								icon="ui-icon-trash" styleClass="action_del"
 								actionListener="#{servicoEditMB.delete(servico)}" process="@all"
 								update="servicoListId"
 								disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
 							</p:commandButton>
-							<p:button value="Iniciar" icon="ui-icon-pencil"
+							<p:button title="Iniciar" icon="ui-icon-arrowthick-1-e"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canStart(servico)}">
 								<f:param name="id" value="#{servico.id}" />
@@ -158,7 +161,7 @@
 									value="#{processoInternoEditMB.processoInterno.id}" />
 								<f:param name="acao" value="START" />
 							</p:button>
-							<p:button value="Suspender" icon="ui-icon-pencil"
+							<p:button title="Suspender" icon="ui-icon-arrowreturnthick-1-n"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canSuspend(servico)}">
 								<f:param name="id" value="#{servico.id}" />
@@ -166,7 +169,7 @@
 									value="#{processoInternoEditMB.processoInterno.id}" />
 								<f:param name="acao" value="SUSPEND" />
 							</p:button>
-							<p:button value="Finalizar" icon="ui-icon-pencil"
+							<p:button title="Finalizar" icon="ui-icon-check"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canFinalize(servico)}">
 								<f:param name="id" value="#{servico.id}" />
