@@ -28,6 +28,7 @@ import javax.persistence.TemporalType;
 public class ProcessoExterno implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
+	private String codCliente;
 	private String descricao;
 	private Date updateDt;
 	private String updateUser;
@@ -100,6 +101,13 @@ public class ProcessoExterno implements Serializable {
 		this.solicitante = solicitante;
 	}
 
+	public String getCodCliente() {
+		return this.codCliente;
+	}
+
+	public void setCodCliente(String codCliente) {
+		this.codCliente = codCliente;
+	}
 
 	//bi-directional many-to-one association to ProcessoInterno
 	@OneToMany(mappedBy="processoExterno")

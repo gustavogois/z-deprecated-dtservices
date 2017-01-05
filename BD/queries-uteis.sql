@@ -17,4 +17,12 @@ inner join estadosservico ests on serv.id = ests.servicoId
 inner join tipos_de_estado te2 on te2.id = ests.tipoId
 where pi.idProcCliente like 'WTS6';
 
-select * from servico
+select * from tiposervico_solicitante;
+SELECT pe.id as 'peid', sol.nome as 'solicitante', 
+	pi.id as 'piid', pi.idProcCliente as 'sigla'
+FROM processoexterno pe
+	inner join solicitante sol ON 
+	 pe.solicitanteId = sol.id
+	 inner join processointerno pi on pi.processoExternoId = pe.id
+order by peid, solicitante
+-- group by pe.id, sol.nome
