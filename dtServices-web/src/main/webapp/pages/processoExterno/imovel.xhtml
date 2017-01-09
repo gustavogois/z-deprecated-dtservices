@@ -14,12 +14,9 @@
 	toggleSpeed="500">
 
 	<h:panelGrid columns="2" id="endereco">
-		<p:outputLabel value="#{bundle.default_field_name}" />
-		<p:inputText size="60" label="#{bundle.imovel_field_inquilino}"
-			value="#{processoExternoEditMB.processoExterno.imovel.inquilino}"
-			required="true"
-			validatorMessage="#{bundle.imovel_msg_invalidInquilino}">
-		</p:inputText>
+		<p:outputLabel value="Tipo do Imóvel" />
+		<p:inputText size="60" label="Tipo do imóvel"
+			value="#{processoExternoEditMB.processoExterno.imovel.tipoImovel}"/>
 		<p:outputLabel value="#{bundle.imovel_field_crp}" />
 		<p:inputText size="60" label="#{bundle.imovel_field_crp}"
 			value="#{processoExternoEditMB.processoExterno.imovel.crp}"

@@ -18,17 +18,18 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQuery(name = "Imovel.findAll", query = "SELECT i FROM Imovel i")
 public class Imovel extends Endereco implements Serializable {
+	
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String crp;
-	private String inquilino;
+	private String tipoImovel;
 	
 	String latitude;
 	String longitude;
 	
 	private List<Imagem> imagems;
 	private ProcessoExterno processoExterno;
-
+	
 	public Imovel() {
 	}
 
@@ -52,12 +53,12 @@ public class Imovel extends Endereco implements Serializable {
 		this.crp = crp;
 	}
 
-	public String getInquilino() {
-		return this.inquilino;
+	public String getTipoImovel() {
+		return this.tipoImovel;
 	}
 
-	public void setInquilino(String inquilino) {
-		this.inquilino = inquilino;
+	public void setTipoImovel(String tipoImovel) {
+		this.tipoImovel = tipoImovel;
 	}
 
 	// bi-directional many-to-many association to Imagem
