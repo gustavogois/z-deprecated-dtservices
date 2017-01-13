@@ -1,9 +1,18 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-
 import java.util.Date;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -20,6 +29,7 @@ public class EstadosServico implements Serializable {
 	private String observacoes;
 	private Servico servico;
 	private TiposDeEstado tiposDeEstado;
+	private User user;
 
 	public EstadosServico() {
 	}
@@ -86,6 +96,17 @@ public class EstadosServico implements Serializable {
 
 	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
+	}
+
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="userId")
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

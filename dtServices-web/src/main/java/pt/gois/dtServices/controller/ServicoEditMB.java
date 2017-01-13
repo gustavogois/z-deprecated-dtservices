@@ -8,6 +8,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -40,6 +41,9 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	@EJB
 	private HistoricoSBLocal sbHistorico;
+	
+	@ManagedProperty(value="#{userSessionMB}")
+	private UserSessionMB userSessionMB;
 
 	
 	Servico servico;
@@ -113,14 +117,15 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		servico = getServico();
 		
 		if(isStarting()) {
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO, data);
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO, data, userSessionMB.getUser());
 		} else if(isSuspending()) {
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_SUSPENSO, data);
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_SUSPENSO, data, userSessionMB.getUser());
 		} else if(isFinalizing()) {
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_FINALIZADO, data);
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_FINALIZADO, data, userSessionMB.getUser());
 		} else if(!isEditing()){
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_CRIADO, data);
+			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_CRIADO, data, userSessionMB.getUser());
 		} else {
+			// Sem alteração de estado
 			sb.save(servico);
 		}
 		
@@ -250,6 +255,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 
 	public void setData(Date data) {
 		this.data = data;
+	}
+	public UserSessionMB getUserSessionMB() {
+		return userSessionMB;
+	}
+
+	public void setUserSessionMB(UserSessionMB userSessionMB) {
+		this.userSessionMB = userSessionMB;
 	}
 
 }

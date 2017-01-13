@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TiposDeEstado;
+import pt.gois.dtServices.entity.User;
 
 @Stateless
 public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
@@ -21,7 +22,6 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	
 	@EJB
 	ProcessoInternoSBLocal sbPI;
-
 	
 	public ServicoSB() {
 		super(Servico.class);
@@ -39,9 +39,9 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	}
 
 	@Override
-	public void salvar(Servico servico, Integer tipoEstado, Date data) {
+	public void salvar(Servico servico, Integer tipoEstado, Date data, User user) {
 		
-		criarEstadoServico(servico, tipoEstado, data);
+		criarEstadoServico(servico, tipoEstado, data, user);
 		
 		if( servico.getId() != null ){
 			
@@ -86,13 +86,14 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 				estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_SUSPENSO);
 	}
 
-	private void criarEstadoServico(Servico servico, Integer tipoEstado, Date data) {
+	private void criarEstadoServico(Servico servico, Integer tipoEstado, Date data, User user) {
 
 		TiposDeEstado tipo = new TiposDeEstado();
 		tipo.setId(tipoEstado);
 		
 		EstadosServico estadosServico = new EstadosServico();
 		estadosServico.setTiposDeEstado(tipo);
+		estadosServico.setUser(user);
 		
 		EstadosServico estadoAtual = retornaEstadoAtual(servico);
 		if(estadoAtual != null) {

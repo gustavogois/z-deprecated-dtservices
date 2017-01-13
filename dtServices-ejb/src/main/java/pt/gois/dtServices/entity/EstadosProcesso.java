@@ -20,6 +20,7 @@ public class EstadosProcesso implements Serializable {
 	private String observacoes;
 	private ProcessoInterno processoInterno;
 	private TiposDeEstado tiposDeEstado;
+	private User user;
 
 	public EstadosProcesso() {
 	}
@@ -86,6 +87,16 @@ public class EstadosProcesso implements Serializable {
 
 	public void setTiposDeEstado(TiposDeEstado tiposDeEstado) {
 		this.tiposDeEstado = tiposDeEstado;
+	}
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="userId")
+	public User getUser() {
+		return user;
+	}
+
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
