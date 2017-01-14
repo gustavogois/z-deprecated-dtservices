@@ -9,6 +9,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -56,6 +57,10 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	@EJB
 	private HistoricoSBLocal sbHistorico;
+	
+	@ManagedProperty(value="#{userSessionMB}")
+	private UserSessionMB userSessionMB;
+
 	
 	ProcessoInterno processoInterno;
 	Servico servico;
@@ -153,11 +158,11 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		ProcessoInterno processoInterno = getProcessoInterno();
 		
 		if(isFaturando()) {
-			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data);
+			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, userSessionMB.getUser());
 		} else if(isPagando()) {
-			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_PAGO, data);
+			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_PAGO, data, userSessionMB.getUser());
 		} else if(!isEditing()){
-			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_CRIADO, data); 
+			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_CRIADO, data, userSessionMB.getUser()); 
 		} else { 
 			sb.save(getProcessoInterno());
 		}

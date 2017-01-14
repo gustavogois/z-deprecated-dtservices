@@ -3,7 +3,6 @@ package pt.gois.dtServices.entity;
 import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
@@ -58,13 +57,12 @@ public class ServicoView implements Serializable {
 
 
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name="`max(est.dtInicio)`")
-	public Date getMax_est_dtInicio_() {
+	public Date getDtEstado() {
 		return this.dtEstado;
 	}
 
-	public void setMax_est_dtInicio_(Date max_est_dtInicio_) {
-		this.dtEstado = max_est_dtInicio_;
+	public void setDtEstado(Date dtEstado) {
+		this.dtEstado = dtEstado;
 	}
 
 

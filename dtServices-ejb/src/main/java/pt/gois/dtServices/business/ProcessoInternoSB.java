@@ -14,6 +14,7 @@ import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TiposDeEstado;
+import pt.gois.dtServices.entity.User;
 
 @Stateless
 public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements ProcessoInternoSBLocal{
@@ -48,9 +49,9 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 	
 	@Override
-	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Date data) {
+	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Date data, User user) {
 		
-		criarEstadoProcesso(processoInterno, tipoEstado, data);
+		criarEstadoProcesso(processoInterno, tipoEstado, data, user);
 		
 		if( processoInterno.getId() != null ){
 			
@@ -63,13 +64,14 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		}
 	}
 	
-	private void criarEstadoProcesso(ProcessoInterno processoInterno, Integer tipoEstado, Date data) {
+	private void criarEstadoProcesso(ProcessoInterno processoInterno, Integer tipoEstado, Date data, User user) {
 
 		TiposDeEstado tipo = new TiposDeEstado();
 		tipo.setId(tipoEstado);
 		
 		EstadosProcesso estadosProcesso = new EstadosProcesso();
 		estadosProcesso.setTiposDeEstado(tipo);
+		estadosProcesso.setUser(user);
 		
 		EstadosProcesso estadoAtual = retornaEstadoAtual(processoInterno);
 		if(estadoAtual != null) {
@@ -168,17 +170,16 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 	
 	@Override
-	public void atualizaEstadoProcesso(ProcessoInterno processo) {
+	public void atualizaEstadoProcesso(ProcessoInterno processo, User user) {
 		if(canStart(processo)) {
-			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_EM_EXECUCAO, getDataInicioExecucao(processo));
+			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_EM_EXECUCAO, getDataInicioExecucao(processo), user);
 			save(processo);
 			return;
 		} else if(canFinalize(processo)) {
-			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, getDataFimExecucao(processo));
 			save(processo);
 			return;
 		} else if(canSuspend(processo)) {
-			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, new Date());
+			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, new Date(), user);
 			save(processo);
 			return;
 		}

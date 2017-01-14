@@ -29,7 +29,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	}
 
 	public Servico findByIdWithEstadosServico(Integer id) {
-		String sql = "select serv from Servico serv fetch join serv.estadosServicos where serv.id = :id";
+		String sql = "select serv from Servico serv inner join fetch serv.estadosServicos where serv.id = :id";
 		Query query = getEM().createQuery(sql);
 		query.setParameter("id", id);
 		return (Servico)query.getSingleResult();
@@ -39,6 +39,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 	public EstadosServico retornaEstadoAtual(Servico servico) {
 		EstadosServico estadoServico = null;
 		if(servico != null) {
+			servico = findByIdWithEstadosServico(servico.getId());
 			List<EstadosServico> estadosServicoList = servico.getEstadosServicos();
 			if(estadosServicoList != null && estadosServicoList.size() > 0) {
 				estadoServico = estadosServicoList.get(estadosServicoList.size() - 1);
@@ -61,7 +62,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			create( servico );
 		}
 		
-		sbPI.atualizaEstadoProcesso(sbPI.buscaProcessoComServicos(servico.getProcessoInterno().getId()));
+		sbPI.atualizaEstadoProcesso(sbPI.buscaProcessoComServicos(servico.getProcessoInterno().getId()), user);
 		
 	}
 

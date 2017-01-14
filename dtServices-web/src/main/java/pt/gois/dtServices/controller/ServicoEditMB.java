@@ -19,6 +19,7 @@ import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.ServicoView;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
@@ -152,8 +153,9 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		return (acao != null && acao.equals("EDIT"));
 	}
 	
-	public void delete( Servico Servico ){
-		sb.delete(Servico);
+	public void delete( ServicoView servicoView ){
+		
+		sb.delete(sb.findById(servicoView.getId()));
 	}
 	
 	public Servico getServico() {
@@ -230,16 +232,16 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		return nomeEstadoAtual;
 	}
 	
-	public boolean canStart(Servico servico) {
-		return sb.canStart(servico);
+	public boolean canStart(ServicoView servico) {
+		return sb.canStart(sb.findById(servico.getId()));
 	}
 	
-	public boolean canSuspend(Servico servico) {
-		return sb.canSuspend(servico);
+	public boolean canSuspend(ServicoView servico) {
+		return sb.canSuspend(sb.findById(servico.getId()));
 	}
 	
-	public boolean canFinalize(Servico servico) {
-		return sb.canFinalize(servico);
+	public boolean canFinalize(ServicoView servico) {
+		return sb.canFinalize(sb.findById(servico.getId()));
 	}
 	
 	public String getAcao() {
