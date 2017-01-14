@@ -129,7 +129,7 @@ public class Servico implements Serializable {
 
 
 	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico", fetch=FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy="servico", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	public List<EstadosServico> getEstadosServicos() {
 		return this.estadosServicos;
 	}

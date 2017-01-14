@@ -124,12 +124,12 @@
 
 						<p:column headerText="#{bundle.servico}">
 							<h:outputText
-								value="#{servico.tipoServicoSolicitante.tipoServico.nome}" />
+								value="#{servico.nomeTipo}" />
 						</p:column>
 
 						<p:column headerText="Estado">
 							<h:outputText
-								value="#{servicoEditMB.getNomeEstadoAtual(servico)}" />
+								value="#{servico.nomeEstado}" />
 						</p:column>
 
 						<p:column headerText="#{bundle.default_field_valor}">

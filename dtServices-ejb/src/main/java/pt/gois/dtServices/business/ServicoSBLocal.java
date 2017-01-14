@@ -16,4 +16,5 @@ public interface ServicoSBLocal extends GeneralSBLocal<Servico>{
 	public boolean canStart(Servico servico);
 	public boolean canSuspend(Servico servico);
 	public boolean canFinalize(Servico servico);
+	public Servico findByIdWithEstadosServico(Integer id);
 }

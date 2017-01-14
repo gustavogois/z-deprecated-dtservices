@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Servico;
@@ -27,6 +28,14 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 		super(Servico.class);
 	}
 
+	public Servico findByIdWithEstadosServico(Integer id) {
+		String sql = "select serv from Servico serv fetch join serv.estadosServicos where serv.id = :id";
+		Query query = getEM().createQuery(sql);
+		query.setParameter("id", id);
+		return (Servico)query.getSingleResult();
+		
+	}
+	
 	public EstadosServico retornaEstadoAtual(Servico servico) {
 		EstadosServico estadoServico = null;
 		if(servico != null) {

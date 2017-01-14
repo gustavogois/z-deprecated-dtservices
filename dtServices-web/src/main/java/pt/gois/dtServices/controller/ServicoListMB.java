@@ -9,9 +9,9 @@ import javax.faces.bean.ViewScoped;
 
 import org.apache.commons.lang3.StringUtils;
 
-import pt.gois.dtServices.business.ServicoSBLocal;
+import pt.gois.dtServices.business.ServicoViewSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.ServicoView;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -20,9 +20,9 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.ServicoSBLocal sb;
+	private pt.gois.dtServices.business.ServicoViewSBLocal sb;
 
-	PaginatedDataModel<Servico> list;
+	PaginatedDataModel<ServicoView> list;
 	
 	Integer idProcessoInterno;
 
@@ -30,11 +30,11 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 
 	}
 
-	public PaginatedDataModel<Servico> getList() {
+	public PaginatedDataModel<ServicoView> getList() {
 		if (list != null) {
 			return list;
 		}
-		SearchPageCtrl<Servico> searchPageCtrl = new SearchPageCtrl<Servico>();
+		SearchPageCtrl<ServicoView> searchPageCtrl = new SearchPageCtrl<ServicoView>();
 		Map<String, Object> filters = searchPageCtrl.getFilters();
 		if (term != null && !"".equals(term = term.trim())) {
 			if (StringUtils.isNumeric(term)) {
@@ -44,11 +44,11 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 		if (idProcessoInterno != null) {
 			filters.put("processoInterno.id", idProcessoInterno);
 		}
-		list = new PaginatedDataModel<Servico>(searchPageCtrl, sb);
+		list = new PaginatedDataModel<ServicoView>(searchPageCtrl, sb);
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<Servico> list) {
+	public void setList(PaginatedDataModel<ServicoView> list) {
 		this.list = list;
 	}
 
@@ -56,11 +56,11 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 		list = null;
 	}
 
-	public ServicoSBLocal getSb() {
+	public ServicoViewSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSb(ServicoSBLocal sb) {
+	public void setSb(ServicoViewSBLocal sb) {
 		this.sb = sb;
 	}
 	public Integer getIdProcessoInterno() {

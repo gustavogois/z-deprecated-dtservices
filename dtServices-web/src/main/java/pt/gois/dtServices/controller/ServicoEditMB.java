@@ -160,7 +160,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		if( servico == null ){
 			Integer id = getId();
 			if( id != null ){
-				servico = sb.findById( getId() );
+				servico = sb.findByIdWithEstadosServico(getId() );
 			}else{
 				servico = new Servico();
 				servico.setProcessoInterno(sbProcessoInterno.findById( idProcessoInterno ) );

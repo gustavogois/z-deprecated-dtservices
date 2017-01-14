@@ -76,7 +76,7 @@ public class EstadosServico implements Serializable {
 
 
 	//bi-directional many-to-one association to Servico
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="servicoId")
 	public Servico getServico() {
 		return this.servico;
