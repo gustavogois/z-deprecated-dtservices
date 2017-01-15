@@ -2,25 +2,23 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.validator.ValidatorException;
 
-import pt.gois.dtServices.business.HistoricoSBLocal;
+import pt.gois.dtServices.business.ServicoViewSBLocal;
 import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
 import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.ServicoView;
 import pt.gois.dtServices.entity.TipoServicoSolicitante;
+import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -30,18 +28,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 
 	@EJB
 	private pt.gois.dtServices.business.ServicoSBLocal sb;
+	@EJB
+	private ServicoViewSBLocal sbServicoView;
 	
 	@EJB
 	private pt.gois.dtServices.business.ProcessoInternoSBLocal sbProcessoInterno;
-	
 	@EJB
 	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTipoServicoSolicitante;
-	
-	@EJB
-	private pt.gois.dtServices.business.TipoDeEstadoSBLocal sbTiposDeEstado;
-	
-	@EJB
-	private HistoricoSBLocal sbHistorico;
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
@@ -50,17 +43,11 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	Servico servico;
 	Integer idProcessoInterno;
 	
-	EstadosServico estadoServico;
 	String nomeEstadoAtual;
+	EstadosServico novoEstado;
 	String acao;
-	Date data;
-	
-	boolean existeTipoServicoSolicitante=true;
-	
-	public List<ProcessoInterno> getProcessosInterno() {
-		return sbProcessoInterno.findAll();
-	}
-	
+	Date datap;
+
 	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
 		
 		ProcessoInterno processoInterno = sbProcessoInterno.findById(idProcessoInterno);
@@ -71,11 +58,6 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		searchPageCtrl.getFilters().put("solicitante.id", idSolicitante);
 		List<TipoServicoSolicitante> tss = sbTipoServicoSolicitante.find(searchPageCtrl).getRows();
 		
-		existeTipoServicoSolicitante = true;
-		if(tss == null || tss.size() == 0){
-			existeTipoServicoSolicitante = false;
-		}
-		
 		return tss;
 		
 	}
@@ -85,50 +67,49 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		servico.setValor(tss.getValor());
 	}
 	
-	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-		String name = (String) value;
-
-		if (name.trim().length() == 0) {
-			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
-		}
-
-		SearchPageCtrl<Servico> searchPageCtrl = new SearchPageCtrl<Servico>();
-		searchPageCtrl.getFilters().put("nome", value);
-		List<Servico> servicos = sb.find(searchPageCtrl).getRows();
-		if (servicos != null && servicos.size() > 0 ) {
-			if( servicos.size() == 1 && ( servicos.get(0).getId() == servico.getId() ) ){
-				return;
-			}
-			throw new ValidatorException(getMessage("default_msg_exists",FacesMessage.SEVERITY_ERROR));
-		}
+//	public String create() {
+//		servico = new Servico();
+//		//servico.setSolicitante(new Solicitante());
+//		sb.create(servico);
+//		return "ServicoEdit";
+//	}
+	
+	private Calendar getDataCalendar() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(datap);
+		return calendar;
 	}
 	
-	public void validateValor(FacesContext context, UIComponent toValidate, Object value) throws Exception {
+	private void adicionaNovoEstado(Servico servico) {
 		
-	}
-	
-	public String create() {
-		servico = new Servico();
-		//servico.setSolicitante(new Solicitante());
-		sb.create(servico);
-		return "ServicoEdit";
+		EstadosServico novoEstado = new EstadosServico();
+		TiposDeEstado tipo;
+		
+		if(isStarting()) {
+			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO);
+		} else if(isSuspending()) {
+			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_SUSPENSO);
+		} else if(isFinalizing()) {
+			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_FINALIZADO);
+		} else if(!isEditing()){
+			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_CRIADO);
+		} else {
+			return;
+		}
+		
+		novoEstado.setTiposDeEstado(tipo);
+		novoEstado.setDtInicio(getDataCalendar());
+		novoEstado.setUser(userSessionMB.getUser());
+		servico.getEstadosServicos().add(novoEstado);
 	}
 	
 	public String save(){
+		
 		servico = getServico();
 		
-		if(isStarting()) {
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO, data, userSessionMB.getUser());
-		} else if(isSuspending()) {
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_SUSPENSO, data, userSessionMB.getUser());
-		} else if(isFinalizing()) {
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_FINALIZADO, data, userSessionMB.getUser());
-		} else if(!isEditing()){
-			sb.salvar(servico, TipoDeEstadoSBLocal.SRV_CRIADO, data, userSessionMB.getUser());
-		} else {
-			// Sem alteração de estado
-			sb.save(servico);
-		}
+		adicionaNovoEstado(servico);
+		
+		sb.salvar(servico);
 		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
@@ -164,25 +145,76 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			if( id != null ){
 				servico = sb.findByIdWithEstadosServico(getId() );
 			}else{
-				servico = new Servico();
-				servico.setProcessoInterno(sbProcessoInterno.findById( idProcessoInterno ) );
-				servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
-				servico.setEstadosServicos(new ArrayList<EstadosServico>());
-				data = new Date();
+				initServico(servico);
 			}
 		}
 		return servico;
 	}
 	
-	public EstadosServico getEstadoServico() {
-		if(estadoServico == null) {
-			estadoServico = new EstadosServico();
-		}
-		return estadoServico;
+	private void initServico(Servico servico) {
+		servico.setProcessoInterno(sbProcessoInterno.findById( idProcessoInterno ) );
+		servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
+		servico.setEstadosServicos(new ArrayList<EstadosServico>());
+	}
+	
+	public String getNomeEstadoAtual() {
+		if(nomeEstadoAtual == null) {
+			Integer id = getServico().getId();  
+			if(id != null) {
+				ServicoView servView = sbServicoView.findById(id);
+				nomeEstadoAtual = servView.getNomeEstado();
+			}
+		}			
+		return nomeEstadoAtual;
 	}
 
-	public void setEstadoServico(EstadosServico estadoServico) {
-		this.estadoServico = estadoServico;
+	public boolean canStart(ServicoView servico) {
+		return sb.canStart(sb.findById(servico.getId()));
+	}
+	
+	public boolean canSuspend(ServicoView servico) {
+		return sb.canSuspend(sb.findById(servico.getId()));
+	}
+	
+	public boolean canFinalize(ServicoView servico) {
+		return sb.canFinalize(sb.findById(servico.getId()));
+	}
+	
+	public String getAcao() {
+		return acao;
+	}
+
+	public void setAcao(String acao) {
+		this.acao = acao;
+	}
+	public UserSessionMB getUserSessionMB() {
+		return userSessionMB;
+	}
+
+	public void setUserSessionMB(UserSessionMB userSessionMB) {
+		this.userSessionMB = userSessionMB;
+	}
+	public Date getDatap() {
+		return datap;
+	}
+
+	public void setDatap(Date datap) {
+		this.datap = datap;
+	}
+
+	public EstadosServico getNovoEstado() {
+		if(novoEstado == null) {
+			novoEstado = new EstadosServico();
+		}
+		return novoEstado;
+	}
+
+	public void setNovoEstado(EstadosServico novoEstado) {
+		this.novoEstado = novoEstado;
+	}
+
+	public void setNomeEstadoAtual(String nomeEstadoAtual) {
+		this.nomeEstadoAtual = nomeEstadoAtual;
 	}
 
 	public void setServico(Servico Servico) {
@@ -203,67 +235,4 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public void setIdProcessoInterno(Integer idProcessoInterno) {
 		this.idProcessoInterno = idProcessoInterno;
 	}
-
-	public boolean isNotExisteTipoServicoSolicitante() {
-		return ! existeTipoServicoSolicitante;
-	}
-	
-	public boolean isExisteTipoServicoSolicitante() {
-		return existeTipoServicoSolicitante;
-	}
-
-	public void setExisteTipoServicoSolicitante(boolean existeTipoServicoSolicitante) {
-		this.existeTipoServicoSolicitante = existeTipoServicoSolicitante;
-	}
-	
-	public String getNomeEstadoAtual(Servico servico) {
-		return sb.retornaNomeEstadoAtual(servico);
-	}
-
-	public String getNomeEstadoAtual() {
-		if(nomeEstadoAtual == null || nomeEstadoAtual == "") {
-			servico = getServico();
-			if(servico.getId() != null) {
-				nomeEstadoAtual = sb.retornaNomeEstadoAtual(servico);
-			} else {
-				nomeEstadoAtual = "Em criação";
-			}
-		}
-		return nomeEstadoAtual;
-	}
-	
-	public boolean canStart(ServicoView servico) {
-		return sb.canStart(sb.findById(servico.getId()));
-	}
-	
-	public boolean canSuspend(ServicoView servico) {
-		return sb.canSuspend(sb.findById(servico.getId()));
-	}
-	
-	public boolean canFinalize(ServicoView servico) {
-		return sb.canFinalize(sb.findById(servico.getId()));
-	}
-	
-	public String getAcao() {
-		return acao;
-	}
-
-	public void setAcao(String acao) {
-		this.acao = acao;
-	}
-	public Date getData() {
-		return data;
-	}
-
-	public void setData(Date data) {
-		this.data = data;
-	}
-	public UserSessionMB getUserSessionMB() {
-		return userSessionMB;
-	}
-
-	public void setUserSessionMB(UserSessionMB userSessionMB) {
-		this.userSessionMB = userSessionMB;
-	}
-
 }

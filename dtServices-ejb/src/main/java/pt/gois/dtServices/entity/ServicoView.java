@@ -23,9 +23,19 @@ public class ServicoView implements Serializable {
 	private Integer id;
 	private Date dtEstado;
 	private String nomeEstado;
+	private Integer idTipo;
 	private String nomeTipo;
 	private double valor;
 	private Integer processoId;
+
+	
+	public Integer getIdTipo() {
+		return idTipo;
+	}
+
+	public void setIdTipo(Integer idTipo) {
+		this.idTipo = idTipo;
+	}
 
 	public Integer getProcessoId() {
 		return processoId;

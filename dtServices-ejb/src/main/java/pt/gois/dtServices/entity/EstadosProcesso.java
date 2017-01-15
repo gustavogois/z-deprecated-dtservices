@@ -1,9 +1,18 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Calendar;
 
-import java.util.Date;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 /**
@@ -15,8 +24,8 @@ import java.util.Date;
 public class EstadosProcesso implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private Date dtFim;
-	private Date dtInicio;
+	private Calendar dtFim;
+	private Calendar dtInicio;
 	private String observacoes;
 	private ProcessoInterno processoInterno;
 	private TiposDeEstado tiposDeEstado;
@@ -37,22 +46,22 @@ public class EstadosProcesso implements Serializable {
 	}
 
 
-	@Temporal(TemporalType.DATE)
-	public Date getDtFim() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Calendar getDtFim() {
 		return this.dtFim;
 	}
 
-	public void setDtFim(Date dtFim) {
+	public void setDtFim(Calendar dtFim) {
 		this.dtFim = dtFim;
 	}
 
 
-	@Temporal(TemporalType.DATE)
-	public Date getDtInicio() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Calendar getDtInicio() {
 		return this.dtInicio;
 	}
 
-	public void setDtInicio(Date dtInicio) {
+	public void setDtInicio(Calendar dtInicio) {
 		this.dtInicio = dtInicio;
 	}
 

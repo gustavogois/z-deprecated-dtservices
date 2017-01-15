@@ -1,7 +1,7 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -24,8 +24,8 @@ import javax.persistence.TemporalType;
 public class EstadosServico implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
-	private Date dtFim;
-	private Date dtInicio;
+	private Calendar dtFim;
+	private Calendar dtInicio;
 	private String observacoes;
 	private Servico servico;
 	private TiposDeEstado tiposDeEstado;
@@ -46,22 +46,22 @@ public class EstadosServico implements Serializable {
 	}
 
 
-	@Temporal(TemporalType.DATE)
-	public Date getDtFim() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Calendar getDtFim() {
 		return this.dtFim;
 	}
 
-	public void setDtFim(Date dtFim) {
+	public void setDtFim(Calendar dtFim) {
 		this.dtFim = dtFim;
 	}
 
 
-	@Temporal(TemporalType.DATE)
-	public Date getDtInicio() {
+	@Temporal(TemporalType.TIMESTAMP)
+	public Calendar getDtInicio() {
 		return this.dtInicio;
 	}
 
-	public void setDtInicio(Date dtInicio) {
+	public void setDtInicio(Calendar dtInicio) {
 		this.dtInicio = dtInicio;
 	}
 

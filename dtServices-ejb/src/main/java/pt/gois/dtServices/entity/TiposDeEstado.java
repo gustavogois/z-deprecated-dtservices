@@ -31,6 +31,10 @@ public class TiposDeEstado implements Serializable {
 
 	public TiposDeEstado() {
 	}
+	
+	public TiposDeEstado(Integer id) {
+		this.id = id;
+	}
 
 
 	@Id

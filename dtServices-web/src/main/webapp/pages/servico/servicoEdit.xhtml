@@ -73,6 +73,7 @@
 						<p:outputLabel
 							value="#{servicoEditMB.servico.tipoServicoSolicitante.tipoServico.nome}"
 							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />
+							
 						<p:outputLabel value="#{bundle.default_field_valor}" />
 						<p:inputText id="valorId" size="8"
 							label="#{bundle.default_field_valor}"
@@ -94,11 +95,22 @@
 
 						<p:outputLabel value="Data"
 							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />
-						<p:calendar id="dataId" value="#{servicoEditMB.data}" pages="1"
-							mask="true" maxlength="10" pattern="dd/MM/yyyy"
+						<p:calendar id="dataId" value="#{servicoEditMB.datap}" pages="1"
+							mask="true" maxlength="10" pattern="dd/MM/yyyy HH:mm:ss"
 							showButtonPanel="true" navigator="true"
 							rendered="#{!servicoEditMB.isCreating() and	!servicoEditMB.isEditing()}">
 						</p:calendar>
+
+						<p:outputLabel value="Observações"
+							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />
+						<p:inputTextarea value="#{servicoEditMB.novoEstado.observacoes}"
+							rows="5" cols="30" counter="displayObs" maxlength="120"
+							counterTemplate="{0} caracteres restantes" autoResize="false"
+							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />
+						<h:outputLabel />
+						<h:outputText id="displayObs" />
+
+
 
 
 					</h:panelGrid>
@@ -113,7 +125,9 @@
 
 						<p:column headerText="Data Início">
 							<h:outputText
-								value="#{estados.dtInicio}" />
+								value="#{estados.dtInicio.getTime()}" >
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss"/>
+								</h:outputText>
 						</p:column>
 						<p:column headerText="Usuário">
 							<h:outputText
@@ -122,6 +136,10 @@
 						<p:column headerText="Estado">
 							<h:outputText
 								value="#{estados.tiposDeEstado.nome}" />
+						</p:column>
+						<p:column headerText="Observações">
+							<h:outputText
+								value="#{estados.observacoes}" />
 						</p:column>
 					</p:dataTable>
 				</p:tab>

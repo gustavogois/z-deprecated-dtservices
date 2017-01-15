@@ -2,7 +2,7 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -71,7 +71,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	String nomeEstadoAtual;
 	String acao;
-	Date data;
+	Calendar data;
 
 	
 	public boolean canEdit(ProcessoInterno processo) {
@@ -205,7 +205,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 				tipoServico = new TipoServico();
 				
 				processoInterno.setEstadosProcesso(new ArrayList<EstadosProcesso>());
-				data = new Date();
+				data = Calendar.getInstance();
 				
 			}
 		}
@@ -325,16 +325,24 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		this.acao = acao;
 	}
 
-	public Date getData() {
+	public Calendar getData() {
 		return data;
 	}
 
-	public void setData(Date data) {
+	public void setData(Calendar data) {
 		this.data = data;
 	}
 
 	public void setNomeEstadoAtual(String nomeEstadoAtual) {
 		this.nomeEstadoAtual = nomeEstadoAtual;
 	}
+	public UserSessionMB getUserSessionMB() {
+		return userSessionMB;
+	}
+
+	public void setUserSessionMB(UserSessionMB userSessionMB) {
+		this.userSessionMB = userSessionMB;
+	}
+
 
 }

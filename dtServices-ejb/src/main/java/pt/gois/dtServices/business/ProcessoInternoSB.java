@@ -1,6 +1,6 @@
 package pt.gois.dtServices.business;
 
-import java.util.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -49,7 +49,7 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 	
 	@Override
-	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Date data, User user) {
+	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Calendar data, User user) {
 		
 		criarEstadoProcesso(processoInterno, tipoEstado, data, user);
 		
@@ -64,7 +64,7 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		}
 	}
 	
-	private void criarEstadoProcesso(ProcessoInterno processoInterno, Integer tipoEstado, Date data, User user) {
+	private void criarEstadoProcesso(ProcessoInterno processoInterno, Integer tipoEstado, Calendar data, User user) {
 
 		TiposDeEstado tipo = new TiposDeEstado();
 		tipo.setId(tipoEstado);
@@ -170,50 +170,17 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	}
 	
 	@Override
-	public void atualizaEstadoProcesso(ProcessoInterno processo, User user) {
-		if(canStart(processo)) {
-			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_EM_EXECUCAO, getDataInicioExecucao(processo), user);
-			save(processo);
-			return;
-		} else if(canFinalize(processo)) {
-			save(processo);
-			return;
-		} else if(canSuspend(processo)) {
-			criarEstadoProcesso(processo, TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, new Date(), user);
-			save(processo);
-			return;
+	public void checkStatusProcessoInterno(Integer idProcesso) {
+		ProcessoInterno processo = buscaProcessoComServicos(idProcesso);
+		if(necessarioAtualizarStatus(processo)) {
+			atualizaStatusProcesso(processo);
 		}
+	}
+	
+	private boolean necessarioAtualizarStatus(ProcessoInterno processo) {
 		
 	}
 	
-	private Date getDataFimExecucao(ProcessoInterno processo) {
-		Date maiorData = new Date(0L);
-		List<Servico> servicos = processo.getServicos();
-		for (Servico servico : servicos) {
-			List<EstadosServico> estadosServicos = servico.getEstadosServicos();
-			for (EstadosServico estadosServico : estadosServicos) {
-				if(estadosServico.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO)) {
-					if(estadosServico.getDtFim().after(maiorData)) {
-						maiorData = estadosServico.getDtFim();
-					}
-				}
-			}
-		}
-		return maiorData;
-	}
-
-	private Date getDataInicioExecucao(ProcessoInterno processo) {
-		List<Servico> servicos = processo.getServicos();
-		for (Servico servico : servicos) {
-			List<EstadosServico> estadosServicos = servico.getEstadosServicos();
-			for (EstadosServico estadosServico : estadosServicos) {
-				if(estadosServico.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO)) {
-					return estadosServico.getDtInicio();
-				}
-			}
-		}
-		return null;
-	}
 
 	@Override
 	public ProcessoInterno buscaProcessoComServicos(Integer idProcesso) {
