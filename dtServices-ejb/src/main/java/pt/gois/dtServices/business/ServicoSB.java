@@ -46,7 +46,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			create( servico );
 		}
 		
-		sbPI.checkStatusProcessoInterno(servico.getProcessoInterno().getId());
+		sbPI.checkStatusProcessoInterno(servico.getProcessoInterno().getId(), user);
 		
 	}
 

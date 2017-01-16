@@ -8,10 +8,9 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.apache.commons.lang3.StringUtils;
-
 import pt.gois.dtServices.business.ProcessoInternoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
+import pt.gois.dtServices.entity.ProcInternoView;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
@@ -23,34 +22,31 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 	@EJB
 	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
 
-	PaginatedDataModel<ProcessoInterno> list;
+	@EJB
+	private pt.gois.dtServices.business.ProcInternoViewSBLocal sbProcView;
+	
+	PaginatedDataModel<ProcInternoView> list;
 	Integer idProcessoExterno;
 	
-	public PaginatedDataModel<ProcessoInterno> getList() {
-		return getList(null);
+	public PaginatedDataModel<ProcInternoView> getList() {
+		return list(null);
 	}
 
-	public PaginatedDataModel<ProcessoInterno> getList(Integer idProcessoExterno) {
+	public PaginatedDataModel<ProcInternoView> list(Integer idProcessoExterno) {
 		this.setIdProcessoExterno(idProcessoExterno);
 		if (list == null) {
-			SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
+			SearchPageCtrl<ProcInternoView> searchPageCtrl = new SearchPageCtrl<ProcInternoView>();
 			Map<String, Object> filters = searchPageCtrl.getFilters();
 			searchPageCtrl.setAndFilter(true);
-			if (term != null && !"".equals(term = term.trim())) {
-				filters.put("obj.loteria.nome", term);
-				if (StringUtils.isNumeric(term)) {
-					filters.put("obj.id", new Integer(term));
-				}
-			}
 			if( idProcessoExterno != null ){
-				filters.put("obj.processoExterno.id", idProcessoExterno);
+				filters.put("processoExternoId", idProcessoExterno);
 			}
-			list = new PaginatedDataModel<ProcessoInterno>(searchPageCtrl, sb);
+			list = new PaginatedDataModel<ProcInternoView>(searchPageCtrl, sbProcView);
 		}
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<ProcessoInterno> list) {
+	public void setList(PaginatedDataModel<ProcInternoView> list) {
 		this.list = list;
 	}
 

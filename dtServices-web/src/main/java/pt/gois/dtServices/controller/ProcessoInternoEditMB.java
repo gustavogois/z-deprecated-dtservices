@@ -26,6 +26,7 @@ import pt.gois.dtServices.entity.EntidadeDeFacturacao;
 import pt.gois.dtServices.entity.EstadosProcesso;
 import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Historico;
+import pt.gois.dtServices.entity.ProcInternoView;
 import pt.gois.dtServices.entity.ProcessoInterno;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.TipoServico;
@@ -42,6 +43,9 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	
 	@EJB
 	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
+	
+	@EJB
+	private pt.gois.dtServices.business.ProcInternoViewSBLocal sbProcView;
 	
 	@EJB
 	private EntidadeDeFacturacaoSBLocal sbEntidade;
@@ -74,34 +78,29 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	Calendar data;
 
 	
-	public boolean canEdit(ProcessoInterno processo) {
+	public boolean canEdit(ProcInternoView processo) {
 		return sb.canEdit(processo);
 	}
 	
-	public boolean canFaturar(ProcessoInterno processo) {
+	public boolean canFaturar(ProcInternoView processo) {
 		return sb.canFaturar(processo);
 	}
 	
-	public boolean canPagar(ProcessoInterno processo) {
+	public boolean canPagar(ProcInternoView processo) {
 		return sb.canPagar(processo);
 	}
 	
-	public String getNomeEstadoAtual(ProcessoInterno processo) {
-		return sb.retornaNomeEstadoAtual(processo);
-	}
-
 	public String getNomeEstadoAtual() {
-		if(nomeEstadoAtual == null || nomeEstadoAtual == "") {
-			processoInterno = getProcessoInterno();
-			if(processoInterno.getId() != null) {
-				nomeEstadoAtual = sb.retornaNomeEstadoAtual(processoInterno);
-			} else {
-				nomeEstadoAtual = "Em criação";
+		if(nomeEstadoAtual == null || nomeEstadoAtual.equals("")) {
+			Integer id = getProcessoInterno().getId();  
+			if(id != null) {
+				ProcInternoView procView = sbProcView.findById(id);
+				nomeEstadoAtual = procView.getNomeEstado();
 			}
-		}
+		}			
 		return nomeEstadoAtual;
 	}
-	
+
 	public List<TiposDeEstado> getEstadosServico() throws Exception {
 
 		List<TiposDeEstado> estados = sbTipoEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);

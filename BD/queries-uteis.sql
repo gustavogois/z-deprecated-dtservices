@@ -16,7 +16,8 @@ inner join tipos_de_estado te2 on te2.id = ests.tipoId
 where pi.idProcCliente like 'WTS6';
 
 create or replace view V_SERVICO as
-select serv.id, tipo.nome as nomeTipo, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, serv.valor, est.dtInicio as dtEstado, serv.processoId
+select serv.id, tipo.id as idTipo, tipo.nome as nomeTipo, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, serv.valor, 
+	est.dtInicio as dtEstado, serv.processoId
 from servico serv 
 inner join 
 	(select s.id, max(e.dtInicio) as maxdate
@@ -31,7 +32,7 @@ where groupserv.id = serv.id
 and groupserv.maxdate = est.dtInicio;
 
 create or replace view V_PROCESSO as
-select pi.id, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, est.dtInicio as dtEstado
+select pi.id, pi.idProcCliente, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, est.dtInicio as dtEstado, pi.processoExternoId
 from processointerno pi 
 inner join 
 	(select p.id, max(e.dtInicio) as maxdate

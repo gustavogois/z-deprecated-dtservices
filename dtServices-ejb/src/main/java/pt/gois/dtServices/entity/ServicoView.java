@@ -22,6 +22,7 @@ public class ServicoView implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private Date dtEstado;
+	private Integer idEstado;
 	private String nomeEstado;
 	private Integer idTipo;
 	private String nomeTipo;
@@ -91,6 +92,13 @@ public class ServicoView implements Serializable {
 
 	public void setNomeTipo(String nomeTipo) {
 		this.nomeTipo = nomeTipo;
+	}
+	public Integer getIdEstado() {
+		return idEstado;
+	}
+
+	public void setIdEstado(Integer idEstado) {
+		this.idEstado = idEstado;
 	}
 
 }

@@ -1,7 +1,6 @@
 package pt.gois.dtServices.business;
 
 import java.util.Calendar;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -9,9 +8,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
 import pt.gois.dtServices.entity.EstadosProcesso;
-import pt.gois.dtServices.entity.EstadosServico;
+import pt.gois.dtServices.entity.ProcInternoView;
 import pt.gois.dtServices.entity.ProcessoInterno;
-import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.entity.User;
@@ -20,27 +18,15 @@ import pt.gois.dtServices.entity.User;
 public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements ProcessoInternoSBLocal{
 	
 	@EJB
+	ProcInternoViewSBLocal sbProcView;
+	
+	@EJB
 	SolicitanteSBLocal sbSolicitante;
 
-	@EJB
-	TipoDeEstadoSBLocal sbTipoDeEstado;
-	
-	@EJB
-	EstadoProcessoSBLocal sbEstadoProcesso;
-	
-	@EJB
-	ServicoSBLocal sbServico;
-	
 	public ProcessoInternoSB() {
 		super(ProcessoInterno.class);
 	}
 	
-	public ProcessoInterno findById(Object id){
-		ProcessoInterno pi = super.findById(id);
-		pi.getEstadosProcesso().size();
-		return pi;
-	}
-
 	private String geraIdProcCliente(ProcessoInterno processoInterno) {
 		Solicitante solicitante = sbSolicitante.
 			findById(processoInterno.getProcessoExterno().getSolicitante().getId());
@@ -50,8 +36,6 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 	
 	@Override
 	public void salvar(ProcessoInterno processoInterno, Integer tipoEstado, Calendar data, User user) {
-		
-		criarEstadoProcesso(processoInterno, tipoEstado, data, user);
 		
 		if( processoInterno.getId() != null ){
 			
@@ -64,124 +48,86 @@ public class ProcessoInternoSB extends GeneralSB<ProcessoInterno> implements Pro
 		}
 	}
 	
-	private void criarEstadoProcesso(ProcessoInterno processoInterno, Integer tipoEstado, Calendar data, User user) {
-
-		TiposDeEstado tipo = new TiposDeEstado();
-		tipo.setId(tipoEstado);
-		
-		EstadosProcesso estadosProcesso = new EstadosProcesso();
-		estadosProcesso.setTiposDeEstado(tipo);
-		estadosProcesso.setUser(user);
-		
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processoInterno);
-		if(estadoAtual != null) {
-			estadoAtual.setDtFim(data);
-		}
-		estadosProcesso.setDtInicio(data);
-		
-		processoInterno.addEstadosprocesso(estadosProcesso);
-	}
-
 	@Override
-	public String retornaNomeEstadoAtual(ProcessoInterno processo) {
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
-		if(estadoAtual != null) {
-			return sbEstadoProcesso.retornaNomeEstado(estadoAtual.getId());
-		} else {
-			return "";
-		}
-	}
-
-	@Override
-	public EstadosProcesso retornaEstadoAtual(ProcessoInterno processo) {
-		EstadosProcesso estadoProcesso = null;
-		if(processo != null) {
-			List<EstadosProcesso> estadosProcessoList = processo.getEstadosProcesso();
-			if(estadosProcessoList != null && estadosProcessoList.size() > 0) {
-				estadoProcesso = estadosProcessoList.get(estadosProcessoList.size() - 1);
-			} 
-		}
-		return estadoProcesso;
-	}
-
-	@Override
-	public boolean canStart(ProcessoInterno processo) {
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+	public boolean canSuspend(ProcInternoView processo) {
+		Integer idEstadoAtual = processo.getIdEstado();
 		
-		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_CRIADO)
+		return idEstadoAtual.equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO)
 				&&
-				existService(processo, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO);
-	}
-
-	private boolean existService(ProcessoInterno processo, Integer tipo) {
-		
-		for (Servico servico : processo.getServicos()) {
-			EstadosServico estadoAtual = sbServico.retornaEstadoAtual(servico);
-			if(estadoAtual.getTiposDeEstado().getId().equals(tipo)) {
-				return true;
-			}
-		}
-		return false;
+				checkAllStatesServicesIn(processo, TipoDeEstadoSBLocal.SRV_SUSPENSO);
 	}
 
 	@Override
-	public boolean canSuspend(ProcessoInterno processo) {
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
+	public boolean canFinalize(ProcInternoView processo) {
+		Integer idEstadoAtual = processo.getIdEstado();
 		
-		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO)
+		return idEstadoAtual.equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO) 
 				&&
-				allServicesIn(processo, TipoDeEstadoSBLocal.SRV_SUSPENSO);
-	}
-
-	@Override
-	public boolean canFinalize(ProcessoInterno processo) {
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
-		
-		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO) 
-				&&
-				allServicesIn(processo, TipoDeEstadoSBLocal.SRV_FINALIZADO);
+				checkAllStatesServicesIn(processo, TipoDeEstadoSBLocal.SRV_FINALIZADO);
 	}
 	
-	private boolean allServicesIn(ProcessoInterno processo, Integer tipo) {
-		for (Servico servico : processo.getServicos()) {
-			EstadosServico estadoAtual = sbServico.retornaEstadoAtual(servico);
-			if(!estadoAtual.getTiposDeEstado().getId().equals(tipo)) {
+	@Override
+	public boolean canFaturar(ProcInternoView processo) {
+		Integer idEstadoAtual = processo.getIdEstado();
+		return idEstadoAtual.equals(TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO); 
+	}
+	
+	@Override
+	public boolean canPagar(ProcInternoView processo) {
+		Integer idEstadoAtual = processo.getIdEstado();
+		return idEstadoAtual.equals(TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO); 
+	}
+
+	@Override
+	public boolean canEdit(ProcInternoView processo) {
+		return true; 
+	}
+	
+	@Override
+	public void checkStatusProcessoInterno(Integer idProcesso, User user) {
+		
+		ProcInternoView procView = sbProcView.findByID(ProcInternoView.class, idProcesso);
+		Integer idTipoEstadoAtualProc = procView.getIdEstado();
+		
+		if(idTipoEstadoAtualProc.equals(TipoDeEstadoSBLocal.PI_CRIADO)) {
+			if(checkAllStatesServicesIn(procView, TipoDeEstadoSBLocal.SRV_EM_EXECUCAO)) {
+				criaEstadoProcesso(procView, TipoDeEstadoSBLocal.PI_EM_EXECUCAO, user);
+				return;
+			} else if(checkAllStatesServicesIn(procView, TipoDeEstadoSBLocal.SRV_SUSPENSO)) {
+				criaEstadoProcesso(procView, TipoDeEstadoSBLocal.PI_SUSPENSO, user);
+			}
+		} else if(idTipoEstadoAtualProc.equals(TipoDeEstadoSBLocal.PI_EM_EXECUCAO)) {
+			if(checkAllStatesServicesIn(procView, TipoDeEstadoSBLocal.SRV_SUSPENSO)) {
+				criaEstadoProcesso(procView, TipoDeEstadoSBLocal.PI_SUSPENSO, user);
+			} 
+		}
+	}
+	
+	private void criaEstadoProcesso(ProcInternoView procView, Integer idTipo, User user) {
+		ProcessoInterno pi = buscaProcessoComServicos(procView.getId());
+		EstadosProcesso novoEstado = new EstadosProcesso();
+		novoEstado.setId(idTipo);
+		novoEstado.setDtInicio(Calendar.getInstance());
+		novoEstado.setProcessoInterno(pi);
+		novoEstado.setUser(user);
+		
+		TiposDeEstado tipo = new TiposDeEstado(idTipo);
+		novoEstado.setTiposDeEstado(tipo);
+
+		pi.getEstadosProcesso().add(novoEstado);
+		save(pi);
+	}
+	
+	private boolean checkAllStatesServicesIn(ProcInternoView proc, Integer idEstado) {
+		ProcessoInterno pi = buscaProcessoComServicos(proc.getId());
+		for (EstadosProcesso estado : pi.getEstadosProcesso()) {
+			if(!estado.getTiposDeEstado().getId().equals(idEstado)) {
 				return false;
 			}
 		}
 		return true;
 	}
-
-	@Override
-	public boolean canFaturar(ProcessoInterno processo) {
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
-		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO); 
-	}
 	
-	@Override
-	public boolean canPagar(ProcessoInterno processo) {
-		EstadosProcesso estadoAtual = retornaEstadoAtual(processo);
-		return estadoAtual.getTiposDeEstado().getId().equals(TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO); 
-	}
-
-	@Override
-	public boolean canEdit(ProcessoInterno processo) {
-		return true; 
-	}
-	
-	@Override
-	public void checkStatusProcessoInterno(Integer idProcesso) {
-		ProcessoInterno processo = buscaProcessoComServicos(idProcesso);
-		if(necessarioAtualizarStatus(processo)) {
-			atualizaStatusProcesso(processo);
-		}
-	}
-	
-	private boolean necessarioAtualizarStatus(ProcessoInterno processo) {
-		
-	}
-	
-
 	@Override
 	public ProcessoInterno buscaProcessoComServicos(Integer idProcesso) {
 		ProcessoInterno processo = null;

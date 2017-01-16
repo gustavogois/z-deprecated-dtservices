@@ -44,7 +44,8 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	Integer idProcessoInterno;
 	
 	String nomeEstadoAtual;
-	EstadosServico novoEstado;
+	String observacaoEstado;
+
 	String acao;
 	Date datap;
 
@@ -66,13 +67,6 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		TipoServicoSolicitante tss = sbTipoServicoSolicitante.findById(servico.getTipoServicoSolicitante().getId());
 		servico.setValor(tss.getValor());
 	}
-	
-//	public String create() {
-//		servico = new Servico();
-//		//servico.setSolicitante(new Solicitante());
-//		sb.create(servico);
-//		return "ServicoEdit";
-//	}
 	
 	private Calendar getDataCalendar() {
 		Calendar calendar = Calendar.getInstance();
@@ -100,6 +94,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		novoEstado.setTiposDeEstado(tipo);
 		novoEstado.setDtInicio(getDataCalendar());
 		novoEstado.setUser(userSessionMB.getUser());
+		novoEstado.setObservacoes(observacaoEstado);
 		servico.getEstadosServicos().add(novoEstado);
 	}
 	
@@ -109,7 +104,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		
 		adicionaNovoEstado(servico);
 		
-		sb.salvar(servico);
+		sb.salvar(servico, userSessionMB.getUser());
 		
 		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
 	}
@@ -202,17 +197,6 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		this.datap = datap;
 	}
 
-	public EstadosServico getNovoEstado() {
-		if(novoEstado == null) {
-			novoEstado = new EstadosServico();
-		}
-		return novoEstado;
-	}
-
-	public void setNovoEstado(EstadosServico novoEstado) {
-		this.novoEstado = novoEstado;
-	}
-
 	public void setNomeEstadoAtual(String nomeEstadoAtual) {
 		this.nomeEstadoAtual = nomeEstadoAtual;
 	}
@@ -234,5 +218,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 
 	public void setIdProcessoInterno(Integer idProcessoInterno) {
 		this.idProcessoInterno = idProcessoInterno;
+	}
+	
+	public String getObservacaoEstado() {
+		return observacaoEstado;
+	}
+
+	public void setObservacaoEstado(String observacaoEstado) {
+		this.observacaoEstado = observacaoEstado;
 	}
 }

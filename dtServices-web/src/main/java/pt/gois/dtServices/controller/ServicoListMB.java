@@ -30,7 +30,7 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 
 	}
 
-	public PaginatedDataModel<ServicoView> getList() {
+	public PaginatedDataModel<ServicoView> list(Integer idProcessoInterno) {
 		if (list != null) {
 			return list;
 		}
