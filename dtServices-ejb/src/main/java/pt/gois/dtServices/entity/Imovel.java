@@ -28,7 +28,7 @@ public class Imovel extends Endereco implements Serializable {
 	String longitude;
 	
 	private List<Imagem> imagems;
-	private ProcessoExterno processoExterno;
+	private Processo processo;
 	
 	public Imovel() {
 	}
@@ -36,7 +36,7 @@ public class Imovel extends Endereco implements Serializable {
 	@Id
 	public Integer getId() {
 		if( id == null ){
-			id = processoExterno.getId();
+			id = processo.getId();
 		}
 		return this.id;
 	}
@@ -74,12 +74,12 @@ public class Imovel extends Endereco implements Serializable {
 	// bi-directional one-to-one association to Processocliente
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id")
-	public ProcessoExterno getProcessoExterno() {
-		return this.processoExterno;
+	public Processo getProcessoExterno() {
+		return this.processo;
 	}
 
-	public void setProcessoExterno(ProcessoExterno processoExterno) {
-		this.processoExterno = processoExterno;
+	public void setProcessoExterno(Processo processoExterno) {
+		this.processo = processoExterno;
 	}
 
 	public String getLatitude() {

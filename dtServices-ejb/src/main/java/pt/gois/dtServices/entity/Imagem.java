@@ -2,8 +2,7 @@ package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -12,19 +11,17 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQueries( {
-	@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i"),
-	@NamedQuery(name="Imagem.findByImovel", query="SELECT i FROM Imagem i join i.imovels im WHERE im.id = :imovelId"),
-	@NamedQuery(name="Imagem.findById", query="SELECT i FROM Imagem i WHERE i.id = :id")
-})
-public class Imagem extends GeneralEntity implements Serializable {
+@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i")
+public class Imagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String descricao;
+	private String filename;
 	private byte[] imagem;
-	String filename;
-	String mimeType;
-	Long size;
+	private String mimeType;
+	private int size;
+	private Date updateDt;
+	private String updateUser;
 	private List<Imovel> imovels;
 	private List<Servico> servicos;
 
@@ -52,6 +49,15 @@ public class Imagem extends GeneralEntity implements Serializable {
 	}
 
 
+	public String getFilename() {
+		return this.filename;
+	}
+
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
+
+
 	@Lob
 	public byte[] getImagem() {
 		return this.imagem;
@@ -59,6 +65,43 @@ public class Imagem extends GeneralEntity implements Serializable {
 
 	public void setImagem(byte[] imagem) {
 		this.imagem = imagem;
+	}
+
+
+	public String getMimeType() {
+		return this.mimeType;
+	}
+
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
+	}
+
+
+	public int getSize() {
+		return this.size;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getUpdateDt() {
+		return this.updateDt;
+	}
+
+	public void setUpdateDt(Date updateDt) {
+		this.updateDt = updateDt;
+	}
+
+
+	public String getUpdateUser() {
+		return this.updateUser;
+	}
+
+	public void setUpdateUser(String updateUser) {
+		this.updateUser = updateUser;
 	}
 
 
@@ -74,9 +117,6 @@ public class Imagem extends GeneralEntity implements Serializable {
 			}
 		)
 	public List<Imovel> getImovels() {
-		if( this.imovels == null ){
-			this.imovels = new ArrayList<Imovel>();
-		}
 		return this.imovels;
 	}
 
@@ -85,7 +125,7 @@ public class Imagem extends GeneralEntity implements Serializable {
 	}
 
 
-	//bi-directional many-to-one association to ImagemServico
+	//bi-directional many-to-many association to Servico
 	@ManyToMany
 	@JoinTable(
 		name="imagem_servico"
@@ -104,35 +144,4 @@ public class Imagem extends GeneralEntity implements Serializable {
 		this.servicos = servicos;
 	}
 
-
-	public String getFilename() {
-		return filename;
-	}
-
-
-	public void setFilename(String filename) {
-		this.filename = filename;
-	}
-
-
-	public String getMimeType() {
-		return mimeType;
-	}
-
-
-	public void setMimeType(String mimeType) {
-		this.mimeType = mimeType;
-	}
-
-
-	public Long getSize() {
-		return size;
-	}
-
-
-	public void setSize(Long size) {
-		this.size = size;
-	}
-	
-	
 }

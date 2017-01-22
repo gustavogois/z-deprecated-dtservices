@@ -15,41 +15,33 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.ValidatorException;
 
-import pt.gois.dtServices.business.EntidadeDeFacturacaoSBLocal;
 import pt.gois.dtServices.business.HistoricoSBLocal;
 import pt.gois.dtServices.business.ServicoSBLocal;
-import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
+import pt.gois.dtServices.business.TipoEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSB;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.EntidadeDeFacturacao;
-import pt.gois.dtServices.entity.EstadosProcesso;
-import pt.gois.dtServices.entity.EstadosServico;
+import pt.gois.dtServices.entity.EstadoProcesso;
+import pt.gois.dtServices.entity.EstadoServico;
 import pt.gois.dtServices.entity.Historico;
-import pt.gois.dtServices.entity.ProcInternoView;
-import pt.gois.dtServices.entity.ProcessoInterno;
+import pt.gois.dtServices.entity.Processo;
+import pt.gois.dtServices.entity.ProcessoView;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.TipoEstado;
 import pt.gois.dtServices.entity.TipoServico;
-import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
+public class ProcessoEditMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.ProcessoExternoSBLocal sbProcessoExterno;
+	private pt.gois.dtServices.business.ProcessoSBLocal sb;
 	
 	@EJB
-	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
+	private pt.gois.dtServices.business.ProcessoViewSBLocal sbProcView;
 	
-	@EJB
-	private pt.gois.dtServices.business.ProcInternoViewSBLocal sbProcView;
-	
-	@EJB
-	private EntidadeDeFacturacaoSBLocal sbEntidade;
-
 	@EJB
 	private TipoServicoSBLocal sbTipoServico;
 	
@@ -57,7 +49,7 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	private ServicoSBLocal sbServico;
 
 	@EJB
-	private TipoDeEstadoSBLocal sbTipoEstado;
+	private TipoEstadoSBLocal sbTipoEstado;
 	
 	@EJB
 	private HistoricoSBLocal sbHistorico;
@@ -66,44 +58,44 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	private UserSessionMB userSessionMB;
 
 	
-	ProcessoInterno processoInterno;
+	Processo processo;
 	Servico servico;
 	TipoServico tipoServico;
 	
 	Integer idProcessoExterno;
-	EstadosProcesso estadoProcesso;
+	EstadoProcesso estadoProcesso;
 
 	String nomeEstadoAtual;
 	String acao;
 	Calendar data;
 
 	
-	public boolean canEdit(ProcInternoView processo) {
+	public boolean canEdit(ProcessoView processo) {
 		return sb.canEdit(processo);
 	}
 	
-	public boolean canFaturar(ProcInternoView processo) {
+	public boolean canFaturar(ProcessoView processo) {
 		return sb.canFaturar(processo);
 	}
 	
-	public boolean canPagar(ProcInternoView processo) {
+	public boolean canPagar(ProcessoView processo) {
 		return sb.canPagar(processo);
 	}
 	
 	public String getNomeEstadoAtual() {
 		if(nomeEstadoAtual == null || nomeEstadoAtual.equals("")) {
-			Integer id = getProcessoInterno().getId();  
+			Integer id = getProcesso().getId();  
 			if(id != null) {
-				ProcInternoView procView = sbProcView.findById(id);
+				ProcessoView procView = sbProcView.findById(id);
 				nomeEstadoAtual = procView.getNomeEstado();
 			}
 		}			
 		return nomeEstadoAtual;
 	}
 
-	public List<TiposDeEstado> getEstadosServico() throws Exception {
+	public List<TipoEstado> getEstadosServico() throws Exception {
 
-		List<TiposDeEstado> estados = sbTipoEstado.findByGroup(TipoDeEstadoSBLocal.SERVICOS);
+		List<TipoEstado> estados = sbTipoEstado.findByGroup(TipoEstadoSBLocal.SERVICOS);
 		
 		return estados;
 	}
@@ -114,16 +106,10 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return servicos;
 	}
 	
-	public List<EntidadeDeFacturacao> getEntidades() throws Exception {
-
-		List<EntidadeDeFacturacao> entidades = sbEntidade.findAll();
-		return entidades;
-	}
-
 	public PaginatedDataModel<Servico> getServicoByProcesso() throws Exception{
-		processoInterno = getProcessoInterno();
+		processo = getProcesso();
 		SearchPageCtrl<Servico> searchPageCtrl = new SearchPageCtrl<Servico>();
-		searchPageCtrl.getFilters().put("obj.processo.id", processoInterno.getId());
+		searchPageCtrl.getFilters().put("obj.processo.id", processo.getId());
 		
 		return new PaginatedDataModel<Servico>(searchPageCtrl, sbServico);
 	}
@@ -135,35 +121,29 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
 		}
 
-		SearchPageCtrl<ProcessoInterno> searchPageCtrl = new SearchPageCtrl<ProcessoInterno>();
+		SearchPageCtrl<Processo> searchPageCtrl = new SearchPageCtrl<Processo>();
 		searchPageCtrl.getFilters().put("nome", value);
-		List<ProcessoInterno> processos = sb.find(searchPageCtrl).getRows();
+		List<Processo> processos = sb.find(searchPageCtrl).getRows();
 		if (processos != null && processos.size() > 0 ) {
-			if( processos.size() == 1 && ( processos.get(0).getId() == processoInterno.getId() ) ){
+			if( processos.size() == 1 && ( processos.get(0).getId() == processo.getId() ) ){
 				return;
 			}
 			throw new ValidatorException(getMessage("default_msg_exists",FacesMessage.SEVERITY_ERROR));
 		}
 	}
 	
-	public String create() {
-		processoInterno = new ProcessoInterno();
-		sb.create(processoInterno);
-		return "processoInternoEdit";
-	}
-	
 	public String save(){
 		
-		ProcessoInterno processoInterno = getProcessoInterno();
+		Processo Processo = getProcesso();
 		
 		if(isFaturando()) {
-			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, userSessionMB.getUser());
+			sb.salvar(Processo, TipoEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, userSessionMB.getUser());
 		} else if(isPagando()) {
-			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_PAGO, data, userSessionMB.getUser());
+			sb.salvar(Processo, TipoEstadoSBLocal.PI_PAGO, data, userSessionMB.getUser());
 		} else if(!isEditing()){
-			sb.salvar(processoInterno, TipoDeEstadoSBLocal.PI_CRIADO, data, userSessionMB.getUser()); 
+			sb.salvar(Processo, TipoEstadoSBLocal.PI_CRIADO, data, userSessionMB.getUser()); 
 		} else { 
-			sb.save(getProcessoInterno());
+			sb.save(getProcesso());
 		}
 		
 		return "/pages/processoExterno/processoExternoEdit?faces-redirect=true&id=" + idProcessoExterno;
@@ -171,13 +151,14 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 
 	public List<Historico> getHistorico() {
 		
-		return sbHistorico.findByObjectAndType(getId(), TipoDeEstadoSBLocal.PROCESSO_INTERNO);
+		return sbHistorico.findByObjectAndType(getId(), TipoEstadoSBLocal.PROCESSO_INTERNO);
 	}
 
 	
-	public void delete( ProcessoInterno processo ){
+	public void delete( ProcessoView processo ){
 		try {
-			sb.delete(processo);
+			
+			sb.delete(sb.findById(processo.getId()));
 		} catch(EJBException e) {
 			if(sb.isCauseException(TipoServicoSB.CONSTRAINT_VIOLATION_EXCEPTION, e)) {
 				String mensagem = "Não é possível excluir este Processo Interno. Existem Serviços associados.";
@@ -189,26 +170,25 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		}
 	}
 	
-	public ProcessoInterno getProcessoInterno() {
-		if( processoInterno == null ){
+	public Processo getProcesso() {
+		if( processo == null ){
 			Integer id = getId();
 			if( id != null ){
-				processoInterno = sb.findById( getId() );
+				processo = sb.findById( getId() );
 			}else{
-				processoInterno = new ProcessoInterno();
-				processoInterno.setProcessoExterno( sbProcessoExterno.findById( getIdProcessoExterno() ) );
+				processo = new Processo();
 				
 				servico = new Servico();
-				servico.setEstadosServicos(new ArrayList<EstadosServico>());
+				servico.setEstadoServicos(new ArrayList<EstadoServico>());
 				
 				tipoServico = new TipoServico();
 				
-				processoInterno.setEstadosProcesso(new ArrayList<EstadosProcesso>());
+				processo.setEstadoProcessos(new ArrayList<EstadoProcesso>());
 				data = Calendar.getInstance();
 				
 			}
 		}
-		return processoInterno;
+		return processo;
 	}
 	
 	public boolean isCreating() {
@@ -227,15 +207,15 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		return (acao != null && acao.equals("PAGAR"));
 	}
 	
-	public void setProcessoInterno(ProcessoInterno processo) {
-		this.processoInterno = processo;
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
 
-	public pt.gois.dtServices.business.ProcessoInternoSBLocal getSb() {
+	public pt.gois.dtServices.business.ProcessoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSBLocalb(pt.gois.dtServices.business.ProcessoInternoSBLocal sb) {
+	public void setSBLocalb(pt.gois.dtServices.business.ProcessoSBLocal sb) {
 		this.sb = sb;
 	}
 	public Servico getServico() {
@@ -246,28 +226,12 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		this.servico = servico;
 	}
 
-	public EntidadeDeFacturacaoSBLocal getSbEntidade() {
-		return sbEntidade;
-	}
-
-	public void setSbEntidade(EntidadeDeFacturacaoSBLocal sbEntidade) {
-		this.sbEntidade = sbEntidade;
-	}
-
 	public TipoServico getTipoServico() {
 		return tipoServico;
 	}
 
 	public void setTipoServico(TipoServico tipoServico) {
 		this.tipoServico = tipoServico;
-	}
-
-	public pt.gois.dtServices.business.ProcessoExternoSBLocal getSbProcessoExterno() {
-		return sbProcessoExterno;
-	}
-
-	public void setSbProcessoExterno(pt.gois.dtServices.business.ProcessoExternoSBLocal sbProcessoExterno) {
-		this.sbProcessoExterno = sbProcessoExterno;
 	}
 
 	public TipoServicoSBLocal getSbTipoServico() {
@@ -286,15 +250,15 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		this.sbServico = sbServico;
 	}
 
-	public TipoDeEstadoSBLocal getSbTipoEstado() {
+	public TipoEstadoSBLocal getSbTipoEstado() {
 		return sbTipoEstado;
 	}
 
-	public void setSbTipoEstado(TipoDeEstadoSBLocal sbTipoEstado) {
+	public void setSbTipoEstado(TipoEstadoSBLocal sbTipoEstado) {
 		this.sbTipoEstado = sbTipoEstado;
 	}
 
-	public void setSb(pt.gois.dtServices.business.ProcessoInternoSBLocal sb) {
+	public void setSb(pt.gois.dtServices.business.ProcessoSBLocal sb) {
 		this.sb = sb;
 	}
 
@@ -306,14 +270,14 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 		this.idProcessoExterno = idProcessoExterno;
 	}
 	
-	public EstadosProcesso getEstadoProcesso() {
+	public EstadoProcesso getEstadoProcesso() {
 		if(estadoProcesso == null) {
-			estadoProcesso = new EstadosProcesso();
+			estadoProcesso = new EstadoProcesso();
 		}
 		return estadoProcesso;
 	}
 
-	public void setEstadoProcesso(EstadosProcesso estadoProcesso) {
+	public void setEstadoProcesso(EstadoProcesso estadoProcesso) {
 		this.estadoProcesso = estadoProcesso;
 	}
 	public String getAcao() {
@@ -342,6 +306,4 @@ public class ProcessoInternoEditMB extends GeneralMB implements Serializable {
 	public void setUserSessionMB(UserSessionMB userSessionMB) {
 		this.userSessionMB = userSessionMB;
 	}
-
-
 }

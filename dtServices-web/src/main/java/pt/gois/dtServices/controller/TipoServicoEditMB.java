@@ -27,35 +27,6 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 	
 	TipoServico tipoServico;
 	
-	public void validateName(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-		String name = (String) value;
-
-		if (name.trim().length() == 0) {
-			throw new ValidatorException(getMessage("default_msg_emptyTerm",FacesMessage.SEVERITY_ERROR));
-		}
-
-		SearchPageCtrl<TipoServico> searchPageCtrl = new SearchPageCtrl<TipoServico>();
-		searchPageCtrl.getFilters().put("nome", value);
-		List<TipoServico> tipoServicos = sb.find(searchPageCtrl).getRows();
-		if (tipoServicos != null && tipoServicos.size() > 0 ) {
-			if( tipoServicos.size() == 1 && ( tipoServicos.get(0).getId() == tipoServico.getId() ) ){
-				return;
-			}
-			throw new ValidatorException(getMessage("default_msg_exists",FacesMessage.SEVERITY_ERROR));
-		}
-	}
-	
-	public void validateValor(FacesContext context, UIComponent toValidate, Object value) throws Exception {
-		
-	}
-	
-	public String create() {
-		tipoServico = new TipoServico();
-		//TipoServico.setSolicitante(new Solicitante());
-		sb.create(tipoServico);
-		return "tipoServicoEdit";
-	}
-	
 	public String save(){
 		TipoServico tipoServico = getTipoServico();
 		if( tipoServico.getId() != null ){

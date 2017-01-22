@@ -2,7 +2,6 @@ package pt.gois.dtServices.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,14 +10,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
+import pt.gois.dtServices.business.ProcessoSBLocal;
 import pt.gois.dtServices.business.ServicoViewSBLocal;
-import pt.gois.dtServices.business.TipoDeEstadoSBLocal;
-import pt.gois.dtServices.entity.EstadosServico;
-import pt.gois.dtServices.entity.ProcessoInterno;
+import pt.gois.dtServices.business.TipoEstadoSBLocal;
+import pt.gois.dtServices.business.TipoServicoSBLocal;
+import pt.gois.dtServices.entity.EstadoServico;
+import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.ServicoView;
-import pt.gois.dtServices.entity.TipoServicoSolicitante;
-import pt.gois.dtServices.entity.TiposDeEstado;
+import pt.gois.dtServices.entity.TipoEstado;
+import pt.gois.dtServices.entity.TipoServico;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -32,16 +33,17 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	private ServicoViewSBLocal sbServicoView;
 	
 	@EJB
-	private pt.gois.dtServices.business.ProcessoInternoSBLocal sbProcessoInterno;
+	private ProcessoSBLocal sbProcesso;
+	
 	@EJB
-	private pt.gois.dtServices.business.TipoServicoSolicitanteSBLocal sbTipoServicoSolicitante;
+	private TipoServicoSBLocal sbTipoServico;
 	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 
 	
 	Servico servico;
-	Integer idProcessoInterno;
+	Integer idProcesso;
 	
 	String nomeEstadoAtual;
 	String observacaoEstado;
@@ -49,53 +51,54 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	String acao;
 	Date datap;
 
-	public List<TipoServicoSolicitante> getTiposServicoSolicitante() {
+	public List<TipoServico> getTiposServicoSolicitante() {
 		
-		ProcessoInterno processoInterno = sbProcessoInterno.findById(idProcessoInterno);
+		Processo processo = sbProcesso.findById(idProcesso);
 		
-		Integer idSolicitante = processoInterno.getProcessoExterno().getSolicitante().getId();
+		Integer idSolicitante = processo.getSolicitante().getId();
 		
-		SearchPageCtrl<TipoServicoSolicitante> searchPageCtrl = new SearchPageCtrl<TipoServicoSolicitante>();
+		SearchPageCtrl<TipoServico> searchPageCtrl = new SearchPageCtrl<TipoServico>();
 		searchPageCtrl.getFilters().put("solicitante.id", idSolicitante);
-		List<TipoServicoSolicitante> tss = sbTipoServicoSolicitante.find(searchPageCtrl).getRows();
+		List<TipoServico> tss = sbTipoServico.find(searchPageCtrl).getRows();
 		
 		return tss;
 		
 	}
 	
 	public void onServicoChange() {
-		TipoServicoSolicitante tss = sbTipoServicoSolicitante.findById(servico.getTipoServicoSolicitante().getId());
+		TipoServico tss = sbTipoServico.findById(servico.getTipoServico().getId());
 		servico.setValor(tss.getValor());
 	}
 	
-	private Calendar getDataCalendar() {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(datap);
-		return calendar;
+	private Date getDataCalendar() {
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.setTime(datap);
+//		return calendar;
+		return datap;
 	}
 	
 	private void adicionaNovoEstado(Servico servico) {
 		
-		EstadosServico novoEstado = new EstadosServico();
-		TiposDeEstado tipo;
+		EstadoServico novoEstado = new EstadoServico();
+		TipoEstado tipo;
 		
 		if(isStarting()) {
-			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO);
+			tipo = new TipoEstado(TipoEstadoSBLocal.SRV_EM_EXECUCAO);
 		} else if(isSuspending()) {
-			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_SUSPENSO);
+			tipo = new TipoEstado(TipoEstadoSBLocal.SRV_SUSPENSO);
 		} else if(isFinalizing()) {
-			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_FINALIZADO);
+			tipo = new TipoEstado(TipoEstadoSBLocal.SRV_FINALIZADO);
 		} else if(!isEditing()){
-			tipo = new TiposDeEstado(TipoDeEstadoSBLocal.SRV_CRIADO);
+			tipo = new TipoEstado(TipoEstadoSBLocal.SRV_CRIADO);
 		} else {
 			return;
 		}
 		
-		novoEstado.setTiposDeEstado(tipo);
-		novoEstado.setDtInicio(getDataCalendar());
-		novoEstado.setUser(userSessionMB.getUser());
+		novoEstado.setTipoEstado(tipo);
+		novoEstado.setDataInicio(getDataCalendar());
+		novoEstado.setUser(userSessionMB.getUser().getId());
 		novoEstado.setObservacoes(observacaoEstado);
-		servico.getEstadosServicos().add(novoEstado);
+		servico.getEstadoServicos().add(novoEstado);
 	}
 	
 	public String save(){
@@ -106,7 +109,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		
 		sb.salvar(servico, userSessionMB.getUser());
 		
-		return "/pages/processoInterno/processoInternoEdit?faces-redirect=true&id=" + idProcessoInterno;
+		return "/pages/Processo/ProcessoEdit?faces-redirect=true&id=" + idProcesso;
 	}
 	
 	public boolean isCreating() {
@@ -147,9 +150,9 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	}
 	
 	private void initServico(Servico servico) {
-		servico.setProcessoInterno(sbProcessoInterno.findById( idProcessoInterno ) );
-		servico.setTipoServicoSolicitante(new TipoServicoSolicitante());
-		servico.setEstadosServicos(new ArrayList<EstadosServico>());
+		servico.setProcesso(sbProcesso.findById( idProcesso ) );
+		servico.setTipoServico(new TipoServico());
+		servico.setEstadoServicos(new ArrayList<EstadoServico>());
 	}
 	
 	public String getNomeEstadoAtual() {
@@ -212,12 +215,12 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public void setSBLocalb(pt.gois.dtServices.business.ServicoSBLocal sb) {
 		this.sb = sb;
 	}
-	public Integer getIdProcessoInterno() {
-		return idProcessoInterno;
+	public Integer getIdProcesso() {
+		return idProcesso;
 	}
 
-	public void setIdProcessoInterno(Integer idProcessoInterno) {
-		this.idProcessoInterno = idProcessoInterno;
+	public void setIdProcesso(Integer idProcesso) {
+		this.idProcesso = idProcesso;
 	}
 	
 	public String getObservacaoEstado() {

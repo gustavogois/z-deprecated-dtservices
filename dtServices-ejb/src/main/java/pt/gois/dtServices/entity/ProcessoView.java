@@ -17,29 +17,38 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="v_processo")
-@NamedQuery(name="ProcInternoView.findAll", query="SELECT p FROM ProcInternoView p")
-public class ProcInternoView implements Serializable {
+@NamedQuery(name="ProcessoView.findAll", query="SELECT p FROM ProcessoView p")
+public class ProcessoView implements Serializable {
 	private static final long serialVersionUID = 1L;
+	@Id
 	private Integer id;
 	private Integer idEstado; 
 	private String nomeEstado;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtEstado;
-	private Integer processoExternoId;
-	private String idProcCliente;
+	private String codExterno;
+	private String codInterno;
 
-	
-	public String getIdProcCliente() {
-		return idProcCliente;
-	}
-
-	public void setIdProcCliente(String idProcCliente) {
-		this.idProcCliente = idProcCliente;
-	}
-
-	public ProcInternoView() {
+	public ProcessoView() {
 	}
 	
-	@Id
+	public String getCodExterno() {
+		return codExterno;
+	}
+
+	public void setCodExterno(String codExterno) {
+		this.codExterno = codExterno;
+	}
+
+	public String getCodInterno() {
+		return codInterno;
+	}
+
+	public void setCodInterno(String codInterno) {
+		this.codInterno = codInterno;
+	}
+
+	
 	public Integer getId() {
 		return this.id;
 	}
@@ -56,7 +65,6 @@ public class ProcInternoView implements Serializable {
 		this.idEstado = idEstado;
 	}
 
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDtEstado() {
 		return this.dtEstado;
 	}
@@ -72,14 +80,6 @@ public class ProcInternoView implements Serializable {
 
 	public void setNomeEstado(String nomeEstado) {
 		this.nomeEstado = nomeEstado;
-	}
-
-	public Integer getProcessoExternoId() {
-		return processoExternoId;
-	}
-
-	public void setProcessoExternoId(Integer processoExternoId) {
-		this.processoExternoId = processoExternoId;
 	}
 
 }

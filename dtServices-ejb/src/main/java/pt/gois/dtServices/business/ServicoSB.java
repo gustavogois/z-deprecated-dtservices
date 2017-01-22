@@ -1,22 +1,17 @@
 package pt.gois.dtServices.business;
 
-import java.util.Calendar;
-
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import pt.gois.dtServices.entity.EstadosServico;
 import pt.gois.dtServices.entity.Servico;
-import pt.gois.dtServices.entity.ServicoView;
-import pt.gois.dtServices.entity.TiposDeEstado;
 import pt.gois.dtServices.entity.User;
 
 @Stateless
 public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 
 	@EJB
-	ProcessoInternoSBLocal sbPI;
+	ProcessoSBLocal sbPI;
 	
 	@EJB
 	ServicoViewSBLocal sbServicoView;
@@ -46,7 +41,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			create( servico );
 		}
 		
-		sbPI.checkStatusProcessoInterno(servico.getProcessoInterno().getId(), user);
+		sbPI.checkStatusProcesso(servico.getProcesso().getId(), user);
 		
 	}
 
@@ -55,9 +50,9 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 		if(servico == null || servico.getId() == null) {
 			return false;
 		} else {
-			Integer idTipo = (sbServicoView.findById(servico.getId())).getIdTipo();
-			return idTipo.equals(TipoDeEstadoSBLocal.SRV_CRIADO) || 
-					idTipo.equals(TipoDeEstadoSBLocal.SRV_SUSPENSO) ? true : false;
+			Integer idEstado = (sbServicoView.findById(servico.getId())).getIdEstado();
+			return idEstado.equals(TipoEstadoSBLocal.SRV_CRIADO) || 
+					idEstado.equals(TipoEstadoSBLocal.SRV_SUSPENSO) ? true : false;
 			
 		}
 	}
@@ -67,8 +62,8 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 		if(servico == null || servico.getId() == null) {
 			return false;
 		} else {
-			Integer idTipo = (sbServicoView.findById(servico.getId())).getIdTipo();
-			return idTipo.equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO) ? true : false;
+			Integer idEstado = (sbServicoView.findById(servico.getId())).getIdEstado();
+			return idEstado.equals(TipoEstadoSBLocal.SRV_EM_EXECUCAO) ? true : false;
 		}
 	}
 
@@ -77,9 +72,9 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 		if(servico == null || servico.getId() == null) {
 			return false;
 		} else {
-			Integer idTipo = (sbServicoView.findById(servico.getId())).getIdTipo();
-			return idTipo.equals(TipoDeEstadoSBLocal.SRV_EM_EXECUCAO) ||
-				idTipo.equals(TipoDeEstadoSBLocal.SRV_SUSPENSO);
+			Integer idEstado = (sbServicoView.findById(servico.getId())).getIdEstado();
+			return idEstado.equals(TipoEstadoSBLocal.SRV_EM_EXECUCAO) ||
+					idEstado.equals(TipoEstadoSBLocal.SRV_SUSPENSO);
 		}
 	}
 

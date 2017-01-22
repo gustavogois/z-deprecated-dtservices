@@ -8,45 +8,45 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import pt.gois.dtServices.business.ProcessoInternoSBLocal;
+import pt.gois.dtServices.business.ProcessoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
-import pt.gois.dtServices.entity.ProcInternoView;
-import pt.gois.dtServices.entity.ProcessoInterno;
+import pt.gois.dtServices.entity.Processo;
+import pt.gois.dtServices.entity.ProcessoView;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
 @ViewScoped
-public class ProcessoInternoListMB extends GeneralMB implements Serializable {
+public class ProcessoListMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	private pt.gois.dtServices.business.ProcessoInternoSBLocal sb;
+	private pt.gois.dtServices.business.ProcessoSBLocal sb;
 
 	@EJB
-	private pt.gois.dtServices.business.ProcInternoViewSBLocal sbProcView;
+	private pt.gois.dtServices.business.ProcessoViewSBLocal sbProcView;
 	
-	PaginatedDataModel<ProcInternoView> list;
+	PaginatedDataModel<ProcessoView> list;
 	Integer idProcessoExterno;
 	
-	public PaginatedDataModel<ProcInternoView> getList() {
+	public PaginatedDataModel<ProcessoView> getList() {
 		return list(null);
 	}
 
-	public PaginatedDataModel<ProcInternoView> list(Integer idProcessoExterno) {
+	public PaginatedDataModel<ProcessoView> list(Integer idProcessoExterno) {
 		this.setIdProcessoExterno(idProcessoExterno);
 		if (list == null) {
-			SearchPageCtrl<ProcInternoView> searchPageCtrl = new SearchPageCtrl<ProcInternoView>();
+			SearchPageCtrl<ProcessoView> searchPageCtrl = new SearchPageCtrl<ProcessoView>();
 			Map<String, Object> filters = searchPageCtrl.getFilters();
 			searchPageCtrl.setAndFilter(true);
 			if( idProcessoExterno != null ){
 				filters.put("processoExternoId", idProcessoExterno);
 			}
-			list = new PaginatedDataModel<ProcInternoView>(searchPageCtrl, sbProcView);
+			list = new PaginatedDataModel<ProcessoView>(searchPageCtrl, sbProcView);
 		}
 		return list;
 	}
 
-	public void setList(PaginatedDataModel<ProcInternoView> list) {
+	public void setList(PaginatedDataModel<ProcessoView> list) {
 		this.list = list;
 	}
 
@@ -54,15 +54,15 @@ public class ProcessoInternoListMB extends GeneralMB implements Serializable {
 		list = null;
 	}
 
-	public ProcessoInternoSBLocal getSb() {
+	public ProcessoSBLocal getSb() {
 		return sb;
 	}
 
-	public void setSb(ProcessoInternoSBLocal sb) {
+	public void setSb(ProcessoSBLocal sb) {
 		this.sb = sb;
 	}
 
-	public List<ProcessoInterno> getProcessos(){
+	public List<Processo> getProcessos(){
 		return sb.findAll();
 	}
 

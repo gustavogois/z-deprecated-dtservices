@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import pt.gois.dtServices.entity.TiposDeEstado;
+import pt.gois.dtServices.entity.TipoEstado;
 
 @Local
-public interface TipoDeEstadoSBLocal extends GeneralSBLocal<TiposDeEstado>{
+public interface TipoEstadoSBLocal extends GeneralSBLocal<TipoEstado>{
 	
 	// Grupos
 	public static final Integer PROCESSO_EXTERNO = 1;
@@ -35,8 +35,8 @@ public interface TipoDeEstadoSBLocal extends GeneralSBLocal<TiposDeEstado>{
 	public static final Integer SRV_SUSPENSO = 14;
 	
 	
-	public List<TiposDeEstado> findByGroup(Integer group);
+	public List<TipoEstado> findByGroup(Integer group);
 	
-	public List<TiposDeEstado> findNextStates(Integer idGroup, Integer idActualState);
+	public List<TipoEstado> findNextStates(Integer idGroup, Integer idActualState);
 
 }

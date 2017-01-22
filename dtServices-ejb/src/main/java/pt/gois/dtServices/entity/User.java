@@ -26,7 +26,7 @@ public class User extends GeneralEntity implements Serializable {
 	boolean locked;
 	Date expiryDate;
 	Date createDt;
-
+	
 	public User() {
 	}
 
@@ -110,4 +110,5 @@ public class User extends GeneralEntity implements Serializable {
 	public void setLocked(boolean locked) {
 		this.locked = locked;
 	}
+
 }

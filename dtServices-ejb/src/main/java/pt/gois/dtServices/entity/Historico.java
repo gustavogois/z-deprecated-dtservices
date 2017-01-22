@@ -6,40 +6,39 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the historico database table.
+ * The persistent class for the t_historico database table.
  * 
  */
 @Entity
-@NamedQueries({
-@NamedQuery(name="Historico.findAll", query="SELECT h FROM Historico h"),
-@NamedQuery(name="Historico.findByObjectAndType", query="SELECT h FROM Historico h where h.idObjeto=:pObjectId and h.tipoObjeto=:pType")
-})
+@Table(name="t_historico")
+@NamedQuery(name="Historico.findAll", query="SELECT t FROM Historico t")
 public class Historico implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private Integer id;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private int id;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
+
 	private String descricao;
-	private Integer idObjeto;
-	private Integer tipoObjeto;
 
+	private int objetoId;
 
+	private int tipoObjetoId;
 
 	public Historico() {
 	}
 
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-
-	@Temporal(TemporalType.DATE)
 	public Date getData() {
 		return this.data;
 	}
@@ -47,7 +46,6 @@ public class Historico implements Serializable {
 	public void setData(Date data) {
 		this.data = data;
 	}
-
 
 	public String getDescricao() {
 		return this.descricao;
@@ -57,21 +55,20 @@ public class Historico implements Serializable {
 		this.descricao = descricao;
 	}
 
-
-	public Integer getIdObjeto() {
-		return this.idObjeto;
+	public int getObjetoId() {
+		return this.objetoId;
 	}
 
-	public void setIdObjeto(Integer idObjeto) {
-		this.idObjeto = idObjeto;
-	}
-	public Integer getTipoObjeto() {
-		return tipoObjeto;
+	public void setObjetoId(int objetoId) {
+		this.objetoId = objetoId;
 	}
 
+	public int getTipoObjetoId() {
+		return this.tipoObjetoId;
+	}
 
-	public void setTipoObjeto(Integer tipoObjeto) {
-		this.tipoObjeto = tipoObjeto;
+	public void setTipoObjetoId(int tipoObjetoId) {
+		this.tipoObjetoId = tipoObjetoId;
 	}
 
 }

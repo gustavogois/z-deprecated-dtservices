@@ -1,37 +1,66 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
 
 /**
- * The persistent class for the servico database table.
+ * The persistent class for the t_servico database table.
  * 
  */
 @Entity
-@NamedQuery(name="Servico.findAll", query="SELECT s FROM Servico s")
+@Table(name="t_servico")
+@NamedQuery(name="Servico.findAll", query="SELECT t FROM Servico t")
 public class Servico implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+
+	@Temporal(TemporalType.DATE)
 	private Date dtCadastro;
-	private Date dtFim;
-	private Date dtInicio;
+
 	private String observacoes;
-	private ProcessoInterno processoInterno;
-	private TipoServicoSolicitante tipoServicoSolicitante;
+
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updateDt;
+
 	private String updateUser;
+
 	private double valor;
-	private List<EstadosServico> estadosServicos;
+
+	//bi-directional many-to-one association to TEstadoServico
+	@OneToMany(mappedBy="servico")
+	private List<EstadoServico> estadoServicos;
+
+	//bi-directional many-to-one association to TipoServico
+	@ManyToOne
+	@JoinColumn(name="tipoServicoId")
+	private TipoServico tipoServico;
+
+	//bi-directional many-to-one association to Processo
+	@ManyToOne
+	@JoinColumn(name="processoId")
+	private Processo processo;
 
 	public Servico() {
 	}
 
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return this.id;
 	}
@@ -40,8 +69,6 @@ public class Servico implements Serializable {
 		this.id = id;
 	}
 
-
-	@Temporal(TemporalType.DATE)
 	public Date getDtCadastro() {
 		return this.dtCadastro;
 	}
@@ -49,27 +76,6 @@ public class Servico implements Serializable {
 	public void setDtCadastro(Date dtCadastro) {
 		this.dtCadastro = dtCadastro;
 	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtFim() {
-		return this.dtFim;
-	}
-
-	public void setDtFim(Date dtFim) {
-		this.dtFim = dtFim;
-	}
-
-
-	@Temporal(TemporalType.DATE)
-	public Date getDtInicio() {
-		return this.dtInicio;
-	}
-
-	public void setDtInicio(Date dtInicio) {
-		this.dtInicio = dtInicio;
-	}
-
 
 	public String getObservacoes() {
 		return this.observacoes;
@@ -79,28 +85,6 @@ public class Servico implements Serializable {
 		this.observacoes = observacoes;
 	}
 
-	@ManyToOne
-	@JoinColumn(name="processoId")
-	public ProcessoInterno getProcessoInterno() {
-		return this.processoInterno;
-	}
-
-	public void setProcessoInterno(ProcessoInterno processoInterno) {
-		this.processoInterno = processoInterno;
-	}
-
-	@OneToOne
-	@JoinColumn(name="tipoServico_SolicitanteId")
-	public TipoServicoSolicitante getTipoServicoSolicitante() {
-		return this.tipoServicoSolicitante;
-	}
-
-	public void setTipoServicoSolicitante(TipoServicoSolicitante tipoServicoSolicitante) {
-		this.tipoServicoSolicitante = tipoServicoSolicitante;
-	}
-
-
-	@Temporal(TemporalType.TIMESTAMP)
 	public Date getUpdateDt() {
 		return this.updateDt;
 	}
@@ -108,7 +92,6 @@ public class Servico implements Serializable {
 	public void setUpdateDt(Date updateDt) {
 		this.updateDt = updateDt;
 	}
-
 
 	public String getUpdateUser() {
 		return this.updateUser;
@@ -118,7 +101,6 @@ public class Servico implements Serializable {
 		this.updateUser = updateUser;
 	}
 
-
 	public double getValor() {
 		return this.valor;
 	}
@@ -127,31 +109,41 @@ public class Servico implements Serializable {
 		this.valor = valor;
 	}
 
-
-	//bi-directional many-to-one association to Estadosservico
-	@OneToMany(mappedBy="servico", fetch=FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-	public List<EstadosServico> getEstadosServicos() {
-		return this.estadosServicos;
+	public TipoServico getTipoServico() {
+		return this.tipoServico;
 	}
 
-	public void setEstadosServicos(List<EstadosServico> estadosservicos) {
-		this.estadosServicos = estadosservicos;
+	public void setTipoServico(TipoServico tipoServico) {
+		this.tipoServico = tipoServico;
 	}
 
-	public EstadosServico addEstadosservico(EstadosServico estadosservico) {
-		getEstadosServicos().add(estadosservico);
-		estadosservico.setServico(this);
-
-		return estadosservico;
+	public Processo getProcesso() {
+		return this.processo;
 	}
 
-	public EstadosServico removeEstadosservico(EstadosServico estadosservico) {
-		getEstadosServicos().remove(estadosservico);
-		estadosservico.setServico(null);
-
-		return estadosservico;
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
-	
+	public List<EstadoServico> getEstadoServicos() {
+		return this.estadoServicos;
+	}
 
+	public void setEstadoServicos(List<EstadoServico> estadoServicos) {
+		this.estadoServicos = estadoServicos;
+	}
+
+	public EstadoServico addEstadoServico(EstadoServico estadoServico) {
+		getEstadoServicos().add(estadoServico);
+		estadoServico.setServico(this);
+
+		return estadoServico;
+	}
+
+	public EstadoServico removeEstadoServico(EstadoServico estadoServico) {
+		getEstadoServicos().remove(estadoServico);
+		estadoServico.setServico(null);
+
+		return estadoServico;
+	}
 
 }
