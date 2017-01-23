@@ -3,6 +3,7 @@ mysql -u root -p dt_services_cp < BD\cp\codigo_postal.sql
 */
 
 delete from t_ref_tipo_estado;
+desc t_ref_tipo_estado;
 insert into t_ref_tipo_estado values (1, "Criado", "Processo");
 insert into t_ref_tipo_estado values (2, "Em execução", "Processo");
 insert into t_ref_tipo_estado values (3, "Finalizado - Aguardando Faturamento", "Processo");
@@ -18,7 +19,9 @@ delete from t_tipo_user;
 INSERT INTO t_tipo_user( id, descricao ) VALUES( 0, 'Root' );
 INSERT INTO t_tipo_user( id, descricao ) VALUES( 1, 'Admin' );
 INSERT INTO t_tipo_user( id, descricao ) VALUES( 2, 'Gerente' );
+select * from t_tipo_user;
 
 delete from t_users;
 INSERT INTO t_users(id, tipoDeUserId, username, password, name, phone, expiryDate, createDt, updateDt,updateUser)
 VALUES(null, 0, 'root','rootPass','root','',null, now(),now(),0);
+select * from t_users;
