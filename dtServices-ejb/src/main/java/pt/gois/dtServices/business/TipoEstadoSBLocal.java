@@ -26,6 +26,5 @@ public interface TipoEstadoSBLocal extends GeneralSBLocal<TipoEstado>{
 	
 	public List<TipoEstado> findByGroup(Integer group);
 	
-	public List<TipoEstado> findNextStates(Integer idGroup, Integer idActualState);
 
 }

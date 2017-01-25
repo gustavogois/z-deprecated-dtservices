@@ -21,8 +21,8 @@
 
 		<f:metadata>
 			<f:viewParam name="id" value="#{servicoEditMB.id}" />
-			<f:viewParam name="idProcessoInterno"
-				value="#{servicoEditMB.idProcessoInterno}" />
+			<f:viewParam name="idProcesso"
+				value="#{servicoEditMB.idProcesso}" />
 			<f:viewParam name="acao" value="#{servicoEditMB.acao}" />
 		</f:metadata>
 		<h:form id="servicoNew">
@@ -31,8 +31,8 @@
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
 						action="#{servicoEditMB.save}" icon="ui-icon-disk" />
 					<p:button value="Cancelar"
-						outcome="/pages/processoInterno/processoInternoEdit">
-						<f:param name="id" value="#{servicoEditMB.idProcessoInterno}" />
+						outcome="/pages/Processo/ProcessoEdit">
+						<f:param name="id" value="#{servicoEditMB.idProcesso}" />
 					</p:button>
 				</h:panelGrid>
 			</div>
@@ -150,7 +150,7 @@
 	</ui:define>
 
 	<ui:param name="pageTitle"
-		value="#{bundle.menu_cadastro_processo_interno}: #{servicoEditMB.idProcessoInterno} - #{bundle.menu_cadastro_servico}" />
+		value="#{bundle.menu_cadastro_processo_interno}: #{servicoEditMB.idProcesso} - #{bundle.menu_cadastro_servico}" />
 
 
 </ui:composition>

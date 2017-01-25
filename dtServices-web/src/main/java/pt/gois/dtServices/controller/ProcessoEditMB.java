@@ -304,13 +304,6 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 		return nomeEstadoAtual;
 	}
 
-	public List<TipoEstado> getEstadosServico() throws Exception {
-
-		List<TipoEstado> estados = sbTipoEstado.findByGroup(TipoEstadoSBLocal.SERVICOS);
-
-		return estados;
-	}
-
 	public List<TipoServico> getServicos() throws Exception {
 
 		List<TipoServico> servicos = sbTipoServico.findAll();
@@ -356,13 +349,8 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 		} else {
 			sb.save(getProcesso());
 		}
-		
+		addMessage("Processo salvo");
 		return "/pages/processo/processoEdit?faces-redirect=true&id=" + processo.getId();
-	}
-
-	public List<Historico> getHistorico() {
-
-		return sbHistorico.findByObjectAndType(getId(), TipoEstadoSBLocal.PROCESSO_INTERNO);
 	}
 
 	public void delete(ProcessoView processo) {

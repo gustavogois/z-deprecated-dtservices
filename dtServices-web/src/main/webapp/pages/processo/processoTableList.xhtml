@@ -33,11 +33,15 @@
 	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 	rowsPerPageTemplate="20, 50, 10">
 
-	<p:column headerText="#{bundle.default_field_ID}"
-		styleClass="column_id">
-		<h:outputText value="#{processo.id}" />
+	<p:column headerText="Código Externo">
+		<h:outputText value="#{processo.codExterno}" />
 	</p:column>
-
+	<p:column headerText="Código Interno">
+		<h:outputText value="#{processo.codInterno}" />
+	</p:column>
+	<p:column headerText="Solicitante">
+		<h:outputText value="#{processo.nomeSolicitante}" />
+	</p:column>
 	<p:column headerText="#{bundle.default_label_action}"
 		styleClass="column_action">
 		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"

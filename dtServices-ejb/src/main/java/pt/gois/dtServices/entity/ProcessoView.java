@@ -28,6 +28,24 @@ public class ProcessoView implements Serializable {
 	private Date dtEstado;
 	private String codExterno;
 	private String codInterno;
+	private Integer idSolicitante;
+	private String nomeSolicitante;
+
+	public Integer getIdSolicitante() {
+		return idSolicitante;
+	}
+
+	public void setIdSolicitante(Integer idSolicitante) {
+		this.idSolicitante = idSolicitante;
+	}
+
+	public String getNomeSolicitante() {
+		return nomeSolicitante;
+	}
+
+	public void setNomeSolicitante(String nomeSolicitante) {
+		this.nomeSolicitante = nomeSolicitante;
+	}
 
 	public ProcessoView() {
 	}
