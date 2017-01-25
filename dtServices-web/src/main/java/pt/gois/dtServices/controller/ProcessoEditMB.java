@@ -27,6 +27,7 @@ import pt.gois.dtServices.entity.Historico;
 import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.ProcessoView;
 import pt.gois.dtServices.entity.Servico;
+import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoEstado;
 import pt.gois.dtServices.entity.TipoServico;
 import pt.gois.dtServices.util.SearchPageCtrl;
@@ -36,6 +37,9 @@ import pt.gois.dtServices.util.SearchPageCtrl;
 public class ProcessoEditMB extends GeneralMB implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	@EJB
+	private pt.gois.dtServices.business.SolicitanteSBLocal sbSolicitante;
+	
 	@EJB
 	private pt.gois.dtServices.business.ProcessoSBLocal sb;
 	
@@ -70,6 +74,10 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 	Calendar data;
 
 	
+	public List<Solicitante> getSolicitantes() {
+		return sbSolicitante.findAll();
+	}
+
 	public boolean canEdit(ProcessoView processo) {
 		return sb.canEdit(processo);
 	}
@@ -185,6 +193,8 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 				
 				processo.setEstadoProcessos(new ArrayList<EstadoProcesso>());
 				data = Calendar.getInstance();
+				
+				processo.setSolicitante(new Solicitante());
 				
 			}
 		}

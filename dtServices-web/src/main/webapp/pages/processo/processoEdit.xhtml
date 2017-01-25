@@ -55,8 +55,18 @@
 							label="Código externo"
 							value="#{processoEditMB.processo.codExterno}" />
 						
+						<p:outputLabel
+							value="#{bundle.processo_externo_field_solicitante}" />
+						<p:selectOneMenu
+							value="#{processoEditMB.processo.solicitante.id}"
+							style="width:300px" required="true">
+							<f:selectItems value="#{processoEditMB.solicitantes}"
+								var="solicitante" itemValue="#{solicitante.id}"
+								itemLabel="#{solicitante.nome}" />
+						</p:selectOneMenu>
+						
 
-						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}" />
+						<p:outputLabel value="Requisitante" />
 						<p:inputText size="60"
 							label="Requisitante"
 							value="#{processoEditMB.processo.nomeRequisitante}"
