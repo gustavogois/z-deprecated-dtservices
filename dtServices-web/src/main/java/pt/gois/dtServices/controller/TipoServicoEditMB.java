@@ -34,7 +34,7 @@ public class TipoServicoEditMB extends GeneralMB implements Serializable {
 		}else{
 			sb.create( tipoServico );
 		}
-		return "tipoServicoList";
+		return "/pages/tipoServicos/tipoServicoList?faces-redirect=true";
 	}
 	
 	public void delete(TipoServico tipoServico){

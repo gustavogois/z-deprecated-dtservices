@@ -13,6 +13,8 @@ import org.primefaces.event.SelectEvent;
 
 import pt.gois.dtServices.business.TipoServicoSB;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
+import pt.gois.dtServices.entity.Concelho;
+import pt.gois.dtServices.entity.Distrito;
 import pt.gois.dtServices.entity.EnderecoVW;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoServico;
@@ -45,22 +47,14 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 	public String save() {
 		Solicitante solicitante = getSolicitante();
 		
-		salvaSolicitante(solicitante);
-		return "solicitanteList";
-	}
-
-	private void salvaSolicitante(Solicitante solicitante) {
-		
-		solicitante = getSolicitante();
-		
 		if (solicitante.getId() != null) {
 			sb.save(solicitante);
-			addMessage("default_msg_saved");
 		} else {
 			sb.create(solicitante);
-			addMessage("default_msg_created");
 		}
+		return "/pages/solicitante/solicitanteList?faces-redirect=true"; 
 	}
+
 
 	public String delete(Solicitante solicitante) {
 		try {
@@ -84,6 +78,8 @@ public class SolicitanteEditMB extends GeneralMB implements Serializable {
 				solicitante = sb.findById(getId());
 			} else {
 				solicitante = new Solicitante();
+				solicitante.setConcelho(new Concelho());
+				solicitante.setDistrito(new Distrito());
 			}
 		}
 		return solicitante;

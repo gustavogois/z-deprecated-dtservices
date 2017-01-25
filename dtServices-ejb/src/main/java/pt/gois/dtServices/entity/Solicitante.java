@@ -1,9 +1,16 @@
 package pt.gois.dtServices.entity;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 
 /**
@@ -13,91 +20,32 @@ import java.util.List;
 @Entity
 @Table(name="t_solicitante")
 @NamedQuery(name="Solicitante.findAll", query="SELECT t FROM Solicitante t")
-public class Solicitante implements Serializable {
+public class Solicitante extends Endereco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-
-	private String cc;
-
-	private String codigoPostal;
-
-	private String complemento;
-
-	private String dd;
-
-	private String localidade;
 
 	private String nif;
 
 	private String nome;
 
-	private String ruaPorta;
-
 	private String sigla;
 
 	private String telefone;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date updateDt;
-
-	private String updateUser;
-
 	//bi-directional many-to-one association to Processo
-	@OneToMany(mappedBy="solicitante")
 	private List<Processo> processos;
 
 	public Solicitante() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return this.id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getCc() {
-		return this.cc;
-	}
-
-	public void setCc(String cc) {
-		this.cc = cc;
-	}
-
-	public String getCodigoPostal() {
-		return this.codigoPostal;
-	}
-
-	public void setCodigoPostal(String codigoPostal) {
-		this.codigoPostal = codigoPostal;
-	}
-
-	public String getComplemento() {
-		return this.complemento;
-	}
-
-	public void setComplemento(String complemento) {
-		this.complemento = complemento;
-	}
-
-	public String getDd() {
-		return this.dd;
-	}
-
-	public void setDd(String dd) {
-		this.dd = dd;
-	}
-
-	public String getLocalidade() {
-		return this.localidade;
-	}
-
-	public void setLocalidade(String localidade) {
-		this.localidade = localidade;
 	}
 
 	public String getNif() {
@@ -116,14 +64,6 @@ public class Solicitante implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getRuaPorta() {
-		return this.ruaPorta;
-	}
-
-	public void setRuaPorta(String ruaPorta) {
-		this.ruaPorta = ruaPorta;
-	}
-
 	public String getSigla() {
 		return this.sigla;
 	}
@@ -140,22 +80,7 @@ public class Solicitante implements Serializable {
 		this.telefone = telefone;
 	}
 
-	public Date getUpdateDt() {
-		return this.updateDt;
-	}
-
-	public void setUpdateDt(Date updateDt) {
-		this.updateDt = updateDt;
-	}
-
-	public String getUpdateUser() {
-		return this.updateUser;
-	}
-
-	public void setUpdateUser(String updateUser) {
-		this.updateUser = updateUser;
-	}
-
+	@OneToMany(mappedBy="solicitante")
 	public List<Processo> getProcessos() {
 		return this.processos;
 	}
@@ -164,6 +89,7 @@ public class Solicitante implements Serializable {
 		this.processos = processos;
 	}
 
+	@Transient
 	public Processo addProcesso(Processo processo) {
 		getProcessos().add(processo);
 		processo.setSolicitante(this);

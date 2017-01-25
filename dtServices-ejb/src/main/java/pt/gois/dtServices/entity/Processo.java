@@ -27,8 +27,6 @@ import javax.persistence.TemporalType;
 public class Processo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 
 	private String codExterno;
@@ -37,13 +35,10 @@ public class Processo implements Serializable {
 
 	private byte comChaves;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtCadastro;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtFim;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date dtInicio;
 
 	private String nomeRequisitante;
@@ -52,33 +47,24 @@ public class Processo implements Serializable {
 
 	private String observacoes;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date previsaoFim;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date previsaoInicio;
 
-	//bi-directional many-to-one association to TEstadoProcesso
-	@OneToMany(mappedBy="processo")
 	private List<EstadoProcesso> estadoProcessos;
 
-	//bi-directional many-to-one association to Imovel
-	@ManyToOne
-	@JoinColumn(name="imovelId")
 	private Imovel imovel;
 
 	//bi-directional many-to-one association to Solicitante
-	@ManyToOne
-	@JoinColumn(name="solicitanteId")
 	private Solicitante solicitante;
 
-	//bi-directional many-to-one association to Servico
-	@OneToMany(mappedBy="processo")
 	private List<Servico> servicos;
 
 	public Processo() {
 	}
 
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return this.id;
 	}
@@ -111,6 +97,7 @@ public class Processo implements Serializable {
 		this.comChaves = comChaves;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDtCadastro() {
 		return this.dtCadastro;
 	}
@@ -119,6 +106,7 @@ public class Processo implements Serializable {
 		this.dtCadastro = dtCadastro;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDtFim() {
 		return this.dtFim;
 	}
@@ -127,6 +115,7 @@ public class Processo implements Serializable {
 		this.dtFim = dtFim;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getDtInicio() {
 		return this.dtInicio;
 	}
@@ -159,6 +148,7 @@ public class Processo implements Serializable {
 		this.observacoes = observacoes;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getPrevisaoFim() {
 		return this.previsaoFim;
 	}
@@ -167,6 +157,7 @@ public class Processo implements Serializable {
 		this.previsaoFim = previsaoFim;
 	}
 
+	@Temporal(TemporalType.TIMESTAMP)
 	public Date getPrevisaoInicio() {
 		return this.previsaoInicio;
 	}
@@ -175,6 +166,8 @@ public class Processo implements Serializable {
 		this.previsaoInicio = previsaoInicio;
 	}
 
+	//bi-directional many-to-one association to TEstadoProcesso
+	@OneToMany(mappedBy="processo")
 	public List<EstadoProcesso> getEstadoProcessos() {
 		return this.estadoProcessos;
 	}
@@ -197,6 +190,9 @@ public class Processo implements Serializable {
 		return estadoProcesso;
 	}
 
+	//bi-directional many-to-one association to Imovel
+	@ManyToOne
+	@JoinColumn(name="imovelId")
 	public Imovel getImovel() {
 		return this.imovel;
 	}
@@ -205,6 +201,8 @@ public class Processo implements Serializable {
 		this.imovel = imovel;
 	}
 
+	@ManyToOne
+	@JoinColumn(name="solicitanteId")
 	public Solicitante getSolicitante() {
 		return this.solicitante;
 	}
@@ -213,6 +211,8 @@ public class Processo implements Serializable {
 		this.solicitante = solicitante;
 	}
 
+	//bi-directional many-to-one association to Servico
+	@OneToMany(mappedBy="processo")
 	public List<Servico> getServicos() {
 		return this.servicos;
 	}
