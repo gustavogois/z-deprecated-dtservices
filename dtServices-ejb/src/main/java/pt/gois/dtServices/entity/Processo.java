@@ -33,7 +33,7 @@ public class Processo implements Serializable {
 
 	private String codInterno;
 
-	private byte comChaves;
+	private boolean comChaves;
 
 	private Date dtCadastro;
 
@@ -89,11 +89,11 @@ public class Processo implements Serializable {
 		this.codInterno = codInterno;
 	}
 
-	public byte getComChaves() {
+	public boolean getComChaves() {
 		return this.comChaves;
 	}
 
-	public void setComChaves(byte comChaves) {
+	public void setComChaves(boolean comChaves) {
 		this.comChaves = comChaves;
 	}
 

@@ -14,22 +14,18 @@
 
 	<ui:define name="body">
 		<f:metadata>
-			<f:viewParam name="id" value="#{processoInternoEditMB.id}" />
-			<f:viewParam name="id" value="#{servicoListMB.idProcessoInterno}" />
-			<f:viewParam name="idProcessoExterno"
-				value="#{processoInternoEditMB.idProcessoExterno}" />
-			<f:viewParam name="acao" value="#{processoInternoEditMB.acao}" />
+			<f:viewParam name="id" value="#{processoEditMB.id}" />
+			<f:viewParam name="id" value="#{servicoListMB.idProc}" />
+			<f:viewParam name="acao" value="#{processoEditMB.acao}" />
 		</f:metadata>
 
-		<h:form id="processoInternoNew">
+		<h:form id="processoNew">
 			<div id="rightbox" class="fixright">
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
-						action="#{processoInternoEditMB.save}" icon="ui-icon-disk" />
+						action="#{processoEditMB.save}" icon="ui-icon-disk" />
 					<p:button value="Cancelar"
-						outcome="/pages/processoExterno/processoExternoEdit">
-						<f:param name="id"
-							value="#{processoInternoEditMB.idProcessoExterno}" />
+						outcome="/pages/processo/processoList">
 					</p:button>
 				</h:panelGrid>
 			</div>
@@ -39,67 +35,72 @@
 					<h1>
 						<p:outputLabel
 							value="Confirma o faturamento dos serviços deste processo?"
-							rendered="#{processoInternoEditMB.isFaturando()}" />
+							rendered="#{processoEditMB.isFaturando()}" />
 
 						<p:outputLabel
 							value="Confirma o pagamento dos serviços deste processo?"
-							rendered="#{processoInternoEditMB.isPagando()}" />
+							rendered="#{processoEditMB.isPagando()}" />
 
 					</h1>
 					<h:panelGrid columns="2">
-						<p:outputLabel value="#{bundle.default_field_ID}" />
-						<p:outputLabel value="#{processoInternoEditMB.processoInterno.id}" />
-						<p:outputLabel value="#{bundle.default_id_interno}" />
-						<p:outputLabel
-							value="#{processoInternoEditMB.processoInterno.idProcCliente}" />
-						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
-						<p:outputLabel value="#{processoInternoEditMB.nomeEstadoAtual}" />
+						<p:outputLabel value="Código interno" rendered="#{processoEditMB.processo.codInterno != null}"/>
+						<p:outputLabel value="#{processoEditMB.processo.codInterno}" 
+							rendered="#{processoEditMB.processo.codInterno != null}" />
+						
+						<p:outputLabel value="#{bundle.default_label_estado_atual}" rendered="#{processoEditMB.processo.codInterno != null}"/>
+						<p:outputLabel value="#{processoEditMB.nomeEstadoAtual}" rendered="#{processoEditMB.processo.codInterno != null}"/>
+						
+						<p:outputLabel value="Código externo" />
+						<p:inputText size="9"
+							label="Código externo"
+							value="#{processoEditMB.processo.codExterno}" />
+						
 
 						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}" />
 						<p:inputText size="60"
-							label="#{bundle.processo_interno_nome_solicitante}"
-							value="#{processoInternoEditMB.processoInterno.nomeSolicitante}"
-							rendered="#{processoInternoEditMB.isEditing() or processoInternoEditMB.isCreating() }" />
+							label="Requisitante"
+							value="#{processoEditMB.processo.nomeRequisitante}"
+							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }" />
 						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}"
-							rendered="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }" />
+							rendered="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }" />
 
 						<p:outputLabel value="#{bundle.processo_interno_field_com_chaves}" />
 						<p:selectBooleanButton
-							value="#{processoInternoEditMB.processoInterno.comChaves}"
+							value="#{processoEditMB.processo.comChaves}"
 							onLabel="#{bundle.default_label_yes}"
 							offLabel="#{bundle.default_label_no}" style="width:60px"
-							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }" />
+							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }" />
 
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
 						<p:inputTextarea
-							value="#{processoInternoEditMB.processoInterno.observacoes}"
+							value="#{processoEditMB.processo.observacoes}"
 							rows="5" cols="58" counter="display" maxlength="120"
 							counterTemplate="{0} caracteres restantes" autoResize="false"
-							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }" />
+							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }" />
 						<h:outputLabel />
 						<h:outputText id="display" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel value="Data"
-							rendered="#{!processoInternoEditMB.isCreating() and !processoInternoEditMB.isEditing()}" />
-						<p:calendar id="dataId" value="#{processoInternoEditMB.data}"
+							rendered="#{!processoEditMB.isCreating() and !processoEditMB.isEditing()}" />
+						<p:calendar id="dataId" value="#{processoEditMB.data}"
 							pages="1" mask="true" maxlength="10" pattern="dd/MM/yyyy"
 							showButtonPanel="true" navigator="true"
-							rendered="#{!processoInternoEditMB.isCreating() and	!processoInternoEditMB.isEditing()}">
+							rendered="#{!processoEditMB.isCreating() and	!processoEditMB.isEditing()}">
 						</p:calendar>
 					</h:panelGrid>
 
 				</p:tab>
 				<p:tab title="#{bundle.tab_servicos}"
-					disabled="#{processoInternoEditMB.processoInterno.id == null}"
+					disabled="#{processoEditMB.processo.id == null}"
 					id="servicosTab">
 					<h:panelGrid columns="2">
 
 						<p:button value="#{bundle.default_action_add}"
 							icon="ui-icon-document" outcome="/pages/servico/servicoEdit"
-							disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
-							<f:param name="idProcessoInterno"
-								value="#{processoInternoEditMB.processoInterno.id}" />
+							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }">
+							<f:param name="idprocesso"
+								value="#{processoEditMB.processo.id}" />
 						</p:button>
 
 						<h:panelGrid columns="3" style="float: right">
@@ -110,7 +111,7 @@
 								onkeydown="if(event.keyCode == 13) { servicoSearchTrigger(); event.preventDefault() }" />
 						</h:panelGrid>
 					</h:panelGrid>
-					<p:dataTable id="servicoListId" value="#{servicoListMB.list(processoInternoEditMB.processoInterno.id)}"
+					<p:dataTable id="servicoListId" value="#{servicoListMB.list(processoEditMB.processo.id)}"
 						var="servico" emptyMessage="#{bundle.default_msg_notFound}"
 						paginator="true" rows="20" lazy="true"
 						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
@@ -141,40 +142,40 @@
 							<p:button title="#{bundle.default_action_edit}"
 								icon="ui-icon-pencil" styleClass="action_edit"
 								outcome="/pages/servico/servicoEdit"
-								disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
+								disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idProcessoInterno"
-									value="#{processoInternoEditMB.processoInterno.id}" />
+								<f:param name="idprocesso"
+									value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="EDIT" />
 							</p:button>
 							<p:commandButton title="#{bundle.default_action_del}"
 								icon="ui-icon-trash" styleClass="action_del"
 								actionListener="#{servicoEditMB.delete(servico)}" process="@all"
 								update="servicoListId"
-								disabled="#{!processoInternoEditMB.isEditing() and !processoInternoEditMB.isCreating() }">
+								disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }">
 							</p:commandButton>
 							<p:button title="Iniciar" icon="ui-icon-arrowthick-1-e"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canStart(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idProcessoInterno"
-									value="#{processoInternoEditMB.processoInterno.id}" />
+								<f:param name="idprocesso"
+									value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="START" />
 							</p:button>
 							<p:button title="Suspender" icon="ui-icon-arrowreturnthick-1-n"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canSuspend(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idProcessoInterno"
-									value="#{processoInternoEditMB.processoInterno.id}" />
+								<f:param name="idprocesso"
+									value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="SUSPEND" />
 							</p:button>
 							<p:button title="Finalizar" icon="ui-icon-check"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canFinalize(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idProcessoInterno"
-									value="#{processoInternoEditMB.processoInterno.id}" />
+								<f:param name="idprocesso"
+									value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="END" />
 							</p:button>
 						</p:column>
@@ -187,7 +188,7 @@
 	</ui:define>
 
 	<ui:param name="pageTitle"
-		value="#{bundle.menu_processo_externo}: #{processoInternoEditMB.idProcessoExterno} - #{bundle.menu_cadastro_processo_interno}: #{processoInternoEditMB.processoInterno.id}" />
+		value="Processo: #{processoEditMB.processo.codExterno}" />
 
 
 </ui:composition>

@@ -24,13 +24,13 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 
 	PaginatedDataModel<ServicoView> list;
 	
-	Integer idProcessoInterno;
+	Integer idProc;
 
 	public ServicoListMB() {
 
 	}
 
-	public PaginatedDataModel<ServicoView> list(Integer idProcessoInterno) {
+	public PaginatedDataModel<ServicoView> list(Integer idProc) {
 		if (list != null) {
 			return list;
 		}
@@ -41,8 +41,8 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 				filters.put("obj.id", new Integer( term ) );
 			}
 		}
-		if (idProcessoInterno != null) {
-			filters.put("processoId", idProcessoInterno);
+		if (idProc != null) {
+			filters.put("processoId", idProc);
 		}
 		list = new PaginatedDataModel<ServicoView>(searchPageCtrl, sb);
 		return list;
@@ -63,11 +63,11 @@ public class ServicoListMB extends GeneralMB implements Serializable {
 	public void setSb(ServicoViewSBLocal sb) {
 		this.sb = sb;
 	}
-	public Integer getIdProcessoInterno() {
-		return idProcessoInterno;
+	public Integer getidProc() {
+		return idProc;
 	}
 
-	public void setIdProcessoInterno(Integer idProcessoInterno) {
-		this.idProcessoInterno = idProcessoInterno;
+	public void setidProc(Integer idProc) {
+		this.idProc = idProc;
 	}
 }
