@@ -10,12 +10,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * The persistent class for the imovel database table.
  * 
  */
 @Entity
+@Table(name="t_imovel")
 @NamedQuery(name = "Imovel.findAll", query = "SELECT i FROM Imovel i")
 public class Imovel extends Endereco implements Serializable {
 	
@@ -74,12 +76,12 @@ public class Imovel extends Endereco implements Serializable {
 	// bi-directional one-to-one association to Processocliente
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id")
-	public Processo getProcessoExterno() {
+	public Processo getProcesso() {
 		return this.processo;
 	}
 
-	public void setProcessoExterno(Processo processoExterno) {
-		this.processo = processoExterno;
+	public void setProcesso(Processo processo) {
+		this.processo = processo;
 	}
 
 	public String getLatitude() {

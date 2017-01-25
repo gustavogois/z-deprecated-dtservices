@@ -48,7 +48,7 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 	}
 	
 	@Override
-	public void salvar(Processo processo, Integer tipoEstado, Calendar data, User user) {
+	public void salvar(Processo processo, Integer tipoEstado, Date data, User user) {
 		
 		if( processo.getId() != null ){
 			
@@ -57,7 +57,16 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 		} else {
 			
 			processo.setCodInterno(geraIdProcCliente(processo));
+			
+			EstadoProcesso estadoProcesso = new EstadoProcesso();
+			estadoProcesso.setDataInicio(data);
+			estadoProcesso.setProcesso(processo);
+			estadoProcesso.setTipoEstado(new TipoEstado(tipoEstado));
+			estadoProcesso.setUserId(user.getId());
+			processo.addEstadoProcesso(estadoProcesso);
+			
 			create( processo );
+			create( processo.getImovel());
 		}
 	}
 	

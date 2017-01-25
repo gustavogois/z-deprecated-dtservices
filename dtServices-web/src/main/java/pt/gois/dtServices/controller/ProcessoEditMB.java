@@ -3,7 +3,7 @@ package pt.gois.dtServices.controller;
 import java.io.ByteArrayInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -97,7 +97,7 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 
 	String nomeEstadoAtual;
 	String acao;
-	Calendar data;
+	Date data;
 
 	EnderecoVW endereco;
 
@@ -296,7 +296,9 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 			Integer id = getProcesso().getId();
 			if (id != null) {
 				ProcessoView procView = sbProcView.findById(id);
-				nomeEstadoAtual = procView.getNomeEstado();
+				if(procView != null) {
+					nomeEstadoAtual = procView.getNomeEstado();
+				}
 			}
 		}
 		return nomeEstadoAtual;
@@ -343,19 +345,19 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 
 	public String save() {
 
-		Processo Processo = getProcesso();
+		Processo processo = getProcesso();
 
 		if (isFaturando()) {
-			sb.salvar(Processo, TipoEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, userSessionMB.getUser());
+			sb.salvar(processo, TipoEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, userSessionMB.getUser());
 		} else if (isPagando()) {
-			sb.salvar(Processo, TipoEstadoSBLocal.PI_PAGO, data, userSessionMB.getUser());
+			sb.salvar(processo, TipoEstadoSBLocal.PI_PAGO, data, userSessionMB.getUser());
 		} else if (!isEditing()) {
-			sb.salvar(Processo, TipoEstadoSBLocal.PI_CRIADO, data, userSessionMB.getUser());
+			sb.salvar(processo, TipoEstadoSBLocal.PI_CRIADO, data, userSessionMB.getUser());
 		} else {
 			sb.save(getProcesso());
 		}
-
-		return "/pages/processo/processoEdit?faces-redirect=true&id=" + idprocesso;
+		
+		return "/pages/processo/processoEdit?faces-redirect=true&id=" + processo.getId();
 	}
 
 	public List<Historico> getHistorico() {
@@ -393,12 +395,11 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 				tipoServico = new TipoServico();
 
 				processo.setEstadoProcessos(new ArrayList<EstadoProcesso>());
-				data = Calendar.getInstance();
+				data = new Date();
 
 				processo.setSolicitante(new Solicitante());
 				
 				processo.setImovel(new Imovel());
-
 			}
 		}
 		return processo;
@@ -503,11 +504,11 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 		this.acao = acao;
 	}
 
-	public Calendar getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(Calendar data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 

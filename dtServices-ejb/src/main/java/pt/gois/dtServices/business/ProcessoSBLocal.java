@@ -1,6 +1,6 @@
 package pt.gois.dtServices.business;
 
-import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.Local;
@@ -12,7 +12,7 @@ import pt.gois.dtServices.entity.User;
 
 @Local
 public interface ProcessoSBLocal extends GeneralSBLocal<Processo>{
-	public void salvar(Processo processoInterno, Integer tipoEstado, Calendar data, User user);
+	public void salvar(Processo processoInterno, Integer tipoEstado, Date data, User user);
 	public boolean canEdit(ProcessoView processoInterno);
 	public boolean canSuspend(ProcessoView processoInterno);
 	public boolean canFinalize(ProcessoView processoInterno);

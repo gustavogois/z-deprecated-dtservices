@@ -1,7 +1,7 @@
 -- ALTER TABLE t_ref_tipo_estado ADD grupo varchar(20);
 -- ALTER TABLE t_servico DROP dtInicio;
 -- ALTER TABLE t_ref_tipo_estado CHANGE nome nome varchar(50) not null;
-RENAME TABLE t_users TO users;
+-- RENAME TABLE t_log TO log;
 
 -- Estados do Processo
 select est.processoId, te.nome 
@@ -36,60 +36,17 @@ where groupserv.id = serv.id
 and groupserv.maxdate = est.dataInicio;
 
 create or replace view V_PROCESSO as
-select pi.id, pi.codExterno, pi.codInterno, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, 
-	est.dataInicio as dtEstado, pi.processoExternoId
-from t_processo pi 
+select proc.id, proc.codExterno, proc.codInterno, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, 
+	est.dataInicio as dtEstado, proc.solicitanteId, sol.nome
+from t_processo proc 
 inner join 
 	(select p.id, max(e.dataInicio) as maxdate
 	from t_processo p
 	inner join t_estado_processo e on e.processoId = p.id
 	group by id) groupproc
-inner join t_estado_processo est on est.processoId = pi.id
-inner join t_ref_tipo_estado tipoEst on tipoEst.id = est.tipoId
-where groupproc.id = pi.id
-and groupproc.maxdate = est.dtInicio;
+inner join t_estado_processo est on est.processoId = proc.id
+inner join t_solicitante sol on sol.id = proc.solicitanteId
+inner join t_ref_tipo_estado tipoEst on tipoEst.id = est.tipoEstadoId
+where groupproc.id = proc.id
+and groupproc.maxdate = est.dataInicio;
 
-alter table estadosprocesso change dtFim dtFim datetime;
-
-desc t_estado_processo;
-
-SELECT dt_services.t_processo.codExterno,
-	dt_services.t_processo.codInterno,
-	dt_services.t_servico.id,
-	dt_services.t_servico.valor
-FROM dt_services.t_servico
-	INNER JOIN dt_services.t_processo ON 
-	 dt_services.t_servico.processoId = dt_services.t_processo.id ;
-
-SELECT dt_services.t_processo.codExterno AS codExterno,
-	dt_services.t_processo.codInterno AS codInterno,
-	dt_services.t_servico.id AS idServico,
-	dt_services.t_servico.valor AS valor,
-	dt_services.t_estado_servico.id AS idEstado,
-	dt_services.t_estado_servico.dataInicio AS dataInicio
-FROM dt_services.t_estado_servico
-	INNER JOIN dt_services.t_servico ON 
-	 dt_services.t_estado_servico.servicoId = dt_services.t_servico.id 
-	INNER JOIN dt_services.t_processo ON 
-	 dt_services.t_servico.processoId = dt_services.t_processo.id ;
-
-
-SELECT dt_services.t_processo.`codExterno` AS codExterno,
-	dt_services.t_processo.`codInterno` AS codInterno,
-	dt_services.t_servico.id AS idServico,
-	dt_services.t_servico.valor AS valor,
-	dt_services.t_estado_servico.`dataInicio` AS dataInicio,
-	dt_services.t_estado_servico.id AS idEstado,
-	dt_services.t_tipo_servico.nome AS nomeServico,
-	dt_services.t_ref_tipo_estado.nome AS nomeEstado,
-	dt_services.v_processo.`nomeEstado` AS nomeEstProc
-FROM dt_services.t_estado_servico
-	INNER JOIN dt_services.t_servico ON 
-	 dt_services.t_estado_servico.`servicoId` = dt_services.t_servico.id 
-	INNER JOIN dt_services.t_processo ON 
-	 dt_services.t_servico.`processoId` = dt_services.t_processo.id 
-	INNER JOIN dt_services.t_tipo_servico ON 
-	 dt_services.t_servico.`tipoServicoId` = dt_services.t_tipo_servico.id 
-	INNER JOIN dt_services.t_ref_tipo_estado ON 
-	 dt_services.t_estado_servico.`tipoEstadoId` = dt_services.t_ref_tipo_estado.id
-	inner join dt_services.v_processo on dt_services.v_processo.id = dt_services.t_processo.id

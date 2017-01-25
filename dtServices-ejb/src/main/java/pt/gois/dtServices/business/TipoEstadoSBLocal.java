@@ -9,22 +9,11 @@ import pt.gois.dtServices.entity.TipoEstado;
 @Local
 public interface TipoEstadoSBLocal extends GeneralSBLocal<TipoEstado>{
 	
-	// Grupos
-	public static final Integer PROCESSO_EXTERNO = 1;
-	public static final Integer PROCESSO_INTERNO = 2;
-	public static final Integer SERVICOS = 3;
-	
-	// Processo Externo
-	public static final Integer PE_CRIADO = 1;
-	public static final Integer PE_EM_EXECUCAO = 2;
-	public static final Integer PE_FINALIZADO = 3;
-	public static final Integer PE_SUSPENSO = 4;
-	
-	// Processo Interno
-	public static final Integer PI_CRIADO = 5;
-	public static final Integer PI_EM_EXECUCAO = 6;
-	public static final Integer PI_AGUARDANDO_FATURAMENTO = 7;
-	public static final Integer PI_AGUARDANDO_PAGAMENTO = 8;
+	// Processo
+	public static final Integer PI_CRIADO = 1;
+	public static final Integer PI_EM_EXECUCAO = 2;
+	public static final Integer PI_AGUARDANDO_FATURAMENTO = 3;
+	public static final Integer PI_AGUARDANDO_PAGAMENTO = 4;
 	public static final Integer PI_PAGO = 9;
 	public static final Integer PI_SUSPENSO = 10;
 	

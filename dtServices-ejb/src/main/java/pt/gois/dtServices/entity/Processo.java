@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -167,7 +169,7 @@ public class Processo implements Serializable {
 	}
 
 	//bi-directional many-to-one association to TEstadoProcesso
-	@OneToMany(mappedBy="processo")
+	@OneToMany(mappedBy="processo", cascade = CascadeType.ALL)
 	public List<EstadoProcesso> getEstadoProcessos() {
 		return this.estadoProcessos;
 	}
@@ -191,7 +193,7 @@ public class Processo implements Serializable {
 	}
 
 	//bi-directional many-to-one association to Imovel
-	@ManyToOne
+	@OneToOne
 	@JoinColumn(name="imovelId")
 	public Imovel getImovel() {
 		return this.imovel;
@@ -199,6 +201,9 @@ public class Processo implements Serializable {
 
 	public void setImovel(Imovel imovel) {
 		this.imovel = imovel;
+		if(imovel != null){
+			imovel.setProcesso(this);
+		}
 	}
 
 	@ManyToOne
