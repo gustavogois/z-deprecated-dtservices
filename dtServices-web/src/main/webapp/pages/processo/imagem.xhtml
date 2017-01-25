@@ -11,7 +11,7 @@
 	xmlns:pe="http://primefaces.org/ui/extensions">
 
 <p:fileUpload
-	fileUploadListener="#{processoExternoEditMB.handleFileUpload}"
+	fileUploadListener="#{processoEditMB.handleFileUpload}"
 	mode="advanced" dragDropSupport="false" update="messages, imagens"
 	allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="true"
 	label="#{bundle.imagem_choose}" uploadLabel="#{bundle.imagem_upload}" />
@@ -23,7 +23,7 @@
 	margin: 0;
 }
 </style>
-	<p:dataGrid var="image" value="#{processoExternoEditMB.images}"
+	<p:dataGrid var="image" value="#{processoEditMB.images}"
 		columns="3" layout="grid" rows="12" paginator="true" id="cars"
 		paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 		rowsPerPageTemplate="6,12,16">
@@ -41,12 +41,12 @@
 						title="#{bundle.imagem_title_detail}">
 						<h:outputText styleClass="fa fa-fw fa-edit" style="margin:0 auto;" />
 						<f:setPropertyActionListener value="#{image}"
-							target="#{processoExternoEditMB.selectedImage}" />
+							target="#{processoEditMB.selectedImage}" />
 					</p:commandLink>
 					<p:commandLink update="messages, imagens"
 						onclick="if( !confirm('#{bundle.imagem_action_del_confirm}') ){ return false; }"
 						title="#{bundle.default_action_del}"
-						actionListener="#{processoExternoEditMB.deleteImage(image)}">
+						actionListener="#{processoEditMB.deleteImage(image)}">
 						<h:outputText styleClass="fa fa-fw fa-remove"
 							style="margin:0 auto;" />
 					</p:commandLink>
@@ -54,7 +54,7 @@
 				</h:panelGrid>
 			</f:facet>
 			<h:panelGrid columns="1" style="width:100%">
-				<p:graphicImage value="#{processoExternoEditMB.getImagem(image)}"
+				<p:graphicImage value="#{processoEditMB.getImagem(image)}"
 					stream="false" title="#{image.descricao}" alt="#{image.filename}"
 					style="width: 150px" />
 				<h:outputText value="#{image.descricao}" />
@@ -68,22 +68,22 @@
 		hideEffect="fade" resizable="false" closeOnEscape="true">
 		<p:outputPanel id="imageDetail" style="text-align:center;">
 			<p:panelGrid columns="1"
-				rendered="#{not empty processoExternoEditMB.selectedImage}"
+				rendered="#{not empty processoEditMB.selectedImage}"
 				columnClasses="label,value">
 				<f:facet name="header">
 					<p:graphicImage
-						value="#{processoExternoEditMB.getImagem(processoExternoEditMB.selectedImage)}"
+						value="#{processoEditMB.getImagem(processoEditMB.selectedImage)}"
 						stream="false"
-						title="#{processoExternoEditMB.selectedImage.descricao}"
-						alt="#{processoExternoEditMB.selectedImage.filename}"
+						title="#{processoEditMB.selectedImage.descricao}"
+						alt="#{processoEditMB.selectedImage.filename}"
 						style="width: 600px" />
 				</f:facet>
 
 				<h:outputText value="#{bundle.default_field_description}" />
 				<p:inputTextarea cols="80" rows="3"
-					value="#{processoExternoEditMB.selectedImage.descricao}" />
+					value="#{processoEditMB.selectedImage.descricao}" />
 				<p:commandButton update="messages, imagens" title="Remover imagem"
-					actionListener="#{processoExternoEditMB.updateImage(processoExternoEditMB.selectedImage)}"
+					actionListener="#{processoEditMB.updateImage(processoEditMB.selectedImage)}"
 					icon="fa fa-fw fa-save" value="#{bundle.default_action_save}" />
 			</p:panelGrid>
 		</p:outputPanel>

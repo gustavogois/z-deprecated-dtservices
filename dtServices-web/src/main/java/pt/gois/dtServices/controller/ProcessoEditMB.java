@@ -396,6 +396,8 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 				data = Calendar.getInstance();
 
 				processo.setSolicitante(new Solicitante());
+				
+				processo.setImovel(new Imovel());
 
 			}
 		}
