@@ -99,8 +99,16 @@
 							rendered="#{!processoEditMB.isCreating() and	!processoEditMB.isEditing()}">
 						</p:calendar>
 					</h:panelGrid>
-
+					
+				<ui:include src="imovel.xhtml" /> 
+					
 				</p:tab>
+				<p:tab title="#{bundle.tab_imagem}"
+					disabled="#{processoEditMB.processo.id == null}"
+					id="imageTab">
+					<ui:include src="imagem.xhtml" />
+				</p:tab>
+
 				<p:tab title="#{bundle.tab_servicos}"
 					disabled="#{processoEditMB.processo.id == null}"
 					id="servicosTab">

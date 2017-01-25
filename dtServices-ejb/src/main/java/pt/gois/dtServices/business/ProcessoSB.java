@@ -2,13 +2,16 @@ package pt.gois.dtServices.business;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import pt.gois.dtServices.entity.EstadoProcesso;
+import pt.gois.dtServices.entity.Imagem;
 import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.ProcessoView;
 import pt.gois.dtServices.entity.Solicitante;
@@ -36,6 +39,12 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 		
 		//return solicitante.getSigla() + solicitante.getChaveSolicitanteProcesso();
 		return solicitante.getSigla() ;
+	}
+	
+	public List<Imagem> getImages(Integer id){
+		Query query = getEM().createNamedQuery("Imagem.findByImovel" );
+		query.setParameter("imovelId", id);
+		return query.getResultList();
 	}
 	
 	@Override
