@@ -8,6 +8,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
+import org.apache.commons.lang3.StringUtils;
+
 import pt.gois.dtServices.business.ProcessoSBLocal;
 import pt.gois.dtServices.controller.util.PaginatedDataModel;
 import pt.gois.dtServices.entity.Processo;
@@ -38,8 +40,8 @@ public class ProcessoListMB extends GeneralMB implements Serializable {
 			SearchPageCtrl<ProcessoView> searchPageCtrl = new SearchPageCtrl<ProcessoView>();
 			Map<String, Object> filters = searchPageCtrl.getFilters();
 			searchPageCtrl.setAndFilter(true);
-			if( idProcessoExterno != null ){
-				filters.put("processoExternoId", idProcessoExterno);
+			if (term != null && !"".equals(term = term.trim())) {
+				filters.put("obj.codExterno", term);
 			}
 			list = new PaginatedDataModel<ProcessoView>(searchPageCtrl, sbProcView);
 		}
