@@ -23,6 +23,10 @@
 			<f:viewParam name="id" value="#{servicoEditMB.id}" />
 			<f:viewParam name="idProcesso"
 				value="#{servicoEditMB.idProcesso}" />
+			<f:viewParam name="codInternoProcesso"
+				value="#{servicoEditMB.codInternoProcesso}" />
+			<f:viewParam name="codExternoProcesso"
+				value="#{servicoEditMB.codExternoProcesso}" />
 			<f:viewParam name="acao" value="#{servicoEditMB.acao}" />
 		</f:metadata>
 		<h:form id="servicoNew">
@@ -31,7 +35,7 @@
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
 						action="#{servicoEditMB.save}" icon="ui-icon-disk" />
 					<p:button value="Cancelar"
-						outcome="/pages/Processo/ProcessoEdit">
+						outcome="/pages/processo/processoEdit">
 						<f:param name="id" value="#{servicoEditMB.idProcesso}" />
 					</p:button>
 				</h:panelGrid>
@@ -53,25 +57,25 @@
 						<p:outputLabel value="" rendered="#{servicoEditMB.isStarting()}" />
 					</h1>
 					<h:panelGrid columns="2">
-						<p:outputLabel value="#{bundle.default_field_ID}" />
-						<p:outputLabel value="#{servicoEditMB.servico.id}" />
+						<p:outputLabel value="#{bundle.default_field_ID}" rendered="servico.id neq null"/>
+						<p:outputLabel value="#{servicoEditMB.servico.id}" rendered="servico.id neq null"/>
 
-						<p:outputLabel value="#{bundle.default_label_estado_atual}" />
-						<p:outputLabel value="#{servicoEditMB.nomeEstadoAtual}" />
+						<p:outputLabel value="#{bundle.default_label_estado_atual}" rendered="servico.id neq null"/>
+						<p:outputLabel value="#{servicoEditMB.nomeEstadoAtual}" rendered="servico.id neq null"/>
 
 						<p:outputLabel value="#{bundle.servico}" />
 						<p:selectOneMenu
-							value="#{servicoEditMB.servico.tipoServicoSolicitante.id}"
+							value="#{servicoEditMB.servico.tipoServico.id}"
 							style="width:125px"
 							rendered="#{servicoEditMB.isEditing() or servicoEditMB.isCreating()}">
-							<f:selectItems value="#{servicoEditMB.tiposServicoSolicitante}"
+							<f:selectItems value="#{servicoEditMB.tiposServico}"
 								var="tss" itemValue="#{tss.id}"
-								itemLabel="#{tss.tipoServico.nome}" />
+								itemLabel="#{tss.nome}" />
 							<p:ajax listener="#{servicoEditMB.onServicoChange}"
 								update="valorId" />
 						</p:selectOneMenu>
 						<p:outputLabel
-							value="#{servicoEditMB.servico.tipoServicoSolicitante.tipoServico.nome}"
+							value="#{servicoEditMB.servico.tipoServico.nome}"
 							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />
 							
 						<p:outputLabel value="#{bundle.default_field_valor}" />
@@ -150,7 +154,7 @@
 	</ui:define>
 
 	<ui:param name="pageTitle"
-		value="#{bundle.menu_cadastro_processo_interno}: #{servicoEditMB.idProcesso} - #{bundle.menu_cadastro_servico}" />
+		value="Processo: #{servicoEditMB.codExternoProcesso} / #{servicoEditMB.codInternoProcesso}" />
 
 
 </ui:composition>

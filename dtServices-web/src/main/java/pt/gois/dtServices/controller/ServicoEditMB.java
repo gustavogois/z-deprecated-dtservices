@@ -44,24 +44,23 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	
 	Servico servico;
 	Integer idProcesso;
+	String codExternoProcesso;
+	String codInternoProcesso;
 	
+	
+
 	String nomeEstadoAtual;
 	String observacaoEstado;
 
 	String acao;
 	Date datap;
 
-	public List<TipoServico> getTiposServicoSolicitante() {
-		
-		Processo processo = sbProcesso.findById(idProcesso);
-		
-		Integer idSolicitante = processo.getSolicitante().getId();
+	public List<TipoServico> getTiposServico() {
 		
 		SearchPageCtrl<TipoServico> searchPageCtrl = new SearchPageCtrl<TipoServico>();
-		searchPageCtrl.getFilters().put("solicitante.id", idSolicitante);
-		List<TipoServico> tss = sbTipoServico.find(searchPageCtrl).getRows();
+		List<TipoServico> tiposServico = sbTipoServico.find(searchPageCtrl).getRows();
 		
-		return tss;
+		return tiposServico;
 		
 	}
 	
@@ -143,16 +142,13 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			if( id != null ){
 				servico = sb.findByIdWithEstadosServico(getId() );
 			}else{
-				initServico(servico);
+				servico = new Servico();
+				servico.setProcesso(sbProcesso.findById( idProcesso ) );
+				servico.setTipoServico(new TipoServico());
+				servico.setEstadoServicos(new ArrayList<EstadoServico>());
 			}
 		}
 		return servico;
-	}
-	
-	private void initServico(Servico servico) {
-		servico.setProcesso(sbProcesso.findById( idProcesso ) );
-		servico.setTipoServico(new TipoServico());
-		servico.setEstadoServicos(new ArrayList<EstadoServico>());
 	}
 	
 	public String getNomeEstadoAtual() {
@@ -230,4 +226,20 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	public void setObservacaoEstado(String observacaoEstado) {
 		this.observacaoEstado = observacaoEstado;
 	}
+	public String getCodExternoProcesso() {
+		return codExternoProcesso;
+	}
+
+	public void setCodExternoProcesso(String codExternoProcesso) {
+		this.codExternoProcesso = codExternoProcesso;
+	}
+
+	public String getCodInternoProcesso() {
+		return codInternoProcesso;
+	}
+
+	public void setCodInternoProcesso(String codInternoProcesso) {
+		this.codInternoProcesso = codInternoProcesso;
+	}
+
 }

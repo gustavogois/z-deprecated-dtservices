@@ -117,8 +117,12 @@
 						<p:button value="#{bundle.default_action_add}"
 							icon="ui-icon-document" outcome="/pages/servico/servicoEdit"
 							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }">
-							<f:param name="idprocesso"
+							<f:param name="idProcesso"
 								value="#{processoEditMB.processo.id}" />
+							<f:param name="codExternoProcesso"
+								value="#{processoEditMB.processo.codExterno}" />
+							<f:param name="codInternoProcesso"
+								value="#{processoEditMB.processo.codInterno}" />
 						</p:button>
 
 						<h:panelGrid columns="3" style="float: right">
