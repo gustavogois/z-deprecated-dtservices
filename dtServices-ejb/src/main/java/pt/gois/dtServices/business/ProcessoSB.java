@@ -35,10 +35,9 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 		Solicitante solicitante = sbSolicitante.
 			findById(Processo.getSolicitante().getId());
 		
-		//solicitante.setChaveSolicitanteProcesso(solicitante.getChaveSolicitanteProcesso()+1);
+		solicitante.setLastId(solicitante.getLastId()+1);
 		
-		//return solicitante.getSigla() + solicitante.getChaveSolicitanteProcesso();
-		return solicitante.getSigla() ;
+		return solicitante.getSigla() + solicitante.getLastId();
 	}
 	
 	public List<Imagem> getImages(Integer id){

@@ -31,6 +31,9 @@ public class Solicitante extends Endereco implements Serializable {
 	private String sigla;
 
 	private String telefone;
+	
+	private int lastId;
+
 
 	//bi-directional many-to-one association to Processo
 	private List<Processo> processos;
@@ -102,6 +105,13 @@ public class Solicitante extends Endereco implements Serializable {
 		processo.setSolicitante(null);
 
 		return processo;
+	}
+	public int getLastId() {
+		return lastId;
+	}
+
+	public void setLastId(int lastId) {
+		this.lastId = lastId;
 	}
 
 }
