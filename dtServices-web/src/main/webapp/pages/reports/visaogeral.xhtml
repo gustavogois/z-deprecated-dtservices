@@ -9,7 +9,9 @@
 	xmlns:p="http://primefaces.org/ui" xmlns:m="http://www.maerlin.com/jsf"
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
 
-<f:event listener="#{GenerateReportMB.generateReport('visao-geral-processos')}" type="preRenderView" />
+<f:metadata>
+    <f:event type="preRenderView" listener="#{generateReportMB.generateReport('visao-geral-processos')}" />
+</f:metadata>
 
 <ui:composition template="/pages/templates/template.xhtml">
 	<ui:param name="pageTitle"
