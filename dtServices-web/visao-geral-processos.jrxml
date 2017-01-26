@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
+<!-- 2017-01-22T16:58:03 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="visao-geral-processos" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="60537e02-6d39-4e88-827e-9f276c922f1a">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="ZHRfc2VydmljZXMudl9wcm9jZXNzbyAsNDU5LDEzMyxhZDhkOWJiZS1kMjZhLTRkMGUtOWYzZi0x&#xA;NTg1NzE1ZGQ0ZDk7ZHRfc2VydmljZXMudl9zZXJ2aWNvIEFTICw3NDUsMTA3LGYwMjE5NWNkLWFk&#xA;ODYtNGUzNi1iMGM3LTU5OGFjOWQzMDU1Zjs="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dtServicesProcessAllAdapter"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="153"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="840"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w1" value="748"/>
+	<property name="com.jaspersoft.studio.property.dataset.dialog.DatasetDialog.sash.w2" value="238"/>
+	<style name="Crosstab_CH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CG" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CT" mode="Opaque" backcolor="#005FB3">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="Crosstab_CD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<leftPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+			<rightPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="crossDataSetVisaoGeral" uuid="73ede325-0e8b-4409-903f-85f7d9865b2d">
+		<property name="com.jaspersoft.studio.data.sql.tables" value="ZHRfc2VydmljZXMudl9wcm9jZXNzbyBBUyAsNTEsMTUsNGU3N2IxYzEtOGNiYi00MTIzLTkyMjgt&#xA;ZGJiYjNlMjRhZWIyO2R0X3NlcnZpY2VzLnZfc2VydmljbyBBUyAsNDksMjI2LDhmYjE0MWNkLWIz&#xA;NzYtNGQwYS1iYjhiLWZmMzBmM2MxMGJkNTs="/>
+		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="227"/>
+		<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="766"/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dtServicesProcessAllAdapter"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT dt_services.v_processo.`codExterno`,
+	dt_services.v_processo.`nomeEstado`,
+	dt_services.v_servico.valor
+FROM dt_services.v_processo,
+	dt_services.v_servico]]>
+		</queryString>
+		<field name="codExterno" class="java.lang.String"/>
+		<field name="nomeEstado" class="java.lang.String"/>
+		<field name="valor" class="java.lang.Double"/>
+		<group name="codExterno">
+			<groupExpression><![CDATA[$F{codExterno}]]></groupExpression>
+		</group>
+		<group name="nomeEstado">
+			<groupExpression><![CDATA[$F{nomeEstado}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="newDataSetCross" uuid="27aedd5d-82f7-4eec-926c-9a4824e073c7">
+		<property name="com.jaspersoft.studio.data.sql.tables" value="ZHRfc2VydmljZXMudl9zZXJ2aWNvIEFTICwxNDcsMTUsNWRiYzAxYTktYTgxYy00MzI4LWEzNGEt&#xA;NmFlODljZWExOGFlO2R0X3NlcnZpY2VzLnZfcHJvY2Vzc28gQVMgLDE1LDQxLGRkNDljNjYyLTlj&#xA;YzktNGQ0My1hOWY1LTI0MGYzNmYwNzJjYTs="/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dtServicesProcessAllAdapter"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT sum( dt_services.v_servico.valor) AS soma,
+	dt_services.v_processo.`codExterno`,
+	dt_services.v_processo.`nomeEstado`
+FROM dt_services.v_processo
+	inner join dt_services.v_servico ON 
+	 dt_services.v_servico.`processoId` = dt_services.v_processo.id 
+GROUP BY dt_services.v_processo.`codExterno`,
+	dt_services.v_processo.`nomeEstado`]]>
+		</queryString>
+		<field name="soma" class="java.lang.Double"/>
+		<field name="codExterno" class="java.lang.String"/>
+		<field name="nomeEstado" class="java.lang.String"/>
+		<group name="codExterno">
+			<groupExpression><![CDATA[$F{codExterno}]]></groupExpression>
+		</group>
+		<group name="nomeEstado">
+			<groupExpression><![CDATA[$F{nomeEstado}]]></groupExpression>
+		</group>
+	</subDataset>
+	<subDataset name="Dataset1" uuid="9e541380-ddda-4dca-841b-cc2219fe5278">
+		<property name="com.jaspersoft.studio.data.sql.tables" value="ZHRfc2VydmljZXMudF9yZWZfdGlwb19lc3RhZG8gLDE1LDc5LGM2ODI5MmQ3LTU5MjAtNGFlZS1i&#xA;ZjVkLTJkYTIwZWI3OTJiNjtkdF9zZXJ2aWNlcy52X3Byb2Nlc3NvICwxNDIsNDEsZThlNmM0Y2Yt&#xA;Mzk0ZS00MjY1LTg4NmQtMmZiY2U3OGUxM2JmO2R0X3NlcnZpY2VzLnZfc2VydmljbyAsMjc0LDE1&#xA;LGUxNGU3ODBiLTE1YjMtNDFjZi05YjZjLTgzYjNjYWEyOTQ5ZTs="/>
+		<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dtServicesProcessAllAdapter"/>
+		<queryString language="SQL">
+			<![CDATA[SELECT dt_services.v_processo.`codExterno` AS codExterno,
+	dt_services.v_servico.valor AS valor,
+	dt_services.t_ref_tipo_estado.nome AS nome
+FROM dt_services.v_processo,
+	dt_services.v_servico,
+	dt_services.t_ref_tipo_estado
+WHERE 
+	 dt_services.v_servico.processoId = dt_services.v_processo.id 
+	 AND dt_services.t_ref_tipo_estado.grupo = 'Processo'
+	 and dt_services.v_processo.idEstado = dt_services.t_ref_tipo_estado.id]]>
+		</queryString>
+		<field name="codExterno" class="java.lang.String"/>
+		<field name="valor" class="java.lang.Double"/>
+		<field name="nome" class="java.lang.String"/>
+		<group name="codExterno">
+			<groupExpression><![CDATA[$F{codExterno}]]></groupExpression>
+		</group>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[SELECT dt_services.v_processo.`nomeEstado` AS nomeEstProc,
+	dt_services.v_servico.`nomeEstado` AS nomeEstServ,
+	dt_services.v_servico.`dtEstado` AS dtServ,
+	dt_services.v_servico.valor AS valor,
+	dt_services.v_processo.`codExterno` AS codExterno,
+	dt_services.v_processo.`codInterno` AS codInterno,
+	dt_services.v_servico.`nomeTipo` AS nomeServ
+FROM dt_services.v_servico,
+	dt_services.v_processo
+where dt_services.v_servico.processoId = dt_services.v_processo.id]]>
+	</queryString>
+	<field name="nomeEstProc" class="java.lang.String"/>
+	<field name="nomeEstServ" class="java.lang.String"/>
+	<field name="dtServ" class="java.sql.Timestamp"/>
+	<field name="valor" class="java.lang.Double"/>
+	<field name="codExterno" class="java.lang.String"/>
+	<field name="codInterno" class="java.lang.String"/>
+	<field name="nomeServ" class="java.lang.String"/>
+	<variable name="valor1" class="java.lang.Double" resetType="Group" resetGroup="processo" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="valor2" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="valor3" class="java.lang.Double" resetType="Group" resetGroup="processo" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<variable name="valor4" class="java.lang.Double" resetType="Group" resetGroup="processo" calculation="Sum">
+		<variableExpression><![CDATA[$F{valor}]]></variableExpression>
+	</variable>
+	<group name="processo">
+		<groupExpression><![CDATA[$F{codExterno}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement x="0" y="10" width="100" height="15" uuid="8c1d1dac-0512-4126-ab80-47a9e78349ef"/>
+					<textFieldExpression><![CDATA[$F{codExterno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="81" y="10" width="100" height="15" uuid="e5be300d-1546-45e7-968b-54c7f996b3e6"/>
+					<textFieldExpression><![CDATA[$F{codInterno}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="183" y="10" width="100" height="15" uuid="f5c77bf8-0c88-48c9-8b8e-299e0738fe23"/>
+					<textFieldExpression><![CDATA[$F{nomeEstProc}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="27">
+				<textField>
+					<reportElement x="394" y="4" width="57" height="18" uuid="07094c02-9767-4f7b-a741-660f565524d3"/>
+					<textFieldExpression><![CDATA[$V{valor4}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch"/>
+	</title>
+	<columnHeader>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="de9d3fc2-759b-4e6f-bfa2-0e46201625f9"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cód. Externo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="0" width="98" height="20" uuid="1228814c-41ba-47af-a232-cb5597734a42"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cód. Interno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="0" width="79" height="20" uuid="7966b52b-7119-4dbf-8788-a437eda17c8e"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Serviço]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="395" y="0" width="200" height="20" uuid="c46bc61a-59b9-48e6-ab0b-d026761b2a98"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[valor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="183" y="0" width="98" height="20" uuid="2eec59c2-57d9-4420-a933-1d41c48c1e66"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado Proc]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="266" y="5" width="100" height="19" uuid="f1ddaa61-5b80-4d82-ae4d-a4a510b41883"/>
+				<textFieldExpression><![CDATA[$F{nomeServ}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="392" y="2" width="60" height="18" uuid="df1c739a-61b4-47be-ac05-092faabb97ba"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="29" splitType="Stretch">
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="0" y="10" width="100" height="17" uuid="6725e221-919f-4822-ae0c-fdf49c057054"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="580" y="10" width="100" height="17" uuid="85da6c90-b1ea-43bd-a7ba-0c54d6e35732"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="680" y="10" width="100" height="17" uuid="b0854386-990d-4b15-b057-f0c1fe25e2c6"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" of " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="332" splitType="Stretch">
+			<textField>
+				<reportElement x="388" y="10" width="100" height="13" uuid="d10b8026-32a4-41fe-93b0-790ccabaf10c"/>
+				<textFieldExpression><![CDATA[$V{valor2}]]></textFieldExpression>
+			</textField>
+			<crosstab>
+				<reportElement x="231" y="132" width="389" height="200" uuid="7a233b86-4fe6-464a-9cb7-c007ae08b246">
+					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
+					<property name="com.jaspersoft.studio.crosstab.style.header" value="Crosstab_CH"/>
+					<property name="com.jaspersoft.studio.crosstab.style.group" value="Crosstab_CG"/>
+					<property name="com.jaspersoft.studio.crosstab.style.total" value="Crosstab_CT"/>
+					<property name="com.jaspersoft.studio.crosstab.style.detail" value="Crosstab_CD"/>
+				</reportElement>
+				<crosstabDataset>
+					<dataset>
+						<datasetRun subDataset="Dataset1" uuid="0987ef71-51fe-4157-bcfc-defa14112582">
+							<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+						</datasetRun>
+					</dataset>
+				</crosstabDataset>
+				<rowGroup name="codExterno" width="60" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{codExterno}]]></bucketExpression>
+					</bucket>
+					<crosstabRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="60" height="20" uuid="93b97691-997a-4ac8-82f8-c4bc0fb3303d"/>
+								<textFieldExpression><![CDATA[$V{codExterno}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabRowHeader>
+					<crosstabTotalRowHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="a9e3ed89-a174-408e-bae2-ebe2711b7bc5"/>
+								<text><![CDATA[Total codExterno]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalRowHeader>
+				</rowGroup>
+				<columnGroup name="nome" height="20" totalPosition="End">
+					<bucket class="java.lang.String">
+						<bucketExpression><![CDATA[$F{nome}]]></bucketExpression>
+					</bucket>
+					<crosstabColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CH">
+							<textField>
+								<reportElement x="0" y="0" width="120" height="20" uuid="080dd3f2-2f66-4237-941e-2af729229b9f"/>
+								<textFieldExpression><![CDATA[$V{nome}]]></textFieldExpression>
+							</textField>
+						</cellContents>
+					</crosstabColumnHeader>
+					<crosstabTotalColumnHeader>
+						<cellContents mode="Opaque" style="Crosstab_CT">
+							<staticText>
+								<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="263bb53d-78f1-4e97-8f9e-55c4e287b935"/>
+								<text><![CDATA[Total nome]]></text>
+							</staticText>
+						</cellContents>
+					</crosstabTotalColumnHeader>
+				</columnGroup>
+				<measure name="valor_MEASURE" class="java.lang.Double" calculation="Sum">
+					<measureExpression><![CDATA[$F{valor}]]></measureExpression>
+				</measure>
+				<crosstabCell width="120" height="20">
+					<cellContents mode="Opaque" style="Crosstab_CD">
+						<textField>
+							<reportElement x="0" y="0" width="120" height="20" uuid="1e0abb18-05b1-4ae9-b01e-3367268787b0"/>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" columnTotalGroup="nome">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="368bb82b-c8d8-4cb8-8d07-eaf42913e356"/>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="120" height="20" rowTotalGroup="codExterno">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField>
+							<reportElement x="0" y="0" width="120" height="20" forecolor="#FFFFFF" uuid="f7d3efdf-0d2c-40e1-9b3e-52a7e9de5c56"/>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+				<crosstabCell width="60" height="20" rowTotalGroup="codExterno" columnTotalGroup="nome">
+					<cellContents mode="Opaque" style="Crosstab_CT">
+						<textField>
+							<reportElement x="0" y="0" width="60" height="20" forecolor="#FFFFFF" uuid="16a95e63-8a9f-47a8-8c48-368c4424b072"/>
+							<textFieldExpression><![CDATA[$V{valor_MEASURE}]]></textFieldExpression>
+						</textField>
+					</cellContents>
+				</crosstabCell>
+			</crosstab>
+		</band>
+	</summary>
+</jasperReport>

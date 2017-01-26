@@ -56,7 +56,14 @@
 							</p:menuitem>
 						</p:menuButton>
 
-						<!--  
+						<p:menuButton value="Relatórios" styleClass="pr1"
+							rendered="#{userSessionMB.user.tipoDeUser.id lt 2}">
+							<p:menuitem value="Visão geral" icon="ui-icon-gear"
+								immediate="true" ajax="true" outcome="/pages/reports/visaogeral.jsf">
+							</p:menuitem>
+						</p:menuButton>
+
+						  
 						<p:menuButton value="#{bundle.menu_admin}" styleClass="pr1"
 							rendered="#{userSessionMB.user.tipoDeUser.id lt 2}">
 							<p:menuitem value="#{bundle.menu_user}" icon="ui-icon-gear"
@@ -66,11 +73,11 @@
 								immediate="true" ajax="true" outcome="/pages/log/logList.jsf">
 							</p:menuitem>
 						</p:menuButton>
--->
+
 					</h:form>
 				</p:toolbarGroup>
 
-				<!--  
+				  
 				<p:toolbarGroup align="right">
 					<h:form prependId="false" _style="display:inline-block">
 						<h:panelGrid columns="4">
@@ -93,7 +100,7 @@
 						</h:panelGrid>
 					</h:form>
 				</p:toolbarGroup>
--->
+
 			</p:toolbar>
 			<!--  <h:outputText style="font-size: 80%; float: right;" value="#{bundle.app_version}" /> -->
 		</ui:insert>
