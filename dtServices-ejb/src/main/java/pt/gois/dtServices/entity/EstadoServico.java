@@ -90,11 +90,11 @@ public class EstadoServico implements Serializable {
 	public void setServico(Servico servico) {
 		this.servico = servico;
 	}
-	public Integer getUser() {
+	public Integer getUserId() {
 		return userId;
 	}
 
-	public void setUser(Integer userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 

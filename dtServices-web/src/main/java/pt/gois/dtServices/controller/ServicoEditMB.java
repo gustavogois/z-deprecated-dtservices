@@ -14,12 +14,13 @@ import pt.gois.dtServices.business.ProcessoSBLocal;
 import pt.gois.dtServices.business.ServicoViewSBLocal;
 import pt.gois.dtServices.business.TipoEstadoSBLocal;
 import pt.gois.dtServices.business.TipoServicoSBLocal;
+import pt.gois.dtServices.business.UserSBLocal;
 import pt.gois.dtServices.entity.EstadoServico;
-import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.Servico;
 import pt.gois.dtServices.entity.ServicoView;
 import pt.gois.dtServices.entity.TipoEstado;
 import pt.gois.dtServices.entity.TipoServico;
+import pt.gois.dtServices.entity.User;
 import pt.gois.dtServices.util.SearchPageCtrl;
 
 @ManagedBean
@@ -38,6 +39,9 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 	@EJB
 	private TipoServicoSBLocal sbTipoServico;
 	
+	@EJB
+	private UserSBLocal sbUser;
+	
 	@ManagedProperty(value="#{userSessionMB}")
 	private UserSessionMB userSessionMB;
 
@@ -54,6 +58,25 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 
 	String acao;
 	Date datap;
+	
+	List<EstadoServico> estadosServicos;
+
+	public List<EstadoServico> getEstadosServicos() {
+		if(estadosServicos == null) {
+			Servico servico = sb.findByIdWithEstadosServico(getServico().getId());
+			estadosServicos = servico.getEstadoServicos();
+		}
+		return estadosServicos;
+	}
+
+	public String getUsername(Integer userId) {
+		User user = sbUser.findById(userId);
+		return user.getName();
+	}
+	
+	public void setEstadosServicos(List<EstadoServico> estadosServicos) {
+		this.estadosServicos = estadosServicos;
+	}
 
 	public List<TipoServico> getTiposServico() {
 		
