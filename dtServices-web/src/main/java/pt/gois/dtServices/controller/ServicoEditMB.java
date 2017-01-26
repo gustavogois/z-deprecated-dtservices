@@ -89,6 +89,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 			tipo = new TipoEstado(TipoEstadoSBLocal.SRV_FINALIZADO);
 		} else if(!isEditing()){
 			tipo = new TipoEstado(TipoEstadoSBLocal.SRV_CRIADO);
+			datap = new Date();
 		} else {
 			return;
 		}
@@ -97,6 +98,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		novoEstado.setDataInicio(getDataCalendar());
 		novoEstado.setUser(userSessionMB.getUser().getId());
 		novoEstado.setObservacoes(observacaoEstado);
+		novoEstado.setServico(servico);
 		servico.getEstadoServicos().add(novoEstado);
 	}
 	

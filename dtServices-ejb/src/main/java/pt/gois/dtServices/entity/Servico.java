@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,7 +46,7 @@ public class Servico implements Serializable {
 	private double valor;
 
 	//bi-directional many-to-one association to TEstadoServico
-	@OneToMany(mappedBy="servico")
+	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL)
 	private List<EstadoServico> estadoServicos;
 
 	//bi-directional many-to-one association to TipoServico

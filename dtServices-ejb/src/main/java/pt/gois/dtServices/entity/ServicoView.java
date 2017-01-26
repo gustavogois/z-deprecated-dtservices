@@ -18,6 +18,8 @@ public class ServicoView {
 	
 	@Id
 	private Integer id;
+	private Integer idTipo;
+	private String nomeTipo;
 	private Integer idEstado; 
 	private String nomeEstado;
 	@Temporal(TemporalType.TIMESTAMP)
@@ -61,5 +63,17 @@ public class ServicoView {
 		this.processoId = processoId;
 	}
 
+	public Integer getIdTipo() {
+		return idTipo;
+	}
+	public void setIdTipo(Integer idTipo) {
+		this.idTipo = idTipo;
+	}
+	public String getNomeTipo() {
+		return nomeTipo;
+	}
+	public void setNomeTipo(String nomeTipo) {
+		this.nomeTipo = nomeTipo;
+	}
 	
 }

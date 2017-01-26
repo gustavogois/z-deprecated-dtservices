@@ -152,7 +152,7 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 	@Override
 	public Processo buscaProcessoComServicos(Integer idProcesso) {
 		Processo processo = null;
-		String sql = "select pi from Processo pi inner join fetch pi.estadosProcesso where pi.id = :id";
+		String sql = "select pi from Processo pi inner join fetch pi.estadoProcessos where pi.id = :id";
 		TypedQuery<Processo> query = getEM().createQuery(sql, Processo.class);
 		query.setParameter("id", idProcesso);
 		try {
