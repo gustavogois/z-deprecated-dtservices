@@ -30,7 +30,7 @@
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
 					<p:fieldset legend="#{bundle.default_dados_basicos}"
 						style="margin-bottom:20px">
-						<h:panelGrid columns="2">
+						<h:panelGrid columns="2" cellspacing="10">
 							<p:outputLabel value="#{bundle.default_field_ID}" />
 							<p:outputLabel value="#{solicitanteEditMB.solicitante.id}" />
 							<p:outputLabel value="#{bundle.default_sigla}" />
@@ -63,7 +63,7 @@
 					<p:fieldset legend="#{bundle.default_endereco}"
 						style="margin-bottom:20px">
 
-						<p:panelGrid columns="2">
+						<p:panelGrid columns="2" cellspacing="10">
 
 							<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
 							<p:inputText id="ruaPorta" size="60"

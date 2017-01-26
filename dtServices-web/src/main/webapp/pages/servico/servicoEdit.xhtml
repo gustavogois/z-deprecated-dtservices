@@ -56,7 +56,7 @@
 							rendered="#{servicoEditMB.isFinalizing()}" />
 						<p:outputLabel value="" rendered="#{servicoEditMB.isStarting()}" />
 					</h1>
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="2" cellspacing="10">
 						<p:outputLabel value="#{bundle.default_field_ID}" rendered="servico.id neq null"/>
 						<p:outputLabel value="#{servicoEditMB.servico.id}" rendered="servico.id neq null"/>
 

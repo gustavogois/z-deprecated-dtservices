@@ -119,7 +119,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		
 		novoEstado.setTipoEstado(tipo);
 		novoEstado.setDataInicio(getDataCalendar());
-		novoEstado.setUser(userSessionMB.getUser().getId());
+		novoEstado.setUserId(userSessionMB.getUser().getId());
 		novoEstado.setObservacoes(observacaoEstado);
 		novoEstado.setServico(servico);
 		servico.getEstadoServicos().add(novoEstado);

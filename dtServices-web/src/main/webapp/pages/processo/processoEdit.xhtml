@@ -42,7 +42,7 @@
 							rendered="#{processoEditMB.isPagando()}" />
 
 					</h1>
-					<h:panelGrid columns="2">
+					<h:panelGrid columns="2" cellspacing="10">
 						<p:outputLabel value="Código interno" rendered="#{processoEditMB.processo.codInterno != null}"/>
 						<p:outputLabel value="#{processoEditMB.processo.codInterno}" 
 							rendered="#{processoEditMB.processo.codInterno != null}" />
@@ -51,9 +51,7 @@
 						<p:outputLabel value="#{processoEditMB.nomeEstadoAtual}" rendered="#{processoEditMB.processo.codInterno != null}"/>
 						
 						<p:outputLabel value="Código externo" />
-						<p:inputText size="9"
-							label="Código externo"
-							value="#{processoEditMB.processo.codExterno}" />
+						<p:outputLabel value="#{processoEditMB.processo.codExterno}" />
 						
 						<p:outputLabel
 							value="#{bundle.processo_externo_field_solicitante}" />
