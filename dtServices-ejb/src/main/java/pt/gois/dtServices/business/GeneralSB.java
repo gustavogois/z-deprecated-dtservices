@@ -28,6 +28,7 @@ public abstract class GeneralSB<T> implements GeneralSBLocal<T> {
 	}
 
 	public boolean isCauseException(String nomeClasseException, EJBException e) {
+		
 		Throwable cause = e.getCause();
 		while(cause != null) {
 			if(cause.getClass().getName().equals(nomeClasseException)) {

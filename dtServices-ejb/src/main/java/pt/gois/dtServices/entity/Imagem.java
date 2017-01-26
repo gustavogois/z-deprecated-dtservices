@@ -11,7 +11,13 @@ import java.util.List;
  * 
  */
 @Entity
-@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i")
+@Table(name="t_imagem")
+@NamedQueries( {
+	@NamedQuery(name="Imagem.findAll", query="SELECT i FROM Imagem i"),
+	@NamedQuery(name="Imagem.findByImovel", query="SELECT i FROM Imagem i join i.imovels im WHERE im.id = :imovelId"),
+	@NamedQuery(name="Imagem.findById", query="SELECT i FROM Imagem i WHERE i.id = :id")
+})
+
 public class Imagem implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private Integer id;
@@ -108,7 +114,7 @@ public class Imagem implements Serializable {
 	//bi-directional many-to-many association to Imovel
 	@ManyToMany
 	@JoinTable(
-		name="imagem_imovel"
+		name="t_imagem_imovel"
 		, joinColumns={
 			@JoinColumn(name="imagemId")
 			}
