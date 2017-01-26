@@ -120,7 +120,7 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 			imagem.getImovels().add(processo.getImovel());
 			imagem.setImagem(file.getContents());
 			imagem.setFilename(file.getFileName());
-			//imagem.setSize(file.getSize());
+			imagem.setSize(new Long(file.getSize()).intValue());
 			imagem.setMimeType(file.getContentType());
 			sbImagem.create(imagem);
 

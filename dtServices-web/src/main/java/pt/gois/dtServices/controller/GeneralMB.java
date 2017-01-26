@@ -48,9 +48,15 @@ public class GeneralMB implements Serializable {
 	public String translate(String key) {
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle bundle = facesContext.getApplication().getResourceBundle(facesContext, "bundle");
-		if( bundle.containsKey(key) ){
-			return bundle.getString(key);
-		}else{
+		try {
+				
+			if(bundle != null && bundle.containsKey(key) ){
+				return bundle.getString(key);
+			}else{
+				return key;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 			return key;
 		}
 	}
