@@ -22,7 +22,9 @@ where pi.idProcCliente like 'WTS6';
 
 create or replace view V_SERVICO as
 select serv.id, tipo.id as idTipo, tipo.nome as nomeTipo, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, serv.valor, 
-	est.dataInicio as dtEstado, serv.processoId
+	est.dataInicio as dtEstado, serv.processoId, 
+    datediff(
+		(select proc.previsaoFim from t_processo proc where proc.id = serv.processoId), now()) as diasRestantes
 from t_servico serv 
 inner join 
 	(select s.id, max(e.dataInicio) as maxdate

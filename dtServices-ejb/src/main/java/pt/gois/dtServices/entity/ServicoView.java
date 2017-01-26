@@ -26,6 +26,21 @@ public class ServicoView {
 	private Date dtEstado;
 	private double valor;
 	private Integer processoId;
+	private int diasRestantes;
+	
+	public String getDiasRestantesSTR() {
+		if(diasRestantes < 0) {
+			return "Atrasado " + (diasRestantes * -1) + "dia(s)";
+		}
+		return Integer.toString(diasRestantes);
+	}
+	
+	public int getDiasRestantes() {
+		return diasRestantes;
+	}
+	public void setDiasRestantes(int diasRestantes) {
+		this.diasRestantes = diasRestantes;
+	}
 	public Integer getId() {
 		return id;
 	}
