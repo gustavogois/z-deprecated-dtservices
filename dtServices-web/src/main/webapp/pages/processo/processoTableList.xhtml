@@ -10,25 +10,22 @@
 	xmlns:cat="http://java.sun.com/jsf/composite/component">
 
 <h:panelGrid columns="2">
-	<p:button value="#{bundle.default_action_add}"
-		icon="ui-icon-document"
+	<p:button value="#{bundle.default_action_add}" icon="ui-icon-document"
 		outcome="/pages/processo/processoEdit">
 	</p:button>
 
 	<h:panelGrid columns="3" style="float: right">
 		<h:outputText value="#{bundle.default_label_termSearch}	" />
-		<p:remoteCommand name="processoSearchTrigger"
-			update="processoList"
+		<p:remoteCommand name="processoSearchTrigger" update="processoList"
 			actionListener="#{processoListMB.search}" />
-		<p:inputText id="processoSearch"
-			value="#{processoListMB.term}"
+		<p:inputText id="processoSearch" value="#{processoListMB.term}"
 			onkeydown="if(event.keyCode == 13) { processoSearchTrigger(); event.preventDefault() }" />
 	</h:panelGrid>
 </h:panelGrid>
 
-<p:dataTable id="processoList" value="#{list}"
-	var="processo" emptyMessage="#{bundle.default_msg_notFound}"
-	paginator="true" rows="20" lazy="true"
+<p:dataTable id="processoList" value="#{list}" var="processo"
+	emptyMessage="#{bundle.default_msg_notFound}" paginator="true"
+	rows="20" lazy="true"
 	currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
 	paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 	rowsPerPageTemplate="20, 50, 10">
@@ -42,18 +39,22 @@
 	<p:column headerText="Solicitante">
 		<h:outputText value="#{processo.nomeSolicitante}" />
 	</p:column>
+	<p:column headerText="Data Limite">
+		<h:outputText value="#{processo.previsaoFim.getTime()}">
+			<f:convertDateTime pattern="dd/MM/yyyy" />
+		</h:outputText>
+	</p:column>
 	<p:column headerText="#{bundle.default_label_action}"
 		styleClass="column_action">
 		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"
-			styleClass="action_edit"
-			outcome="/pages/processo/processoEdit">
+			styleClass="action_edit" outcome="/pages/processo/processoEdit">
 			<f:param name="id" value="#{processo.id}" />
 			<f:param name="idProcessoExterno" value="#{idProcessoExterno}" />
 		</p:button>
 		<p:commandButton value="#{bundle.default_action_del}"
 			icon="ui-icon-trash" styleClass="action_del"
-			action="#{processoEditMB.delete(processo)}"
-			update="processoList" ajax="true">
+			action="#{processoEditMB.delete(processo)}" update="processoList"
+			ajax="true">
 		</p:commandButton>
 	</p:column>
 </p:dataTable>

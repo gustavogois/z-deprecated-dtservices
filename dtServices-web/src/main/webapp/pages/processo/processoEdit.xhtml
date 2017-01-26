@@ -51,7 +51,11 @@
 						<p:outputLabel value="#{processoEditMB.nomeEstadoAtual}" rendered="#{processoEditMB.processo.codInterno != null}"/>
 						
 						<p:outputLabel value="Código externo" />
-						<p:outputLabel value="#{processoEditMB.processo.codExterno}" />
+						<p:inputText size="20"
+							label="Código externo"
+							value="#{processoEditMB.processo.codExterno}"
+							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }" />
+						<p:outputLabel value="#{processoEditMB.processo.codExterno}" rendered="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }"/>
 						
 						<p:outputLabel
 							value="#{bundle.processo_externo_field_solicitante}" />
@@ -63,6 +67,13 @@
 								itemLabel="#{solicitante.nome}" />
 						</p:selectOneMenu>
 						
+						<p:outputLabel value="Data limite"
+							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }" />
+						<p:calendar id="dataLimiteId" value="#{processoEditMB.processo.previsaoFim}" pages="1"
+							mask="true" maxlength="10" pattern="dd/MM/yyyy"
+							showButtonPanel="true" navigator="true"
+							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }">
+						</p:calendar>
 
 						<p:outputLabel value="Requisitante" />
 						<p:inputText size="60"

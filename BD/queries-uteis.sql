@@ -1,6 +1,6 @@
--- ALTER TABLE t_ref_tipo_estado ADD grupo varchar(20);
+-- ALTER TABLE t_solicitante ADD lastId int;
 -- ALTER TABLE t_servico DROP dtInicio;
--- ALTER TABLE t_ref_tipo_estado CHANGE nome nome varchar(50) not null;
+-- ALTER TABLE t_solicitante CHANGE lastId lastId int default 0;
 -- RENAME TABLE t_log TO log;
 
 -- Estados do Processo
@@ -34,10 +34,10 @@ inner join t_estado_servico est on est.servicoId = serv.id
 inner join t_ref_tipo_estado tipoEst on tipoEst.id = est.tipoEstadoId
 where groupserv.id = serv.id
 and groupserv.maxdate = est.dataInicio;
-
+ 
 create or replace view V_PROCESSO as
 select proc.id, proc.codExterno, proc.codInterno, tipoEst.id as idEstado, tipoEst.nome as nomeEstado, 
-	est.dataInicio as dtEstado, proc.solicitanteId, sol.nome
+	est.dataInicio as dtEstado, proc.solicitanteId as idSolicitante, sol.nome as nomeSolicitante, proc.previsaoFim as previsaoFim
 from t_processo proc 
 inner join 
 	(select p.id, max(e.dataInicio) as maxdate
@@ -50,3 +50,14 @@ inner join t_ref_tipo_estado tipoEst on tipoEst.id = est.tipoEstadoId
 where groupproc.id = proc.id
 and groupproc.maxdate = est.dataInicio;
 
+delete from t_solicitante
+delete from t_estado_processo;
+delete from t_imovel;
+delete from t_processo;
+
+select * from t_servico;
+select * from t_estado_servico;
+delete from t_servico;
+delete from t_estado_servico;
+
+select * from t_estado_processo;

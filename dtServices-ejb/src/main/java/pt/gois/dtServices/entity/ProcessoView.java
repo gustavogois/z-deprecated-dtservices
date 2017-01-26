@@ -30,6 +30,15 @@ public class ProcessoView implements Serializable {
 	private String codInterno;
 	private Integer idSolicitante;
 	private String nomeSolicitante;
+	private Date previsaoFim;
+
+	public Date getPrevisaoFim() {
+		return previsaoFim;
+	}
+
+	public void setPrevisaoFim(Date previsaoFim) {
+		this.previsaoFim = previsaoFim;
+	}
 
 	public Integer getIdSolicitante() {
 		return idSolicitante;
