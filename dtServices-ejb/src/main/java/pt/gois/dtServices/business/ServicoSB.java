@@ -22,7 +22,7 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 
 	@Override
 	public Servico findByIdWithEstadosServico(Integer id) {
-		String sql = "select serv from Servico serv inner join fetch serv.estadosServicos where serv.id = :id";
+		String sql = "select serv from Servico serv inner join fetch serv.estadoServicos where serv.id = :id";
 		Query query = getEM().createQuery(sql);
 		query.setParameter("id", id);
 		return (Servico)query.getSingleResult();

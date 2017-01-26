@@ -110,7 +110,7 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 		
 		sb.salvar(servico, userSessionMB.getUser());
 		
-		return "/pages/Processo/ProcessoEdit?faces-redirect=true&id=" + idProcesso;
+		return "/pages/processo/processoEdit?faces-redirect=true&id=" + idProcesso;
 	}
 	
 	public boolean isCreating() {

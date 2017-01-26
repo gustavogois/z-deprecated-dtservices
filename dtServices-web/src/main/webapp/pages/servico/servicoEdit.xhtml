@@ -107,7 +107,7 @@
 
 						<p:outputLabel value="Observações"
 							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />
-						<p:inputTextarea value="#{servicoEditMB.novoEstado.observacoes}"
+						<p:inputTextarea value="#{servicoEditMB.observacaoEstado}"
 							rows="5" cols="30" counter="displayObs" maxlength="120"
 							counterTemplate="{0} caracteres restantes" autoResize="false"
 							rendered="#{!servicoEditMB.isCreating() and !servicoEditMB.isEditing()}" />

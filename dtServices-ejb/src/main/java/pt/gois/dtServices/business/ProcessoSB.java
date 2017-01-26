@@ -1,6 +1,5 @@
 package pt.gois.dtServices.business;
 
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import pt.gois.dtServices.entity.EstadoProcesso;
 import pt.gois.dtServices.entity.Imagem;
 import pt.gois.dtServices.entity.Processo;
 import pt.gois.dtServices.entity.ProcessoView;
+import pt.gois.dtServices.entity.ServicoView;
 import pt.gois.dtServices.entity.Solicitante;
 import pt.gois.dtServices.entity.TipoEstado;
 import pt.gois.dtServices.entity.User;
@@ -23,6 +23,9 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 	
 	@EJB
 	ProcessoViewSBLocal sbProcView;
+	
+	@EJB
+	ServicoViewSBLocal sbServView;
 	
 	@EJB
 	SolicitanteSBLocal sbSolicitante;
@@ -140,9 +143,13 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 	}
 	
 	private boolean checkAllStatesServicesIn(ProcessoView proc, Integer idEstado) {
-		Processo pi = buscaProcessoComServicos(proc.getId());
-		for (EstadoProcesso estado : pi.getEstadoProcessos()) {
-			if(!estado.getTipoEstado().getId().equals(idEstado)) {
+		
+		Query query = getEM().createQuery("select serv from ServicoView serv where serv.processoId = :idProcesso" );
+		query.setParameter("idProcesso", proc.getId());
+		List<ServicoView> servicos = query.getResultList();
+		
+		for (ServicoView serv : servicos) {
+			if(!serv.getIdEstado().equals(idEstado)) {
 				return false;
 			}
 		}
