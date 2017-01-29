@@ -1,2 +1,0 @@
-- Após gerar as Entities, alterar os tipos das chaves de int para Integer
-- Verificar a questão da tabela hibernate_sequence. Talvez seja necessário setar o atributo hibernate.hbm2ddl.auto para create, e depois para update

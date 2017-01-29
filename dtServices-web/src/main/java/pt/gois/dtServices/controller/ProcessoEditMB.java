@@ -110,6 +110,16 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 	String descricao;
 
 	Imagem selectedImage;
+	String observacaoEstado;
+
+
+	public String getObservacaoEstado() {
+		return observacaoEstado;
+	}
+
+	public void setObservacaoEstado(String observacaoEstado) {
+		this.observacaoEstado = observacaoEstado;
+	}
 
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
@@ -341,11 +351,11 @@ public class ProcessoEditMB extends GeneralMB implements Serializable {
 		Processo processo = getProcesso();
 
 		if (isFaturando()) {
-			sb.salvar(processo, TipoEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, userSessionMB.getUser());
+			sb.salvar(processo, TipoEstadoSBLocal.PI_AGUARDANDO_PAGAMENTO, data, observacaoEstado, userSessionMB.getUser());
 		} else if (isPagando()) {
-			sb.salvar(processo, TipoEstadoSBLocal.PI_PAGO, data, userSessionMB.getUser());
+			sb.salvar(processo, TipoEstadoSBLocal.PI_PAGO, data, observacaoEstado, userSessionMB.getUser());
 		} else if (!isEditing()) {
-			sb.salvar(processo, TipoEstadoSBLocal.PI_CRIADO, data, userSessionMB.getUser());
+			sb.salvar(processo, TipoEstadoSBLocal.PI_CRIADO, data, observacaoEstado, userSessionMB.getUser());
 		} else {
 			sb.save(getProcesso());
 		}

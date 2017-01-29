@@ -18,6 +18,7 @@ public class GenerateReportMB {
 		HashMap<String, Object> parametros = new HashMap<String, Object>();
 		Connection connection = new ConnectionFactory().getConnectionFactory();
 		
+		
 		GeradorRelatorio gerador = new GeradorRelatorio(fileName, parametros, connection);
 		
 		

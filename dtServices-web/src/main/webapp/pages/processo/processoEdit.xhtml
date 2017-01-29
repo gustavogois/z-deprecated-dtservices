@@ -24,61 +24,91 @@
 				<h:panelGrid columns="2">
 					<p:commandButton ajax="false" value="#{bundle.default_action_save}"
 						action="#{processoEditMB.save}" icon="ui-icon-disk" />
-					<p:button value="Cancelar"
-						outcome="/pages/processo/processoList">
+					<p:button value="Cancelar" outcome="/pages/processo/processoList">
 					</p:button>
 				</h:panelGrid>
 			</div>
 			<p:tabView dynamic="true" cache="true">
 
 				<p:tab title="#{bundle.tab_main}" id="mainTab">
-					<h1>
-						<p:outputLabel
-							value="Confirma o faturamento dos serviços deste processo?"
-							rendered="#{processoEditMB.isFaturando()}" />
-
-						<p:outputLabel
-							value="Confirma o pagamento dos serviços deste processo?"
-							rendered="#{processoEditMB.isPagando()}" />
-
-					</h1>
+					
+					
+					<p:fieldset 
+						toggleable="false" toggleSpeed="500">
+						<h1>
+							<p:outputLabel
+								value="Informe a data do Faturamento"
+								rendered="#{processoEditMB.isFaturando()}" />
+	
+							<p:outputLabel
+								value="Informe a data do Pagamento"
+								rendered="#{processoEditMB.isPagando()}" />
+	
+						</h1>
+						
+						<h:panelGrid columns="2" cellspacing="10">
+							<p:outputLabel value="Data do Faturamento"
+								rendered="#{processoEditMB.isFaturando()}" />
+							<p:outputLabel value="Data do Pagamento"
+								rendered="#{processoEditMB.isPagando()}" />
+							<p:calendar id="dataId" value="#{processoEditMB.data}" pages="1"
+								mask="true" maxlength="10" pattern="dd/MM/yyyy HH:mm:ss"
+								showButtonPanel="true" navigator="true"
+								rendered="#{!processoEditMB.isCreating() and !processoEditMB.isEditing()}">
+							</p:calendar>
+							
+							<p:outputLabel value="Observações"
+								rendered="#{!processoEditMB.isCreating() and !processoEditMB.isEditing()}" />
+							<p:inputTextarea value="#{processoEditMB.observacaoEstado}"
+								rows="5" cols="30" counter="displayObs" maxlength="120"
+								counterTemplate="{0} caracteres restantes" autoResize="false"
+								rendered="#{!processoEditMB.isCreating() and !processoEditMB.isEditing()}" />
+							<h:outputLabel />
+							<h:outputText id="displayObs" />
+							
+						</h:panelGrid>
+					</p:fieldset>
+					
+					
 					<h:panelGrid columns="2" cellspacing="10">
 						<p:outputLabel value="Código externo" />
-						<p:inputText size="20"
-							label="Código externo"
+						<p:inputText size="20" label="Código externo"
 							value="#{processoEditMB.processo.codExterno}"
 							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }" />
-						<p:outputLabel value="#{processoEditMB.processo.codExterno}" 
-							rendered="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }"/>
-						
-						<p:outputLabel value="Código interno" rendered="#{processoEditMB.processo.codInterno != null}"/>
-						<p:outputLabel value="#{processoEditMB.processo.codInterno}" 
+						<p:outputLabel value="#{processoEditMB.processo.codExterno}"
+							rendered="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }" />
+
+						<p:outputLabel value="Código interno"
 							rendered="#{processoEditMB.processo.codInterno != null}" />
-						
-						<p:outputLabel value="#{bundle.default_label_estado_atual}" rendered="#{processoEditMB.processo.codInterno != null}"/>
-						<p:outputLabel value="#{processoEditMB.nomeEstadoAtual}" rendered="#{processoEditMB.processo.codInterno != null}"/>
-						
+						<p:outputLabel value="#{processoEditMB.processo.codInterno}"
+							rendered="#{processoEditMB.processo.codInterno != null}" />
+
+						<p:outputLabel value="#{bundle.default_label_estado_atual}"
+							rendered="#{processoEditMB.processo.codInterno != null}" />
+						<p:outputLabel value="#{processoEditMB.nomeEstadoAtual}"
+							rendered="#{processoEditMB.processo.codInterno != null}" />
+
 						<p:outputLabel
 							value="#{bundle.processo_externo_field_solicitante}" />
-						<p:selectOneMenu
-							value="#{processoEditMB.processo.solicitante.id}"
-							style="width:300px" required="true">
+						<p:selectOneMenu value="#{processoEditMB.processo.solicitante.id}"
+							style="width:300px" required="true"
+							disabled="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}">
 							<f:selectItems value="#{processoEditMB.solicitantes}"
 								var="solicitante" itemValue="#{solicitante.id}"
 								itemLabel="#{solicitante.nome}" />
 						</p:selectOneMenu>
-						
+
 						<p:outputLabel value="Data limite"
 							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }" />
-						<p:calendar id="dataLimiteId" value="#{processoEditMB.processo.previsaoFim}" pages="1"
+						<p:calendar id="dataLimiteId"
+							value="#{processoEditMB.processo.previsaoFim}" pages="1"
 							mask="true" maxlength="10" pattern="dd/MM/yyyy"
 							showButtonPanel="true" navigator="true"
 							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }">
 						</p:calendar>
 
 						<p:outputLabel value="Requisitante" />
-						<p:inputText size="60"
-							label="Requisitante"
+						<p:inputText size="60" label="Requisitante"
 							value="#{processoEditMB.processo.nomeRequisitante}"
 							rendered="#{processoEditMB.isEditing() or processoEditMB.isCreating() }" />
 						<p:outputLabel value="#{bundle.processo_interno_nome_solicitante}"
@@ -92,43 +122,155 @@
 							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }" />
 
 						<p:outputLabel value="#{bundle.default_field_observacoes}" />
-						<p:inputTextarea
-							value="#{processoEditMB.processo.observacoes}"
+						<p:inputTextarea value="#{processoEditMB.processo.observacoes}"
 							rows="5" cols="58" counter="display" maxlength="120"
 							counterTemplate="{0} caracteres restantes" autoResize="false"
 							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }" />
 						<h:outputLabel />
 						<h:outputText id="display" />
 					</h:panelGrid>
-					<h:panelGrid columns="2">
-						<p:outputLabel value="Data"
-							rendered="#{!processoEditMB.isCreating() and !processoEditMB.isEditing()}" />
-						<p:calendar id="dataId" value="#{processoEditMB.data}"
-							pages="1" mask="true" maxlength="10" pattern="dd/MM/yyyy"
-							showButtonPanel="true" navigator="true"
-							rendered="#{!processoEditMB.isCreating() and	!processoEditMB.isEditing()}">
-						</p:calendar>
-					</h:panelGrid>
-					
-				<ui:include src="imovel.xhtml" /> 
-					
+
+
+
+					<p:fieldset legend="#{bundle.menu_cadastro_imovel}"
+						toggleable="false" toggleSpeed="500">
+
+						<h:panelGrid columns="2" id="endereco" cellspacing="10">
+							<p:outputLabel value="Tipo do Imóvel" />
+							<p:inputText size="60" label="Tipo do imóvel"
+								value="#{processoEditMB.processo.imovel.tipoImovel}"
+								rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}" />
+							<p:outputLabel value="#{processoEditMB.processo.imovel.tipoImovel}" 
+								rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+
+							<p:outputLabel value="#{bundle.imovel_field_crp}" />
+							<p:inputText size="60" label="#{bundle.imovel_field_crp}"
+								value="#{processoEditMB.processo.imovel.crp}" required="true"
+								validatorMessage="#{bundle.imovel_msg_invalidCrp}" 
+								rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}">
+							</p:inputText>
+							<p:outputLabel value="#{processoEditMB.processo.imovel.crp}" 
+								rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+								
+							<p:outputLabel value="#{bundle.endereco_field_ruaPorta}" />
+							<h:panelGrid columns="2">
+								<p:inputText id="ruaPorta" size="60"
+									label="#{bundle.endereco_field_ruaPorta}"
+									value="#{processoEditMB.processo.imovel.ruaPorta}"
+									required="true"
+									validatorMessage="#{bundle.imovel_msg_invalidEndereco}"
+									rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}">
+								</p:inputText>
+								<p:outputLabel value="#{processoEditMB.processo.imovel.ruaPorta}" 
+									rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+							</h:panelGrid>
+
+							<p:outputLabel value="#{bundle.endereco_field_complemento}" />
+							<p:inputText id="complemento" size="60"
+								label="#{bundle.endereco_field_complemento}"
+								value="#{processoEditMB.processo.imovel.complemento}"
+								required="true"
+								rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}">
+							</p:inputText>
+							<p:outputLabel value="#{processoEditMB.processo.imovel.complemento}" 
+								rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+
+							<p:outputLabel value="#{bundle.endereco_field_cp}" />
+							<p:outputLabel value="#{processoEditMB.processo.imovel.codigoPostal}" 
+								rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+							<h:panelGrid columns="2" rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}">
+								<p:autoComplete id="cp"
+									value="#{processoEditMB.processo.imovel.codigoPostal}"
+									completeMethod="#{enderecoMB.search}" var="end"
+									converter="enderecoConverter" itemLabel="#{end}"
+									itemValue="#{end.id}" forceSelection="true" required="true"
+									>
+									<p:ajax event="itemSelect"
+										listener="#{processoEditMB.onEnderecoSelect}"
+										update="ruaPorta,complemento,cp,concelho,distrito" />
+									<p:column style="width:10%">
+										<h:outputText value="#{end.codigoPostal}" />
+									</p:column>
+
+									<p:column>
+										<h:outputText value="#{end.ruaPorta}" />
+									</p:column>
+
+									<p:column>
+										<h:outputText value="#{end.complemento}" />
+									</p:column>
+
+									<p:column>
+										<h:outputText value="#{end.concelho.nome}" />
+									</p:column>
+
+									<p:column>
+										<h:outputText value="#{end.distrito.nome}" />
+									</p:column>
+								</p:autoComplete>
+							</h:panelGrid>
+
+							<p:outputLabel value="#{bundle.endereco_field_concelho}" />
+							<p:selectOneMenu id="concelho"
+								value="#{processoEditMB.processo.imovel.concelho.id}"
+								style="width:125px" required="true"
+								label="#{bundle.endereco_field_concelho}"
+								disabled="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}">
+								<f:selectItems
+									value="#{enderecoMB.getConcelhos(processoEditMB.processo.imovel.distrito)}"
+									var="concelho" itemValue="#{concelho.id}"
+									itemLabel="#{concelho.nome}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{bundle.endereco_field_distrito}" />
+							<p:selectOneMenu id="distrito"
+								value="#{processoEditMB.processo.imovel.distrito.id}"
+								style="width:125px" required="true"
+								label="#{bundle.endereco_field_distrito}"
+								disabled="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}">
+								<f:selectItems value="#{enderecoMB.distritos}" var="distrito"
+									itemValue="#{distrito.id}" itemLabel="#{distrito.nome}" />
+							</p:selectOneMenu>
+
+							<p:outputLabel value="#{bundle.endereco_field_latitude}" />
+							<p:inputText id="lat" size="30"
+								label="#{bundle.endereco_field_latitude}"
+								value="#{processoEditMB.processo.imovel.latitude}"
+								rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}">
+							</p:inputText>
+							<p:outputLabel value="#{processoEditMB.processo.imovel.latitude}" 
+								rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+
+							<p:outputLabel value="#{bundle.endereco_field_longitude}" />
+							<p:inputText id="lng" size="30"
+								label="#{bundle.endereco_field_longitude}"
+								value="#{processoEditMB.processo.imovel.longitude}"
+								rendered="#{!processoEditMB.isFaturando() and !processoEditMB.isPagando()}">
+							</p:inputText>
+							<p:outputLabel value="#{processoEditMB.processo.imovel.longitude}" 
+								rendered="#{processoEditMB.isFaturando() or processoEditMB.isPagando()}" />
+
+						</h:panelGrid>
+
+					</p:fieldset>
+
+
+
 				</p:tab>
+				<!--  
 				<p:tab title="#{bundle.tab_imagem}"
-					disabled="#{processoEditMB.processo.id == null}"
-					id="imageTab">
+					disabled="#{processoEditMB.processo.id == null}" id="imageTab">
 					<ui:include src="imagem.xhtml" />
 				</p:tab>
-
+-->
 				<p:tab title="#{bundle.tab_servicos}"
-					disabled="#{processoEditMB.processo.id == null}"
-					id="servicosTab">
+					disabled="#{processoEditMB.processo.id == null}" id="servicosTab">
 					<h:panelGrid columns="2">
 
 						<p:button value="#{bundle.default_action_add}"
 							icon="ui-icon-document" outcome="/pages/servico/servicoEdit"
 							disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }">
-							<f:param name="idProcesso"
-								value="#{processoEditMB.processo.id}" />
+							<f:param name="idProcesso" value="#{processoEditMB.processo.id}" />
 							<f:param name="codExternoProcesso"
 								value="#{processoEditMB.processo.codExterno}" />
 							<f:param name="codInternoProcesso"
@@ -143,7 +285,8 @@
 								onkeydown="if(event.keyCode == 13) { servicoSearchTrigger(); event.preventDefault() }" />
 						</h:panelGrid>
 					</h:panelGrid>
-					<p:dataTable id="servicoListId" value="#{servicoListMB.list(processoEditMB.processo.id)}"
+					<p:dataTable id="servicoListId"
+						value="#{servicoListMB.list(processoEditMB.processo.id)}"
 						var="servico" emptyMessage="#{bundle.default_msg_notFound}"
 						paginator="true" rows="20" lazy="true"
 						currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords}"
@@ -156,13 +299,11 @@
 						</p:column>
 
 						<p:column headerText="#{bundle.servico}">
-							<h:outputText
-								value="#{servico.nomeTipo}" />
+							<h:outputText value="#{servico.nomeTipo}" />
 						</p:column>
 
 						<p:column headerText="Estado">
-							<h:outputText
-								value="#{servico.nomeEstado}" />
+							<h:outputText value="#{servico.nomeEstado}" />
 						</p:column>
 
 						<p:column headerText="#{bundle.default_field_valor}">
@@ -172,7 +313,7 @@
 						<p:column headerText="Dias restantes">
 							<h:outputText value="#{servico.diasRestantesSTR}" />
 						</p:column>
-						
+
 						<p:column headerText="#{bundle.default_label_action}"
 							styleClass="column_action">
 							<p:button title="#{bundle.default_action_edit}"
@@ -180,8 +321,7 @@
 								outcome="/pages/servico/servicoEdit"
 								disabled="#{!processoEditMB.isEditing() and !processoEditMB.isCreating() }">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idprocesso"
-									value="#{processoEditMB.processo.id}" />
+								<f:param name="idprocesso" value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="EDIT" />
 							</p:button>
 							<p:commandButton title="#{bundle.default_action_del}"
@@ -194,24 +334,21 @@
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canStart(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idprocesso"
-									value="#{processoEditMB.processo.id}" />
+								<f:param name="idprocesso" value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="START" />
 							</p:button>
 							<p:button title="Suspender" icon="ui-icon-arrowreturnthick-1-n"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canSuspend(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idprocesso"
-									value="#{processoEditMB.processo.id}" />
+								<f:param name="idprocesso" value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="SUSPEND" />
 							</p:button>
 							<p:button title="Finalizar" icon="ui-icon-check"
 								outcome="/pages/servico/servicoEdit"
 								rendered="#{servicoEditMB.canFinalize(servico)}">
 								<f:param name="id" value="#{servico.id}" />
-								<f:param name="idprocesso"
-									value="#{processoEditMB.processo.id}" />
+								<f:param name="idprocesso" value="#{processoEditMB.processo.id}" />
 								<f:param name="acao" value="END" />
 							</p:button>
 						</p:column>

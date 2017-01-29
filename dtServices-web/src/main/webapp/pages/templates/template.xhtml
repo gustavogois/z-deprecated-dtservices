@@ -56,6 +56,7 @@
 							</p:menuitem>
 						</p:menuButton>
 
+<!--  
 						<p:menuButton value="Relatórios" styleClass="pr1"
 							rendered="#{userSessionMB.user.tipoDeUser.id lt 2}">
 							<p:menuitem value="Visão geral" icon="ui-icon-gear"
@@ -73,7 +74,7 @@
 								immediate="true" ajax="true" outcome="/pages/log/logList.jsf">
 							</p:menuitem>
 						</p:menuButton>
-
+-->
 					</h:form>
 				</p:toolbarGroup>
 
@@ -82,6 +83,7 @@
 					<h:form prependId="false" _style="display:inline-block">
 						<h:panelGrid columns="4">
 
+							<h:outputText value="versão 0.1 (BETA)  " />
 							<h:panelGroup>
 								<p:menuButton value="#{userSessionMB.user.name}"
 									styleClass="rolebutton" id="rolebutton">

@@ -16,7 +16,9 @@
 	<h:panelGrid columns="2" id="endereco">
 		<p:outputLabel value="Tipo do Imóvel" />
 		<p:inputText size="60" label="Tipo do imóvel"
-			value="#{processoEditMB.processo.imovel.tipoImovel}"/>
+			value="#{processoEditMB.processo.imovel.tipoImovel}" rendered="false" />
+		<p:outputLabel value="Tipo do Imóvel" rendered="true" />
+			
 		<p:outputLabel value="#{bundle.imovel_field_crp}" />
 		<p:inputText size="60" label="#{bundle.imovel_field_crp}"
 			value="#{processoEditMB.processo.imovel.crp}"

@@ -39,6 +39,9 @@
 	<p:column headerText="Solicitante">
 		<h:outputText value="#{processo.nomeSolicitante}" />
 	</p:column>
+	<p:column headerText="Estado">
+		<h:outputText value="#{processo.nomeEstado}" />
+	</p:column>
 	<p:column headerText="Data Limite">
 		<h:outputText value="#{processo.previsaoFim.getTime()}">
 			<f:convertDateTime pattern="dd/MM/yyyy" />
@@ -46,16 +49,36 @@
 	</p:column>
 	<p:column headerText="#{bundle.default_label_action}"
 		styleClass="column_action">
-		<p:button value="#{bundle.default_action_edit}" icon="ui-icon-pencil"
-			styleClass="action_edit" outcome="/pages/processo/processoEdit">
+		<p:button title="Editar" icon="ui-icon-pencil"
+			styleClass="action_edit"
+			outcome="/pages/processo/processoEdit"
+			rendered="#{processoEditMB.canEdit(processo)}">
 			<f:param name="id" value="#{processo.id}" />
-			<f:param name="idProcessoExterno" value="#{idProcessoExterno}" />
+			<f:param name="idprocesso"
+				value="#{processoEditMB.processo.id}" />
+			<f:param name="acao" value="EDIT" />
 		</p:button>
-		<p:commandButton value="#{bundle.default_action_del}"
-			icon="ui-icon-trash" styleClass="action_del"
-			action="#{processoEditMB.delete(processo)}" update="processoList"
-			ajax="true">
+		<p:commandButton title="Excluir" icon="ui-icon-trash"
+			styleClass="action_del"
+			action="#{processoEditMB.delete(processo)}"
+			update="processoList" ajax="true">
 		</p:commandButton>
+		<p:button title="Faturar" icon=" ui-icon-extlink"
+			outcome="/pages/processo/processoEdit"
+			rendered="#{processoEditMB.canFaturar(processo)}">
+			<f:param name="id" value="#{processo.id}" />
+			<f:param name="idprocesso"
+				value="#{processoEditMB.processo.id}" />
+			<f:param name="acao" value="FATURAR" />
+		</p:button>
+		<p:button title="Pagar" icon="ui-icon-squaresmall-minus"
+			outcome="/pages/processo/processoEdit"
+			rendered="#{processoEditMB.canPagar(processo)}">
+			<f:param name="id" value="#{processo.id}" />
+			<f:param name="idprocesso"
+				value="#{processoEditMB.processo.id}" />
+			<f:param name="acao" value="PAGAR" />
+		</p:button>
 	</p:column>
 </p:dataTable>
 </html>

@@ -33,7 +33,17 @@ public class Solicitante extends Endereco implements Serializable {
 	private String telefone;
 	
 	private int lastId;
+	
+	private String entFacturacao;
 
+
+	public String getEntFacturacao() {
+		return entFacturacao;
+	}
+
+	public void setEntFacturacao(String entFacturacao) {
+		this.entFacturacao = entFacturacao;
+	}
 
 	//bi-directional many-to-one association to Processo
 	private List<Processo> processos;

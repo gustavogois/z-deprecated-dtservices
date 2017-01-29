@@ -50,10 +50,11 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 	}
 	
 	@Override
-	public void salvar(Processo processo, Integer tipoEstado, Date data, User user) {
+	public void salvar(Processo processo, Integer tipoEstado, Date data, String obsEstado, User user) {
 		
 		if( processo.getId() != null ){
 			
+			criaEstadoProcesso(sbProcView.findById(processo.getId()), tipoEstado, data, obsEstado, user);
 			save( processo );
 			
 		} else {
@@ -62,6 +63,7 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 			
 			EstadoProcesso estadoProcesso = new EstadoProcesso();
 			estadoProcesso.setDataInicio(data);
+			estadoProcesso.setObservacoes("Criado automaticamente pelo sistema.");
 			estadoProcesso.setProcesso(processo);
 			estadoProcesso.setTipoEstado(new TipoEstado(tipoEstado));
 			estadoProcesso.setUserId(user.getId());
@@ -108,38 +110,44 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 	}
 	
 	@Override
-	public void checkStatusProcesso(Integer idProcesso, User user) {
+	public void checkStatusProcesso(Integer idProcesso, Date data, String obs, User user) {
 		
 		ProcessoView procView = sbProcView.findByID(ProcessoView.class, idProcesso);
 		Integer idTipoEstadoAtualProc = procView.getIdEstado();
 		
-		if(idTipoEstadoAtualProc.equals(TipoEstadoSBLocal.PI_CRIADO)) {
-			if(checkAllStatesServicesIn(procView, TipoEstadoSBLocal.SRV_EM_EXECUCAO)) {
-				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_EM_EXECUCAO, user);
+		if(idTipoEstadoAtualProc.equals(TipoEstadoSBLocal.PI_CRIADO) && checkIfOneStateServicesIn(procView, TipoEstadoSBLocal.SRV_EM_EXECUCAO)) {
+				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_EM_EXECUCAO, data, obs, user);
 				return;
-			} else if(checkAllStatesServicesIn(procView, TipoEstadoSBLocal.SRV_SUSPENSO)) {
-				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_SUSPENSO, user);
-			}
 		} else if(idTipoEstadoAtualProc.equals(TipoEstadoSBLocal.PI_EM_EXECUCAO)) {
 			if(checkAllStatesServicesIn(procView, TipoEstadoSBLocal.SRV_SUSPENSO)) {
-				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_SUSPENSO, user);
-			} 
+				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_SUSPENSO, data, obs, user);
+			} else if(checkAllStatesServicesIn(procView, TipoEstadoSBLocal.SRV_FINALIZADO)) {
+				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, data, obs, user);
+			}	  
+		} else if(idTipoEstadoAtualProc.equals(TipoEstadoSBLocal.PI_SUSPENSO)) {
+			if(checkIfOneStateServicesIn(procView, TipoEstadoSBLocal.SRV_EM_EXECUCAO)) {
+				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_EM_EXECUCAO, data, obs, user);
+			} else if(checkAllStatesServicesIn(procView, TipoEstadoSBLocal.SRV_FINALIZADO)) {
+				criaEstadoProcesso(procView, TipoEstadoSBLocal.PI_AGUARDANDO_FATURAMENTO, data, obs, user);
+			}
 		}
 	}
 	
-	private void criaEstadoProcesso(ProcessoView procView, Integer idTipo, User user) {
-		Processo pi = buscaProcessoComServicos(procView.getId());
+	private void criaEstadoProcesso(ProcessoView procView, Integer idTipo, Date data, String obs, User user) {
+		Processo pi = findById(procView.getId());
 		EstadoProcesso novoEstado = new EstadoProcesso();
 		novoEstado.setId(idTipo);
-		novoEstado.setDataInicio(new Date());
+		novoEstado.setDataInicio(data);
+		novoEstado.setObservacoes(obs);
 		novoEstado.setProcesso(pi);
 		novoEstado.setUserId(user.getId());
 		
 		TipoEstado tipo = new TipoEstado(idTipo);
 		novoEstado.setTipoEstado(tipo);
 
-		pi.getEstadoProcessos().add(novoEstado);
-		save(pi);
+		save(novoEstado);
+		//pi.getEstadoProcessos().add(novoEstado);
+		//save(pi);
 	}
 	
 	private boolean checkAllStatesServicesIn(ProcessoView proc, Integer idEstado) {
@@ -154,6 +162,20 @@ public class ProcessoSB extends GeneralSB<Processo> implements ProcessoSBLocal{
 			}
 		}
 		return true;
+	}
+	
+	private boolean checkIfOneStateServicesIn(ProcessoView proc, Integer idEstado) {
+		
+		Query query = getEM().createQuery("select serv from ServicoView serv where serv.processoId = :idProcesso" );
+		query.setParameter("idProcesso", proc.getId());
+		List<ServicoView> servicos = query.getResultList();
+		
+		for (ServicoView serv : servicos) {
+			if(serv.getIdEstado().equals(idEstado)) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	@Override

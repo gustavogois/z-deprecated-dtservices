@@ -4,12 +4,13 @@ delete from t_servico;
 delete from t_processo;
 delete from t_imovel;
 delete from t_solicitante;
-delete from t_tipo_servico;
 
+delete from t_tipo_servico;
 insert into t_tipo_servico values (1, 'Tipo de serviço 01', 10,'');
 insert into t_tipo_servico values (2, 'Tipo de serviço 02', 20,'');
-insert into t_tipo_servico values (3, 'Tipo de serviço 03', 30,'');
-insert into t_tipo_servico values (4, 'Tipo de serviço 04', 40,'');
+insert into t_tipo_servico values (3, 'Tipo de serviço 03', 31,'');
+insert into t_tipo_servico values (4, 'Tipo de serviço 04', 12,'');
+insert into t_tipo_servico values (5, 'Tipo de serviço 05', 8,'');
 
 insert into t_solicitante values (1, 'Solicitante 01', 'SL1-', '', '', 'rua qualquer', '', '', '', 'xxx', 'xxx', null, '');
 insert into t_solicitante values (2, 'Solicitante 02', 'SL2-', '', '', 'rua qualquer', '', '', '', 'xxx', 'xxx', null, '');

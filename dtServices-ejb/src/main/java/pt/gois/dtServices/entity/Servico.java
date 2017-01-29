@@ -46,7 +46,7 @@ public class Servico implements Serializable {
 	private double valor;
 
 	//bi-directional many-to-one association to TEstadoServico
-	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy="servico", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<EstadoServico> estadoServicos;
 
 	//bi-directional many-to-one association to TipoServico

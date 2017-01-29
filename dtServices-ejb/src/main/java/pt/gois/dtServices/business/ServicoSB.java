@@ -1,5 +1,7 @@
 package pt.gois.dtServices.business;
 
+import java.util.Date;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
@@ -41,7 +43,8 @@ public class ServicoSB extends GeneralSB<Servico> implements ServicoSBLocal{
 			create( servico );
 		}
 		
-		sbPI.checkStatusProcesso(servico.getProcesso().getId(), user);
+		sbPI.checkStatusProcesso(servico.getProcesso().getId(), new Date(), 
+				"Criado automaticamente pelo sistema por uma mudança de estado de um Serviço do Processo.", user);
 		
 	}
 

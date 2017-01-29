@@ -63,7 +63,11 @@ public class ServicoEditMB extends GeneralMB implements Serializable {
 
 	public List<EstadoServico> getEstadosServicos() {
 		if(estadosServicos == null) {
-			Servico servico = sb.findByIdWithEstadosServico(getServico().getId());
+			Integer idServico = getServico().getId();
+			if(idServico == null) {
+				return new ArrayList<EstadoServico>();
+			}
+			Servico servico = sb.findByIdWithEstadosServico(idServico);
 			estadosServicos = servico.getEstadoServicos();
 		}
 		return estadosServicos;
