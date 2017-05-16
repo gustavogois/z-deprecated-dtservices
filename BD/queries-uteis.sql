@@ -1,4 +1,4 @@
--- ALTER TABLE t_solicitante ADD lastId int;
+ ALTER TABLE t_solicitante ADD entFacturacao varchar(60);
 -- ALTER TABLE t_servico DROP dtInicio;
 -- ALTER TABLE t_solicitante CHANGE lastId lastId int default 0;
 -- RENAME TABLE t_log TO log;
